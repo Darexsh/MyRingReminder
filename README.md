@@ -45,6 +45,14 @@
     
 * 🎨 **Customization**: Set cycle length, insertion date/time, calendar range, language, and background image. Customize button color, home ring color, and widget colors.
 
+* 🎞️ **App Animations**: Choose a global navigation animation style in Settings (for tab switches and screen openings), including options such as slide, fade, zoom, rotate, pop, or none.
+
+* ⚙️ **Animated Advanced Settings**: The **Settings → Advanced** section opens and closes with a subtle transition for smoother interaction.
+
+* 🗓️ **Enhanced Calendar Navigation**: Navigate months with left/right arrows, tap the month header to jump directly to a selected month and year, and scroll through months without a fixed limit.
+
+* 🌐 **Language Mode**: Select German, English, or **System Default**. System Default follows the device language and falls back to English if unsupported.
+
 * 🌙 **Dark Mode (Default)**: App runs in dark mode by default, independent of system theme.
 
 * 🔒 **Portrait Only**: Interface stays in vertical orientation for a consistent experience.
@@ -57,7 +65,7 @@
 
 * 🧩 **Home Screen Widgets**: Small widget shows days left; large widget shows days left plus next dates, both color‑synced with app settings and resizable.
 
-* 💾 **Backup / Restore**: One‑tap export and import of all settings and notes.
+* 💾 **Backup / Restore**: One‑tap export and import of all settings and notes, with import validation and a user-friendly expandable review before confirming restore.
 
 * 🛠️ **Debug View**: Long‑press settings title for detailed diagnostic information.
     
@@ -125,7 +133,7 @@
         
     * Optionally choose a background image.
 
-    * Switch the app language (German/English).
+    * Switch the app language (German/English/System Default).
 
     * (Optional) Restart the welcome tour in **Settings → Advanced**.
         
@@ -142,6 +150,10 @@
         * 🟩 Green: Active cycle days
 
     * Tap legend dots to change the colors.
+
+    * Use the left/right arrows to move between months.
+
+    * Tap the month label to choose a specific month and year.
             
 3. **Get Notifications**:
     
@@ -164,9 +176,15 @@
 
     * Use **Settings → Advanced** to export or import all settings and notes.
 
+    * Before restore, review validated import content in an expandable, readable preview and confirm with **Yes/No**.
+
 8. **Wear Ring Longer Info**:
 
     * Tap the **info** icon next to “Wear ring longer” for guidance.
+
+9. **Animation Style**:
+
+    * Open **Settings** and choose your preferred global app transition animation.
         
 
 * * *
