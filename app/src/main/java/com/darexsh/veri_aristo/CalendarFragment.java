@@ -18,15 +18,20 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Button;
+import android.widget.ImageButton;
+import android.widget.NumberPicker;
 import android.content.res.ColorStateList;
 import androidx.core.graphics.ColorUtils;
 import com.prolificinteractive.materialcalendarview.CalendarDay;
 import com.prolificinteractive.materialcalendarview.MaterialCalendarView;
 import com.prolificinteractive.materialcalendarview.DayViewDecorator;
 import com.prolificinteractive.materialcalendarview.DayViewFacade;
+import java.text.DateFormatSymbols;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
+import java.util.Locale;
 
 public class CalendarFragment extends Fragment {
 
@@ -36,6 +41,9 @@ public class CalendarFragment extends Fragment {
     private View legendRingFreeView;
     private View legendRemovalView;
     private View legendInsertionView;
+    private TextView monthSelectorView;
+    private ImageButton prevMonthButton;
+    private ImageButton nextMonthButton;
     private static final int CALENDAR_ALPHA = 127;
     private static final int LEGEND_ALPHA = 255;
     private int[] colorValues;
@@ -53,12 +61,26 @@ public class CalendarFragment extends Fragment {
         // Inflate calendar layout
         View view = inflater.inflate(R.layout.fragment_calendar, container, false);
         calendarView = view.findViewById(R.id.calendarView);
+        monthSelectorView = view.findViewById(R.id.tv_calendar_month_selector);
+        prevMonthButton = view.findViewById(R.id.btn_calendar_prev);
+        nextMonthButton = view.findViewById(R.id.btn_calendar_next);
+        calendarView.setTopbarVisible(false);
         calendarView.setDateTextAppearance(R.style.Theme_Veri_Aristo);
         calendarView.post(() -> tintCalendarArrows(resolveCalendarHeaderColor()));
+        calendarView.setOnMonthChangedListener((widget, date) -> updateMonthSelectorText());
         legendWearView = view.findViewById(R.id.view_legend_wear);
         legendRingFreeView = view.findViewById(R.id.view_legend_ring_free);
         legendRemovalView = view.findViewById(R.id.view_legend_removal);
         legendInsertionView = view.findViewById(R.id.view_legend_insertion);
+        if (monthSelectorView != null) {
+            monthSelectorView.setOnClickListener(v -> showMonthYearPickerDialog());
+        }
+        if (prevMonthButton != null) {
+            prevMonthButton.setOnClickListener(v -> stepMonth(-1));
+        }
+        if (nextMonthButton != null) {
+            nextMonthButton.setOnClickListener(v -> stepMonth(1));
+        }
 
         if (legendWearView != null) {
             legendWearView.setOnClickListener(v -> showLegendColorDialog(
@@ -140,6 +162,7 @@ public class CalendarFragment extends Fragment {
         setupCalendarDecorators(startDate, cycleLength, pastMonths, futureMonths);
         calendarView.addDecorator(new TodayBorderDecorator()); // Add today border decorator
         updateLegendColors();
+        updateMonthSelectorText();
     }
 
     // Retrieve start date
@@ -575,5 +598,88 @@ public class CalendarFragment extends Fragment {
 
     private boolean isOverlappingRange(Calendar rangeStart, Calendar rangeEnd, Calendar windowStart, Calendar windowEnd) {
         return !rangeEnd.before(windowStart) && !rangeStart.after(windowEnd);
+    }
+
+    private void updateMonthSelectorText() {
+        if (monthSelectorView == null) {
+            return;
+        }
+        CalendarDay currentDate = calendarView.getCurrentDate();
+        Calendar calendar = Calendar.getInstance();
+        if (currentDate != null) {
+            calendar.set(currentDate.getYear(), currentDate.getMonth() - 1, 1);
+        }
+        SimpleDateFormat formatter = new SimpleDateFormat("MMMM yyyy", Locale.getDefault());
+        String text = formatter.format(calendar.getTime());
+        monthSelectorView.setText(text);
+    }
+
+    private void showMonthYearPickerDialog() {
+        CalendarDay currentDay = calendarView.getCurrentDate();
+        Calendar current = Calendar.getInstance();
+        if (currentDay != null) {
+            current.set(currentDay.getYear(), currentDay.getMonth() - 1, 1);
+        }
+
+        NumberPicker monthPicker = new NumberPicker(requireContext());
+        NumberPicker yearPicker = new NumberPicker(requireContext());
+
+        String[] monthNames = DateFormatSymbols.getInstance(Locale.getDefault()).getMonths();
+        String[] displayMonths = new String[12];
+        System.arraycopy(monthNames, 0, displayMonths, 0, 12);
+
+        monthPicker.setMinValue(0);
+        monthPicker.setMaxValue(11);
+        monthPicker.setDisplayedValues(displayMonths);
+        monthPicker.setValue(current.get(Calendar.MONTH));
+
+        yearPicker.setMinValue(1900);
+        yearPicker.setMaxValue(2100);
+        yearPicker.setValue(current.get(Calendar.YEAR));
+
+        android.widget.LinearLayout layout = new android.widget.LinearLayout(requireContext());
+        layout.setOrientation(android.widget.LinearLayout.HORIZONTAL);
+        int padding = (int) (16 * getResources().getDisplayMetrics().density);
+        layout.setPadding(padding, padding, padding, padding);
+
+        android.widget.LinearLayout.LayoutParams params =
+                new android.widget.LinearLayout.LayoutParams(0, android.widget.LinearLayout.LayoutParams.WRAP_CONTENT, 1f);
+        monthPicker.setLayoutParams(params);
+        yearPicker.setLayoutParams(params);
+        layout.addView(monthPicker);
+        layout.addView(yearPicker);
+
+        AlertDialog dialog = new AlertDialog.Builder(requireContext())
+                .setTitle(R.string.calendar_month_picker_title)
+                .setView(layout)
+                .setPositiveButton(R.string.dialog_ok, (d, which) -> {
+                    Calendar selected = Calendar.getInstance();
+                    selected.set(Calendar.YEAR, yearPicker.getValue());
+                    selected.set(Calendar.MONTH, monthPicker.getValue());
+                    selected.set(Calendar.DAY_OF_MONTH, 1);
+                    selected.set(Calendar.HOUR_OF_DAY, 0);
+                    selected.set(Calendar.MINUTE, 0);
+                    selected.set(Calendar.SECOND, 0);
+                    selected.set(Calendar.MILLISECOND, 0);
+                    calendarView.setCurrentDate(toCalendarDay(selected));
+                    updateMonthSelectorText();
+                })
+                .setNegativeButton(R.string.dialog_cancel, null)
+                .show();
+        applyDialogButtonColors(dialog);
+    }
+
+    private void stepMonth(int delta) {
+        CalendarDay currentDay = calendarView.getCurrentDate();
+        Calendar target = Calendar.getInstance();
+        if (currentDay != null) {
+            target.set(currentDay.getYear(), currentDay.getMonth() - 1, 1);
+        } else {
+            target.set(Calendar.DAY_OF_MONTH, 1);
+        }
+        target.add(Calendar.MONTH, delta);
+        target.set(Calendar.DAY_OF_MONTH, 1);
+        calendarView.setCurrentDate(toCalendarDay(target));
+        updateMonthSelectorText();
     }
 }

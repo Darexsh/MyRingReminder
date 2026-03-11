@@ -43,4 +43,24 @@
         <item>Pulse Strong</item>
         <item>Halo</item>
     </string-array>
+
+    <string-array name="settings_navigation_animation_labels">
+        <item>Slide</item>
+        <item>Fade</item>
+        <item>Zoom</item>
+        <item>Slide Up</item>
+        <item>Rotate</item>
+        <item>Pop</item>
+        <item>None</item>
+    </string-array>
+
+    <integer-array name="settings_navigation_animation_values">
+        <item>0</item>
+        <item>1</item>
+        <item>2</item>
+        <item>4</item>
+        <item>5</item>
+        <item>6</item>
+        <item>3</item>
+    </integer-array>
 </resources>

@@ -43,4 +43,14 @@
         <item>Puls Stark</item>
         <item>Halo</item>
     </string-array>
+
+    <string-array name="settings_navigation_animation_labels">
+        <item>Schieben</item>
+        <item>Überblenden</item>
+        <item>Zoom</item>
+        <item>Nach oben schieben</item>
+        <item>Drehen</item>
+        <item>Pop</item>
+        <item>Keine</item>
+    </string-array>
 </resources>

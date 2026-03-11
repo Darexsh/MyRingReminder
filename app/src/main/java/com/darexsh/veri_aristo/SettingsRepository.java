@@ -37,6 +37,7 @@ public class SettingsRepository {
     private static final String KEY_CALENDAR_RING_FREE_COLOR = "calendar_ring_free_color";
     private static final String KEY_CALENDAR_REMOVAL_COLOR = "calendar_removal_color";
     private static final String KEY_CALENDAR_INSERTION_COLOR = "calendar_insertion_color";
+    private static final String KEY_NAVIGATION_ANIMATION_STYLE = "navigation_animation_style";
     private static final String KEY_DEBUG_TOOLS_ENABLED = "debug_tools_enabled";
     private static final String KEY_DEBUG_TIME_ENABLED = "debug_time_enabled";
     private static final String KEY_DEBUG_TIME_MILLIS = "debug_time_millis";
@@ -48,6 +49,14 @@ public class SettingsRepository {
     public static final int DEFAULT_CALENDAR_RING_FREE_COLOR = 0xFFFF0000;
     public static final int DEFAULT_CALENDAR_REMOVAL_COLOR = 0xFFFFFF00;
     public static final int DEFAULT_CALENDAR_INSERTION_COLOR = 0xFF00FFFF;
+    public static final int NAV_ANIM_SLIDE = 0;
+    public static final int NAV_ANIM_FADE = 1;
+    public static final int NAV_ANIM_ZOOM = 2;
+    public static final int NAV_ANIM_NONE = 3;
+    public static final int NAV_ANIM_SLIDE_UP = 4;
+    public static final int NAV_ANIM_ROTATE = 5;
+    public static final int NAV_ANIM_POP = 6;
+    public static final int DEFAULT_NAVIGATION_ANIMATION_STYLE = NAV_ANIM_SLIDE;
 
     private final SharedPreferences sharedPreferences;
 
@@ -313,6 +322,18 @@ public class SettingsRepository {
 
     public void saveCalendarInsertionColor(int color) {
         sharedPreferences.edit().putInt(KEY_CALENDAR_INSERTION_COLOR, color).apply();
+    }
+
+    public int getNavigationAnimationStyle() {
+        int style = sharedPreferences.getInt(KEY_NAVIGATION_ANIMATION_STYLE, DEFAULT_NAVIGATION_ANIMATION_STYLE);
+        if (style < NAV_ANIM_SLIDE || style > NAV_ANIM_POP) {
+            return DEFAULT_NAVIGATION_ANIMATION_STYLE;
+        }
+        return style;
+    }
+
+    public void saveNavigationAnimationStyle(int style) {
+        sharedPreferences.edit().putInt(KEY_NAVIGATION_ANIMATION_STYLE, style).apply();
     }
 
     public int getNotificationSettingsHash() {

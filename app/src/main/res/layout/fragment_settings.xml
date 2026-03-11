@@ -262,6 +262,18 @@
                         app:backgroundTint="#6200EE"
                         android:textColor="#FFFFFF"
                         android:layout_marginTop="10dp" />
+
+                    <com.google.android.material.button.MaterialButton
+                        android:id="@+id/btn_set_navigation_animation"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="@string/settings_navigation_animation_label"
+                        android:textAllCaps="false"
+                        android:textSize="15sp"
+                        app:cornerRadius="12dp"
+                        app:backgroundTint="#6200EE"
+                        android:textColor="#FFFFFF"
+                        android:layout_marginTop="10dp" />
                 </LinearLayout>
             </com.google.android.material.card.MaterialCardView>
 

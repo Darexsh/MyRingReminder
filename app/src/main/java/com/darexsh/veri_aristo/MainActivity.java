@@ -25,6 +25,7 @@ import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
+import androidx.fragment.app.FragmentTransaction;
 import androidx.lifecycle.ViewModelProvider;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.jakewharton.threetenabp.AndroidThreeTen;
@@ -52,6 +53,7 @@ public class MainActivity extends AppCompatActivity {
     private BottomNavigationView bottomNavigationView;
     private long lastBackPressedAt = 0L;
     private SharedViewModel viewModel;
+    private int navigationAnimationStyle = SettingsRepository.DEFAULT_NAVIGATION_ANIMATION_STYLE;
     private SharedPreferences prefs;
     private GuidedTourOverlay tourOverlay;
     private List<TourStep> tourSteps;
@@ -91,6 +93,11 @@ public class MainActivity extends AppCompatActivity {
                 if (tourOverlay != null) {
                     tourOverlay.setButtonColor(color);
                 }
+            }
+        });
+        viewModel.getNavigationAnimationStyle().observe(this, style -> {
+            if (style != null) {
+                navigationAnimationStyle = style;
             }
         });
 
@@ -216,12 +223,116 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void loadFragment(Fragment fragment, boolean addToBackStack) {
-        androidx.fragment.app.FragmentTransaction transaction = fragmentManager.beginTransaction()
-                .replace(R.id.fragment_container, fragment);
+        FragmentTransaction transaction = fragmentManager.beginTransaction();
+        applyFragmentAnimation(transaction, fragment);
+        transaction.replace(R.id.fragment_container, fragment);
         if (addToBackStack) {
             transaction.addToBackStack(null);
         }
+        transaction.setReorderingAllowed(true);
         transaction.commit();
+    }
+
+    private void applyFragmentAnimation(FragmentTransaction transaction, Fragment targetFragment) {
+        Fragment currentFragment = fragmentManager.findFragmentById(R.id.fragment_container);
+        if (currentFragment == null) {
+            transaction.setCustomAnimations(android.R.anim.fade_in, android.R.anim.fade_out);
+            return;
+        }
+
+        if (navigationAnimationStyle == SettingsRepository.NAV_ANIM_NONE) {
+            transaction.setCustomAnimations(0, 0, 0, 0);
+            return;
+        }
+        if (navigationAnimationStyle == SettingsRepository.NAV_ANIM_FADE) {
+            transaction.setCustomAnimations(
+                    android.R.anim.fade_in,
+                    android.R.anim.fade_out,
+                    android.R.anim.fade_in,
+                    android.R.anim.fade_out
+            );
+            return;
+        }
+        if (navigationAnimationStyle == SettingsRepository.NAV_ANIM_ZOOM) {
+            transaction.setCustomAnimations(
+                    R.anim.zoom_in_fade_in,
+                    R.anim.zoom_out_fade_out,
+                    R.anim.zoom_in_fade_in,
+                    R.anim.zoom_out_fade_out
+            );
+            return;
+        }
+        if (navigationAnimationStyle == SettingsRepository.NAV_ANIM_SLIDE_UP) {
+            transaction.setCustomAnimations(
+                    R.anim.slide_in_up,
+                    R.anim.slide_out_up,
+                    R.anim.slide_in_down,
+                    R.anim.slide_out_down
+            );
+            return;
+        }
+        if (navigationAnimationStyle == SettingsRepository.NAV_ANIM_ROTATE) {
+            transaction.setCustomAnimations(
+                    R.anim.rotate_in_fade_in,
+                    R.anim.rotate_out_fade_out,
+                    R.anim.rotate_in_fade_in,
+                    R.anim.rotate_out_fade_out
+            );
+            return;
+        }
+        if (navigationAnimationStyle == SettingsRepository.NAV_ANIM_POP) {
+            transaction.setCustomAnimations(
+                    R.anim.pop_in,
+                    R.anim.pop_out,
+                    R.anim.pop_in,
+                    R.anim.pop_out
+            );
+            return;
+        }
+
+        int currentOrder = getFragmentOrder(currentFragment);
+        int targetOrder = getFragmentOrder(targetFragment);
+
+        if (targetOrder == currentOrder) {
+            transaction.setCustomAnimations(android.R.anim.fade_in, android.R.anim.fade_out,
+                    android.R.anim.fade_in, android.R.anim.fade_out);
+            return;
+        }
+
+        if (targetOrder > currentOrder) {
+            transaction.setCustomAnimations(
+                    R.anim.slide_in_right,
+                    R.anim.slide_out_left,
+                    R.anim.slide_in_left,
+                    R.anim.slide_out_right
+            );
+        } else {
+            transaction.setCustomAnimations(
+                    R.anim.slide_in_left,
+                    R.anim.slide_out_right,
+                    R.anim.slide_in_right,
+                    R.anim.slide_out_left
+            );
+        }
+    }
+
+    private int getFragmentOrder(Fragment fragment) {
+        if (fragment instanceof HomeFragment) {
+            return 0;
+        }
+        if (fragment instanceof CalendarFragment) {
+            return 1;
+        }
+        if (fragment instanceof CyclesFragment) {
+            return 2;
+        }
+        if (fragment instanceof SettingsFragment) {
+            return 3;
+        }
+        if (fragment instanceof NotesFragment) {
+            return 4;
+        }
+        return 99;
     }
 
     private void maybeStartWelcomeFlow() {

@@ -27,6 +27,7 @@ public class SharedViewModel extends ViewModel {
     private final MutableLiveData<Integer> calendarRingFreeColor = new MutableLiveData<>();
     private final MutableLiveData<Integer> calendarRemovalColor = new MutableLiveData<>();
     private final MutableLiveData<Integer> calendarInsertionColor = new MutableLiveData<>();
+    private final MutableLiveData<Integer> navigationAnimationStyle = new MutableLiveData<>();
 
     public SharedViewModel(SettingsRepository repository) {
         this.repository = repository;
@@ -46,6 +47,7 @@ public class SharedViewModel extends ViewModel {
         calendarRingFreeColor.setValue(repository.getCalendarRingFreeColor());
         calendarRemovalColor.setValue(repository.getCalendarRemovalColor());
         calendarInsertionColor.setValue(repository.getCalendarInsertionColor());
+        navigationAnimationStyle.setValue(repository.getNavigationAnimationStyle());
     }
 
     // Getters for LiveData
@@ -111,6 +113,10 @@ public class SharedViewModel extends ViewModel {
 
     public LiveData<Integer> getCalendarInsertionColor() {
         return calendarInsertionColor;
+    }
+
+    public LiveData<Integer> getNavigationAnimationStyle() {
+        return navigationAnimationStyle;
     }
 
     public SettingsRepository getRepository() {
@@ -188,5 +194,10 @@ public class SharedViewModel extends ViewModel {
     public void setCalendarInsertionColor(int color) {
         repository.saveCalendarInsertionColor(color);
         calendarInsertionColor.setValue(color);
+    }
+
+    public void setNavigationAnimationStyle(int style) {
+        repository.saveNavigationAnimationStyle(style);
+        navigationAnimationStyle.setValue(style);
     }
 }

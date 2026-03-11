@@ -68,6 +68,9 @@ import java.util.Locale;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.TreeMap;
+import java.util.HashSet;
+import java.util.Set;
 import java.io.InputStream;
 import java.io.OutputStream;
 import java.nio.charset.StandardCharsets;
@@ -94,6 +97,7 @@ public class SettingsFragment extends Fragment {
     private MaterialButton btnSetButtonColor;
     private MaterialButton btnSetCircleColor;
     private MaterialButton btnSetCircleStyle;
+    private MaterialButton btnSetNavigationAnimation;
     private MaterialButton btnWelcomeTour;
     private View debugSection;
     private TextView tvDebugTimeStatus;
@@ -110,6 +114,8 @@ public class SettingsFragment extends Fragment {
     private int[] buttonColorValues;
     private String[] buttonColorLabels;
     private String[] circleStyleLabels;
+    private String[] navigationAnimationLabels;
+    private int[] navigationAnimationValues;
     private Drawable[] circleStylePreviews;
     private static final String RELEASES_URL = "https://api.github.com/repos/Darexsh/Veri_Aristo_App/releases";
     private File pendingApkFile;
@@ -213,6 +219,7 @@ public class SettingsFragment extends Fragment {
         btnSetButtonColor = view.findViewById(R.id.btn_set_button_color);
         btnSetCircleColor = view.findViewById(R.id.btn_set_circle_color);
         btnSetCircleStyle = view.findViewById(R.id.btn_set_circle_style);
+        btnSetNavigationAnimation = view.findViewById(R.id.btn_set_navigation_animation);
         debugSection = view.findViewById(R.id.debug_section);
         tvDebugTimeStatus = view.findViewById(R.id.tv_debug_time_status);
         switchDebugTime = view.findViewById(R.id.switch_debug_time);
@@ -302,6 +309,12 @@ public class SettingsFragment extends Fragment {
             }
         });
 
+        viewModel.getNavigationAnimationStyle().observe(getViewLifecycleOwner(), style -> {
+            if (style != null) {
+                updateNavigationAnimationButtonText(style);
+            }
+        });
+
 
         // Set up button click listeners
         btnSetTime.setOnClickListener(v -> showTimePicker());
@@ -316,6 +329,7 @@ public class SettingsFragment extends Fragment {
         btnSetButtonColor.setOnClickListener(v -> showButtonColorDialog());
         btnSetCircleColor.setOnClickListener(v -> showCircleColorDialog());
         btnSetCircleStyle.setOnClickListener(v -> showCircleStyleDialog());
+        btnSetNavigationAnimation.setOnClickListener(v -> showNavigationAnimationDialog());
         btnWelcomeTour.setOnClickListener(v -> {
             if (getActivity() instanceof MainActivity) {
                 ((MainActivity) getActivity()).restartWelcomeTour();
@@ -623,14 +637,24 @@ public class SettingsFragment extends Fragment {
     }
 
     private void showLanguageDialog() {
-        String[] options = {getString(R.string.language_german), getString(R.string.language_english)};
+        String[] options = {
+                getString(R.string.language_system_default),
+                getString(R.string.language_german),
+                getString(R.string.language_english)
+        };
+        int selected = getSelectedLanguageIndex();
         AlertDialog dialog = new AlertDialog.Builder(requireContext())
                 .setTitle(R.string.language_title)
-                .setItems(options, (dlg, which) -> {
-                    String tag = which == 0 ? "de" : "en";
-                    AppCompatDelegate.setApplicationLocales(LocaleListCompat.forLanguageTags(tag));
+                .setSingleChoiceItems(options, selected, (dlg, which) -> {
+                    if (which == 0) {
+                        AppCompatDelegate.setApplicationLocales(LocaleListCompat.getEmptyLocaleList());
+                    } else {
+                        String tag = which == 1 ? "de" : "en";
+                        AppCompatDelegate.setApplicationLocales(LocaleListCompat.forLanguageTags(tag));
+                    }
                     WidgetUpdater.updateAllWidgets(requireContext());
                     updateLanguageButtonText();
+                    dlg.dismiss();
                     requireActivity().recreate();
                 })
                 .setNegativeButton(R.string.dialog_cancel, null)
@@ -640,9 +664,26 @@ public class SettingsFragment extends Fragment {
 
     private void updateLanguageButtonText() {
         LocaleListCompat locales = AppCompatDelegate.getApplicationLocales();
-        String language = locales.isEmpty() ? Locale.getDefault().getLanguage() : Objects.requireNonNull(locales.get(0)).getLanguage();
-        String label = "de".equals(language) ? getString(R.string.language_german) : getString(R.string.language_english);
+        String label;
+        if (locales.isEmpty()) {
+            label = getString(R.string.language_system_default);
+        } else {
+            String language = Objects.requireNonNull(locales.get(0)).getLanguage();
+            label = "de".equals(language) ? getString(R.string.language_german) : getString(R.string.language_english);
+        }
         btnSetLanguage.setText(getString(R.string.language_button, label));
+    }
+
+    private int getSelectedLanguageIndex() {
+        LocaleListCompat locales = AppCompatDelegate.getApplicationLocales();
+        if (locales.isEmpty()) {
+            return 0;
+        }
+        String language = Objects.requireNonNull(locales.get(0)).getLanguage();
+        if ("de".equals(language)) {
+            return 1;
+        }
+        return 2;
     }
 
     private void showButtonColorDialog() {
@@ -777,6 +818,7 @@ public class SettingsFragment extends Fragment {
         ButtonColorHelper.applyPrimaryColor(btnSetButtonColor, color);
         ButtonColorHelper.applyPrimaryColor(btnSetCircleColor, color);
         ButtonColorHelper.applyPrimaryColor(btnSetCircleStyle, color);
+        ButtonColorHelper.applyPrimaryColor(btnSetNavigationAnimation, color);
     }
 
     private void applyDialogButtonColors(@Nullable AlertDialog dialog) {
@@ -803,10 +845,38 @@ public class SettingsFragment extends Fragment {
 
     private void toggleAdvancedSection() {
         boolean isVisible = advancedContent.getVisibility() == View.VISIBLE;
-        advancedContent.setVisibility(isVisible ? View.GONE : View.VISIBLE);
+        animateAdvancedSection(!isVisible);
         btnAdvancedToggle.animate()
                 .rotation(isVisible ? 0f : 180f)
                 .setDuration(150)
+                .start();
+    }
+
+    private void animateAdvancedSection(boolean show) {
+        float offset = 10f * getResources().getDisplayMetrics().density;
+        advancedContent.animate().cancel();
+
+        if (show) {
+            advancedContent.setVisibility(View.VISIBLE);
+            advancedContent.setAlpha(0f);
+            advancedContent.setTranslationY(-offset);
+            advancedContent.animate()
+                    .alpha(1f)
+                    .translationY(0f)
+                    .setDuration(180)
+                    .start();
+            return;
+        }
+
+        advancedContent.animate()
+                .alpha(0f)
+                .translationY(-offset)
+                .setDuration(150)
+                .withEndAction(() -> {
+                    advancedContent.setVisibility(View.GONE);
+                    advancedContent.setAlpha(1f);
+                    advancedContent.setTranslationY(0f);
+                })
                 .start();
     }
 
@@ -824,6 +894,14 @@ public class SettingsFragment extends Fragment {
                 ? circleStyleLabels[style]
                 : circleStyleLabels[0];
         btnSetCircleStyle.setText(getString(R.string.settings_circle_style_format, label));
+    }
+
+    private void updateNavigationAnimationButtonText(int style) {
+        ensureNavigationAnimationOptionsLoaded();
+        int safeStyle = styleToNavigationAnimationIndex(style);
+        btnSetNavigationAnimation.setText(
+                getString(R.string.settings_navigation_animation_format, navigationAnimationLabels[safeStyle])
+        );
     }
 
     private void ensureCircleStyleOptionsLoaded() {
@@ -874,6 +952,24 @@ public class SettingsFragment extends Fragment {
             WidgetUpdater.updateAllWidgets(requireContext());
             dialog.dismiss();
         });
+        applyDialogButtonColors(dialog);
+    }
+
+    private void showNavigationAnimationDialog() {
+        ensureNavigationAnimationOptionsLoaded();
+        Integer currentStyle = viewModel.getNavigationAnimationStyle().getValue();
+        int selected = styleToNavigationAnimationIndex(currentStyle != null
+                ? currentStyle
+                : SettingsRepository.DEFAULT_NAVIGATION_ANIMATION_STYLE);
+
+        AlertDialog dialog = new AlertDialog.Builder(requireContext())
+                .setTitle(R.string.settings_navigation_animation_dialog_title)
+                .setSingleChoiceItems(navigationAnimationLabels, selected, (dlg, which) -> {
+                    viewModel.setNavigationAnimationStyle(navigationAnimationValues[which]);
+                    dlg.dismiss();
+                })
+                .setNegativeButton(R.string.dialog_cancel, null)
+                .show();
         applyDialogButtonColors(dialog);
     }
 
@@ -989,6 +1085,35 @@ public class SettingsFragment extends Fragment {
             buttonColorValues = getResources().getIntArray(R.array.settings_button_color_values);
             buttonColorLabels = getResources().getStringArray(R.array.settings_button_color_labels);
         }
+    }
+
+    private void ensureNavigationAnimationOptionsLoaded() {
+        if (navigationAnimationLabels == null) {
+            navigationAnimationLabels = getResources().getStringArray(R.array.settings_navigation_animation_labels);
+            navigationAnimationValues = getResources().getIntArray(R.array.settings_navigation_animation_values);
+            if (navigationAnimationLabels.length != navigationAnimationValues.length) {
+                navigationAnimationLabels = new String[]{"Slide", "Fade", "Zoom", "Slide Up", "Rotate", "Pop", "None"};
+                navigationAnimationValues = new int[]{
+                        SettingsRepository.NAV_ANIM_SLIDE,
+                        SettingsRepository.NAV_ANIM_FADE,
+                        SettingsRepository.NAV_ANIM_ZOOM,
+                        SettingsRepository.NAV_ANIM_SLIDE_UP,
+                        SettingsRepository.NAV_ANIM_ROTATE,
+                        SettingsRepository.NAV_ANIM_POP,
+                        SettingsRepository.NAV_ANIM_NONE
+                };
+            }
+        }
+    }
+
+    private int styleToNavigationAnimationIndex(int style) {
+        ensureNavigationAnimationOptionsLoaded();
+        for (int i = 0; i < navigationAnimationValues.length; i++) {
+            if (navigationAnimationValues[i] == style) {
+                return i;
+            }
+        }
+        return 0;
     }
 
     private int getButtonColorIndex(int color) {
@@ -1589,36 +1714,429 @@ public class SettingsFragment extends Fragment {
             while ((nRead = inputStream.read(bufferData, 0, bufferData.length)) != -1) {
                 buffer.write(bufferData, 0, nRead);
             }
-            String json = null;
-            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
-                json = buffer.toString(StandardCharsets.UTF_8);
-            }
+            String json = new String(buffer.toByteArray(), StandardCharsets.UTF_8);
             BackupData backupData = new Gson().fromJson(json, BackupData.class);
             if (backupData == null) {
                 Toast.makeText(requireContext(), R.string.backup_invalid_toast, Toast.LENGTH_SHORT).show();
                 return;
             }
-            writePrefs("app_prefs", backupData.appPrefs);
-            writePrefs("notes_prefs", backupData.notesPrefs);
-
-            viewModel.getRepository().clearNotificationFlags();
-
-            SettingsRepository restoredRepository = new SettingsRepository(requireContext());
-            viewModel.setBackgroundImageUri(restoredRepository.getBackgroundImageUri());
-            viewModel.setCycleLength(restoredRepository.getCycleLength());
-            viewModel.setStartDate(restoredRepository.getStartDate());
-            viewModel.setCalendarPastRange(restoredRepository.getCalendarPastAmount(),
-                    restoredRepository.getCalendarPastUnit());
-            viewModel.setCalendarFutureRange(restoredRepository.getCalendarFutureAmount(),
-                    restoredRepository.getCalendarFutureUnit());
-            viewModel.setRemovalReminderHours(restoredRepository.getRemovalReminderHours());
-            viewModel.setInsertionReminderHours(restoredRepository.getInsertionReminderHours());
-
-            WidgetUpdater.updateAllWidgets(requireContext());
-            Toast.makeText(requireContext(), R.string.backup_restored_toast, Toast.LENGTH_SHORT).show();
+            showBackupValidationDialog(backupData);
         } catch (Exception e) {
             Toast.makeText(requireContext(), R.string.backup_read_failed_toast, Toast.LENGTH_SHORT).show();
         }
+    }
+
+    private void showBackupValidationDialog(BackupData backupData) {
+        int appEntries = backupData.appPrefs != null ? backupData.appPrefs.size() : 0;
+        int notesEntries = backupData.notesPrefs != null ? backupData.notesPrefs.size() : 0;
+        int padding = (int) (16 * getResources().getDisplayMetrics().density);
+        int smallSpacing = (int) (8 * getResources().getDisplayMetrics().density);
+
+        android.widget.LinearLayout content = new android.widget.LinearLayout(requireContext());
+        content.setOrientation(android.widget.LinearLayout.VERTICAL);
+        content.setPadding(padding, padding, padding, padding);
+
+        TextView summary = new TextView(requireContext());
+        summary.setText(getString(R.string.backup_import_check_message));
+        summary.setPadding(0, 0, 0, smallSpacing);
+        content.addView(summary);
+
+        content.addView(buildBackupPreviewLine(
+                getString(R.string.backup_import_section_app),
+                appEntries,
+                backupData.appPrefs
+        ));
+        content.addView(buildBackupPreviewLine(
+                getString(R.string.backup_import_section_notes),
+                notesEntries,
+                backupData.notesPrefs
+        ));
+
+        android.widget.ScrollView scrollView = new android.widget.ScrollView(requireContext());
+        scrollView.addView(content);
+
+        AlertDialog dialog = new AlertDialog.Builder(requireContext())
+                .setTitle(R.string.backup_import_check_title)
+                .setView(scrollView)
+                .setPositiveButton(R.string.backup_import_yes, (dlg, which) -> applyBackupData(backupData))
+                .setNegativeButton(R.string.backup_import_no, null)
+                .show();
+        applyDialogButtonColors(dialog);
+    }
+
+    private View buildBackupPreviewLine(String sectionTitle, int count, Map<String, PrefValue> values) {
+        int verticalSpacing = (int) (8 * getResources().getDisplayMetrics().density);
+
+        android.widget.LinearLayout section = new android.widget.LinearLayout(requireContext());
+        section.setOrientation(android.widget.LinearLayout.VERTICAL);
+        section.setPadding(0, verticalSpacing / 2, 0, verticalSpacing / 2);
+
+        TextView toggle = new TextView(requireContext());
+        toggle.setPadding(0, verticalSpacing / 2, 0, verticalSpacing / 2);
+        toggle.setBackgroundResource(android.R.drawable.list_selector_background);
+        toggle.setClickable(true);
+        toggle.setFocusable(true);
+
+        TextView details = new TextView(requireContext());
+        details.setText(buildBackupDetailsText(values));
+        details.setVisibility(View.GONE);
+        details.setPadding(0, verticalSpacing / 2, 0, 0);
+
+        updateBackupSectionToggleText(toggle, sectionTitle, count, false);
+
+        toggle.setOnClickListener(v -> {
+            boolean expanded = details.getVisibility() == View.VISIBLE;
+            details.setVisibility(expanded ? View.GONE : View.VISIBLE);
+            updateBackupSectionToggleText(toggle, sectionTitle, count, !expanded);
+        });
+
+        section.addView(toggle);
+        section.addView(details);
+        return section;
+    }
+
+    private void updateBackupSectionToggleText(TextView toggle, String title, int count, boolean expanded) {
+        String action = expanded
+                ? getString(R.string.backup_import_hide_details)
+                : getString(R.string.backup_import_show_details);
+        toggle.setText(getString(R.string.backup_import_line_format, title, count, action));
+    }
+
+    private String buildBackupDetailsText(Map<String, PrefValue> values) {
+        if (values == null || values.isEmpty()) {
+            return getString(R.string.backup_import_no_entries);
+        }
+
+        Map<String, PrefValue> sorted = new TreeMap<>(values);
+        Set<String> consumed = new HashSet<>();
+        StringBuilder builder = new StringBuilder();
+
+        appendAggregatedBackupLines(sorted, consumed, builder);
+
+        for (Map.Entry<String, PrefValue> entry : sorted.entrySet()) {
+            String key = entry.getKey();
+            if (consumed.contains(key)) {
+                continue;
+            }
+            String line = formatBackupLine(key, entry.getValue(), sorted, consumed);
+            if (line == null || line.isEmpty()) {
+                continue;
+            }
+            builder.append(line)
+                    .append('\n');
+        }
+        if (builder.length() > 0) {
+            builder.setLength(builder.length() - 1);
+        }
+        return builder.toString();
+    }
+
+    private void appendAggregatedBackupLines(Map<String, PrefValue> all, Set<String> consumed, StringBuilder builder) {
+        if (all.containsKey("cycle_history")) {
+            consumed.add("cycle_history");
+            appendLine(builder, getString(R.string.backup_field_cycle_history) + ": " + formatCycleHistory(all.get("cycle_history")));
+        }
+
+        int notificationFlags = 0;
+        int notificationFlagsTrue = 0;
+        int notifiedSettings = 0;
+        int cycleDelayEntries = 0;
+        for (Map.Entry<String, PrefValue> entry : all.entrySet()) {
+            String key = entry.getKey();
+            if (key.startsWith("notified_settings_")) {
+                notifiedSettings++;
+                consumed.add(key);
+            } else if (key.startsWith("notified_")) {
+                notificationFlags++;
+                if (toBoolean(entry.getValue() != null ? entry.getValue().value : null)) {
+                    notificationFlagsTrue++;
+                }
+                consumed.add(key);
+            } else if (key.startsWith("cycle_delay_")) {
+                cycleDelayEntries++;
+                consumed.add(key);
+            }
+        }
+
+        if (notificationFlags > 0) {
+            appendLine(builder, getString(
+                    R.string.backup_field_notification_flags_format,
+                    notificationFlags,
+                    notificationFlagsTrue
+            ));
+        }
+        if (notifiedSettings > 0) {
+            appendLine(builder, getString(R.string.backup_field_notification_hashes_format, notifiedSettings));
+        }
+        if (cycleDelayEntries > 0) {
+            appendLine(builder, getString(R.string.backup_field_cycle_delay_entries_format, cycleDelayEntries));
+        }
+    }
+
+    private void appendLine(StringBuilder builder, String text) {
+        if (text == null || text.trim().isEmpty()) {
+            return;
+        }
+        builder.append(text).append('\n');
+    }
+
+    private String formatBackupLine(String key, PrefValue value, Map<String, PrefValue> all, Set<String> consumed) {
+        switch (key) {
+            case "start_day":
+            case "start_month":
+            case "start_year":
+                consumed.add("start_day");
+                consumed.add("start_month");
+                consumed.add("start_year");
+                return getString(R.string.backup_field_start_date) + ": " + formatStartDate(all);
+            case "set_time_hour":
+            case "set_time_minute":
+                consumed.add("set_time_hour");
+                consumed.add("set_time_minute");
+                return getString(R.string.backup_field_start_time) + ": " + formatStartTime(all);
+            case "calendar_future_amount":
+                consumed.add("calendar_future_amount");
+                consumed.add("calendar_future_unit");
+                return getString(R.string.backup_field_calendar_future) + ": " + formatRangeValue(
+                        prefToInt(value),
+                        prefToString(all.get("calendar_future_unit"), "years")
+                );
+            case "calendar_future_years":
+                if (all.containsKey("calendar_future_amount")) {
+                    return null;
+                }
+                consumed.add("calendar_future_years");
+                return getString(R.string.backup_field_calendar_future) + ": " + formatRangeValue(prefToInt(value), "years");
+            case "calendar_past_amount":
+                consumed.add("calendar_past_amount");
+                consumed.add("calendar_past_unit");
+                return getString(R.string.backup_field_calendar_past) + ": " + formatRangeValue(
+                        prefToInt(value),
+                        prefToString(all.get("calendar_past_unit"), "months")
+                );
+            case "calendar_past_months":
+                if (all.containsKey("calendar_past_amount")) {
+                    return null;
+                }
+                consumed.add("calendar_past_months");
+                return getString(R.string.backup_field_calendar_past) + ": " + formatRangeValue(prefToInt(value), "months");
+            case "calendar_future_unit":
+            case "calendar_past_unit":
+                return null;
+            case "cycle_length":
+                return getString(R.string.backup_field_cycle_length) + ": " + prefToInt(value) + " " + getString(R.string.backup_unit_days);
+            case "removal_reminder_hours":
+                return getString(R.string.backup_field_reminder_removal) + ": " + prefToInt(value) + "h";
+            case "insertion_reminder_hours":
+                return getString(R.string.backup_field_reminder_insertion) + ": " + prefToInt(value) + "h";
+            case "button_color":
+                return getString(R.string.backup_field_button_color) + ": " + formatColor(value);
+            case "home_circle_color":
+                return getString(R.string.backup_field_home_circle_color) + ": " + formatColor(value);
+            case "home_circle_style":
+                return getString(R.string.backup_field_home_circle_style) + ": " + formatCircleStyle(value);
+            case "navigation_animation_style":
+                return getString(R.string.backup_field_navigation_animation) + ": " + formatNavigationAnimation(value);
+            case "background_image_uri":
+                return getString(R.string.backup_field_background_image) + ": " + formatBackgroundImage(value);
+            case "user_notes":
+                return getString(R.string.backup_field_notes_text) + ": " + formatNotesPreview(value);
+            case "notes_last_saved":
+                return getString(R.string.backup_field_notes_last_saved) + ": " + formatTimestamp(value);
+            case "debug_tools_enabled":
+                return getString(R.string.backup_field_debug_tools) + ": " + formatBoolean(value);
+            case "debug_time_enabled":
+                return getString(R.string.backup_field_debug_time) + ": " + formatBoolean(value);
+            case "debug_time_millis":
+                return getString(R.string.backup_field_debug_time_value) + ": " + formatTimestamp(value);
+            case "last_version":
+                return getString(R.string.backup_field_last_version) + ": " + prefToInt(value);
+            case "tour_shown":
+                return getString(R.string.backup_field_tour_shown) + ": " + formatBoolean(value);
+            case "welcome_shown":
+                return getString(R.string.backup_field_welcome_shown) + ": " + formatBoolean(value);
+            case "exact_alarm_prompted":
+                return getString(R.string.backup_field_exact_alarm_prompted) + ": " + formatBoolean(value);
+            case "home_circle_style_version":
+                return null; // internal migration marker
+            default:
+                return key + " = " + formatPrefValue(value);
+        }
+    }
+
+    private String formatPrefValue(PrefValue value) {
+        if (value == null) {
+            return "null";
+        }
+        if (value.value == null) {
+            return "null";
+        }
+        return String.valueOf(value.value);
+    }
+
+    private int prefToInt(PrefValue value) {
+        return toInt(value != null ? value.value : null);
+    }
+
+    private String prefToString(PrefValue value, String fallback) {
+        if (value == null || value.value == null) {
+            return fallback;
+        }
+        return String.valueOf(value.value);
+    }
+
+    private String formatStartDate(Map<String, PrefValue> all) {
+        int day = prefToInt(all.get("start_day"));
+        int month = prefToInt(all.get("start_month")) + 1;
+        int year = prefToInt(all.get("start_year"));
+        if (year <= 0 || month <= 0 || day <= 0) {
+            return getString(R.string.backup_unknown);
+        }
+        return String.format(Locale.getDefault(), "%02d.%02d.%04d", day, month, year);
+    }
+
+    private String formatStartTime(Map<String, PrefValue> all) {
+        int hour = prefToInt(all.get("set_time_hour"));
+        int minute = prefToInt(all.get("set_time_minute"));
+        return String.format(Locale.getDefault(), "%02d:%02d", hour, minute);
+    }
+
+    private String formatRangeValue(int amount, String unit) {
+        if ("years".equals(unit)) {
+            String label = amount == 1 ? getString(R.string.backup_unit_year) : getString(R.string.backup_unit_years);
+            return amount + " " + label;
+        }
+        String label = amount == 1 ? getString(R.string.backup_unit_month) : getString(R.string.backup_unit_months);
+        return amount + " " + label;
+    }
+
+    private String formatColor(PrefValue value) {
+        int color = prefToInt(value);
+        return String.format(Locale.US, "#%08X", color);
+    }
+
+    private String formatCircleStyle(PrefValue value) {
+        int style = prefToInt(value);
+        String[] labels = getResources().getStringArray(R.array.settings_circle_style_labels);
+        if (style >= 0 && style < labels.length) {
+            return labels[style];
+        }
+        return String.valueOf(style);
+    }
+
+    private String formatNavigationAnimation(PrefValue value) {
+        int style = prefToInt(value);
+        int[] values = getResources().getIntArray(R.array.settings_navigation_animation_values);
+        String[] labels = getResources().getStringArray(R.array.settings_navigation_animation_labels);
+        for (int i = 0; i < values.length && i < labels.length; i++) {
+            if (values[i] == style) {
+                return labels[i];
+            }
+        }
+        return String.valueOf(style);
+    }
+
+    private String formatBackgroundImage(PrefValue value) {
+        String raw = prefToString(value, "");
+        if (raw == null || raw.trim().isEmpty() || "null".equalsIgnoreCase(raw.trim())) {
+            return getString(R.string.backup_no);
+        }
+        return getString(R.string.backup_yes);
+    }
+
+    private String formatNotesPreview(PrefValue value) {
+        String raw = prefToString(value, "");
+        if (raw.trim().isEmpty()) {
+            return getString(R.string.backup_import_no_entries);
+        }
+        String singleLine = raw.replace('\n', ' ').trim();
+        if (singleLine.length() > 80) {
+            return singleLine.substring(0, 80) + "...";
+        }
+        return singleLine;
+    }
+
+    private String formatTimestamp(PrefValue value) {
+        long millis = toLong(value != null ? value.value : null);
+        if (millis <= 0) {
+            return getString(R.string.backup_unknown);
+        }
+        SimpleDateFormat format = new SimpleDateFormat("dd.MM.yyyy HH:mm", Locale.getDefault());
+        return format.format(new java.util.Date(millis));
+    }
+
+    private String formatBoolean(PrefValue value) {
+        return toBoolean(value != null ? value.value : null)
+                ? getString(R.string.backup_yes)
+                : getString(R.string.backup_no);
+    }
+
+    private String formatCycleHistory(PrefValue value) {
+        String raw = prefToString(value, "");
+        if (raw.trim().isEmpty()) {
+            return getString(R.string.backup_import_no_entries);
+        }
+        try {
+            JsonArray history = JsonParser.parseString(raw).getAsJsonArray();
+            int entries = history.size();
+            long minStart = Long.MAX_VALUE;
+            long maxEnd = Long.MIN_VALUE;
+            for (JsonElement element : history) {
+                if (!element.isJsonObject()) {
+                    continue;
+                }
+                JsonObject obj = element.getAsJsonObject();
+                if (obj.has("dateMillis") && !obj.get("dateMillis").isJsonNull()) {
+                    long start = obj.get("dateMillis").getAsLong();
+                    if (start > 0 && start < minStart) {
+                        minStart = start;
+                    }
+                }
+                if (obj.has("endDateMillis") && !obj.get("endDateMillis").isJsonNull()) {
+                    long end = obj.get("endDateMillis").getAsLong();
+                    if (end > 0 && end > maxEnd) {
+                        maxEnd = end;
+                    }
+                }
+            }
+            if (entries == 0) {
+                return getString(R.string.backup_import_no_entries);
+            }
+            if (minStart == Long.MAX_VALUE || maxEnd == Long.MIN_VALUE) {
+                return getString(R.string.backup_field_cycle_history_entries_format, entries);
+            }
+            SimpleDateFormat format = new SimpleDateFormat("dd.MM.yyyy", Locale.getDefault());
+            return getString(
+                    R.string.backup_field_cycle_history_range_format,
+                    entries,
+                    format.format(new java.util.Date(minStart)),
+                    format.format(new java.util.Date(maxEnd))
+            );
+        } catch (Exception ignored) {
+            return getString(R.string.backup_unknown);
+        }
+    }
+
+    private void applyBackupData(BackupData backupData) {
+        writePrefs("app_prefs", backupData.appPrefs);
+        writePrefs("notes_prefs", backupData.notesPrefs);
+
+        viewModel.getRepository().clearNotificationFlags();
+
+        SettingsRepository restoredRepository = new SettingsRepository(requireContext());
+        viewModel.setBackgroundImageUri(restoredRepository.getBackgroundImageUri());
+        viewModel.setCycleLength(restoredRepository.getCycleLength());
+        viewModel.setStartDate(restoredRepository.getStartDate());
+        viewModel.setCalendarPastRange(restoredRepository.getCalendarPastAmount(),
+                restoredRepository.getCalendarPastUnit());
+        viewModel.setCalendarFutureRange(restoredRepository.getCalendarFutureAmount(),
+                restoredRepository.getCalendarFutureUnit());
+        viewModel.setRemovalReminderHours(restoredRepository.getRemovalReminderHours());
+        viewModel.setInsertionReminderHours(restoredRepository.getInsertionReminderHours());
+        viewModel.setNavigationAnimationStyle(restoredRepository.getNavigationAnimationStyle());
+
+        WidgetUpdater.updateAllWidgets(requireContext());
+        Toast.makeText(requireContext(), R.string.backup_restored_toast, Toast.LENGTH_SHORT).show();
     }
 
     private Map<String, PrefValue> readPrefs(String name) {
