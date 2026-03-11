@@ -67,6 +67,7 @@ This is not the recommended standard use, but it is possible:<br>
     <string name="calendar_month_selector_desc">Select month and year</string>
     <string name="calendar_previous_month_desc">Previous month</string>
     <string name="calendar_next_month_desc">Next month</string>
+    <string name="calendar_today_button">Back to current date</string>
     <string name="legend_wear_time">Wear time</string>
     <string name="legend_ring_free">Ring-free</string>
     <string name="legend_removal">Removal</string>

@@ -43,6 +43,7 @@ public class CalendarFragment extends Fragment {
     private TextView monthSelectorView;
     private ImageButton prevMonthButton;
     private ImageButton nextMonthButton;
+    private com.google.android.material.button.MaterialButton todayButton;
     private static final int CALENDAR_ALPHA = 127;
     private static final int LEGEND_ALPHA = 255;
     private int[] colorValues;
@@ -64,10 +65,16 @@ public class CalendarFragment extends Fragment {
         monthSelectorView = view.findViewById(R.id.tv_calendar_month_selector);
         prevMonthButton = view.findViewById(R.id.btn_calendar_prev);
         nextMonthButton = view.findViewById(R.id.btn_calendar_next);
+        todayButton = view.findViewById(R.id.btn_calendar_today);
         calendarView.setTopbarVisible(false);
+        calendarView.setDynamicHeightEnabled(true);
+        calendarView.setSelectionMode(MaterialCalendarView.SELECTION_MODE_NONE);
         calendarView.setDateTextAppearance(R.style.Theme_Veri_Aristo);
         calendarView.post(() -> tintCalendarArrows(resolveCalendarHeaderColor()));
-        calendarView.setOnMonthChangedListener((widget, date) -> updateMonthSelectorText());
+        calendarView.setOnMonthChangedListener((widget, date) -> {
+            updateMonthSelectorText();
+            updateTodayButtonVisibility();
+        });
         legendWearView = view.findViewById(R.id.view_legend_wear);
         legendRingFreeView = view.findViewById(R.id.view_legend_ring_free);
         legendRemovalView = view.findViewById(R.id.view_legend_removal);
@@ -80,6 +87,9 @@ public class CalendarFragment extends Fragment {
         }
         if (nextMonthButton != null) {
             nextMonthButton.setOnClickListener(v -> stepMonth(1));
+        }
+        if (todayButton != null) {
+            todayButton.setOnClickListener(v -> jumpToToday());
         }
 
         if (legendWearView != null) {
@@ -150,6 +160,7 @@ public class CalendarFragment extends Fragment {
             requestCalendarUpdate();
             updateLegendColors();
         });
+        viewModel.getButtonColor().observe(getViewLifecycleOwner(), value -> applyTodayButtonStyle());
     }
 
     private void requestCalendarUpdate() {
@@ -177,6 +188,7 @@ public class CalendarFragment extends Fragment {
         calendarView.addDecorator(new TodayBorderDecorator()); // Add today border decorator
         updateLegendColors();
         updateMonthSelectorText();
+        updateTodayButtonVisibility();
     }
 
     // Retrieve start date
@@ -256,6 +268,19 @@ public class CalendarFragment extends Fragment {
         applyLegendColor(legendRingFreeView, getCalendarRingFreeColor());
         applyLegendColor(legendRemovalView, getCalendarRemovalColor());
         applyLegendColor(legendInsertionView, getCalendarInsertionColor());
+        applyTodayButtonStyle();
+    }
+
+    private void applyTodayButtonStyle() {
+        if (todayButton == null || viewModel == null) {
+            return;
+        }
+        Integer color = viewModel.getButtonColor().getValue();
+        if (color == null) {
+            return;
+        }
+        ButtonColorHelper.applyPrimaryColor(todayButton, color);
+        todayButton.setTextColor(Color.WHITE);
     }
 
     private void showLegendColorDialog(int titleResId, int customTitleResId, int selectedColor, ColorConsumer onSelect) {
@@ -609,5 +634,25 @@ public class CalendarFragment extends Fragment {
         target.set(Calendar.DAY_OF_MONTH, 1);
         calendarView.setCurrentDate(toCalendarDay(target));
         updateMonthSelectorText();
+    }
+
+    private void jumpToToday() {
+        Calendar today = Calendar.getInstance();
+        CalendarDay todayDay = toCalendarDay(today);
+        calendarView.setCurrentDate(todayDay);
+        updateMonthSelectorText();
+        updateTodayButtonVisibility();
+    }
+
+    private void updateTodayButtonVisibility() {
+        if (todayButton == null || calendarView == null) {
+            return;
+        }
+        CalendarDay currentDay = calendarView.getCurrentDate();
+        Calendar now = Calendar.getInstance();
+        boolean sameMonth = currentDay != null
+                && currentDay.getYear() == now.get(Calendar.YEAR)
+                && currentDay.getMonth() == now.get(Calendar.MONTH) + 1;
+        todayButton.setVisibility(sameMonth ? View.GONE : View.VISIBLE);
     }
 }

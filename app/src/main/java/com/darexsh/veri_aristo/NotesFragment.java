@@ -9,7 +9,10 @@ import android.os.Looper;
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 import android.text.Editable;
+import android.text.Spannable;
 import android.text.TextWatcher;
+import android.text.style.ForegroundColorSpan;
+import android.text.style.RelativeSizeSpan;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -19,11 +22,14 @@ import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
 import android.graphics.PorterDuff;
+import android.graphics.Color;
 import androidx.lifecycle.ViewModelProvider;
 import com.google.android.material.button.MaterialButton;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.Locale;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 // NotesFragment allows users to create and save personal notes
 public class NotesFragment extends Fragment {
@@ -36,6 +42,8 @@ public class NotesFragment extends Fragment {
 
     private final Handler autoSaveHandler = new Handler(Looper.getMainLooper());
     private Runnable autoSaveRunnable;
+    private boolean isProgrammaticNoteUpdate = false;
+    private static final Pattern DATE_HEADER_LINE_PATTERN = Pattern.compile("(?m)^(?:\\d{2}\\.\\d{2}\\.\\d{4}|[\\p{L}]+,\\s\\d{2}\\.\\d{2}\\.\\d{4})$");
 
     private static final String PREF_NAME = "notes_prefs";
     private static final String NOTES_KEY = "user_notes";
@@ -83,6 +91,10 @@ public class NotesFragment extends Fragment {
 
             @Override
             public void afterTextChanged(Editable s) {
+                if (isProgrammaticNoteUpdate) {
+                    return;
+                }
+                applyDateHeaderStyling(s);
                 updateCharCount(s.length());
                 scheduleAutoSave();
             }
@@ -125,13 +137,36 @@ public class NotesFragment extends Fragment {
         autoSaveHandler.removeCallbacksAndMessages(null);
     }
 
+    @Override
+    public void onResume() {
+        super.onResume();
+        updateNoteDate();
+        applyDailyDateHeaderIfNeeded(true);
+        applyDateHeaderStyling(editTextNotes.getText());
+    }
+
     // Load saved notes from SharedPreferences
     private void loadNotes() {
         SharedPreferences prefs = requireContext().getSharedPreferences(PREF_NAME, Context.MODE_PRIVATE);
         String savedNotes = prefs.getString(NOTES_KEY, "");
-        editTextNotes.setText(savedNotes);
-        updateCharCount(savedNotes.length());
-        updateLastSavedText(prefs.getLong(NOTES_LAST_SAVED_KEY, 0));
+        long lastSaved = prefs.getLong(NOTES_LAST_SAVED_KEY, 0);
+        String notesWithHeader = ensureCurrentDateHeader(savedNotes);
+
+        isProgrammaticNoteUpdate = true;
+        editTextNotes.setText(notesWithHeader);
+        isProgrammaticNoteUpdate = false;
+        applyDateHeaderStyling(editTextNotes.getText());
+        updateCharCount(notesWithHeader.length());
+
+        if (!notesWithHeader.equals(savedNotes)) {
+            long now = System.currentTimeMillis();
+            prefs.edit()
+                    .putString(NOTES_KEY, notesWithHeader)
+                    .putLong(NOTES_LAST_SAVED_KEY, now)
+                    .apply();
+            lastSaved = now;
+        }
+        updateLastSavedText(lastSaved);
     }
 
     // Save notes to SharedPreferences
@@ -171,5 +206,102 @@ public class NotesFragment extends Fragment {
     private void updateNoteDate() {
         SimpleDateFormat format = new SimpleDateFormat("EEEE, dd.MM.yyyy", Locale.getDefault());
         tvNoteDate.setText(format.format(new Date()));
+    }
+
+    private void applyDailyDateHeaderIfNeeded(boolean persistChanges) {
+        String current = editTextNotes.getText().toString();
+        String updated = ensureCurrentDateHeader(current);
+        if (updated.equals(current)) {
+            applyDateHeaderStyling(editTextNotes.getText());
+            return;
+        }
+
+        isProgrammaticNoteUpdate = true;
+        editTextNotes.setText(updated);
+        int cursorPosition = Math.min(updated.length(), getTodayHeader().length() + 2);
+        editTextNotes.setSelection(cursorPosition);
+        isProgrammaticNoteUpdate = false;
+
+        updateCharCount(updated.length());
+        applyDateHeaderStyling(editTextNotes.getText());
+        if (persistChanges) {
+            saveNotes(false);
+        }
+    }
+
+    private String ensureCurrentDateHeader(String noteText) {
+        String safeText = noteText == null ? "" : noteText;
+        String leadingTrimmed = trimLeadingNewLines(safeText);
+        String todayHeader = getTodayHeader();
+
+        String firstLine = leadingTrimmed;
+        int firstNewLine = leadingTrimmed.indexOf('\n');
+        if (firstNewLine >= 0) {
+            firstLine = leadingTrimmed.substring(0, firstNewLine);
+        }
+
+        String firstLineTrimmed = firstLine.trim();
+        if (firstLineTrimmed.equals(todayHeader) || firstLineTrimmed.equals(getTodayHeaderWithWeekday())) {
+            return leadingTrimmed;
+        }
+        if (leadingTrimmed.trim().isEmpty()) {
+            return todayHeader + "\n\n";
+        }
+        return todayHeader + "\n\n" + leadingTrimmed;
+    }
+
+    private String getTodayHeader() {
+        SimpleDateFormat format = new SimpleDateFormat("dd.MM.yyyy", Locale.getDefault());
+        return format.format(new Date());
+    }
+
+    private String getTodayHeaderWithWeekday() {
+        SimpleDateFormat format = new SimpleDateFormat("EEEE, dd.MM.yyyy", Locale.getDefault());
+        return format.format(new Date());
+    }
+
+    private String trimLeadingNewLines(String value) {
+        int index = 0;
+        while (index < value.length()) {
+            char c = value.charAt(index);
+            if (c != '\n' && c != '\r') {
+                break;
+            }
+            index++;
+        }
+        return value.substring(index);
+    }
+
+    private void applyDateHeaderStyling(Editable editable) {
+        if (editable == null || editable.length() == 0) {
+            return;
+        }
+
+        DateHeaderColorSpan[] existingColorSpans = editable.getSpans(0, editable.length(), DateHeaderColorSpan.class);
+        for (DateHeaderColorSpan span : existingColorSpans) {
+            editable.removeSpan(span);
+        }
+        DateHeaderSizeSpan[] existingSizeSpans = editable.getSpans(0, editable.length(), DateHeaderSizeSpan.class);
+        for (DateHeaderSizeSpan span : existingSizeSpans) {
+            editable.removeSpan(span);
+        }
+
+        Matcher matcher = DATE_HEADER_LINE_PATTERN.matcher(editable.toString());
+        while (matcher.find()) {
+            editable.setSpan(new DateHeaderColorSpan(Color.GRAY), matcher.start(), matcher.end(), Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
+            editable.setSpan(new DateHeaderSizeSpan(0.88f), matcher.start(), matcher.end(), Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
+        }
+    }
+
+    private static class DateHeaderColorSpan extends ForegroundColorSpan {
+        DateHeaderColorSpan(int color) {
+            super(color);
+        }
+    }
+
+    private static class DateHeaderSizeSpan extends RelativeSizeSpan {
+        DateHeaderSizeSpan(float proportion) {
+            super(proportion);
+        }
     }
 }

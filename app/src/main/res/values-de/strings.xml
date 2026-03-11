@@ -67,6 +67,7 @@ Dies entspricht nicht der empfohlenen Standardanwendung, ist aber möglich:<br>
     <string name="calendar_month_selector_desc">Monat und Jahr auswählen</string>
     <string name="calendar_previous_month_desc">Vorheriger Monat</string>
     <string name="calendar_next_month_desc">Nächster Monat</string>
+    <string name="calendar_today_button">Zurück zum heutigen Datum</string>
     <string name="legend_wear_time">Tragezeit</string>
     <string name="legend_ring_free">Ringfrei</string>
     <string name="legend_removal">Entfernen</string>
