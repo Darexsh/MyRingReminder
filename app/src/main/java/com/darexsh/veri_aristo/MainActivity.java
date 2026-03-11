@@ -76,6 +76,7 @@ public class MainActivity extends AppCompatActivity {
 
             if (currentVersion > lastVersion) {
                 clearAllScheduledNotifications();
+                new SettingsRepository(this).clearNotificationFlags();
                 prefs.edit().putInt(KEY_LAST_VERSION, currentVersion).apply();
             }
         } catch (PackageManager.NameNotFoundException e) {
@@ -175,6 +176,7 @@ public class MainActivity extends AppCompatActivity {
         // Create notification channel and request permission
         createNotificationChannel();
         requestNotificationPermission();
+        ReminderScheduler.scheduleCurrentCycle(this);
 
         maybeStartWelcomeFlow();
     }

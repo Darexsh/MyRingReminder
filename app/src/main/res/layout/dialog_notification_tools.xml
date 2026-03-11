@@ -28,6 +28,30 @@
         android:layout_marginBottom="12dp" />
 
     <com.google.android.material.button.MaterialButton
+        android:id="@+id/btn_notification_permission"
+        style="?attr/materialButtonOutlinedStyle"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/btn_notification_permission"
+        android:textAllCaps="false"
+        android:textSize="15sp"
+        app:cornerRadius="12dp"
+        app:strokeColor="#6200EE"
+        app:strokeWidth="2dp"
+        android:textColor="#6200EE" />
+
+    <TextView
+        android:id="@+id/tv_notification_permission_hint"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/notification_hint_permission"
+        android:textSize="12sp"
+        android:textStyle="italic"
+        android:textColor="?attr/colorOnBackground"
+        android:layout_marginTop="4dp"
+        android:layout_marginBottom="12dp" />
+
+    <com.google.android.material.button.MaterialButton
         android:id="@+id/btn_notification_exact"
         style="?attr/materialButtonOutlinedStyle"
         android:layout_width="match_parent"
@@ -72,6 +96,18 @@
         android:textSize="12sp"
         android:textStyle="italic"
         android:textColor="?attr/colorOnBackground"
-        android:layout_marginTop="4dp" />
+        android:layout_marginTop="4dp"
+        android:layout_marginBottom="12dp" />
+
+    <com.google.android.material.button.MaterialButton
+        android:id="@+id/btn_notification_test"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/btn_notification_test"
+        android:textAllCaps="false"
+        android:textSize="15sp"
+        app:cornerRadius="12dp"
+        app:backgroundTint="#6200EE"
+        android:textColor="#FFFFFF" />
 
 </LinearLayout>

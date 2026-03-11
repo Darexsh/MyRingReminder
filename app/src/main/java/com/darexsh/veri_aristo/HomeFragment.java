@@ -293,9 +293,11 @@ public class HomeFragment extends Fragment {
             long cycleStartMillis = startDate.getTimeInMillis();
             int settingsHash = viewModel.getRepository().getNotificationSettingsHash();
             int scheduledHash = viewModel.getRepository().getNotificationSettingsHashForCycle(cycleStartMillis);
+            boolean hasPendingAlarms = ReminderScheduler.hasAnyScheduledForCycle(requireContext(), cycleStartMillis);
             if (systemNow.before(reinsertionDate)
                     && (!viewModel.getRepository().wasNotificationScheduledForCycle(cycleStartMillis)
-                    || scheduledHash != settingsHash)) {
+                    || scheduledHash != settingsHash
+                    || !hasPendingAlarms)) {
                 scheduleRingCycleNotifications(
                         viewModel,
                         (Calendar) startDate.clone(),

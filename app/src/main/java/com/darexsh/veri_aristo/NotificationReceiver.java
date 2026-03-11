@@ -4,6 +4,7 @@ import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
+import android.os.Build;
 import androidx.core.app.ActivityCompat;
 import androidx.core.app.NotificationCompat;
 import androidx.core.app.NotificationManagerCompat;
@@ -15,6 +16,12 @@ public class NotificationReceiver extends BroadcastReceiver {
         // Retrieve notification title and message from the intent
         String title = intent.getStringExtra("title");
         String message = intent.getStringExtra("message");
+        if (title == null || title.trim().isEmpty()) {
+            title = context.getString(R.string.notifications_channel_name);
+        }
+        if (message == null || message.trim().isEmpty()) {
+            message = context.getString(R.string.notifications_channel_description);
+        }
 
         // Build the notification
         NotificationCompat.Builder builder = new NotificationCompat.Builder(context, "reminder_channel")
@@ -28,7 +35,9 @@ public class NotificationReceiver extends BroadcastReceiver {
         NotificationManagerCompat manager = NotificationManagerCompat.from(context);
 
         // Check if the app has permission to post notifications (Android 13+)
-        if (ActivityCompat.checkSelfPermission(context, android.Manifest.permission.POST_NOTIFICATIONS) != PackageManager.PERMISSION_GRANTED) {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU
+                && ActivityCompat.checkSelfPermission(context, android.Manifest.permission.POST_NOTIFICATIONS)
+                != PackageManager.PERMISSION_GRANTED) {
             return;
         }
 

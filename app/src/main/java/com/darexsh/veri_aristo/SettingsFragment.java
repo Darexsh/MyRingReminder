@@ -5,6 +5,8 @@ import android.app.AlertDialog;
 import android.app.DatePickerDialog;
 import android.app.TimePickerDialog;
 import android.app.AlarmManager;
+import android.app.NotificationChannel;
+import android.app.NotificationManager;
 import android.app.PendingIntent;
 import android.app.Activity;
 import android.content.Context;
@@ -52,6 +54,7 @@ import androidx.appcompat.app.AppCompatDelegate;
 import androidx.core.content.ContextCompat;
 import androidx.core.content.FileProvider;
 import androidx.core.os.LocaleListCompat;
+import androidx.core.app.NotificationManagerCompat;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
 import android.Manifest;
@@ -107,6 +110,7 @@ public class SettingsFragment extends Fragment {
     private TextView btnSettingsInfo;
     private SharedViewModel viewModel;
     private ActivityResultLauncher<String> requestPermissionLauncher;
+    private ActivityResultLauncher<String> requestNotificationPermissionLauncher;
     private ActivityResultLauncher<Intent> pickImageLauncher;
     private ActivityResultLauncher<String> createBackupLauncher;
     private ActivityResultLauncher<String[]> restoreBackupLauncher;
@@ -149,6 +153,25 @@ public class SettingsFragment extends Fragment {
                 applyDialogButtonColors(dialog);
             }
         });
+
+        requestNotificationPermissionLauncher = registerForActivityResult(
+                new ActivityResultContracts.RequestPermission(),
+                isGranted -> {
+                    if (isGranted) {
+                        showToast(R.string.notification_permission_granted);
+                    } else if (isAdded()) {
+                        AlertDialog dialog = new AlertDialog.Builder(requireContext())
+                                .setTitle(R.string.notification_permission_required_title)
+                                .setMessage(R.string.notification_permission_required_message)
+                                .setPositiveButton(R.string.notification_open_settings, (d, w) -> openAppNotificationSettings())
+                                .setNegativeButton(R.string.dialog_cancel, null)
+                                .show();
+                        applyDialogButtonColors(dialog);
+                        showToast(R.string.notification_permission_denied);
+                    }
+                    updateExactAlarmButtonLabel(notificationToolsDialog);
+                }
+        );
 
         // Initialize ActivityResultLauncher for picking images
         pickImageLauncher = registerForActivityResult(
@@ -2323,16 +2346,21 @@ public class SettingsFragment extends Fragment {
         View content = LayoutInflater.from(requireContext())
                 .inflate(R.layout.dialog_notification_tools, null);
         MaterialButton btnTimes = content.findViewById(R.id.btn_notification_times);
+        MaterialButton btnPermission = content.findViewById(R.id.btn_notification_permission);
         MaterialButton btnExact = content.findViewById(R.id.btn_notification_exact);
         MaterialButton btnBattery = content.findViewById(R.id.btn_notification_battery_opt);
+        MaterialButton btnTest = content.findViewById(R.id.btn_notification_test);
 
         Integer color = viewModel.getButtonColor().getValue();
         if (color != null) {
             ButtonColorHelper.applyPrimaryColor(btnTimes, color);
+            btnPermission.setStrokeColor(ColorStateList.valueOf(color));
+            btnPermission.setTextColor(color);
             btnExact.setStrokeColor(ColorStateList.valueOf(color));
             btnExact.setTextColor(color);
             btnBattery.setStrokeColor(ColorStateList.valueOf(color));
             btnBattery.setTextColor(color);
+            ButtonColorHelper.applyPrimaryColor(btnTest, color);
         }
 
         updateExactAlarmButtonLabel(content);
@@ -2349,6 +2377,10 @@ public class SettingsFragment extends Fragment {
             dialog.dismiss();
             showNotificationTimesDialog();
         });
+        btnPermission.setOnClickListener(v -> {
+            dialog.dismiss();
+            handleNotificationPermissionAction();
+        });
         btnExact.setOnClickListener(v -> {
             dialog.dismiss();
             openExactAlarmSettings();
@@ -2357,6 +2389,7 @@ public class SettingsFragment extends Fragment {
             dialog.dismiss();
             openBatteryOptimizationSettings();
         });
+        btnTest.setOnClickListener(v -> sendTestNotification());
     }
 
     private void updateExactAlarmButtonLabel(View root) {
@@ -2367,12 +2400,89 @@ public class SettingsFragment extends Fragment {
         if (btnExact == null) {
             return;
         }
+        MaterialButton btnPermission = root.findViewById(R.id.btn_notification_permission);
+        if (btnPermission != null) {
+            btnPermission.setText(getString(R.string.notification_permission_button_label, getNotificationPermissionStatusText()));
+        }
         btnExact.setText(getString(R.string.exact_alarm_button_label, getExactAlarmStatusText()));
         MaterialButton btnBattery = root.findViewById(R.id.btn_notification_battery_opt);
         if (btnBattery != null) {
             btnBattery.setText(getString(R.string.battery_opt_button_label, getBatteryOptStatusText()));
         }
         updateNotificationTimesButtonLabel(root);
+    }
+
+    private String getNotificationPermissionStatusText() {
+        if (Build.VERSION.SDK_INT < Build.VERSION_CODES.TIRAMISU) {
+            return getString(R.string.notification_permission_status_not_required);
+        }
+        boolean granted = ContextCompat.checkSelfPermission(
+                requireContext(),
+                Manifest.permission.POST_NOTIFICATIONS
+        ) == PackageManager.PERMISSION_GRANTED;
+        return granted
+                ? getString(R.string.notification_permission_status_allowed)
+                : getString(R.string.notification_permission_status_blocked);
+    }
+
+    private void handleNotificationPermissionAction() {
+        if (Build.VERSION.SDK_INT < Build.VERSION_CODES.TIRAMISU) {
+            openAppNotificationSettings();
+            return;
+        }
+        boolean granted = ContextCompat.checkSelfPermission(
+                requireContext(),
+                Manifest.permission.POST_NOTIFICATIONS
+        ) == PackageManager.PERMISSION_GRANTED;
+        if (granted) {
+            openAppNotificationSettings();
+        } else {
+            requestNotificationPermissionLauncher.launch(Manifest.permission.POST_NOTIFICATIONS);
+        }
+    }
+
+    private void openAppNotificationSettings() {
+        Intent intent = new Intent(Settings.ACTION_APP_NOTIFICATION_SETTINGS);
+        intent.putExtra(Settings.EXTRA_APP_PACKAGE, requireContext().getPackageName());
+        if (intent.resolveActivity(requireContext().getPackageManager()) != null) {
+            startActivity(intent);
+            return;
+        }
+        Intent appDetails = new Intent(Settings.ACTION_APPLICATION_DETAILS_SETTINGS);
+        appDetails.setData(Uri.fromParts("package", requireContext().getPackageName(), null));
+        startActivity(appDetails);
+    }
+
+    private void sendTestNotification() {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU
+                && ContextCompat.checkSelfPermission(requireContext(), Manifest.permission.POST_NOTIFICATIONS)
+                != PackageManager.PERMISSION_GRANTED) {
+            showToast(R.string.notification_test_blocked_permission);
+            return;
+        }
+
+        NotificationManagerCompat managerCompat = NotificationManagerCompat.from(requireContext());
+        if (!managerCompat.areNotificationsEnabled()) {
+            showToast(R.string.notification_test_blocked_system);
+            return;
+        }
+
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+            NotificationManager manager = requireContext().getSystemService(NotificationManager.class);
+            if (manager != null) {
+                NotificationChannel channel = manager.getNotificationChannel("reminder_channel");
+                if (channel != null && channel.getImportance() == NotificationManager.IMPORTANCE_NONE) {
+                    showToast(R.string.notification_test_blocked_system);
+                    return;
+                }
+            }
+        }
+
+        Intent intent = new Intent(requireContext(), NotificationReceiver.class);
+        intent.putExtra("title", getString(R.string.notification_test_title));
+        intent.putExtra("message", getString(R.string.notification_test_message));
+        requireContext().sendBroadcast(intent);
+        showToast(R.string.notification_test_sent);
     }
 
     private void updateExactAlarmButtonLabel(AlertDialog dialog) {
