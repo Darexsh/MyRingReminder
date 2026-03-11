@@ -393,6 +393,7 @@ public class SettingsRepository {
 
     public void setCycleDelayDays(long cycleStartMillis, int delayDays) {
         sharedPreferences.edit().putInt(cycleDelayKey(cycleStartMillis), delayDays).apply();
+        CalendarRenderCache.clear();
     }
 
     private String cycleDelayKey(long cycleStartMillis) {

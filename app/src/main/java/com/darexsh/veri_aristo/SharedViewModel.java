@@ -143,12 +143,14 @@ public class SharedViewModel extends ViewModel {
         repository.saveCalendarPastRange(amount, unit);
         calendarPastAmount.setValue(amount);
         calendarPastUnit.setValue(unit);
+        CalendarRenderCache.warmAsync(repository);
     }
 
     public void setCalendarFutureRange(int amount, String unit) {
         repository.saveCalendarFutureRange(amount, unit);
         calendarFutureAmount.setValue(amount);
         calendarFutureUnit.setValue(unit);
+        CalendarRenderCache.warmAsync(repository);
     }
 
     public void setRemovalReminderHours(int hours) {

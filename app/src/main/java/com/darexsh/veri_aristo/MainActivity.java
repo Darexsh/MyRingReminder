@@ -99,6 +99,7 @@ public class MainActivity extends AppCompatActivity {
         btnUnlockApp = findViewById(R.id.btn_unlock_app);
         SharedViewModelFactory factory = new SharedViewModelFactory(getApplication());
         viewModel = new ViewModelProvider(this, factory).get(SharedViewModel.class);
+        CalendarRenderCache.warmAsync(viewModel.getRepository());
         viewModel.getButtonColor().observe(this, color -> {
             if (color != null) {
                 applyBottomNavColors(color);

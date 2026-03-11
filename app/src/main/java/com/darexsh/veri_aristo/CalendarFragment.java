@@ -28,10 +28,9 @@ import com.prolificinteractive.materialcalendarview.DayViewDecorator;
 import com.prolificinteractive.materialcalendarview.DayViewFacade;
 import java.text.DateFormatSymbols;
 import java.text.SimpleDateFormat;
-import java.util.ArrayList;
 import java.util.Calendar;
-import java.util.List;
 import java.util.Locale;
+import java.util.Set;
 
 public class CalendarFragment extends Fragment {
 
@@ -48,6 +47,7 @@ public class CalendarFragment extends Fragment {
     private static final int LEGEND_ALPHA = 255;
     private int[] colorValues;
     private String[] colorLabels;
+    private boolean calendarUpdateScheduled = false;
 
     private interface ColorConsumer {
         void accept(int color);
@@ -120,35 +120,49 @@ public class CalendarFragment extends Fragment {
         viewModel = new ViewModelProvider(requireActivity(), factory).get(SharedViewModel.class);
 
         // Set up calendar view properties
-        updateCalendar();
         setupObservers();
+        updateCalendar();
 
         return view;
     }
 
     // Observe cycle data changes and update calendar
     private void setupObservers() {
-        viewModel.getCycleLength().observe(getViewLifecycleOwner(), value -> updateCalendar());
-        viewModel.getStartDate().observe(getViewLifecycleOwner(), value -> updateCalendar());
-        viewModel.getCalendarPastAmount().observe(getViewLifecycleOwner(), value -> updateCalendar());
-        viewModel.getCalendarPastUnit().observe(getViewLifecycleOwner(), value -> updateCalendar());
-        viewModel.getCalendarFutureAmount().observe(getViewLifecycleOwner(), value -> updateCalendar());
-        viewModel.getCalendarFutureUnit().observe(getViewLifecycleOwner(), value -> updateCalendar());
+        viewModel.getCycleLength().observe(getViewLifecycleOwner(), value -> requestCalendarUpdate());
+        viewModel.getStartDate().observe(getViewLifecycleOwner(), value -> requestCalendarUpdate());
+        viewModel.getCalendarPastAmount().observe(getViewLifecycleOwner(), value -> requestCalendarUpdate());
+        viewModel.getCalendarPastUnit().observe(getViewLifecycleOwner(), value -> requestCalendarUpdate());
+        viewModel.getCalendarFutureAmount().observe(getViewLifecycleOwner(), value -> requestCalendarUpdate());
+        viewModel.getCalendarFutureUnit().observe(getViewLifecycleOwner(), value -> requestCalendarUpdate());
         viewModel.getCalendarWearColor().observe(getViewLifecycleOwner(), value -> {
-            updateCalendar();
+            requestCalendarUpdate();
             updateLegendColors();
         });
         viewModel.getCalendarRingFreeColor().observe(getViewLifecycleOwner(), value -> {
-            updateCalendar();
+            requestCalendarUpdate();
             updateLegendColors();
         });
         viewModel.getCalendarRemovalColor().observe(getViewLifecycleOwner(), value -> {
-            updateCalendar();
+            requestCalendarUpdate();
             updateLegendColors();
         });
         viewModel.getCalendarInsertionColor().observe(getViewLifecycleOwner(), value -> {
-            updateCalendar();
+            requestCalendarUpdate();
             updateLegendColors();
+        });
+    }
+
+    private void requestCalendarUpdate() {
+        if (calendarView == null || calendarUpdateScheduled) {
+            return;
+        }
+        calendarUpdateScheduled = true;
+        calendarView.post(() -> {
+            calendarUpdateScheduled = false;
+            if (!isAdded() || calendarView == null) {
+                return;
+            }
+            updateCalendar();
         });
     }
 
@@ -201,33 +215,17 @@ public class CalendarFragment extends Fragment {
 
     // Setup calendar decorators
     private void setupCalendarDecorators(Calendar startDate, int cycleLength, int pastMonths, int futureMonths) {
-        List<DayViewDecorator> decorators = new ArrayList<>();
-
-        Calendar today = Calendar.getInstance();
-        Calendar pastLimit = (Calendar) today.clone();
-        pastLimit.add(Calendar.MONTH, -Math.max(pastMonths, 0));
-        Calendar futureLimit = (Calendar) today.clone();
-        futureLimit.add(Calendar.MONTH, Math.max(futureMonths, 0));
-
-        // 6 days ring-free + 1 insertion day
-        int ringFreeDays = Constants.RING_FREE_DAYS;
-        int baseStepDays = cycleLength + ringFreeDays;
-        if (baseStepDays <= 0) {
-            return;
-        }
-
-        Calendar currentStartDate = (Calendar) startDate.clone();
-        currentStartDate.set(Calendar.SECOND, 0);
-        currentStartDate.set(Calendar.MILLISECOND, 0);
-        if (currentStartDate.after(pastLimit)) {
-            while (currentStartDate.after(pastLimit)) {
-                currentStartDate.add(Calendar.DAY_OF_MONTH, -baseStepDays);
-            }
-        } else {
-            while (currentStartDate.before(pastLimit)) {
-                int delayDays = getDelayDaysForStart(currentStartDate);
-                currentStartDate.add(Calendar.DAY_OF_MONTH, baseStepDays + delayDays);
-            }
+        CalendarRenderCache.Snapshot snapshot =
+                CalendarRenderCache.getSnapshotIfMatches(startDate, cycleLength, pastMonths, futureMonths);
+        if (snapshot == null) {
+            snapshot = CalendarRenderCache.computeSnapshot(
+                    viewModel.getRepository(),
+                    startDate,
+                    cycleLength,
+                    pastMonths,
+                    futureMonths
+            );
+            CalendarRenderCache.setSnapshot(snapshot);
         }
 
         int wearColor = ColorUtils.setAlphaComponent(getCalendarWearColor(), CALENDAR_ALPHA);
@@ -235,47 +233,17 @@ public class CalendarFragment extends Fragment {
         int removalColor = ColorUtils.setAlphaComponent(getCalendarRemovalColor(), CALENDAR_ALPHA);
         int insertionColor = ColorUtils.setAlphaComponent(getCalendarInsertionColor(), CALENDAR_ALPHA);
 
-        int guard = 0;
-        while (!currentStartDate.after(futureLimit) && guard < 2000) {
-            int delayDays = getDelayDaysForStart(currentStartDate);
-            int stepDays = cycleLength + ringFreeDays + delayDays;
-            Calendar removalDate = (Calendar) currentStartDate.clone();
-            removalDate.add(Calendar.DAY_OF_MONTH, cycleLength + delayDays);
-            Calendar newInsertionDate = (Calendar) removalDate.clone();
-            newInsertionDate.add(Calendar.DAY_OF_MONTH, ringFreeDays);
-
-            Calendar greenStart = (Calendar) currentStartDate.clone();
-            greenStart.add(Calendar.DAY_OF_MONTH, 1);
-            Calendar greenEnd = (Calendar) removalDate.clone();
-            greenEnd.add(Calendar.DAY_OF_MONTH, -1);
-
-            Calendar redStart = (Calendar) removalDate.clone();
-            redStart.add(Calendar.DAY_OF_MONTH, 1);
-            Calendar redEnd = (Calendar) removalDate.clone();
-            redEnd.add(Calendar.DAY_OF_MONTH, 6);
-
-            if (isWithinRange(currentStartDate, pastLimit, futureLimit)) {
-                decorators.add(new SingleDayDecorator(insertionColor, toCalendarDay(currentStartDate)));
-            }
-            if (isWithinRange(removalDate, pastLimit, futureLimit)) {
-                decorators.add(new SingleDayDecorator(removalColor, toCalendarDay(removalDate)));
-            }
-            if (isWithinRange(newInsertionDate, pastLimit, futureLimit)) {
-                decorators.add(new SingleDayDecorator(insertionColor, toCalendarDay(newInsertionDate)));
-            }
-            if (isOverlappingRange(greenStart, greenEnd, pastLimit, futureLimit)) {
-                decorators.add(new RangeDayDecorator(wearColor, toCalendarDay(greenStart), toCalendarDay(greenEnd)));
-            }
-            if (isOverlappingRange(redStart, redEnd, pastLimit, futureLimit)) {
-                decorators.add(new RangeDayDecorator(ringFreeColor, toCalendarDay(redStart), toCalendarDay(redEnd)));
-            }
-
-            currentStartDate.add(Calendar.DAY_OF_MONTH, stepDays);
-            guard++;
+        if (!snapshot.wearDays.isEmpty()) {
+            calendarView.addDecorator(new SetDayDecorator(wearColor, snapshot.wearDays));
         }
-
-        for (DayViewDecorator d : decorators) {
-            calendarView.addDecorator(d);
+        if (!snapshot.ringFreeDays.isEmpty()) {
+            calendarView.addDecorator(new SetDayDecorator(ringFreeColor, snapshot.ringFreeDays));
+        }
+        if (!snapshot.removalDays.isEmpty()) {
+            calendarView.addDecorator(new SetDayDecorator(removalColor, snapshot.removalDays));
+        }
+        if (!snapshot.insertionDays.isEmpty()) {
+            calendarView.addDecorator(new SetDayDecorator(insertionColor, snapshot.insertionDays));
         }
     }
 
@@ -500,43 +468,18 @@ public class CalendarFragment extends Fragment {
         return null;
     }
 
-    // Single day decorator
-    private static class SingleDayDecorator implements DayViewDecorator {
+    private static class SetDayDecorator implements DayViewDecorator {
         private final int color;
-        private final CalendarDay day;
+        private final Set<CalendarDay> days;
 
-        public SingleDayDecorator(int color, CalendarDay day) {
+        public SetDayDecorator(int color, Set<CalendarDay> days) {
             this.color = color;
-            this.day = day;
+            this.days = days;
         }
 
         @Override
         public boolean shouldDecorate(CalendarDay day) {
-            return this.day.equals(day);
-        }
-
-        @Override
-        public void decorate(DayViewFacade view) {
-            GradientDrawable drawable = createCircleDrawable(color);
-            view.setBackgroundDrawable(drawable);
-        }
-    }
-
-    // Range of days decorator
-    private static class RangeDayDecorator implements DayViewDecorator {
-        private final int color;
-        private final CalendarDay startDay;
-        private final CalendarDay endDay;
-
-        public RangeDayDecorator(int color, CalendarDay startDay, CalendarDay endDay) {
-            this.color = color;
-            this.startDay = startDay;
-            this.endDay = endDay;
-        }
-
-        @Override
-        public boolean shouldDecorate(CalendarDay day) {
-            return !day.isBefore(startDay) && !day.isAfter(endDay);
+            return days.contains(day);
         }
 
         @Override
@@ -583,21 +526,6 @@ public class CalendarFragment extends Fragment {
                 calendar.get(Calendar.MONTH) + 1,
                 calendar.get(Calendar.DAY_OF_MONTH)
         );
-    }
-
-    private int getDelayDaysForStart(Calendar startDate) {
-        Calendar normalized = (Calendar) startDate.clone();
-        normalized.set(Calendar.MILLISECOND, 0);
-        normalized.set(Calendar.SECOND, 0);
-        return viewModel.getRepository().getCycleDelayDays(normalized.getTimeInMillis());
-    }
-
-    private boolean isWithinRange(Calendar date, Calendar start, Calendar end) {
-        return !date.before(start) && !date.after(end);
-    }
-
-    private boolean isOverlappingRange(Calendar rangeStart, Calendar rangeEnd, Calendar windowStart, Calendar windowEnd) {
-        return !rangeEnd.before(windowStart) && !rangeStart.after(windowEnd);
     }
 
     private void updateMonthSelectorText() {
