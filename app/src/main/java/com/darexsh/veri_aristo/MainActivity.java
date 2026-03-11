@@ -382,45 +382,45 @@ public class MainActivity extends AppCompatActivity {
         if (navigationAnimationStyle == SettingsRepository.NAV_ANIM_FADE) {
             transaction.setCustomAnimations(
                     android.R.anim.fade_in,
-                    android.R.anim.fade_out,
+                    0,
                     android.R.anim.fade_in,
-                    android.R.anim.fade_out
+                    0
             );
             return;
         }
         if (navigationAnimationStyle == SettingsRepository.NAV_ANIM_ZOOM) {
             transaction.setCustomAnimations(
                     R.anim.zoom_in_fade_in,
-                    R.anim.zoom_out_fade_out,
+                    0,
                     R.anim.zoom_in_fade_in,
-                    R.anim.zoom_out_fade_out
+                    0
             );
             return;
         }
         if (navigationAnimationStyle == SettingsRepository.NAV_ANIM_SLIDE_UP) {
             transaction.setCustomAnimations(
                     R.anim.slide_in_up,
-                    R.anim.slide_out_up,
+                    0,
                     R.anim.slide_in_down,
-                    R.anim.slide_out_down
+                    0
             );
             return;
         }
         if (navigationAnimationStyle == SettingsRepository.NAV_ANIM_ROTATE) {
             transaction.setCustomAnimations(
                     R.anim.rotate_in_fade_in,
-                    R.anim.rotate_out_fade_out,
+                    0,
                     R.anim.rotate_in_fade_in,
-                    R.anim.rotate_out_fade_out
+                    0
             );
             return;
         }
         if (navigationAnimationStyle == SettingsRepository.NAV_ANIM_POP) {
             transaction.setCustomAnimations(
                     R.anim.pop_in,
-                    R.anim.pop_out,
+                    0,
                     R.anim.pop_in,
-                    R.anim.pop_out
+                    0
             );
             return;
         }
@@ -429,24 +429,24 @@ public class MainActivity extends AppCompatActivity {
         int targetOrder = getFragmentOrder(targetFragment);
 
         if (targetOrder == currentOrder) {
-            transaction.setCustomAnimations(android.R.anim.fade_in, android.R.anim.fade_out,
-                    android.R.anim.fade_in, android.R.anim.fade_out);
+            transaction.setCustomAnimations(android.R.anim.fade_in, 0,
+                    android.R.anim.fade_in, 0);
             return;
         }
 
         if (targetOrder > currentOrder) {
             transaction.setCustomAnimations(
                     R.anim.slide_in_right,
-                    R.anim.slide_out_left,
+                    0,
                     R.anim.slide_in_left,
-                    R.anim.slide_out_right
+                    0
             );
         } else {
             transaction.setCustomAnimations(
                     R.anim.slide_in_left,
-                    R.anim.slide_out_right,
+                    0,
                     R.anim.slide_in_right,
-                    R.anim.slide_out_left
+                    0
             );
         }
     }
