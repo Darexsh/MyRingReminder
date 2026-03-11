@@ -42,6 +42,8 @@ public class SettingsRepository {
     private static final String KEY_DEBUG_TIME_ENABLED = "debug_time_enabled";
     private static final String KEY_DEBUG_TIME_MILLIS = "debug_time_millis";
     private static final String KEY_EXACT_ALARM_PROMPTED = "exact_alarm_prompted";
+    private static final String KEY_APP_LOCK_ENABLED = "app_lock_enabled";
+    private static final String KEY_APP_LOCK_TIMEOUT_MS = "app_lock_timeout_ms";
     public static final int DEFAULT_BUTTON_COLOR = 0xFF6200EE;
     public static final int DEFAULT_HOME_CIRCLE_COLOR = 0xFFBB86FC;
     public static final int DEFAULT_HOME_CIRCLE_STYLE = 0;
@@ -259,6 +261,22 @@ public class SettingsRepository {
 
     public void setExactAlarmPrompted(boolean prompted) {
         sharedPreferences.edit().putBoolean(KEY_EXACT_ALARM_PROMPTED, prompted).apply();
+    }
+
+    public boolean isAppLockEnabled() {
+        return sharedPreferences.getBoolean(KEY_APP_LOCK_ENABLED, false);
+    }
+
+    public void setAppLockEnabled(boolean enabled) {
+        sharedPreferences.edit().putBoolean(KEY_APP_LOCK_ENABLED, enabled).apply();
+    }
+
+    public int getAppLockTimeoutMs() {
+        return sharedPreferences.getInt(KEY_APP_LOCK_TIMEOUT_MS, 0);
+    }
+
+    public void setAppLockTimeoutMs(int timeoutMs) {
+        sharedPreferences.edit().putInt(KEY_APP_LOCK_TIMEOUT_MS, Math.max(0, timeoutMs)).apply();
     }
 
     private int remapHomeCircleStyleV1(int style) {

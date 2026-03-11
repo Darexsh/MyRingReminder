@@ -8,7 +8,7 @@
 **An Android app for tracking and managing contraceptive ring cycles**  
 📅⏰📝🎨📊
 
-![Projekt-Status](https://img.shields.io/badge/Status-Aktiv-brightgreen) ![License](https://img.shields.io/badge/License-NonCommercial-blue) ![Version](https://img.shields.io/badge/Version-1.3.0-orange)
+![Projekt-Status](https://img.shields.io/badge/Status-Aktiv-brightgreen) ![License](https://img.shields.io/badge/License-NonCommercial-blue) ![Version](https://img.shields.io/badge/Version-1.3.2-orange)
 
 [![Telegram Bot](https://img.shields.io/badge/Telegram-Bot-2AABEE?logo=telegram&logoColor=white)](https://t.me/darexsh_bot) [![Buy Me a Coffee](https://img.shields.io/badge/Buy%20Me%20a%20Coffee-yellow?logo=buy-me-a-coffee)](https://buymeacoffee.com/darexsh)  
 <sub>Get release updates on Telegram.<br>If you want to support more apps, you can leave a small donation for a coffee.</sub>
@@ -52,6 +52,8 @@
 * 🗓️ **Enhanced Calendar Navigation**: Navigate months with left/right arrows, tap the month header to jump directly to a selected month and year, and scroll through months without a fixed limit.
 
 * 🌐 **Language Mode**: Select German, English, or **System Default**. System Default follows the device language and falls back to English if unsupported.
+
+* 🔐 **App Lock**: Optional biometric/PIN app protection (default off) with a dedicated App Lock dialog to enable/disable protection and set auto-lock delay.
 
 * 🌙 **Dark Mode (Default)**: App runs in dark mode by default, independent of system theme.
 
@@ -185,6 +187,14 @@
 9. **Animation Style**:
 
     * Open **Settings** and choose your preferred global app transition animation.
+
+10. **App Lock**:
+
+    * Open **Settings → Advanced → App lock**.
+
+    * In the popup, enable/disable app lock and set auto-lock delay (e.g., immediate, 30s, 1m, 5m, 15m).
+
+    * Unlock uses biometric authentication or device PIN/pattern/password.
         
 
 * * *
@@ -197,6 +207,8 @@
 * 🔔 **Notifications**: Required to receive cycle reminders.
 
 * ⏰ **Exact Alarms**: Used to schedule precise reminder notifications.
+
+* 🔐 **Biometric / Device Credential**: Used for optional app lock authentication.
     
 
 * * *

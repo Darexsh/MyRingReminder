@@ -63,4 +63,20 @@
         <item>6</item>
         <item>3</item>
     </integer-array>
+
+    <string-array name="settings_app_lock_timeout_labels">
+        <item>Immediately</item>
+        <item>30 seconds</item>
+        <item>1 minute</item>
+        <item>5 minutes</item>
+        <item>15 minutes</item>
+    </string-array>
+
+    <integer-array name="settings_app_lock_timeout_values">
+        <item>0</item>
+        <item>30000</item>
+        <item>60000</item>
+        <item>300000</item>
+        <item>900000</item>
+    </integer-array>
 </resources>

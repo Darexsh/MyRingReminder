@@ -678,6 +678,18 @@
                 android:layout_marginBottom="10dp" />
 
             <com.google.android.material.button.MaterialButton
+                android:id="@+id/btn_app_lock"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/settings_app_lock_label"
+                android:textAllCaps="false"
+                android:textSize="15sp"
+                app:cornerRadius="12dp"
+                app:backgroundTint="#6200EE"
+                android:textColor="#FFFFFF"
+                android:layout_marginBottom="10dp" />
+
+            <com.google.android.material.button.MaterialButton
                 android:id="@+id/btn_welcome_tour"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"

@@ -23,6 +23,8 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.app.AppCompatDelegate;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
+import androidx.biometric.BiometricManager;
+import androidx.biometric.BiometricPrompt;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
@@ -37,6 +39,7 @@ import com.google.android.material.button.MaterialButton;
 import java.util.ArrayList;
 import java.util.List;
 import android.util.Log;
+import java.util.concurrent.Executor;
 
 // MainActivity serves as the entry point for the app, managing fragments and navigation
 public class MainActivity extends AppCompatActivity {
@@ -51,6 +54,8 @@ public class MainActivity extends AppCompatActivity {
     private FragmentManager fragmentManager;
     private ImageButton btnNotes;
     private BottomNavigationView bottomNavigationView;
+    private View appLockOverlay;
+    private MaterialButton btnUnlockApp;
     private long lastBackPressedAt = 0L;
     private SharedViewModel viewModel;
     private int navigationAnimationStyle = SettingsRepository.DEFAULT_NAVIGATION_ANIMATION_STYLE;
@@ -59,6 +64,10 @@ public class MainActivity extends AppCompatActivity {
     private List<TourStep> tourSteps;
     private int tourIndex = 0;
     private boolean tourCompleted = false;
+    private boolean appUnlockInProgress = false;
+    private boolean appUnlockedThisSession = false;
+    private boolean appMovedToBackground = false;
+    private long appBackgroundedAtMillis = 0L;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -86,11 +95,16 @@ public class MainActivity extends AppCompatActivity {
         fragmentManager = getSupportFragmentManager();
         btnNotes = findViewById(R.id.btn_notes);
         bottomNavigationView = findViewById(R.id.bottom_navigation);
+        appLockOverlay = findViewById(R.id.app_lock_overlay);
+        btnUnlockApp = findViewById(R.id.btn_unlock_app);
         SharedViewModelFactory factory = new SharedViewModelFactory(getApplication());
         viewModel = new ViewModelProvider(this, factory).get(SharedViewModel.class);
         viewModel.getButtonColor().observe(this, color -> {
             if (color != null) {
                 applyBottomNavColors(color);
+                if (btnUnlockApp != null) {
+                    ButtonColorHelper.applyPrimaryColor(btnUnlockApp, color);
+                }
                 if (tourOverlay != null) {
                     tourOverlay.setButtonColor(color);
                 }
@@ -101,6 +115,17 @@ public class MainActivity extends AppCompatActivity {
                 navigationAnimationStyle = style;
             }
         });
+
+        boolean lockEnabledAtLaunch = viewModel.getRepository().isAppLockEnabled();
+        appUnlockedThisSession = !lockEnabledAtLaunch;
+        setAppLockOverlayVisible(lockEnabledAtLaunch);
+        if (btnUnlockApp != null) {
+            btnUnlockApp.setOnClickListener(v -> {
+                if (!appUnlockInProgress) {
+                    showAppUnlockPrompt();
+                }
+            });
+        }
 
         // Load default Home-Fragment
         if (savedInstanceState == null) {
@@ -213,6 +238,16 @@ public class MainActivity extends AppCompatActivity {
     protected void onResume() {
         super.onResume();
         updateNotesButtonVisibility();
+        maybeRequestAppUnlock();
+    }
+
+    @Override
+    protected void onStop() {
+        super.onStop();
+        if (!isChangingConfigurations()) {
+            appMovedToBackground = true;
+            appBackgroundedAtMillis = System.currentTimeMillis();
+        }
     }
 
     private void updateNotesButtonVisibility() {
@@ -221,6 +256,104 @@ public class MainActivity extends AppCompatActivity {
             btnNotes.setVisibility(View.VISIBLE);
         } else {
             btnNotes.setVisibility(View.GONE);
+        }
+    }
+
+    private void maybeRequestAppUnlock() {
+        if (viewModel == null) {
+            return;
+        }
+        SettingsRepository repository = viewModel.getRepository();
+        boolean appLockEnabled = repository.isAppLockEnabled();
+        if (!appLockEnabled) {
+            appUnlockInProgress = false;
+            appUnlockedThisSession = true;
+            appMovedToBackground = false;
+            appBackgroundedAtMillis = 0L;
+            setAppLockOverlayVisible(false);
+            return;
+        }
+        if (appUnlockInProgress) {
+            return;
+        }
+
+        if (appUnlockedThisSession && appMovedToBackground) {
+            int timeoutMs = repository.getAppLockTimeoutMs();
+            long elapsed = appBackgroundedAtMillis > 0L
+                    ? Math.max(0L, System.currentTimeMillis() - appBackgroundedAtMillis)
+                    : Long.MAX_VALUE;
+            appMovedToBackground = false;
+            appBackgroundedAtMillis = 0L;
+            if (elapsed < timeoutMs) {
+                setAppLockOverlayVisible(false);
+                return;
+            }
+            appUnlockedThisSession = false;
+        }
+
+        if (appUnlockedThisSession) {
+            setAppLockOverlayVisible(false);
+            return;
+        }
+        setAppLockOverlayVisible(true);
+        showAppUnlockPrompt();
+    }
+
+    private void showAppUnlockPrompt() {
+        BiometricManager biometricManager = BiometricManager.from(this);
+        int authenticators = BiometricManager.Authenticators.BIOMETRIC_STRONG
+                | BiometricManager.Authenticators.DEVICE_CREDENTIAL;
+        int canAuthenticate = biometricManager.canAuthenticate(authenticators);
+        if (canAuthenticate != BiometricManager.BIOMETRIC_SUCCESS) {
+            Toast.makeText(this, R.string.settings_app_lock_requires_secure_lock, Toast.LENGTH_LONG).show();
+            appUnlockInProgress = false;
+            setAppLockOverlayVisible(true);
+            return;
+        }
+
+        appUnlockInProgress = true;
+        Executor executor = ContextCompat.getMainExecutor(this);
+        BiometricPrompt biometricPrompt = new BiometricPrompt(
+                this,
+                executor,
+                new BiometricPrompt.AuthenticationCallback() {
+                    @Override
+                    public void onAuthenticationSucceeded(@NonNull BiometricPrompt.AuthenticationResult result) {
+                        super.onAuthenticationSucceeded(result);
+                        appUnlockInProgress = false;
+                        appUnlockedThisSession = true;
+                        appMovedToBackground = false;
+                        setAppLockOverlayVisible(false);
+                    }
+
+                    @Override
+                    public void onAuthenticationError(int errorCode, @NonNull CharSequence errString) {
+                        super.onAuthenticationError(errorCode, errString);
+                        appUnlockInProgress = false;
+                        Toast.makeText(MainActivity.this, R.string.app_lock_auth_required, Toast.LENGTH_SHORT).show();
+                        setAppLockOverlayVisible(true);
+                    }
+                }
+        );
+
+        BiometricPrompt.PromptInfo promptInfo = new BiometricPrompt.PromptInfo.Builder()
+                .setTitle(getString(R.string.app_lock_auth_title))
+                .setSubtitle(getString(R.string.app_lock_auth_subtitle))
+                .setAllowedAuthenticators(authenticators)
+                .build();
+        biometricPrompt.authenticate(promptInfo);
+    }
+
+    private void setAppLockOverlayVisible(boolean visible) {
+        if (appLockOverlay == null) {
+            return;
+        }
+        appLockOverlay.setVisibility(visible ? View.VISIBLE : View.GONE);
+        if (bottomNavigationView != null) {
+            bottomNavigationView.setEnabled(!visible);
+        }
+        if (btnNotes != null) {
+            btnNotes.setEnabled(!visible);
         }
     }
 
@@ -681,6 +814,9 @@ public class MainActivity extends AppCompatActivity {
         steps.add(new TourStep(R.id.nav_settings, R.id.btn_set_circle_style,
                 R.string.tour_title_settings_circle_style, R.string.tour_body_settings_circle_style,
                 R.id.settings_scroll, false));
+        steps.add(new TourStep(R.id.nav_settings, R.id.btn_set_navigation_animation,
+                R.string.tour_title_settings_animation, R.string.tour_body_settings_animation,
+                R.id.settings_scroll, false));
         steps.add(new TourStep(R.id.nav_settings, R.id.btn_set_language,
                 R.string.tour_title_settings_language, R.string.tour_body_settings_language,
                 R.id.settings_scroll, false));
@@ -692,6 +828,9 @@ public class MainActivity extends AppCompatActivity {
                 0, false, true, false, false, false, false, false, false));
         steps.add(new TourStep(R.id.nav_settings, R.id.btn_backup_manage,
                 R.string.tour_title_settings_backup, R.string.tour_body_settings_backup,
+                0, false, true, false, false, false, false, false, false));
+        steps.add(new TourStep(R.id.nav_settings, R.id.btn_app_lock,
+                R.string.tour_title_settings_app_lock, R.string.tour_body_settings_app_lock,
                 0, false, true, false, false, false, false, false, false));
         steps.add(new TourStep(R.id.nav_settings, R.id.btn_reset_app,
                 R.string.tour_title_settings_reset, R.string.tour_body_settings_reset,

@@ -55,6 +55,8 @@ import androidx.core.content.ContextCompat;
 import androidx.core.content.FileProvider;
 import androidx.core.os.LocaleListCompat;
 import androidx.core.app.NotificationManagerCompat;
+import androidx.biometric.BiometricManager;
+import androidx.biometric.BiometricPrompt;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
 import android.Manifest;
@@ -78,6 +80,7 @@ import java.io.InputStream;
 import java.io.OutputStream;
 import java.nio.charset.StandardCharsets;
 import java.util.Objects;
+import java.util.concurrent.Executor;
 
 import com.google.gson.Gson;
 import com.google.gson.JsonArray;
@@ -101,6 +104,7 @@ public class SettingsFragment extends Fragment {
     private MaterialButton btnSetCircleColor;
     private MaterialButton btnSetCircleStyle;
     private MaterialButton btnSetNavigationAnimation;
+    private MaterialButton btnAppLock;
     private MaterialButton btnWelcomeTour;
     private View debugSection;
     private TextView tvDebugTimeStatus;
@@ -120,6 +124,8 @@ public class SettingsFragment extends Fragment {
     private String[] circleStyleLabels;
     private String[] navigationAnimationLabels;
     private int[] navigationAnimationValues;
+    private String[] appLockTimeoutLabels;
+    private int[] appLockTimeoutValues;
     private Drawable[] circleStylePreviews;
     private static final String RELEASES_URL = "https://api.github.com/repos/Darexsh/Veri_Aristo_App/releases";
     private File pendingApkFile;
@@ -233,6 +239,7 @@ public class SettingsFragment extends Fragment {
         MaterialButton btnResetApp = view.findViewById(R.id.btn_reset_app);
         btnBackupManage = view.findViewById(R.id.btn_backup_manage);
         btnUpdateApp = view.findViewById(R.id.btn_update_app);
+        btnAppLock = view.findViewById(R.id.btn_app_lock);
         btnWelcomeTour = view.findViewById(R.id.btn_welcome_tour);
         advancedContent = view.findViewById(R.id.advanced_content);
         View advancedHeader = view.findViewById(R.id.advanced_header);
@@ -353,6 +360,7 @@ public class SettingsFragment extends Fragment {
         btnSetCircleColor.setOnClickListener(v -> showCircleColorDialog());
         btnSetCircleStyle.setOnClickListener(v -> showCircleStyleDialog());
         btnSetNavigationAnimation.setOnClickListener(v -> showNavigationAnimationDialog());
+        btnAppLock.setOnClickListener(v -> showAppLockToolsDialog());
         btnWelcomeTour.setOnClickListener(v -> {
             if (getActivity() instanceof MainActivity) {
                 ((MainActivity) getActivity()).restartWelcomeTour();
@@ -421,6 +429,7 @@ public class SettingsFragment extends Fragment {
         });
 
         updateLanguageButtonText();
+        updateAppLockButtonText();
 
         return view;
     }
@@ -428,6 +437,7 @@ public class SettingsFragment extends Fragment {
     @Override
     public void onResume() {
         super.onResume();
+        updateAppLockButtonText();
         if (notificationToolsDialog != null && notificationToolsDialog.isShowing()) {
             updateExactAlarmButtonLabel(notificationToolsDialog);
         }
@@ -835,6 +845,7 @@ public class SettingsFragment extends Fragment {
         ButtonColorHelper.applyPrimaryColor(btnSetCalendarRange, color);
         ButtonColorHelper.applyPrimaryColor(btnBackupManage, color);
         ButtonColorHelper.applyPrimaryColor(btnUpdateApp, color);
+        ButtonColorHelper.applyPrimaryColor(btnAppLock, color);
         ButtonColorHelper.applyPrimaryColor(btnWelcomeTour, color);
         ButtonColorHelper.applyPrimaryColor(btnNotificationGroup, color);
         ButtonColorHelper.applyPrimaryColor(btnSetLanguage, color);
@@ -925,6 +936,132 @@ public class SettingsFragment extends Fragment {
         btnSetNavigationAnimation.setText(
                 getString(R.string.settings_navigation_animation_format, navigationAnimationLabels[safeStyle])
         );
+    }
+
+    private void updateAppLockButtonText() {
+        btnAppLock.setText(R.string.settings_app_lock_label);
+    }
+
+    private void showAppLockToolsDialog() {
+        View content = LayoutInflater.from(requireContext())
+                .inflate(R.layout.dialog_app_lock_tools, null);
+        MaterialButton btnToggle = content.findViewById(R.id.btn_app_lock_toggle);
+        MaterialButton btnDelay = content.findViewById(R.id.btn_app_lock_delay);
+        TextView tvDelayHint = content.findViewById(R.id.tv_app_lock_delay_hint);
+
+        Integer color = viewModel.getButtonColor().getValue();
+        if (color != null) {
+            ButtonColorHelper.applyPrimaryColor(btnToggle, color);
+            btnDelay.setStrokeColor(ColorStateList.valueOf(color));
+            btnDelay.setTextColor(color);
+        }
+
+        Runnable refresh = () -> {
+            boolean enabled = viewModel.getRepository().isAppLockEnabled();
+            btnToggle.setText(enabled ? R.string.app_lock_tools_toggle_on : R.string.app_lock_tools_toggle_off);
+            String currentLabel = getAppLockTimeoutLabel(viewModel.getRepository().getAppLockTimeoutMs());
+            btnDelay.setText(getString(R.string.settings_app_lock_timeout_format, currentLabel));
+            tvDelayHint.setText(getString(R.string.app_lock_tools_delay_hint)
+                    + "\n"
+                    + getString(R.string.app_lock_tools_delay_current, currentLabel));
+        };
+        refresh.run();
+
+        AlertDialog dialog = new AlertDialog.Builder(requireContext())
+                .setTitle(R.string.app_lock_tools_title)
+                .setView(content)
+                .setNegativeButton(R.string.dialog_cancel, null)
+                .show();
+        applyDialogButtonColors(dialog);
+
+        btnToggle.setOnClickListener(v -> {
+            boolean enabled = viewModel.getRepository().isAppLockEnabled();
+            authenticateForAppLockChange(() -> {
+                viewModel.getRepository().setAppLockEnabled(!enabled);
+                refresh.run();
+            });
+        });
+        btnDelay.setOnClickListener(v -> showAppLockTimeoutDialog(refresh));
+    }
+
+    private void authenticateForAppLockChange(Runnable onSuccess) {
+        BiometricManager biometricManager = BiometricManager.from(requireContext());
+        int authenticators = BiometricManager.Authenticators.BIOMETRIC_STRONG
+                | BiometricManager.Authenticators.DEVICE_CREDENTIAL;
+        int canAuthenticate = biometricManager.canAuthenticate(authenticators);
+        if (canAuthenticate != BiometricManager.BIOMETRIC_SUCCESS) {
+            Toast.makeText(requireContext(), R.string.settings_app_lock_requires_secure_lock, Toast.LENGTH_LONG).show();
+            return;
+        }
+
+        Executor executor = ContextCompat.getMainExecutor(requireContext());
+        BiometricPrompt prompt = new BiometricPrompt(
+                this,
+                executor,
+                new BiometricPrompt.AuthenticationCallback() {
+                    @Override
+                    public void onAuthenticationSucceeded(@NonNull BiometricPrompt.AuthenticationResult result) {
+                        super.onAuthenticationSucceeded(result);
+                        if (isAdded() && onSuccess != null) {
+                            onSuccess.run();
+                        }
+                    }
+                }
+        );
+
+        BiometricPrompt.PromptInfo promptInfo = new BiometricPrompt.PromptInfo.Builder()
+                .setTitle(getString(R.string.app_lock_auth_title))
+                .setSubtitle(getString(R.string.app_lock_auth_subtitle))
+                .setAllowedAuthenticators(authenticators)
+                .build();
+        prompt.authenticate(promptInfo);
+    }
+
+    private void ensureAppLockTimeoutOptionsLoaded() {
+        if (appLockTimeoutLabels == null) {
+            appLockTimeoutLabels = getResources().getStringArray(R.array.settings_app_lock_timeout_labels);
+        }
+        if (appLockTimeoutValues == null) {
+            appLockTimeoutValues = getResources().getIntArray(R.array.settings_app_lock_timeout_values);
+        }
+    }
+
+    private void showAppLockTimeoutDialog(@Nullable Runnable onChanged) {
+        ensureAppLockTimeoutOptionsLoaded();
+        int current = viewModel.getRepository().getAppLockTimeoutMs();
+        int checkedIndex = 0;
+        for (int i = 0; i < appLockTimeoutValues.length; i++) {
+            if (appLockTimeoutValues[i] == current) {
+                checkedIndex = i;
+                break;
+            }
+        }
+        final int[] pendingIndex = new int[]{checkedIndex};
+        AlertDialog dialog = new AlertDialog.Builder(requireContext())
+                .setTitle(R.string.settings_app_lock_timeout_dialog_title)
+                .setSingleChoiceItems(appLockTimeoutLabels, checkedIndex, (d, which) -> pendingIndex[0] = which)
+                .setPositiveButton(R.string.dialog_ok, (d, which) -> {
+                    int selected = pendingIndex[0];
+                    if (selected >= 0 && selected < appLockTimeoutValues.length) {
+                        viewModel.getRepository().setAppLockTimeoutMs(appLockTimeoutValues[selected]);
+                        if (onChanged != null) {
+                            onChanged.run();
+                        }
+                    }
+                })
+                .setNegativeButton(R.string.dialog_cancel, null)
+                .show();
+        applyDialogButtonColors(dialog);
+    }
+
+    private String getAppLockTimeoutLabel(int timeoutMs) {
+        ensureAppLockTimeoutOptionsLoaded();
+        for (int i = 0; i < appLockTimeoutValues.length && i < appLockTimeoutLabels.length; i++) {
+            if (appLockTimeoutValues[i] == timeoutMs) {
+                return appLockTimeoutLabels[i];
+            }
+        }
+        return appLockTimeoutLabels[0];
     }
 
     private void ensureCircleStyleOptionsLoaded() {
@@ -1987,6 +2124,10 @@ public class SettingsFragment extends Fragment {
                 return getString(R.string.backup_field_welcome_shown) + ": " + formatBoolean(value);
             case "exact_alarm_prompted":
                 return getString(R.string.backup_field_exact_alarm_prompted) + ": " + formatBoolean(value);
+            case "app_lock_enabled":
+                return getString(R.string.backup_field_app_lock) + ": " + formatBoolean(value);
+            case "app_lock_timeout_ms":
+                return getString(R.string.backup_field_app_lock_timeout) + ": " + formatAppLockTimeout(value);
             case "home_circle_style_version":
                 return null; // internal migration marker
             default:
@@ -2064,6 +2205,18 @@ public class SettingsFragment extends Fragment {
             }
         }
         return String.valueOf(style);
+    }
+
+    private String formatAppLockTimeout(PrefValue value) {
+        int timeoutMs = prefToInt(value);
+        int[] values = getResources().getIntArray(R.array.settings_app_lock_timeout_values);
+        String[] labels = getResources().getStringArray(R.array.settings_app_lock_timeout_labels);
+        for (int i = 0; i < values.length && i < labels.length; i++) {
+            if (values[i] == timeoutMs) {
+                return labels[i];
+            }
+        }
+        return timeoutMs + "ms";
     }
 
     private String formatBackgroundImage(PrefValue value) {
