@@ -90,6 +90,7 @@ This is not the recommended standard use, but it is possible:<br>
     <string name="app_info_github">GitHub: %1$s</string>
     <string name="app_info_open_email">Write email</string>
     <string name="app_info_open_github">Open social media</string>
+    <string name="app_info_open_telegram_bot">Open Telegram bot</string>
     <string name="app_info_open_github_profile">GitHub profile</string>
     <string name="app_info_open_coffee">Buy me a coffee</string>
     <string name="app_info_actions_title">Actions</string>

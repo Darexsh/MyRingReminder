@@ -90,6 +90,7 @@ Dies entspricht nicht der empfohlenen Standardanwendung, ist aber möglich:<br>
     <string name="app_info_github">GitHub: %1$s</string>
     <string name="app_info_open_email">E-Mail schreiben</string>
     <string name="app_info_open_github">Soziale Medien öffnen</string>
+    <string name="app_info_open_telegram_bot">Telegram-Bot öffnen</string>
     <string name="app_info_open_github_profile">GitHub-Profil</string>
     <string name="app_info_open_coffee">Kaffee spendieren</string>
     <string name="app_info_actions_title">Aktionen</string>

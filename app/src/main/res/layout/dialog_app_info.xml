@@ -107,6 +107,23 @@
             android:textColor="#FFFFFF" />
 
         <com.google.android.material.button.MaterialButton
+            android:id="@+id/btn_open_telegram_bot"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:text="@string/app_info_open_telegram_bot"
+            android:textAllCaps="false"
+            android:textSize="14sp"
+            app:iconSize="18dp"
+            app:icon="@drawable/telegram_icon"
+            app:iconTint="@null"
+            app:iconGravity="textStart"
+            app:iconPadding="8dp"
+            app:cornerRadius="12dp"
+            app:backgroundTint="#6200EE"
+            android:textColor="#FFFFFF" />
+
+        <com.google.android.material.button.MaterialButton
             android:id="@+id/btn_open_github_profile"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"

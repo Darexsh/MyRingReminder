@@ -1560,12 +1560,14 @@ public class SettingsFragment extends Fragment {
         TextView appDeveloper = content.findViewById(R.id.tv_app_developer);
         com.google.android.material.button.MaterialButton openEmail = content.findViewById(R.id.btn_open_email);
         com.google.android.material.button.MaterialButton openGithub = content.findViewById(R.id.btn_open_github);
+        com.google.android.material.button.MaterialButton openTelegramBot = content.findViewById(R.id.btn_open_telegram_bot);
         com.google.android.material.button.MaterialButton openGithubProfile = content.findViewById(R.id.btn_open_github_profile);
         com.google.android.material.button.MaterialButton openCoffee = content.findViewById(R.id.btn_open_coffee);
         Integer buttonColor = viewModel.getButtonColor().getValue();
         if (buttonColor != null) {
             ButtonColorHelper.applyPrimaryColor(openEmail, buttonColor);
             ButtonColorHelper.applyPrimaryColor(openGithub, buttonColor);
+            ButtonColorHelper.applyPrimaryColor(openTelegramBot, buttonColor);
             ButtonColorHelper.applyPrimaryColor(openGithubProfile, buttonColor);
             ButtonColorHelper.applyPrimaryColor(openCoffee, buttonColor);
         }
@@ -1595,6 +1597,11 @@ public class SettingsFragment extends Fragment {
 
         openGithub.setOnClickListener(v -> {
             Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse("https://linktr.ee/darexsh"));
+            startActivity(intent);
+        });
+
+        openTelegramBot.setOnClickListener(v -> {
+            Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse("https://t.me/darexsh_bot"));
             startActivity(intent);
         });
 
