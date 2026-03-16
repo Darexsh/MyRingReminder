@@ -53,7 +53,17 @@ public class CycleWidgetLargeProvider extends AppWidgetProvider {
         int ringStyle = repository.getHomeCircleStyle();
         views.setImageViewBitmap(R.id.img_widget_ring,
                 CycleWidgetUtils.buildRingBitmap(context, fraction, ringColor, ringStyle, state.maxProgress));
-        views.setOnClickPendingIntent(R.id.widget_root, buildLaunchIntent(context, appWidgetId));
+        PendingIntent launchIntent = buildLaunchIntent(context, appWidgetId);
+        views.setOnClickPendingIntent(R.id.widget_root, launchIntent);
+        views.setOnClickPendingIntent(R.id.widget_bg_image, launchIntent);
+        views.setOnClickPendingIntent(R.id.img_widget_ring, launchIntent);
+        views.setOnClickPendingIntent(R.id.tv_widget_days_number, launchIntent);
+        views.setOnClickPendingIntent(R.id.tv_widget_days_label, launchIntent);
+        views.setOnClickPendingIntent(R.id.tv_widget_title, launchIntent);
+        views.setOnClickPendingIntent(R.id.tv_widget_subtitle, launchIntent);
+        views.setOnClickPendingIntent(R.id.tv_widget_removal, launchIntent);
+        views.setOnClickPendingIntent(R.id.tv_widget_insertion, launchIntent);
+        views.setOnClickPendingIntent(R.id.img_widget_logo, launchIntent);
 
         appWidgetManager.updateAppWidget(appWidgetId, views);
     }

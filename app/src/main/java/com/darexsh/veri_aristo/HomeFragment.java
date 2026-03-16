@@ -648,9 +648,15 @@ public class HomeFragment extends Fragment {
     private static int daysBetweenDays(Calendar from, Calendar to) {
         Calendar fromDay = startOfDay(from);
         Calendar toDay = startOfDay(to);
-        long millisLeft = toDay.getTimeInMillis() - fromDay.getTimeInMillis();
-        int days = (int) (millisLeft / (24L * 60L * 60L * 1000L));
-        return Math.max(days, 0);
+        if (!fromDay.before(toDay)) {
+            return 0;
+        }
+        int days = 0;
+        while (fromDay.before(toDay)) {
+            fromDay.add(Calendar.DAY_OF_MONTH, 1);
+            days++;
+        }
+        return days;
     }
 
     private void applyHomeCircleStyle(HomeCircleView progress, int style, int color) {

@@ -5,6 +5,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.os.Build;
+import android.app.PendingIntent;
 import androidx.core.app.ActivityCompat;
 import androidx.core.app.NotificationCompat;
 import androidx.core.app.NotificationManagerCompat;
@@ -23,12 +24,24 @@ public class NotificationReceiver extends BroadcastReceiver {
             message = context.getString(R.string.notifications_channel_description);
         }
 
+        int notificationId = (int) (System.currentTimeMillis() % Integer.MAX_VALUE);
+        Intent openIntent = new Intent(context, MainActivity.class);
+        openIntent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TOP);
+        openIntent.putExtra("open_home", true);
+        PendingIntent contentIntent = PendingIntent.getActivity(
+                context,
+                notificationId,
+                openIntent,
+                PendingIntent.FLAG_UPDATE_CURRENT | PendingIntent.FLAG_IMMUTABLE
+        );
+
         // Build the notification
         NotificationCompat.Builder builder = new NotificationCompat.Builder(context, "reminder_channel")
                 .setSmallIcon(R.drawable.ic_notification) // Notification icon
                 .setContentTitle(title)                  // Title
                 .setContentText(message)                 // Message
                 .setPriority(NotificationCompat.PRIORITY_HIGH) // High priority
+                .setContentIntent(contentIntent)
                 .setAutoCancel(true)                     // Remove notification on click
                 .setDefaults(NotificationCompat.DEFAULT_SOUND | NotificationCompat.DEFAULT_VIBRATE); // Sound & vibration
 
@@ -42,7 +55,6 @@ public class NotificationReceiver extends BroadcastReceiver {
         }
 
         // Use a unique ID for each notification based on timestamp to avoid overwriting
-        int notificationId = (int) (System.currentTimeMillis() % Integer.MAX_VALUE);
         manager.notify(notificationId, builder.build());
     }
 }

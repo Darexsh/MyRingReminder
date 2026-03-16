@@ -42,7 +42,13 @@ public class CycleWidgetSmallProvider extends AppWidgetProvider {
 
         views.setTextViewText(R.id.tv_widget_days_number, String.valueOf(state.daysLeft));
         views.setTextViewText(R.id.tv_widget_days_label, state.label);
-        views.setOnClickPendingIntent(R.id.widget_root, buildLaunchIntent(context, appWidgetId));
+        PendingIntent launchIntent = buildLaunchIntent(context, appWidgetId);
+        views.setOnClickPendingIntent(R.id.widget_root, launchIntent);
+        views.setOnClickPendingIntent(R.id.widget_bg_image, launchIntent);
+        views.setOnClickPendingIntent(R.id.tv_widget_days_number, launchIntent);
+        views.setOnClickPendingIntent(R.id.tv_widget_days_label, launchIntent);
+        views.setOnClickPendingIntent(R.id.img_widget_logo, launchIntent);
+        views.setOnClickPendingIntent(R.id.tv_widget_app_name, launchIntent);
 
         appWidgetManager.updateAppWidget(appWidgetId, views);
     }
