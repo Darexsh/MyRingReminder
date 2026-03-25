@@ -49,6 +49,7 @@ public class MainActivity extends AppCompatActivity {
     private static final String KEY_LAST_VERSION = "last_version";
     private static final String KEY_TOUR_SHOWN = "tour_shown";
     private static final String KEY_WELCOME_SHOWN = "welcome_shown";
+    private static final String KEY_APP_LOCK_LAST_BACKGROUND_AT = "app_lock_last_background_at";
     private static final long BACK_PRESS_WINDOW_MS = 2000;
     private static final String TAG = "MainActivity";
     private FragmentManager fragmentManager;
@@ -118,8 +119,19 @@ public class MainActivity extends AppCompatActivity {
         });
 
         boolean lockEnabledAtLaunch = viewModel.getRepository().isAppLockEnabled();
-        appUnlockedThisSession = !lockEnabledAtLaunch;
-        setAppLockOverlayVisible(lockEnabledAtLaunch);
+        if (!lockEnabledAtLaunch) {
+            appUnlockedThisSession = true;
+        } else {
+            int timeoutMs = viewModel.getRepository().getAppLockTimeoutMs();
+            long lastBackgroundAt = prefs.getLong(KEY_APP_LOCK_LAST_BACKGROUND_AT, 0L);
+            if (timeoutMs > 0 && lastBackgroundAt > 0L) {
+                long elapsed = Math.max(0L, System.currentTimeMillis() - lastBackgroundAt);
+                appUnlockedThisSession = elapsed < timeoutMs;
+            } else {
+                appUnlockedThisSession = false;
+            }
+        }
+        setAppLockOverlayVisible(lockEnabledAtLaunch && !appUnlockedThisSession);
         if (btnUnlockApp != null) {
             btnUnlockApp.setOnClickListener(v -> {
                 if (!appUnlockInProgress) {
@@ -248,6 +260,9 @@ public class MainActivity extends AppCompatActivity {
         if (!isChangingConfigurations()) {
             appMovedToBackground = true;
             appBackgroundedAtMillis = System.currentTimeMillis();
+            if (prefs != null) {
+                prefs.edit().putLong(KEY_APP_LOCK_LAST_BACKGROUND_AT, appBackgroundedAtMillis).apply();
+            }
         }
     }
 
@@ -271,6 +286,9 @@ public class MainActivity extends AppCompatActivity {
             appUnlockedThisSession = true;
             appMovedToBackground = false;
             appBackgroundedAtMillis = 0L;
+            if (prefs != null) {
+                prefs.edit().remove(KEY_APP_LOCK_LAST_BACKGROUND_AT).apply();
+            }
             setAppLockOverlayVisible(false);
             return;
         }
@@ -285,6 +303,9 @@ public class MainActivity extends AppCompatActivity {
                     : Long.MAX_VALUE;
             appMovedToBackground = false;
             appBackgroundedAtMillis = 0L;
+            if (prefs != null) {
+                prefs.edit().remove(KEY_APP_LOCK_LAST_BACKGROUND_AT).apply();
+            }
             if (elapsed < timeoutMs) {
                 setAppLockOverlayVisible(false);
                 return;
@@ -324,6 +345,10 @@ public class MainActivity extends AppCompatActivity {
                         appUnlockInProgress = false;
                         appUnlockedThisSession = true;
                         appMovedToBackground = false;
+                        appBackgroundedAtMillis = 0L;
+                        if (prefs != null) {
+                            prefs.edit().remove(KEY_APP_LOCK_LAST_BACKGROUND_AT).apply();
+                        }
                         setAppLockOverlayVisible(false);
                     }
 
