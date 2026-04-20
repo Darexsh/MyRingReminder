@@ -163,6 +163,23 @@ public class SettingsRepository {
         sharedPreferences.edit().putString(KEY_CYCLE_HISTORY, json).apply();
     }
 
+    public void pruneCycleHistoryFrom(long cycleStartMillis) {
+        List<Cycle> cycleHistory = getCycleHistory();
+        if (cycleHistory.isEmpty()) {
+            return;
+        }
+        List<Cycle> kept = new ArrayList<>();
+        for (Cycle cycle : cycleHistory) {
+            long latestMillis = Math.max(cycle.getDateMillis(), cycle.getEndDateMillis());
+            if (latestMillis < cycleStartMillis) {
+                kept.add(cycle);
+            }
+        }
+        if (kept.size() != cycleHistory.size()) {
+            saveCycleHistory(kept);
+        }
+    }
+
     public boolean wasNotificationScheduledForCycle(long cycleStartMillis) {
         return sharedPreferences.getBoolean("notified_" + cycleStartMillis, false);
     }
@@ -396,6 +413,22 @@ public class SettingsRepository {
         CalendarRenderCache.clear();
     }
 
+    public int getRingFreeDaysForCycle(long cycleStartMillis) {
+        boolean skipRingFreeWeek = sharedPreferences.getBoolean(skipRingFreeKey(cycleStartMillis), false);
+        return skipRingFreeWeek ? 0 : Constants.RING_FREE_DAYS;
+    }
+
+    public void setSkipRingFreeWeek(long cycleStartMillis, boolean skip) {
+        SharedPreferences.Editor editor = sharedPreferences.edit();
+        if (skip) {
+            editor.putBoolean(skipRingFreeKey(cycleStartMillis), true);
+        } else {
+            editor.remove(skipRingFreeKey(cycleStartMillis));
+        }
+        editor.apply();
+        CalendarRenderCache.clear();
+    }
+
     private String cycleDelayKey(long cycleStartMillis) {
         Calendar cal = Calendar.getInstance();
         cal.setTimeInMillis(cycleStartMillis);
@@ -403,5 +436,14 @@ public class SettingsRepository {
         int month = cal.get(Calendar.MONTH) + 1;
         int day = cal.get(Calendar.DAY_OF_MONTH);
         return "cycle_delay_" + year + "_" + month + "_" + day;
+    }
+
+    private String skipRingFreeKey(long cycleStartMillis) {
+        Calendar cal = Calendar.getInstance();
+        cal.setTimeInMillis(cycleStartMillis);
+        int year = cal.get(Calendar.YEAR);
+        int month = cal.get(Calendar.MONTH) + 1;
+        int day = cal.get(Calendar.DAY_OF_MONTH);
+        return "skip_ring_free_" + year + "_" + month + "_" + day;
     }
 }

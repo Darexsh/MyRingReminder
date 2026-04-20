@@ -97,38 +97,107 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="bottom|center_horizontal"
-        android:layout_marginBottom="24dp"
-        android:gravity="center_vertical"
-        android:orientation="horizontal">
+        android:layout_marginBottom="74dp"
+        android:background="@drawable/bg_special_actions_panel"
+        android:padding="8dp"
+        android:gravity="center_horizontal"
+        android:orientation="vertical"
+        android:visibility="gone">
 
-        <TextView
-            android:id="@+id/btn_delay_info"
-            android:layout_width="20dp"
-            android:layout_height="20dp"
-            android:layout_marginEnd="5dp"
-            android:background="@drawable/round_icon_button"
-            android:clickable="true"
-            android:contentDescription="@string/home_delay_info_desc"
-            android:focusable="true"
-            android:gravity="center"
-            android:text="i"
-            android:textColor="#FFFFFF"
-            android:textSize="12sp"
-            android:textStyle="bold|italic"
-            android:fontFamily="serif" />
-
-        <com.google.android.material.button.MaterialButton
-            android:id="@+id/btn_delay_cycle"
+        <LinearLayout
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@string/btn_delay_cycle"
-            android:textAllCaps="false"
-            android:textSize="14sp"
-            app:cornerRadius="12dp"
-            app:backgroundTint="#6200EE"
-            android:textColor="#FFFFFF"
-            app:elevation="2dp" />
+            android:gravity="center_vertical"
+            android:orientation="horizontal">
+
+            <TextView
+                android:id="@+id/btn_delay_info"
+                android:layout_width="20dp"
+                android:layout_height="20dp"
+                android:layout_marginEnd="5dp"
+                android:background="@drawable/round_icon_button"
+                android:clickable="true"
+                android:contentDescription="@string/home_delay_info_desc"
+                android:focusable="true"
+                android:fontFamily="serif"
+                android:gravity="center"
+                android:text="i"
+                android:textColor="#FFFFFF"
+                android:textSize="12sp"
+                android:textStyle="bold|italic" />
+
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/btn_delay_cycle"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:minWidth="220dp"
+                android:text="@string/btn_delay_cycle"
+                android:textAllCaps="false"
+                android:textColor="#FFFFFF"
+                android:textSize="14sp"
+                app:backgroundTint="#6200EE"
+                app:cornerRadius="12dp"
+                app:elevation="2dp" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:gravity="center_vertical"
+            android:orientation="horizontal">
+
+            <TextView
+                android:id="@+id/btn_skip_ring_free_info"
+                android:layout_width="20dp"
+                android:layout_height="20dp"
+                android:layout_marginEnd="5dp"
+                android:background="@drawable/round_icon_button"
+                android:clickable="true"
+                android:contentDescription="@string/home_skip_ring_free_info_desc"
+                android:focusable="true"
+                android:fontFamily="serif"
+                android:gravity="center"
+                android:text="i"
+                android:textColor="#FFFFFF"
+                android:textSize="12sp"
+                android:textStyle="bold|italic" />
+
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/btn_skip_ring_free_week"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:minWidth="220dp"
+                android:text="@string/btn_skip_ring_free_week"
+                android:textAllCaps="false"
+                android:textColor="#FFFFFF"
+                android:textSize="14sp"
+                app:backgroundTint="#6200EE"
+                app:cornerRadius="12dp"
+                app:elevation="2dp" />
+        </LinearLayout>
 
     </LinearLayout>
+
+    <com.google.android.material.button.MaterialButton
+        android:id="@+id/btn_special_actions_toggle"
+        android:layout_width="wrap_content"
+        android:layout_height="42dp"
+        android:layout_gravity="bottom|center_horizontal"
+        android:layout_marginBottom="24dp"
+        android:contentDescription="@string/home_special_actions_toggle_open"
+        android:text="@string/home_special_actions_label"
+        android:textAllCaps="false"
+        android:textColor="#FFFFFF"
+        android:textSize="13sp"
+        app:backgroundTint="#A61A1D2A"
+        app:cornerRadius="21dp"
+        app:elevation="3dp"
+        app:icon="@drawable/ic_special_cases"
+        app:iconGravity="textStart"
+        app:iconPadding="6dp"
+        app:iconTint="#FFFFFF"
+        app:strokeColor="#66FFFFFF"
+        app:strokeWidth="1dp" />
 
 </FrameLayout>

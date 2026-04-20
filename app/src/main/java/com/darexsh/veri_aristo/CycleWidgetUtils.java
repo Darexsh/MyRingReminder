@@ -45,22 +45,24 @@ public final class CycleWidgetUtils {
         currentStart.set(Calendar.MILLISECOND, 0);
 
         int delayDays = repository.getCycleDelayDays(currentStart.getTimeInMillis());
+        int ringFreeDays = repository.getRingFreeDaysForCycle(currentStart.getTimeInMillis());
         Calendar removalDate = (Calendar) currentStart.clone();
         removalDate.add(Calendar.DAY_OF_MONTH, cycleLength + delayDays);
         Calendar reinsertionDate = (Calendar) removalDate.clone();
-        reinsertionDate.add(Calendar.DAY_OF_MONTH, Constants.RING_FREE_DAYS);
+        reinsertionDate.add(Calendar.DAY_OF_MONTH, ringFreeDays);
 
         Calendar nowDay = startOfDay(now);
         Calendar reinsertionDay = startOfDay(reinsertionDate);
 
         int guard = 0;
         while (nowDay.after(reinsertionDay) && guard < 200) {
-            currentStart.add(Calendar.DAY_OF_MONTH, cycleLength + Constants.RING_FREE_DAYS + delayDays);
+            currentStart.add(Calendar.DAY_OF_MONTH, cycleLength + ringFreeDays + delayDays);
             delayDays = repository.getCycleDelayDays(currentStart.getTimeInMillis());
+            ringFreeDays = repository.getRingFreeDaysForCycle(currentStart.getTimeInMillis());
             removalDate = (Calendar) currentStart.clone();
             removalDate.add(Calendar.DAY_OF_MONTH, cycleLength + delayDays);
             reinsertionDate = (Calendar) removalDate.clone();
-            reinsertionDate.add(Calendar.DAY_OF_MONTH, Constants.RING_FREE_DAYS);
+            reinsertionDate.add(Calendar.DAY_OF_MONTH, ringFreeDays);
             reinsertionDay = startOfDay(reinsertionDate);
             guard++;
         }
@@ -77,7 +79,7 @@ public final class CycleWidgetUtils {
             label = context.getString(R.string.home_days_left);
         } else if (now.before(reinsertionDate)) {
             remainingDays = daysBetweenDays(now, reinsertionDate);
-            maxProgress = Constants.RING_FREE_DAYS;
+            maxProgress = Math.max(1, ringFreeDays);
             currentProgress = maxProgress - remainingDays;
             label = context.getString(R.string.home_days_until_insertion);
         } else {
@@ -218,22 +220,24 @@ public final class CycleWidgetUtils {
         currentStart.set(Calendar.MILLISECOND, 0);
 
         int delayDays = repository.getCycleDelayDays(currentStart.getTimeInMillis());
+        int ringFreeDays = repository.getRingFreeDaysForCycle(currentStart.getTimeInMillis());
         Calendar removalDate = (Calendar) currentStart.clone();
         removalDate.add(Calendar.DAY_OF_MONTH, cycleLength + delayDays);
         Calendar reinsertionDate = (Calendar) removalDate.clone();
-        reinsertionDate.add(Calendar.DAY_OF_MONTH, Constants.RING_FREE_DAYS);
+        reinsertionDate.add(Calendar.DAY_OF_MONTH, ringFreeDays);
 
         Calendar nowDay = startOfDay(now);
         Calendar reinsertionDay = startOfDay(reinsertionDate);
 
         int guard = 0;
         while (nowDay.after(reinsertionDay) && guard < 200) {
-            currentStart.add(Calendar.DAY_OF_MONTH, cycleLength + Constants.RING_FREE_DAYS + delayDays);
+            currentStart.add(Calendar.DAY_OF_MONTH, cycleLength + ringFreeDays + delayDays);
             delayDays = repository.getCycleDelayDays(currentStart.getTimeInMillis());
+            ringFreeDays = repository.getRingFreeDaysForCycle(currentStart.getTimeInMillis());
             removalDate = (Calendar) currentStart.clone();
             removalDate.add(Calendar.DAY_OF_MONTH, cycleLength + delayDays);
             reinsertionDate = (Calendar) removalDate.clone();
-            reinsertionDate.add(Calendar.DAY_OF_MONTH, Constants.RING_FREE_DAYS);
+            reinsertionDate.add(Calendar.DAY_OF_MONTH, ringFreeDays);
             reinsertionDay = startOfDay(reinsertionDate);
             guard++;
         }
@@ -244,7 +248,7 @@ public final class CycleWidgetUtils {
         } else if (now.before(reinsertionDate)) {
             nextEvent = reinsertionDate;
         } else {
-            currentStart.add(Calendar.DAY_OF_MONTH, cycleLength + Constants.RING_FREE_DAYS + delayDays);
+            currentStart.add(Calendar.DAY_OF_MONTH, cycleLength + ringFreeDays + delayDays);
             delayDays = repository.getCycleDelayDays(currentStart.getTimeInMillis());
             removalDate = (Calendar) currentStart.clone();
             removalDate.add(Calendar.DAY_OF_MONTH, cycleLength + delayDays);

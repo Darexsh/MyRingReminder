@@ -98,8 +98,7 @@ public final class CalendarRenderCache {
         Calendar futureLimit = (Calendar) today.clone();
         futureLimit.add(Calendar.MONTH, Math.max(futureMonths, 0));
 
-        int ringFreeCount = Constants.RING_FREE_DAYS;
-        int baseStepDays = cycleLength + ringFreeCount;
+        int baseStepDays = cycleLength + Constants.RING_FREE_DAYS;
         if (baseStepDays <= 0) {
             return new Snapshot(
                     normalizeMillis(startDate),
@@ -130,12 +129,13 @@ public final class CalendarRenderCache {
         int guard = 0;
         while (!currentStart.after(futureLimit) && guard < 2000) {
             int delayDays = getDelayDaysForStart(repository, currentStart);
-            int stepDays = cycleLength + ringFreeCount + delayDays;
+            int ringFreeDaysForCycle = repository.getRingFreeDaysForCycle(currentStart.getTimeInMillis());
+            int stepDays = cycleLength + ringFreeDaysForCycle + delayDays;
 
             Calendar removalDate = (Calendar) currentStart.clone();
             removalDate.add(Calendar.DAY_OF_MONTH, cycleLength + delayDays);
             Calendar newInsertionDate = (Calendar) removalDate.clone();
-            newInsertionDate.add(Calendar.DAY_OF_MONTH, ringFreeCount);
+            newInsertionDate.add(Calendar.DAY_OF_MONTH, ringFreeDaysForCycle);
 
             Calendar wearStart = (Calendar) currentStart.clone();
             wearStart.add(Calendar.DAY_OF_MONTH, 1);
@@ -145,7 +145,7 @@ public final class CalendarRenderCache {
             Calendar ringFreeStart = (Calendar) removalDate.clone();
             ringFreeStart.add(Calendar.DAY_OF_MONTH, 1);
             Calendar ringFreeEnd = (Calendar) removalDate.clone();
-            ringFreeEnd.add(Calendar.DAY_OF_MONTH, 6);
+            ringFreeEnd.add(Calendar.DAY_OF_MONTH, Math.max(0, ringFreeDaysForCycle - 1));
 
             if (isWithinRange(currentStart, pastLimit, futureLimit)) {
                 insertionDays.add(toCalendarDay(currentStart));
@@ -159,7 +159,7 @@ public final class CalendarRenderCache {
             if (isOverlappingRange(wearStart, wearEnd, pastLimit, futureLimit)) {
                 addDaysToSet(wearDays, wearStart, wearEnd, pastLimit, futureLimit);
             }
-            if (isOverlappingRange(ringFreeStart, ringFreeEnd, pastLimit, futureLimit)) {
+            if (ringFreeDaysForCycle > 0 && isOverlappingRange(ringFreeStart, ringFreeEnd, pastLimit, futureLimit)) {
                 addDaysToSet(ringFreeDays, ringFreeStart, ringFreeEnd, pastLimit, futureLimit);
             }
 

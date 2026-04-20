@@ -2008,6 +2008,7 @@ public class SettingsFragment extends Fragment {
         int notificationFlagsTrue = 0;
         int notifiedSettings = 0;
         int cycleDelayEntries = 0;
+        int skipRingFreeEntries = 0;
         for (Map.Entry<String, PrefValue> entry : all.entrySet()) {
             String key = entry.getKey();
             if (key.startsWith("notified_settings_")) {
@@ -2021,6 +2022,9 @@ public class SettingsFragment extends Fragment {
                 consumed.add(key);
             } else if (key.startsWith("cycle_delay_")) {
                 cycleDelayEntries++;
+                consumed.add(key);
+            } else if (key.startsWith("skip_ring_free_")) {
+                skipRingFreeEntries++;
                 consumed.add(key);
             }
         }
@@ -2037,6 +2041,9 @@ public class SettingsFragment extends Fragment {
         }
         if (cycleDelayEntries > 0) {
             appendLine(builder, getString(R.string.backup_field_cycle_delay_entries_format, cycleDelayEntries));
+        }
+        if (skipRingFreeEntries > 0) {
+            appendLine(builder, getString(R.string.backup_field_skip_ring_free_entries_format, skipRingFreeEntries));
         }
     }
 
@@ -2722,20 +2729,22 @@ public class SettingsFragment extends Fragment {
         currentStart.set(Calendar.SECOND, 0);
         currentStart.set(Calendar.MILLISECOND, 0);
         int delayDays = viewModel.getRepository().getCycleDelayDays(currentStart.getTimeInMillis());
+        int ringFreeDays = viewModel.getRepository().getRingFreeDaysForCycle(currentStart.getTimeInMillis());
         Calendar removalDate = (Calendar) currentStart.clone();
         removalDate.add(Calendar.DAY_OF_MONTH, cycleLength + delayDays);
         Calendar reinsertionDate = (Calendar) removalDate.clone();
-        reinsertionDate.add(Calendar.DAY_OF_MONTH, Constants.RING_FREE_DAYS);
+        reinsertionDate.add(Calendar.DAY_OF_MONTH, ringFreeDays);
 
         int guard = 0;
         Calendar systemNow = Calendar.getInstance();
         while (systemNow.after(reinsertionDate) && guard < 300) {
-            currentStart.add(Calendar.DAY_OF_MONTH, cycleLength + Constants.RING_FREE_DAYS + delayDays);
+            currentStart.add(Calendar.DAY_OF_MONTH, cycleLength + ringFreeDays + delayDays);
             delayDays = viewModel.getRepository().getCycleDelayDays(currentStart.getTimeInMillis());
+            ringFreeDays = viewModel.getRepository().getRingFreeDaysForCycle(currentStart.getTimeInMillis());
             removalDate = (Calendar) currentStart.clone();
             removalDate.add(Calendar.DAY_OF_MONTH, cycleLength + delayDays);
             reinsertionDate = (Calendar) removalDate.clone();
-            reinsertionDate.add(Calendar.DAY_OF_MONTH, Constants.RING_FREE_DAYS);
+            reinsertionDate.add(Calendar.DAY_OF_MONTH, ringFreeDays);
             guard++;
         }
 
@@ -2825,21 +2834,24 @@ public class SettingsFragment extends Fragment {
             baseStart = Calendar.getInstance();
         }
         int cycleLength = getSafeCycleLength();
-        int ringFreeDays = Constants.RING_FREE_DAYS;
+        int ringFreeDays = viewModel.getRepository().getRingFreeDaysForCycle(baseStart.getTimeInMillis());
         int removalReminderHours = viewModel.getRepository().getRemovalReminderHours();
         int insertionReminderHours = viewModel.getRepository().getInsertionReminderHours();
+        int delayDays = viewModel.getRepository().getCycleDelayDays(baseStart.getTimeInMillis());
 
         Calendar currentStart = (Calendar) baseStart.clone();
         Calendar removalDate = (Calendar) currentStart.clone();
-        removalDate.add(Calendar.DAY_OF_MONTH, cycleLength);
+        removalDate.add(Calendar.DAY_OF_MONTH, cycleLength + delayDays);
         Calendar reinsertionDate = (Calendar) removalDate.clone();
         reinsertionDate.add(Calendar.DAY_OF_MONTH, ringFreeDays);
 
         int guard = 0;
         while (now.after(reinsertionDate) && guard < 500) {
-            currentStart.add(Calendar.DAY_OF_MONTH, cycleLength + ringFreeDays);
+            currentStart.add(Calendar.DAY_OF_MONTH, cycleLength + ringFreeDays + delayDays);
+            delayDays = viewModel.getRepository().getCycleDelayDays(currentStart.getTimeInMillis());
+            ringFreeDays = viewModel.getRepository().getRingFreeDaysForCycle(currentStart.getTimeInMillis());
             removalDate = (Calendar) currentStart.clone();
-            removalDate.add(Calendar.DAY_OF_MONTH, cycleLength);
+            removalDate.add(Calendar.DAY_OF_MONTH, cycleLength + delayDays);
             reinsertionDate = (Calendar) removalDate.clone();
             reinsertionDate.add(Calendar.DAY_OF_MONTH, ringFreeDays);
             guard++;

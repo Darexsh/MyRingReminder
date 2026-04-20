@@ -9,7 +9,6 @@ import java.util.Calendar;
 
 public final class ReminderScheduler {
 
-    private static final int RING_FREE_DAYS = Constants.RING_FREE_DAYS;
     private static final int NOTIFY_TWO_WEEKS = 0;
     private static final int NOTIFY_ONE_WEEK = 1;
     private static final int NOTIFY_REMOVAL_REMINDER = 2;
@@ -29,22 +28,24 @@ public final class ReminderScheduler {
         int cycleLength = repository.getCycleLength();
 
         int delayDays = repository.getCycleDelayDays(startDate.getTimeInMillis());
+        int ringFreeDays = repository.getRingFreeDaysForCycle(startDate.getTimeInMillis());
         Calendar removalDate = (Calendar) startDate.clone();
         removalDate.add(Calendar.DAY_OF_MONTH, cycleLength + delayDays);
         Calendar reinsertionDate = (Calendar) removalDate.clone();
-        reinsertionDate.add(Calendar.DAY_OF_MONTH, RING_FREE_DAYS);
+        reinsertionDate.add(Calendar.DAY_OF_MONTH, ringFreeDays);
 
         Calendar now = Calendar.getInstance();
         Calendar nowDay = startOfDay(now);
         Calendar reinsertionDay = startOfDay(reinsertionDate);
 
         while (nowDay.after(reinsertionDay)) {
-            startDate.add(Calendar.DAY_OF_MONTH, cycleLength + RING_FREE_DAYS + delayDays);
+            startDate.add(Calendar.DAY_OF_MONTH, cycleLength + ringFreeDays + delayDays);
             delayDays = repository.getCycleDelayDays(startDate.getTimeInMillis());
+            ringFreeDays = repository.getRingFreeDaysForCycle(startDate.getTimeInMillis());
             removalDate = (Calendar) startDate.clone();
             removalDate.add(Calendar.DAY_OF_MONTH, cycleLength + delayDays);
             reinsertionDate = (Calendar) removalDate.clone();
-            reinsertionDate.add(Calendar.DAY_OF_MONTH, RING_FREE_DAYS);
+            reinsertionDate.add(Calendar.DAY_OF_MONTH, ringFreeDays);
             reinsertionDay = startOfDay(reinsertionDate);
         }
 

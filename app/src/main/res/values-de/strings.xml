@@ -22,16 +22,23 @@
     <string name="btn_welcome_tour">Welcome-Tour</string>
     <string name="btn_reset_app">App zurücksetzen</string>
     <string name="btn_delay_cycle">Ring länger tragen</string>
+    <string name="btn_skip_ring_free_week">Ringfreie Woche überspringen</string>
 
     <string name="home_days_left">Tage verbleibend</string>
     <string name="home_days_until_insertion">Tage bis zum Einsetzen</string>
     <string name="home_delay_info_title">Info</string>
     <string name="home_delay_info_desc">Info zu Ring länger tragen</string>
+    <string name="home_skip_ring_free_info_desc">Info zu Ringfreie Woche überspringen</string>
+    <string name="home_special_actions_label">Sonderfälle</string>
+    <string name="home_special_actions_toggle_open">Sonderaktionen öffnen</string>
+    <string name="home_special_actions_toggle_close">Sonderaktionen schließen</string>
     <string name="home_delay_info_message"><![CDATA[
 <b>Sie haben vergessen, den Ring zu entfernen</b><br><br>
 <b>Ring 3–4 Wochen eingelegt</b>: Der Schutz vor Schwangerschaft bleibt erhalten. Entfernen Sie den Ring, machen Sie eine ringfreie Woche (in der meist die Monatsblutung einsetzt) und legen Sie dann einen neuen Ring ein.<br><br>
 <b>Ring länger als 4 Wochen eingelegt</b>: Der Verhütungsschutz kann beeinträchtigt sein – es besteht ein Risiko für eine Schwangerschaft. Entfernen Sie den Ring sofort und kontaktieren Sie Ihren Arzt/Ihre Ärztin, bevor Sie einen neuen einlegen (ggf. Schwangerschaftstest oder zusätzliche Verhütung notwendig).<br><br>
 <b>Hinweis</b>: Bei ausbleibender Monatsblutung nach Entfernen des Rings ebenfalls ärztlichen Rat einholen.<br><br>
+]]></string>
+    <string name="home_skip_ring_free_info_message"><![CDATA[
 <b>Sie möchten Ihre Monatsblutung verzögern</b><br><br>
 Dies entspricht nicht der empfohlenen Standardanwendung, ist aber möglich:<br>
 - Lassen Sie die ringfreie Woche aus und legen Sie direkt nach Entfernen des alten Rings einen neuen Ring ein.<br>
@@ -274,6 +281,7 @@ Dies entspricht nicht der empfohlenen Standardanwendung, ist aber möglich:<br>
     <string name="backup_field_notification_flags_format">Benachrichtigungs-Flags: %1$d Einträge (%2$d aktiv)</string>
     <string name="backup_field_notification_hashes_format">Benachrichtigungs-Snapshots: %1$d Einträge</string>
     <string name="backup_field_cycle_delay_entries_format">Verschobene Zyklus-Einträge: %1$d</string>
+    <string name="backup_field_skip_ring_free_entries_format">Übersprungene ringfreie Wochen: %1$d</string>
     <string name="backup_unit_day">Tag</string>
     <string name="backup_unit_days">Tage</string>
     <string name="backup_unit_month">Monat</string>
@@ -318,6 +326,9 @@ Dies entspricht nicht der empfohlenen Standardanwendung, ist aber möglich:<br>
     <string name="home_delay_title">Ring länger getragen</string>
     <string name="home_delay_message">Wie viele Tage länger wurde der Ring getragen?</string>
     <string name="home_delay_confirm">Aktualisieren</string>
+    <string name="home_skip_ring_free_title">Ringfreie Woche überspringen</string>
+    <string name="home_skip_ring_free_message">Nach dem Entfernen wird für diesen Zyklus das direkte Einsetzen eines neuen Rings gesetzt. Die folgenden Zyklen laufen wieder normal mit ringfreier Woche weiter.</string>
+    <string name="home_skip_ring_free_confirm">Jetzt überspringen</string>
 
     <string name="main_double_back_exit">Doppelt zurück um App zu schließen</string>
 
