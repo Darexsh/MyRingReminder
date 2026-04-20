@@ -8,7 +8,7 @@
 **An Android app for tracking and managing contraceptive ring cycles**  
 📅⏰📝🎨📊
 
-![Projekt-Status](https://img.shields.io/badge/Status-Aktiv-brightgreen) ![License](https://img.shields.io/badge/License-NonCommercial-blue) ![Version](https://img.shields.io/badge/Version-1.3.2.1-orange)
+![Projekt-Status](https://img.shields.io/badge/Status-Aktiv-brightgreen) ![License](https://img.shields.io/badge/License-NonCommercial-blue) ![Version](https://img.shields.io/badge/Version-1.3.3-orange)
 
 [![Telegram Bot](https://img.shields.io/badge/Telegram-Bot-2AABEE?logo=telegram&logoColor=white)](https://t.me/darexsh_bot) [![Buy Me a Coffee](https://img.shields.io/badge/Buy%20Me%20a%20Coffee-yellow?logo=buy-me-a-coffee)](https://buymeacoffee.com/darexsh)  
 <sub>Get release updates on Telegram.<br>If you want to support more apps, you can leave a small donation for a coffee.</sub>
@@ -63,7 +63,11 @@
 
 * 📊 **Cycle History**: Review past and upcoming cycles to track patterns and durations.
 
-* ⏩ **Wear Ring Longer**: Extend the current cycle once and keep history intact, with built‑in info guidance.
+* ⏩ **Wear Ring Longer**: Extend the current cycle by extra days (per cycle), with built‑in info guidance.
+
+* ⏭️ **Skip Ring-Free Week**: Skip the ring-free week for the current cycle (immediate reinsertion), then continue with normal cycle behavior afterward.
+
+* 🧰 **Special Cases Menu (Home)**: Open quick actions for “Wear ring longer” and “Skip ring-free week” from a compact Home menu with auto-hide.
 
 * 🧩 **Home Screen Widgets**: Small widget shows days left; large widget shows days left plus next dates, both color‑synced with app settings and resizable.
 
@@ -184,11 +188,21 @@
 
     * Tap the **info** icon next to “Wear ring longer” for guidance.
 
-9. **Animation Style**:
+9. **Special Cases Menu (Home)**:
+
+    * Tap **Sonderfälle / Special cases** on the Home screen to open quick actions.
+
+    * Use **Wear ring longer** to extend only the current cycle.
+
+    * Use **Skip ring-free week** to set immediate reinsertion for the current cycle.
+
+    * Both actions include dedicated **info** dialogs.
+
+10. **Animation Style**:
 
     * Open **Settings** and choose your preferred global app transition animation.
 
-10. **App Lock**:
+11. **App Lock**:
 
     * Open **Settings → Advanced → App lock**.
 
