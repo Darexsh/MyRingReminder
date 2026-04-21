@@ -1,0 +1,533 @@
+<resources>
+    <!-- App -->
+    <string name="app_info_actions_title">Eylemler</string>
+    <string name="app_info_description">Veri Aristo, kontraseptif halka döngülerini takip etmek için tasarlanmış bir Android uygulamasıdır. Halka takma, çıkarma ve halkasız günler için renk kodlu bir takvim, özelleştirilebilir hatırlatıcılar, notlar, widgetlar ve yedekleme/geri yükleme seçenekleri sunar. Uygulama, hoş geldin turu, döngü geçmişi ve döngüyü uzatma („halkayı daha uzun süre kullan“) rehberliği içerir. Varsayılan olarak karanlık modda çalışır, dikey yönde kalır ve arka plan resimleri ile renk ayarları gibi kişiselleştirmeleri destekler.\nTüm veriler yalnızca bu cihazda saklanır!</string>
+    <string name="app_info_developer">Geliştirici: %1$s</string>
+    <string name="app_info_developer_label">Geliştirici:</string>
+    <string name="app_info_developer_name">Daniel Sichler tarafından Darexsh</string>
+    <string name="app_info_email">E-posta: %1$s</string>
+    <string name="app_info_github">GitHub: %1$s</string>
+    <string name="app_info_name">Veri Aristo Halka Hatırlatıcı</string>
+    <string name="app_info_open_coffee">Bana bir kahve ısmarla</string>
+    <string name="app_info_open_email">E-posta yaz</string>
+    <string name="app_info_open_github">Sosyal medyayı aç</string>
+    <string name="app_info_open_github_profile">GitHub profili</string>
+    <string name="app_info_open_telegram_bot">Telegram botunu aç</string>
+    <string name="app_info_title">Uygulama bilgisi</string>
+    <string name="app_info_version">Sürüm %1$s</string>
+    <string name="app_info_version_label">Sürüm</string>
+    <string name="app_lock_auth_required">Uygulamayı açmak için kimlik doğrulaması gerekiyor.</string>
+    <string name="app_lock_auth_subtitle">Biyometrik doğrulamayı veya cihaz PIN\'ini kullanın</string>
+    <string name="app_lock_auth_title">Veri Aristo\'nun Kilidini Aç</string>
+    <string name="app_lock_overlay_subtitle">Devam etmek için kilidi açın</string>
+    <string name="app_lock_overlay_title">Uygulama Kilitlendi</string>
+    <string name="app_lock_overlay_unlock">Uygulama kilidini aç</string>
+    <string name="app_lock_tools_delay_current">Mevcut gecikme: %1$s</string>
+    <string name="app_lock_tools_delay_hint">Uygulama değiştirildikten sonra uygulamanın ne zaman otomatik olarak kilitleneceğini ayarlayın.</string>
+    <string name="app_lock_tools_title">Uygulama kilidi</string>
+    <string name="app_lock_tools_toggle_hint">Uygulama korumasını etkinleştirin veya devre dışı bırakın.</string>
+    <string name="app_lock_tools_toggle_off">Uygulama kilidi: Kapalı</string>
+    <string name="app_lock_tools_toggle_on">Uygulama kilidi: Açık</string>
+    <string name="app_name">Veri Aristo</string>
+
+    <!-- Section Headers -->
+    <string name="section_advanced">Gelişmiş</string>
+    <string name="section_calendar">Takvim</string>
+    <string name="section_cycle">Döngü</string>
+    <string name="section_debug">Hata Ayıklama</string>
+    <string name="section_design">Tasarım</string>
+    <string name="section_language">Dil</string>
+    <string name="section_notifications">Bildirimler</string>
+
+    <!-- Buttons -->
+    <string name="btn_backup">Yedekle</string>
+    <string name="btn_debug_clear_time">Hata ayıklama zamanını temizle</string>
+    <string name="btn_debug_info">Hata ayıklama bilgisi</string>
+    <string name="btn_debug_jump_midnight">Gece yarısına atla</string>
+    <string name="btn_debug_minus_day">-1 gün</string>
+    <string name="btn_debug_minus_hour">-1 saat</string>
+    <string name="btn_debug_plus_day">+1 gün</string>
+    <string name="btn_debug_plus_hour">+1 saat</string>
+    <string name="btn_debug_preset_insertion_at">Hazır ayar: Yerleştirme zamanı</string>
+    <string name="btn_debug_preset_insertion_before">Hazır ayar: Yerleştirme -1sa</string>
+    <string name="btn_debug_preset_removal_at">Hazır ayar: Çıkarma zamanı</string>
+    <string name="btn_debug_preset_removal_before">Hazır ayar: Çıkarma -1sa</string>
+    <string name="btn_debug_refresh">Arayüzü ve widgetları yenile</string>
+    <string name="btn_debug_set_time">Hata ayıklama zamanını ayarla</string>
+    <string name="btn_delay_cycle">Halkayı daha uzun süre kullan</string>
+    <string name="btn_notification_battery">Pil optimizasyonunu devre dışı bırak</string>
+    <string name="btn_notification_help">Tam alarmlara izin ver</string>
+    <string name="btn_notification_permission">Bildirim izni</string>
+    <string name="btn_notification_test">Test bildirimi gönder</string>
+    <string name="btn_notifications_settings">Bildirim ayarları</string>
+    <string name="btn_reset_app">Uygulamayı sıfırla</string>
+    <string name="btn_set_background">Arka plan resmi seç</string>
+    <string name="btn_set_calendar_range">Takvim aralığını ayarla</string>
+    <string name="btn_set_cycle_length">Döngü süresini değiştir</string>
+    <string name="btn_set_notification_times">Hatırlatıcıları ayarla</string>
+    <string name="btn_set_start_date">Yerleştirme tarihini ayarla</string>
+    <string name="btn_set_time">Yerleştirme saatini ayarla</string>
+    <string name="btn_skip_ring_free_week">Halkasız haftayı atla</string>
+    <string name="btn_update_app">Güncellemeleri kontrol et</string>
+    <string name="btn_welcome_tour">Hoş geldin turu</string>
+
+    <!-- Settings -->
+    <string name="settings_advanced_toggle_desc">Gelişmiş ayarları değiştir</string>
+    <string name="settings_app_lock_disable">Devre Dışı Bırak</string>
+    <string name="settings_app_lock_disable_message">Uygulama biyometrik veya PIN koruması olmadan açılacaktır.</string>
+    <string name="settings_app_lock_disable_title">Uygulama kilidi kapatılsın mı?</string>
+    <string name="settings_app_lock_enable">Etkinleştir</string>
+    <string name="settings_app_lock_enable_message">Etkinleştirildiğinde, uygulama açılırken biyometrik kimlik doğrulama veya cihaz PIN/desen/şifresini gerektirir.</string>
+    <string name="settings_app_lock_enable_title">Uygulama kilidi açılsın mı?</string>
+    <string name="settings_app_lock_format">Uygulama kilidi: %1$s</string>
+    <string name="settings_app_lock_label">Uygulama kilidi</string>
+    <string name="settings_app_lock_requires_secure_lock">Uygulama kilidini kullanmak için önce bir ekran kilidi (PIN/desen/şifre) ayarlayın.</string>
+    <string name="settings_app_lock_status_off">Kapalı</string>
+    <string name="settings_app_lock_status_on">Açık</string>
+    <string name="settings_app_lock_timeout_dialog_title">Otomatik kilitleme gecikmesi</string>
+    <string name="settings_app_lock_timeout_format">Kilitleme gecikmesi: %1$s</string>
+    <string name="settings_app_lock_timeout_label">Otomatik kilitleme gecikmesi</string>
+    <string name="settings_background_all_screens_format">Tüm ekranlarda arka plan: %1$s</string>
+    <string name="settings_background_all_screens_label">Tüm ekranlarda arka plan</string>
+    <string name="settings_background_all_screens_off">Kapalı</string>
+    <string name="settings_background_all_screens_on">Açık</string>
+    <string name="settings_background_blur_dashboard">Kontrol Paneli: %1$d%%</string>
+    <string name="settings_background_blur_dashboard_title">Kontrol Paneli</string>
+    <string name="settings_background_blur_format">Arka plan bulanıklığı:\nPanel %1$d%%, Diğerleri %2$d%%</string>
+    <string name="settings_background_blur_label">Arka plan bulanıklığı</string>
+    <string name="settings_background_blur_others">Diğer ekranlar: %1$d%%</string>
+    <string name="settings_background_blur_others_title">Diğer ekranlar</string>
+    <string name="settings_background_blur_title">Arka plan bulanıklığı</string>
+    <string name="settings_background_blur_unavailable_toast">Yalnızca Android 12 ve üzeri sürümlerde kullanılabilir</string>
+    <string name="settings_background_dim_format">Arka plan karartma: %1$d%%</string>
+    <string name="settings_background_dim_label">Arka plan karartma</string>
+    <string name="settings_background_dim_message">Yüzde olarak karartma gücünü seçin.</string>
+    <string name="settings_background_dim_title">Arka plan karartmayı ayarla</string>
+    <string name="settings_button_color_custom">Özel renk</string>
+    <string name="settings_button_color_custom_action">Özel renk</string>
+    <string name="settings_button_color_custom_title">Özel düğme rengi</string>
+    <string name="settings_button_color_dialog_title">Düğme rengini seçin</string>
+    <string name="settings_button_color_format">Düğme rengi</string>
+    <string name="settings_button_color_label">Düğme rengi</string>
+    <string name="settings_button_color_widget_note">Widget arka plan rengini de günceller.</string>
+    <string name="settings_calendar_insertion_color_custom_title">Özel yerleştirme rengi</string>
+    <string name="settings_calendar_insertion_color_dialog_title">Yerleştirme rengini seçin</string>
+    <string name="settings_calendar_insertion_color_format">Yerleştirme rengi: %1$s</string>
+    <string name="settings_calendar_insertion_color_label">Yerleştirme rengi</string>
+    <string name="settings_calendar_range_back">Geri</string>
+    <string name="settings_calendar_range_button">Takvim aralığı:\n%1$d %2$s geri, %3$d %4$s ileri</string>
+    <string name="settings_calendar_range_forward">İleri</string>
+    <string name="settings_calendar_range_message">Takvimin ne kadar ileriyi/geriyi göstereceğini seçin.</string>
+    <string name="settings_calendar_range_title">Takvim aralığını ayarla</string>
+    <string name="settings_calendar_removal_color_custom_title">Özel çıkarma rengi</string>
+    <string name="settings_calendar_removal_color_dialog_title">Çıkarma rengini seçin</string>
+    <string name="settings_calendar_removal_color_format">Çıkarma rengi: %1$s</string>
+    <string name="settings_calendar_removal_color_label">Çıkarma rengi</string>
+    <string name="settings_calendar_ring_free_color_custom_title">Özel halkasız dönem rengi</string>
+    <string name="settings_calendar_ring_free_color_dialog_title">Halkasız dönem rengini seçin</string>
+    <string name="settings_calendar_ring_free_color_format">Halkasız renk: %1$s</string>
+    <string name="settings_calendar_ring_free_color_label">Halkasız renk</string>
+    <string name="settings_calendar_wear_color_custom_title">Özel kullanım süresi rengi</string>
+    <string name="settings_calendar_wear_color_dialog_title">Kullanım süresi rengini seçin</string>
+    <string name="settings_calendar_wear_color_format">Kullanım rengi: %1$s</string>
+    <string name="settings_calendar_wear_color_label">Kullanım rengi</string>
+    <string name="settings_circle_color_custom_title">Özel ana halka rengi</string>
+    <string name="settings_circle_color_dialog_title">Ana halka rengini seçin</string>
+    <string name="settings_circle_color_format">Ana halka rengi</string>
+    <string name="settings_circle_color_label">Ana halka rengi</string>
+    <string name="settings_circle_color_widget_note">Widget halka rengini de günceller.</string>
+    <string name="settings_circle_style_dialog_title">Ana halka stilini seçin</string>
+    <string name="settings_circle_style_format">Ana halka stili: %1$s</string>
+    <string name="settings_circle_style_label">Ana halka stili</string>
+    <string name="settings_cycle_length_button">Döngü süresi: %1$d gün</string>
+    <string name="settings_cycle_length_message">Döngü süresini gün olarak seçin:</string>
+    <string name="settings_cycle_length_title">Döngü süresini ayarla</string>
+    <string name="settings_date_button_format">Yerleştirme tarihi: %1$02d.%2$02d.%3$d</string>
+    <string name="settings_info_desc">Uygulama bilgisi</string>
+    <string name="settings_navigation_animation_dialog_title">Gezinme animasyonunu seçin</string>
+    <string name="settings_navigation_animation_format">Gezinme animasyonu: %1$s</string>
+    <string name="settings_navigation_animation_label">Gezinme animasyonu</string>
+    <string name="settings_notification_before_insertion">Yerleştirmeden önce (saat)</string>
+    <string name="settings_notification_before_removal">Çıkarmadan önce (saat)</string>
+    <string name="settings_notification_times_button">Hatırlatıcılar: çıkarmadan %1$d sa, yerleştirmeden %2$d sa önce</string>
+    <string name="settings_notification_times_message">Saat bazında önceden bildirme süresini seçin (0 = hatırlatıcı yok).</string>
+    <string name="settings_notification_times_title">Hatırlatıcıları ayarla</string>
+    <string name="settings_permission_message">Arka plan resmi seçmek için resimlere erişim izni gereklidir.</string>
+    <string name="settings_permission_title">İzin gerekli</string>
+    <string name="settings_reset_confirm">Sıfırla</string>
+    <string name="settings_reset_done">Uygulama sıfırlandı</string>
+    <string name="settings_reset_message">Tüm kaydedilen veriler, ayarlar ve notlar silinecektir.</string>
+    <string name="settings_reset_title">Uygulama sıfırlansın mı?</string>
+    <string name="settings_subtitle">Her şey tek bir yerde.</string>
+    <string name="settings_time_button_format">Yerleştirme saati: %1$02d:%2$02d</string>
+    <string name="settings_title">Ayarlar</string>
+    <string name="settings_unit_month">Ay</string>
+    <string name="settings_unit_month_short">ay</string>
+    <string name="settings_unit_year">Yıl</string>
+    <string name="settings_unit_year_short">yıl</string>
+
+    <!-- Notification Settings -->
+    <string name="notification_hint_battery">Sistemin hatırlatıcıları geciktirmemesi için pil optimizasyonunu devre dışı bırakın.</string>
+    <string name="notification_hint_exact_alarm">Hatırlatıcıların zamanında çalması için tam alarmlara izin verin (Android 12+).</string>
+    <string name="notification_hint_permission">Hatırlatıcıların görünebilmesi için bildirim erişimine izin verin (Android 13+).</string>
+    <string name="notification_hint_set_times">Çıkarmadan veya yerleştirmeden kaç saat önce hatırlatıcı istediğinizi seçin.</string>
+    <string name="notification_open_settings">Bildirim ayarlarını aç</string>
+    <string name="notification_permission_button_label">Bildirim izni: %1$s</string>
+    <string name="notification_permission_denied">Bildirim izni reddedildi.</string>
+    <string name="notification_permission_granted">Bildirim izni verildi.</string>
+    <string name="notification_permission_required_message">Lütfen bu uygulama için bildirimlere izin verin, aksi takdirde hatırlatıcılar ve test bildirimleri gösterilemez.</string>
+    <string name="notification_permission_required_title">Bildirim izni gerekli</string>
+    <string name="notification_permission_status_allowed">izin verildi</string>
+    <string name="notification_permission_status_blocked">engellendi</string>
+    <string name="notification_permission_status_not_required">gerekli değil</string>
+    <string name="notification_test_blocked_permission">Bildirim izni engellendi.</string>
+    <string name="notification_test_blocked_system">Sistem ayarlarında bu uygulama için bildirimler devre dışı bırakılmış.</string>
+    <string name="notification_test_message">Bunu görebiliyorsanız, bildirimler çalışıyor demektir.</string>
+    <string name="notification_test_sent">Test bildirimi gönderildi.</string>
+    <string name="notification_test_title">Veri Aristo testi</string>
+    <string name="notification_times_button_label">Hatırlatıcılar:\nçıkarmadan %1$d sa önce, yerleştirmeden %2$d sa önce</string>
+    <string name="notification_times_button_unknown">Hatırlatıcılar:\nbilinmiyor</string>
+    <string name="notifications_channel_description">Halka döngüleri için bildirimler</string>
+    <string name="notifications_channel_name">Hatırlatıcılar</string>
+
+    <!-- Notifications -->
+    <string name="battery_opt_button_label">Pil optimizasyonu: %1$s</string>
+    <string name="battery_opt_status_disabled">devre dışı</string>
+    <string name="battery_opt_status_enabled">etkin</string>
+    <string name="battery_opt_status_not_required">gerekli değil</string>
+    <string name="battery_opt_status_unknown">bilinmiyor</string>
+    <string name="exact_alarm_button_label">Tam alarmlar: %1$s</string>
+    <string name="exact_alarm_message">Tam hatırlatıcılar izin gerektirir. Bildirimlerin zamanında çalması için lütfen sistem ayarlarından tam alarmlara izin verin.</string>
+    <string name="exact_alarm_not_supported">Bu Android sürümünde tam alarmlar gerekli değildir.</string>
+    <string name="exact_alarm_open_settings">Ayarları aç</string>
+    <string name="exact_alarm_status_allowed">izin verildi</string>
+    <string name="exact_alarm_status_blocked">engellendi</string>
+    <string name="exact_alarm_status_not_required">gerekli değil</string>
+    <string name="exact_alarm_status_unknown">bilinmiyor</string>
+    <string name="exact_alarm_title">Tam alarmlara izin ver</string>
+    <string name="notif_cycle_duration_title">Döngü süresi</string>
+    <string name="notif_insert_in_hours">Halkayı %1$d saat içinde yerleştirin!</string>
+    <string name="notif_insert_now">Halkayı şimdi saat %1$s itibarıyla yerleştirin!</string>
+    <string name="notif_insert_title">Halkayı yerleştir</string>
+    <string name="notif_one_week_remaining">Halkalı son bir hafta.</string>
+    <string name="notif_remove_in_hours">Halkayı %1$d saat içinde çıkarın!</string>
+    <string name="notif_remove_now">Halkayı şimdi saat %1$s itibarıyla çıkarın!</string>
+    <string name="notif_remove_title">Halkayı çıkar</string>
+    <string name="notif_two_weeks_remaining">Halkalı son iki hafta.</string>
+
+    <!-- Home -->
+    <string name="home_at_time">%1$s saatinde</string>
+    <string name="home_background_desc">Arka plan resmi</string>
+    <string name="home_days">17</string>
+    <string name="home_days_left">Kalan gün</string>
+    <string name="home_days_until_insertion">Yerleştirmeye kalan gün</string>
+    <string name="home_delay_confirm">Güncelle</string>
+    <string name="home_delay_info_desc">Halkayı daha uzun süre kullanma hakkında bilgi</string>
+    <string name="home_delay_info_message"><![CDATA[
+        <b>Halkayı çıkarmayı unuttunuz</b><br><br>
+        <b>Halka 3–4 hafta kaldıysa</b>: Doğum kontrol koruması devam eder. Halkayı çıkarın, bir hafta ara verin (genellikle kanamanın olduğu hafta), ardından yeni bir halka yerleştirin.<br><br>
+        <b>Halka 4 haftadan uzun süre kaldıysa</b>: Doğum kontrol koruması azalmış olabilir — hamilelik riski vardır. Halkayı derhal çıkarın ve yenisini yerleştirmeden önce doktorunuza danışın (hamilelik testi veya ek doğum kontrol yöntemi gerekebilir).<br><br>
+        <b>Not</b>: Halkayı çıkardıktan sonra kanama olmazsa, yine de tıbbi yardım alın.<br><br>
+        ]]></string>
+    <string name="home_delay_info_title">Bilgi</string>
+    <string name="home_delay_message">Halka kaç gün daha uzun süre takıldı?</string>
+    <string name="home_delay_title">Halka daha uzun takıldı</string>
+    <string name="home_insertion_on">Yerleştirme: %1$s</string>
+    <string name="home_insertion_on_placeholder">Yerleştirme: --</string>
+    <string name="home_removal_on">Çıkarma: %1$s</string>
+    <string name="home_removal_on_placeholder">Çıkarma: --</string>
+    <string name="home_skip_ring_free_confirm">Şimdi atla</string>
+    <string name="home_skip_ring_free_info_desc">Halkasız haftayı atlama hakkında bilgi</string>
+    <string name="home_skip_ring_free_info_message"><![CDATA[
+        <b>Regl döneminizi geciktirmek istiyorsunuz</b><br><br>
+        Bu önerilen standart kullanım değildir, ancak mümkündür:<br>
+        - Halkasız haftayı atlayın ve eski halkayı çıkardıktan hemen sonra yenisini takın.<br>
+        - Yeni halka 3 haftaya kadar takılı kalabilir.<br>
+        - Bu süre zarfında lekelenme veya ara kanamalar görülebilir.<br>
+        - Çekilme kanamasını başlatmak için: Halkayı daha erken çıkarın, her zamanki bir haftalık halkasız arayı verin ve ardından yeni bir halka takın.<br><br>
+        <b>Önemli</b>: Regl döneminizi geciktirmeden önce doktorunuza danışın.
+        ]]></string>
+    <string name="home_skip_ring_free_message">Halka çıkarıldıktan sonra, bu döngü için bir sonraki yerleştirme hemen ayarlanır. Takip eden döngüler, halkasız hafta ile normal şekilde devam eder.</string>
+    <string name="home_skip_ring_free_title">Halkasız haftayı atla</string>
+    <string name="home_special_actions_label">Özel durumlar</string>
+    <string name="home_special_actions_toggle_close">Özel eylemleri kapat</string>
+    <string name="home_special_actions_toggle_open">Özel eylemleri aç</string>
+
+    <!-- Calendar -->
+    <string name="calendar_month_picker_title">Ay seçimine git</string>
+    <string name="calendar_month_selector_desc">Ay ve yıl seçin</string>
+    <string name="calendar_next_month_desc">Sonraki ay</string>
+    <string name="calendar_previous_month_desc">Önceki ay</string>
+    <string name="calendar_title">Takvim</string>
+    <string name="calendar_today_button">Bugüne dön</string>
+
+    <!-- Calendar Legend -->
+    <string name="legend_insertion">Yerleştirme</string>
+    <string name="legend_removal">Çıkarma</string>
+    <string name="legend_ring_free">Halkasız dönem</string>
+    <string name="legend_wear_time">Kullanım süresi</string>
+
+    <!-- Cycles -->
+    <string name="cycles_clear_history">Geçmişi temizle</string>
+    <string name="cycles_status_inserted">Halka yerleştirildi</string>
+    <string name="cycles_status_removed">Halka çıkarıldı</string>
+    <string name="cycles_title">Döngü geçmişi</string>
+
+    <!-- Notes -->
+    <string name="notes_char_count">%1$d karakter</string>
+    <string name="notes_char_count_default">0 karakter</string>
+    <string name="notes_close_desc">Notları kapat</string>
+    <string name="notes_delete">Sil</string>
+    <string name="notes_delete_message">Mevcut notlarınız kaldırılacak.</string>
+    <string name="notes_delete_title">Notlar silinsin mi?</string>
+    <string name="notes_hint">Notlarınızı buraya yazın...</string>
+    <string name="notes_last_saved">Kaydedildi: %1$s</string>
+    <string name="notes_not_saved">Kaydedilmedi</string>
+    <string name="notes_open_desc">Notları aç</string>
+    <string name="notes_save">Kaydet</string>
+    <string name="notes_saved_toast">Notlar kaydedildi</string>
+    <string name="notes_title">Not Defteri</string>
+    <string name="notes_today">Bugün</string>
+
+    <!-- Widgets -->
+    <string name="widget_large_name">Halka aracı (büyük)</string>
+    <string name="widget_small_name">Halka aracı (küçük)</string>
+    <string name="widget_title">Sıradaki tarihler:</string>
+
+    <!-- Navigation -->
+    <string name="nav_calendar">Takvim</string>
+    <string name="nav_cycles">Döngüler</string>
+    <string name="nav_home">Anasayfa</string>
+    <string name="nav_settings">Ayarlar</string>
+
+    <!-- Language -->
+    <string name="language_button">Seçilen: %1$s</string>
+    <string name="language_chinese">Çince</string>
+    <string name="language_english">İngilizce</string>
+    <string name="language_french">Fransızca</string>
+    <string name="language_german">Almanca</string>
+    <string name="language_italian">İtalyanca</string>
+    <string name="language_polish">Lehçe</string>
+    <string name="language_portuguese_brazil">Portekizce (Brezilya)</string>
+    <string name="language_russian">Rusça</string>
+    <string name="language_spanish">İspanyolca</string>
+    <string name="language_system_default">Sistem varsayılanı</string>
+    <string name="language_turkish">Türkçe</string>
+    <string name="language_title">Uygulama dili</string>
+
+    <!-- Backup -->
+    <string name="backup_create">Yedek oluştur</string>
+    <string name="backup_created_toast">Yedek oluşturuldu</string>
+    <string name="backup_failed_toast">Yedekleme başarısız</string>
+    <string name="backup_field_app_lock">Uygulama kilidi etkin</string>
+    <string name="backup_field_app_lock_timeout">Otomatik kilit gecikmesi</string>
+    <string name="backup_field_background_all_screens">Arka plan tüm ekranlarda</string>
+    <string name="backup_field_background_blur_dashboard">Arka plan bulanıklığı (ana ekran)</string>
+    <string name="backup_field_background_blur_others">Arka plan bulanıklığı (diğer ekranlar)</string>
+    <string name="backup_field_background_dim">Arka plan karartma</string>
+    <string name="backup_field_background_image">Arka plan resmi seçildi</string>
+    <string name="backup_field_button_color">Düğme rengi</string>
+    <string name="backup_field_calendar_future">Takvim gelecek aralığı</string>
+    <string name="backup_field_calendar_past">Takvim geçmiş aralığı</string>
+    <string name="backup_field_cycle_delay_entries_format">Gecikmiş döngü girişleri: %1$d</string>
+    <string name="backup_field_cycle_history">Döngü geçmişi</string>
+    <string name="backup_field_cycle_history_entries_format">%1$d giriş</string>
+    <string name="backup_field_cycle_history_range_format">%1$d giriş (%2$s - %3$s)</string>
+    <string name="backup_field_cycle_length">Döngü süresi</string>
+    <string name="backup_field_debug_time">Hata ayıklama süresi etkin</string>
+    <string name="backup_field_debug_time_value">Hata ayıklama süresi değeri</string>
+    <string name="backup_field_debug_tools">Hata ayıklama araçları etkin</string>
+    <string name="backup_field_exact_alarm_prompted">Tam alarm uyarısı gösterildi</string>
+    <string name="backup_field_home_circle_color">Ana ekran halka rengi</string>
+    <string name="backup_field_home_circle_style">Ana ekran halka stili</string>
+    <string name="backup_field_last_version">Son uygulama sürüm kodu</string>
+    <string name="backup_field_navigation_animation">Navigasyon animasyonu</string>
+    <string name="backup_field_notes_last_saved">Notların son kaydedilme zamanı</string>
+    <string name="backup_field_notes_text">Not içeriği</string>
+    <string name="backup_field_notification_flags_format">Bildirim bayrakları: %1$d giriş (%2$d aktif)</string>
+    <string name="backup_field_notification_hashes_format">Bildirim ayarları anlık görüntüleri: %1$d giriş</string>
+    <string name="backup_field_reminder_insertion">Yerleştirme öncesi hatırlatıcı</string>
+    <string name="backup_field_reminder_removal">Çıkarma öncesi hatırlatıcı</string>
+    <string name="backup_field_skip_ring_free_entries_format">Atlanan halkasız hafta girişleri: %1$d</string>
+    <string name="backup_field_start_date">Yerleştirme tarihi</string>
+    <string name="backup_field_start_time">Yerleştirme saati</string>
+    <string name="backup_field_tour_shown">Tur zaten tamamlandı</string>
+    <string name="backup_field_welcome_shown">Karşılama diyaloğu zaten gösterildi</string>
+    <string name="backup_hint_create">Verilerinizi güvenle saklamak için bir dosyaya kaydedin.</string>
+    <string name="backup_hint_restore">Verilerinizi daha önce kaydedilmiş bir dosyadan geri yükleyin.</string>
+    <string name="backup_import_check_message">Lütfen yedekleme verilerini inceleyin. Gerekiyorsa ayrıntıları genişletin.\n\nBu verilerle devam edilsin mi?</string>
+    <string name="backup_import_check_title">İçe aktarma kontrolü</string>
+    <string name="backup_import_hide_details">Ayrıntıları gizle</string>
+    <string name="backup_import_line_format">- %1$s: %2$d giriş - %3$s</string>
+    <string name="backup_import_no">Hayır</string>
+    <string name="backup_import_no_entries">Giriş yok</string>
+    <string name="backup_import_section_app">Uygulama ayarları</string>
+    <string name="backup_import_section_notes">Not verileri</string>
+    <string name="backup_import_show_details">Ayrıntıları göster</string>
+    <string name="backup_import_toggle_format">%1$s (%2$d) - %3$s</string>
+    <string name="backup_import_yes">Evet</string>
+    <string name="backup_invalid_toast">Geçersiz yedekleme</string>
+    <string name="backup_no">Hayır</string>
+    <string name="backup_read_failed_toast">Yedek okunamadı</string>
+    <string name="backup_restore">Yedeği geri yükle</string>
+    <string name="backup_restored_toast">Yedek geri yüklendi</string>
+    <string name="backup_title">Yedekleme</string>
+    <string name="backup_unit_day">gün</string>
+    <string name="backup_unit_days">gün</string>
+    <string name="backup_unit_month">ay</string>
+    <string name="backup_unit_months">ay</string>
+    <string name="backup_unit_year">yıl</string>
+    <string name="backup_unit_years">yıl</string>
+    <string name="backup_unknown">Bilinmiyor</string>
+    <string name="backup_yes">Evet</string>
+
+    <!-- Update -->
+    <string name="update_available_message">%1$s sürümü mevcut. Şimdi yüklensin mi?</string>
+    <string name="update_available_title">Güncelleme mevcut</string>
+    <string name="update_available_toast">Güncelleme bulundu. İndiriliyor...</string>
+    <string name="update_backup_message">Uygulama güncellemeleri kontrol edecek. Verileriniz cihazda kalır ancak yedekleme yapmanız önerilir.\n\nYedek oluşturmak ister misiniz? Zaten oluşturduysanız veya istemiyorsanız Devam Et\'e dokunun.</string>
+    <string name="update_backup_no">Yedek oluştur</string>
+    <string name="update_backup_title">Yedekleme</string>
+    <string name="update_backup_yes">Devam Et</string>
+    <string name="update_checking_toast">Güncellemeler kontrol ediliyor...</string>
+    <string name="update_download_failed_toast">İndirme başarısız.</string>
+    <string name="update_download_title">Güncelleme indiriliyor</string>
+    <string name="update_failed_toast">Güncelleme kontrolü başarısız.</string>
+    <string name="update_install">Yükle</string>
+    <string name="update_install_prompt_toast">Devam etmek için bu uygulamadan yüklemelere izin verin.</string>
+    <string name="update_later">Sonra</string>
+    <string name="update_latest_toast">En son sürümü kullanıyorsunuz.</string>
+    <string name="update_no_apk_toast">Son sürümde APK bulunamadı.</string>
+
+    <!-- Dialogs -->
+    <string name="dialog_cancel">İptal</string>
+    <string name="dialog_ok">Tamam</string>
+
+    <!-- Main -->
+    <string name="main_double_back_exit">Uygulamayı kapatmak için geri tuşuna iki kez basın</string>
+
+    <!-- Debug -->
+    <string name="debug_base_start">Başlangıç tarihi (temel)</string>
+    <string name="debug_calendar_limits">Takvim sınırları</string>
+    <string name="debug_calendar_range">Takvim aralığı</string>
+    <string name="debug_current_start">Mevcut başlangıç</string>
+    <string name="debug_cycle_length">Döngü süresi: %1$d gün</string>
+    <string name="debug_dialog_title">Hata Ayıklama: Bildirimler</string>
+    <string name="debug_disabled_suffix"> (kapalı)</string>
+    <string name="debug_future_suffix"> [gelecek]</string>
+    <string name="debug_hint_clear_time">Hata ayıklama süresini temizle ve sistem saatine dön.</string>
+    <string name="debug_hint_info">Mevcut döngü hakkında detaylı hata ayıklama bilgisini göster.</string>
+    <string name="debug_hint_jump_midnight">Hata ayıklama saatini mevcut günün 00:00\'ına ayarla.</string>
+    <string name="debug_hint_minus_day">Hata ayıklama saatini 1 gün geri al.</string>
+    <string name="debug_hint_minus_hour">Hata ayıklama saatini 1 saat geri al.</string>
+    <string name="debug_hint_plus_day">Hata ayıklama saatini 1 gün ileri al.</string>
+    <string name="debug_hint_plus_hour">Hata ayıklama saatini 1 saat ileri al.</string>
+    <string name="debug_hint_preset_insertion_at">Hata ayıklama saatini tam yerleştirme saatine ayarla.</string>
+    <string name="debug_hint_preset_insertion_before">Hata ayıklama saatini yerleştirmeden bir saat öncesine ayarla.</string>
+    <string name="debug_hint_preset_removal_at">Hata ayıklama saatini tam çıkarma saatine ayarla.</string>
+    <string name="debug_hint_preset_removal_before">Hata ayıklama saatini çıkarmadan bir saat öncesine ayarla.</string>
+    <string name="debug_hint_refresh">Ana ekranı ve widget\'ları şimdi yenile.</string>
+    <string name="debug_hint_set_time">Hata ayıklama saati için belirli bir tarih ve saat seçin.</string>
+    <string name="debug_insertion">Yerleştirme</string>
+    <string name="debug_insertion_reminder">Yerleştirme hatırlatıcısı: %1$d saat önce</string>
+    <string name="debug_insertion_reminder_line">Yerleştirme (-%1$ds)</string>
+    <string name="debug_jump_midnight">Gece yarısına atlandı</string>
+    <string name="debug_notified_for_cycle">Döngü için planlanan bildirim</string>
+    <string name="debug_now">Şimdi</string>
+    <string name="debug_one_week_remaining">1 hafta kaldı</string>
+    <string name="debug_past_suffix"> [geçmiş]</string>
+    <string name="debug_preset_applied">Ön ayar uygulandı</string>
+    <string name="debug_refreshed">Yenilendi</string>
+    <string name="debug_removal">Çıkarma</string>
+    <string name="debug_removal_reminder">Çıkarma hatırlatıcısı: %1$d saat önce</string>
+    <string name="debug_removal_reminder_line">Çıkarma (-%1$ds)</string>
+    <string name="debug_ring_free">Halkasız: %1$d gün</string>
+    <string name="debug_scheduled_notifications">Planlanmış bildirimler</string>
+    <string name="debug_time_cleared">Hata ayıklama saati temizlendi</string>
+    <string name="debug_time_set">Hata ayıklama saati ayarlandı</string>
+    <string name="debug_time_shift_back">Zaman geri alındı</string>
+    <string name="debug_time_shift_forward">Zaman ileri alındı</string>
+    <string name="debug_time_status_override">Hata ayıklama saati kullanılıyor: %1$s</string>
+    <string name="debug_time_status_system">Sistem saati kullanılıyor</string>
+    <string name="debug_time_switch_label">Hata ayıklama saatini kullan</string>
+    <string name="debug_tools_desc">Ayarlar\'dan geliştirici araçlarını etkinleştirin.</string>
+    <string name="debug_tools_enable">Hata ayıklama araçlarını etkinleştir</string>
+    <string name="debug_tools_title">Hata ayıklama araçları</string>
+    <string name="debug_two_weeks_remaining">2 hafta kaldı</string>
+
+    <!-- Tour -->
+    <string name="tour_body_calendar">Yerleştirme, çıkarma ve halkasız günleri bir bakışta görün.</string>
+    <string name="tour_body_calendar_legend">Bu renkler kullanım süresini, halkasız günleri, çıkarma ve yerleştirmeyi gösterir.\nLejant noktalarına dokunarak renkleri değiştirebilirsiniz.</string>
+    <string name="tour_body_cycles">Önceki döngüleri ve yerleştirme/çıkarma olaylarını takip edin.</string>
+    <string name="tour_body_cycles_clear">Tüm kayıtlı döngü girişlerini listeden kaldırın.</string>
+    <string name="tour_body_delay">Halka daha uzun süre kullanıldıysa ekstra günleri kaydetmek için bunu kullanın. Bilgi butonuyla daha fazla bilgi alabilirsiniz.</string>
+    <string name="tour_body_navigation">Ana Ekran, Takvim, Döngüler ve Ayarlar arasında buradan geçiş yapın.</string>
+    <string name="tour_body_notes">Bu döngü için hatırlatıcılar ve kişisel notlar kaydedin.</string>
+    <string name="tour_body_notes_close">Ana ekrana dönmek için dokunun.</string>
+    <string name="tour_body_notes_delete">Mevcut notlarınızı kaldırın.</string>
+    <string name="tour_body_notes_editor">Notlarınızı buraya yazın. Notlar sadece bu cihazda saklanır.</string>
+    <string name="tour_body_notes_save">Notlarınızdaki değişiklikleri kaydedin.</string>
+    <string name="tour_body_progress">Bu halka, çıkarma veya yerleştirmeye kaç gün kaldığını gösterir.</string>
+    <string name="tour_body_settings_advanced">Gelişmiş bölümü genişletmek veya daraltmak için dokunun.</string>
+    <string name="tour_body_settings_animation">Sekme ve ekran geçiş animasyonlarını seçin.</string>
+    <string name="tour_body_settings_app_lock">Korumayı etkinleştirebileceğiniz ve kilit gecikmesini ayarlayabileceğiniz uygulama kilidini açar.</string>
+    <string name="tour_body_settings_background">Ana ekran arka planını kişiselleştirmek için bir fotoğraf seçin.</string>
+    <string name="tour_body_settings_backup">Verilerinizin yedeğini oluşturun veya geri yükleyin.</string>
+    <string name="tour_body_settings_button_color">Düğmelerin vurgu rengini değiştirin.\nBu aynı zamanda widget arka planını da değiştirir.</string>
+    <string name="tour_body_settings_calendar">Takvimin geçmiş ve gelecek döngüleri ne kadar göstereceğini seçin.</string>
+    <string name="tour_body_settings_circle_color">Ana ekrandaki halka rengini ayarlayın.\nBu aynı zamanda büyük widget\'taki halka rengini de değiştirir.</string>
+    <string name="tour_body_settings_circle_style">Ana ekran halkası için bir stil seçin.</string>
+    <string name="tour_body_settings_cycle">Yerleştirme tarihi, saati ve döngü uzunluğunu ayarlayın.</string>
+    <string name="tour_body_settings_info">Sürüm, geliştirici bilgisi ve iletişim linklerini gösterir.</string>
+    <string name="tour_body_settings_language">Diller arasında geçiş yapın.</string>
+    <string name="tour_body_settings_notifications">Yerleştirme ve çıkarma günlerinde ne zaman hatırlatılmak istediğinizi ayarlayın.\nHatırlatıcılar çalışmazsa pil optimizasyonunu devre dışı bırakın.</string>
+    <string name="tour_body_settings_reset">Tüm verileri silin ve uygulamayı sıfırlayın.</string>
+    <string name="tour_body_settings_update">Yeni uygulama sürümlerini kontrol edin ve yükleyin.</string>
+    <string name="tour_complete_done">Tamam</string>
+    <string name="tour_complete_message">Turu tamamladınız. Veri Aristo\'nun tadını çıkarın!\nTura tekrar ihtiyaç duyarsanız, Gelişmiş ayarlar altından başlatabilirsiniz.</string>
+    <string name="tour_complete_subtitle">Tur tamamlandı</string>
+    <string name="tour_complete_title">Her şey hazır! 🎉</string>
+    <string name="tour_finish">Bitir</string>
+    <string name="tour_next">İleri</string>
+    <string name="tour_skip">Atla</string>
+    <string name="tour_title_calendar">Takvim Görünümü</string>
+    <string name="tour_title_calendar_legend">Takvim lejantı</string>
+    <string name="tour_title_cycles">Döngü geçmişi</string>
+    <string name="tour_title_cycles_clear">Geçmişi temizle</string>
+    <string name="tour_title_delay">Döngüyü ertele</string>
+    <string name="tour_title_navigation">Gezinme</string>
+    <string name="tour_title_notes">Hızlı notlar</string>
+    <string name="tour_title_notes_close">Notları kapat</string>
+    <string name="tour_title_notes_delete">Notları sil</string>
+    <string name="tour_title_notes_editor">Not editörü</string>
+    <string name="tour_title_notes_save">Notları kaydet</string>
+    <string name="tour_title_progress">Döngü sayacı</string>
+    <string name="tour_title_settings_advanced">Gelişmiş</string>
+    <string name="tour_title_settings_animation">Navigasyon animasyonu</string>
+    <string name="tour_title_settings_app_lock">Uygulama kilidi</string>
+    <string name="tour_title_settings_background">Arka plan resmi</string>
+    <string name="tour_title_settings_backup">Yedekleme</string>
+    <string name="tour_title_settings_button_color">Düğme rengi</string>
+    <string name="tour_title_settings_calendar">Takvim aralığı</string>
+    <string name="tour_title_settings_circle_color">Halka rengi</string>
+    <string name="tour_title_settings_circle_style">Halka stili</string>
+    <string name="tour_title_settings_cycle">Döngü ayarları</string>
+    <string name="tour_title_settings_info">Uygulama bilgisi</string>
+    <string name="tour_title_settings_language">Dil</string>
+    <string name="tour_title_settings_notifications">Hatırlatıcılar</string>
+    <string name="tour_title_settings_reset">Uygulamayı sıfırla</string>
+    <string name="tour_title_settings_update">Güncellemeler</string>
+
+    <!-- Welcome -->
+    <string name="welcome_features_body">- 📅 Yerleştirme, çıkarma ve halkasız günler için takvim görünümü\n- 🔔 Özelleştirilebilir hatırlatıcılar\n- 📝 Notlar ve döngü geçmişi\n- 🎨 Arka plan, renk, dil ve widget kişiselleştirme\n- 💾 Yedekleme ve geri yükleme</string>
+    <string name="welcome_features_title">Bu uygulama ne yapar?</string>
+    <string name="welcome_info_note">Uygulama bilgilerini Ayarlar\'dan istediğiniz zaman açabilirsiniz.</string>
+    <string name="welcome_intro">Kişisel tarihleriniz, hatırlatıcılarınız ve notlarınızla doğum kontrol halkası döngünüzü takip edin.</string>
+    <string name="welcome_permissions_body">- 🖼️ Medya erişimi: arka plan resmi seçin\n- 🔔 Bildirimler: döngü hatırlatıcıları\n- ⏰ Hassas alarmlar: kesin zamanlama</string>
+    <string name="welcome_permissions_title">Kullanılan izinler</string>
+    <string name="welcome_privacy_note">Verileriniz yalnızca bu cihazda saklanır. Tüm ayarlar bittiğinde yedek oluşturmayı unutmayın 😊</string>
+    <string name="welcome_skip_tour">Şimdi değil</string>
+    <string name="welcome_start_tour">Turu başlat</string>
+    <string name="welcome_subtitle">Veri Aristo Halka Hatırlatıcı</string>
+    <string name="welcome_title">Hoş Geldiniz 👋</string>
+</resources>

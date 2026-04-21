@@ -1,17 +1,17 @@
 <resources>
     <string-array name="settings_button_color_labels">
-        <item>Rot</item>
-        <item>Pink</item>
-        <item>Orange</item>
-        <item>Bernstein</item>
-        <item>Olive</item>
-        <item>Grün</item>
-        <item>Türkis</item>
-        <item>Blau</item>
-        <item>Indigo</item>
-        <item>Dunkellila</item>
-        <item>Lila</item>
-        <item>Schiefergrau</item>
+        <item>Czerwony</item>
+        <item>Różowy</item>
+        <item>Pomarańczowy</item>
+        <item>Bursztynowy</item>
+        <item>Oliwkowy</item>
+        <item>Zielony</item>
+        <item>Turkusowy</item>
+        <item>Niebieski</item>
+        <item>Indygo</item>
+        <item>Ciemny fiolet</item>
+        <item>Fioletowy</item>
+        <item>Szaroniebieski</item>
     </string-array>
 
     <integer-array name="settings_button_color_values">
@@ -30,28 +30,28 @@
     </integer-array>
 
     <string-array name="settings_circle_style_labels">
-        <item>Klassisch</item>
-        <item>Dünn</item>
-        <item>Segmentiert</item>
-        <item>Nur Bogen</item>
-        <item>Markierung</item>
-        <item>Verlauf</item>
-        <item>Leuchten</item>
-        <item>Verlauf mit Leuchten</item>
-        <item>Puls leicht</item>
-        <item>Puls mittel</item>
-        <item>Puls stark</item>
+        <item>Klasyczny</item>
+        <item>Cienki</item>
+        <item>Segmentowy</item>
+        <item>Tylko łuk</item>
+        <item>Znacznik</item>
+        <item>Gradient</item>
+        <item>Poświata</item>
+        <item>Gradient z poświatą</item>
+        <item>Puls lekki</item>
+        <item>Puls średni</item>
+        <item>Puls silny</item>
         <item>Halo</item>
     </string-array>
 
     <string-array name="settings_navigation_animation_labels">
-        <item>Schieben</item>
-        <item>Überblenden</item>
-        <item>Zoomen</item>
-        <item>Nach oben schieben</item>
-        <item>Drehen</item>
+        <item>Przesunięcie</item>
+        <item>Zanikanie</item>
+        <item>Powiększenie</item>
+        <item>Przesunięcie w górę</item>
+        <item>Obrót</item>
         <item>Pop</item>
-        <item>Keine</item>
+        <item>Brak</item>
     </string-array>
 
     <integer-array name="settings_navigation_animation_values">
@@ -65,11 +65,11 @@
     </integer-array>
 
     <string-array name="settings_app_lock_timeout_labels">
-        <item>Sofort</item>
-        <item>30 Sekunden</item>
-        <item>1 Minute</item>
-        <item>5 Minuten</item>
-        <item>15 Minuten</item>
+        <item>Natychmiast</item>
+        <item>30 sekund</item>
+        <item>1 minuta</item>
+        <item>5 minut</item>
+        <item>15 minut</item>
     </string-array>
 
     <integer-array name="settings_app_lock_timeout_values">

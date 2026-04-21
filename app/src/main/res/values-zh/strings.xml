@@ -1,0 +1,533 @@
+<resources>
+    <!-- App -->
+    <string name="app_info_actions_title">操作</string>
+    <string name="app_info_description">Veri Aristo 是一款用于追踪避孕环周期的 Android 应用。它提供彩色编码的日历（显示置入、取出和停用期）、可自定义的提醒、笔记、小组件以及备份/恢复功能。应用包含欢迎引导、周期历史和延长周期指引（“延长佩戴”）。默认开启深色模式，仅限竖屏显示，并支持背景图片和颜色等个性化设置。\n所有数据仅存储在此设备上！</string>
+    <string name="app_info_developer">开发者：%1$s</string>
+    <string name="app_info_developer_label">开发者：</string>
+    <string name="app_info_developer_name">Daniel Sichler 创作的 Darexsh</string>
+    <string name="app_info_email">电子邮件：%1$s</string>
+    <string name="app_info_github">GitHub：%1$s</string>
+    <string name="app_info_name">Veri Aristo 避孕环提醒</string>
+    <string name="app_info_open_coffee">请我喝杯咖啡</string>
+    <string name="app_info_open_email">撰写邮件</string>
+    <string name="app_info_open_github">打开社交媒体</string>
+    <string name="app_info_open_github_profile">GitHub 个人主页</string>
+    <string name="app_info_open_telegram_bot">打开 Telegram 机器人</string>
+    <string name="app_info_title">应用信息</string>
+    <string name="app_info_version">版本 %1$s</string>
+    <string name="app_info_version_label">版本</string>
+    <string name="app_lock_auth_required">打开应用需要身份验证。</string>
+    <string name="app_lock_auth_subtitle">使用生物识别或设备 PIN 码</string>
+    <string name="app_lock_auth_title">解锁 Veri Aristo</string>
+    <string name="app_lock_overlay_subtitle">解锁以继续</string>
+    <string name="app_lock_overlay_title">应用已锁定</string>
+    <string name="app_lock_overlay_unlock">解锁应用</string>
+    <string name="app_lock_tools_delay_current">当前延迟：%1$s</string>
+    <string name="app_lock_tools_delay_hint">设置切换应用后自动锁定的时间。</string>
+    <string name="app_lock_tools_title">应用锁</string>
+    <string name="app_lock_tools_toggle_hint">启用或禁用应用保护。</string>
+    <string name="app_lock_tools_toggle_off">应用锁：关闭</string>
+    <string name="app_lock_tools_toggle_on">应用锁：开启</string>
+    <string name="app_name">Veri Aristo</string>
+
+    <!-- Section Headers -->
+    <string name="section_advanced">高级</string>
+    <string name="section_calendar">日历</string>
+    <string name="section_cycle">周期</string>
+    <string name="section_debug">调试</string>
+    <string name="section_design">设计</string>
+    <string name="section_language">语言</string>
+    <string name="section_notifications">通知</string>
+
+    <!-- Buttons -->
+    <string name="btn_backup">备份</string>
+    <string name="btn_debug_clear_time">清除调试时间</string>
+    <string name="btn_debug_info">调试信息</string>
+    <string name="btn_debug_jump_midnight">跳至午夜</string>
+    <string name="btn_debug_minus_day">-1 天</string>
+    <string name="btn_debug_minus_hour">-1 小时</string>
+    <string name="btn_debug_plus_day">+1 天</string>
+    <string name="btn_debug_plus_hour">+1 小时</string>
+    <string name="btn_debug_preset_insertion_at">预设：置入时间</string>
+    <string name="btn_debug_preset_insertion_before">预设：置入前 1 小时</string>
+    <string name="btn_debug_preset_removal_at">预设：取出时间</string>
+    <string name="btn_debug_preset_removal_before">预设：取出前 1 小时</string>
+    <string name="btn_debug_refresh">刷新 UI + 小组件</string>
+    <string name="btn_debug_set_time">设置调试时间</string>
+    <string name="btn_delay_cycle">延长佩戴周期</string>
+    <string name="btn_notification_battery">禁用电池优化</string>
+    <string name="btn_notification_help">允许精确闹钟</string>
+    <string name="btn_notification_permission">通知权限</string>
+    <string name="btn_notification_test">发送测试通知</string>
+    <string name="btn_notifications_settings">通知设置</string>
+    <string name="btn_reset_app">重置应用</string>
+    <string name="btn_set_background">选择背景图片</string>
+    <string name="btn_set_calendar_range">设置日历范围</string>
+    <string name="btn_set_cycle_length">更改周期长度</string>
+    <string name="btn_set_notification_times">设置提醒</string>
+    <string name="btn_set_start_date">设置置入日期</string>
+    <string name="btn_set_time">设置置入时间</string>
+    <string name="btn_skip_ring_free_week">跳过停用周</string>
+    <string name="btn_update_app">检查应用更新</string>
+    <string name="btn_welcome_tour">欢迎引导</string>
+
+    <!-- Settings -->
+    <string name="settings_advanced_toggle_desc">切换高级设置</string>
+    <string name="settings_app_lock_disable">禁用</string>
+    <string name="settings_app_lock_disable_message">应用将在没有生物识别或 PIN 保护的情况下打开。</string>
+    <string name="settings_app_lock_disable_title">禁用应用锁？</string>
+    <string name="settings_app_lock_enable">启用</string>
+    <string name="settings_app_lock_enable_message">开启后，应用在打开时需要生物识别验证或您的设备 PIN/图案/密码。</string>
+    <string name="settings_app_lock_enable_title">启用应用锁？</string>
+    <string name="settings_app_lock_format">应用锁：%1$s</string>
+    <string name="settings_app_lock_label">应用锁</string>
+    <string name="settings_app_lock_requires_secure_lock">请先设置设备屏幕锁（PIN/图案/密码）以使用应用锁。</string>
+    <string name="settings_app_lock_status_off">关闭</string>
+    <string name="settings_app_lock_status_on">开启</string>
+    <string name="settings_app_lock_timeout_dialog_title">选择自动锁定延迟</string>
+    <string name="settings_app_lock_timeout_format">自动锁定延迟：%1$s</string>
+    <string name="settings_app_lock_timeout_label">自动锁定延迟</string>
+    <string name="settings_background_all_screens_format">所有界面背景：%1$s</string>
+    <string name="settings_background_all_screens_label">所有界面背景</string>
+    <string name="settings_background_all_screens_off">关闭</string>
+    <string name="settings_background_all_screens_on">开启</string>
+    <string name="settings_background_blur_dashboard">主页：%1$d%%</string>
+    <string name="settings_background_blur_dashboard_title">主页</string>
+    <string name="settings_background_blur_format">背景模糊：\n主页 %1$d%%，其他 %2$d%%</string>
+    <string name="settings_background_blur_label">背景模糊</string>
+    <string name="settings_background_blur_others">其他界面：%1$d%%</string>
+    <string name="settings_background_blur_others_title">其他界面</string>
+    <string name="settings_background_blur_title">背景模糊</string>
+    <string name="settings_background_blur_unavailable_toast">仅支持 Android 12 及以上版本</string>
+    <string name="settings_background_dim_format">背景亮度调节：%1$d%%</string>
+    <string name="settings_background_dim_label">背景暗度</string>
+    <string name="settings_background_dim_message">选择背景暗度（百分比）。</string>
+    <string name="settings_background_dim_title">设置背景暗度</string>
+    <string name="settings_button_color_custom">自定义颜色</string>
+    <string name="settings_button_color_custom_action">自定义颜色</string>
+    <string name="settings_button_color_custom_title">自定义按钮颜色</string>
+    <string name="settings_button_color_dialog_title">选择按钮颜色</string>
+    <string name="settings_button_color_format">按钮颜色</string>
+    <string name="settings_button_color_label">按钮颜色</string>
+    <string name="settings_button_color_widget_note">同时也会更新小组件的背景颜色。</string>
+    <string name="settings_calendar_insertion_color_custom_title">自定义置入颜色</string>
+    <string name="settings_calendar_insertion_color_dialog_title">选择置入颜色</string>
+    <string name="settings_calendar_insertion_color_format">置入颜色：%1$s</string>
+    <string name="settings_calendar_insertion_color_label">置入颜色</string>
+    <string name="settings_calendar_range_back">回顾</string>
+    <string name="settings_calendar_range_button">日历范围：\n向后 %1$d %2$s，向前 %3$d %4$s</string>
+    <string name="settings_calendar_range_forward">向前</string>
+    <string name="settings_calendar_range_message">选择日历显示的范围。</string>
+    <string name="settings_calendar_range_title">设置日历范围</string>
+    <string name="settings_calendar_removal_color_custom_title">自定义取出颜色</string>
+    <string name="settings_calendar_removal_color_dialog_title">选择取出颜色</string>
+    <string name="settings_calendar_removal_color_format">取出颜色：%1$s</string>
+    <string name="settings_calendar_removal_color_label">取出颜色</string>
+    <string name="settings_calendar_ring_free_color_custom_title">自定义停用期颜色</string>
+    <string name="settings_calendar_ring_free_color_dialog_title">选择停用期颜色</string>
+    <string name="settings_calendar_ring_free_color_format">停用期颜色：%1$s</string>
+    <string name="settings_calendar_ring_free_color_label">停用期颜色</string>
+    <string name="settings_calendar_wear_color_custom_title">自定义佩戴期颜色</string>
+    <string name="settings_calendar_wear_color_dialog_title">选择佩戴期颜色</string>
+    <string name="settings_calendar_wear_color_format">佩戴期颜色：%1$s</string>
+    <string name="settings_calendar_wear_color_label">佩戴期颜色</string>
+    <string name="settings_circle_color_custom_title">自定义主页圆环颜色</string>
+    <string name="settings_circle_color_dialog_title">选择主页圆环颜色</string>
+    <string name="settings_circle_color_format">主页圆环颜色</string>
+    <string name="settings_circle_color_label">主页圆环颜色</string>
+    <string name="settings_circle_color_widget_note">同时也会更新小组件的圆环颜色。</string>
+    <string name="settings_circle_style_dialog_title">选择主页圆环样式</string>
+    <string name="settings_circle_style_format">圆环样式：%1$s</string>
+    <string name="settings_circle_style_label">主页圆环样式</string>
+    <string name="settings_cycle_length_button">设置周期：%1$d 天</string>
+    <string name="settings_cycle_length_message">选择周期天数：</string>
+    <string name="settings_cycle_length_title">设置周期长度</string>
+    <string name="settings_date_button_format">设置置入日期：%1$02d.%2$02d.%3$d</string>
+    <string name="settings_info_desc">应用信息</string>
+    <string name="settings_navigation_animation_dialog_title">选择导航动画</string>
+    <string name="settings_navigation_animation_format">导航动画：%1$s</string>
+    <string name="settings_navigation_animation_label">导航动画</string>
+    <string name="settings_notification_before_insertion">置入前（小时）</string>
+    <string name="settings_notification_before_removal">取出前（小时）</string>
+    <string name="settings_notification_times_button">提醒：取出前 %1$d 小时，置入前 %2$d 小时</string>
+    <string name="settings_notification_times_message">选择提前的小时数（0 = 不提醒）。</string>
+    <string name="settings_notification_times_title">设置提醒</string>
+    <string name="settings_permission_message">选择背景图片需要访问图片的权限。</string>
+    <string name="settings_permission_title">需要权限</string>
+    <string name="settings_reset_confirm">重置</string>
+    <string name="settings_reset_done">应用已重置</string>
+    <string name="settings_reset_message">所有保存的数据、设置和笔记都将被删除。</string>
+    <string name="settings_reset_title">重置应用？</string>
+    <string name="settings_subtitle">一应俱全。</string>
+    <string name="settings_time_button_format">设置置入时间：%1$02d:%2$02d</string>
+    <string name="settings_title">设置</string>
+    <string name="settings_unit_month">月</string>
+    <string name="settings_unit_month_short">月</string>
+    <string name="settings_unit_year">年</string>
+    <string name="settings_unit_year_short">年</string>
+
+    <!-- Notification Settings -->
+    <string name="notification_hint_battery">禁用电池优化，以便系统不会延迟提醒。</string>
+    <string name="notification_hint_exact_alarm">允许精确闹钟，以便提醒准时发出（Android 12+）。</string>
+    <string name="notification_hint_permission">允许通知访问，以便显示提醒（Android 13+）。</string>
+    <string name="notification_hint_set_times">选择在取出或置入前多少小时接收提醒。</string>
+    <string name="notification_open_settings">打开通知设置</string>
+    <string name="notification_permission_button_label">通知权限：%1$s</string>
+    <string name="notification_permission_denied">通知权限已被拒绝。</string>
+    <string name="notification_permission_granted">通知权限已授予。</string>
+    <string name="notification_permission_required_message">请允许此应用的通知权限，否则无法显示提醒和测试通知。</string>
+    <string name="notification_permission_required_title">需要通知权限</string>
+    <string name="notification_permission_status_allowed">已允许</string>
+    <string name="notification_permission_status_blocked">已阻止</string>
+    <string name="notification_permission_status_not_required">不需要</string>
+    <string name="notification_test_blocked_permission">通知权限已被阻止。</string>
+    <string name="notification_test_blocked_system">系统设置中已禁用此应用的通知。</string>
+    <string name="notification_test_message">如果您能看到此内容，说明通知功能正常。</string>
+    <string name="notification_test_sent">测试通知已发送。</string>
+    <string name="notification_test_title">Veri Aristo 测试</string>
+    <string name="notification_times_button_label">提醒：\n取出前 %1$d 小时，置入前 %2$d 小时</string>
+    <string name="notification_times_button_unknown">提醒：\n未知</string>
+    <string name="notifications_channel_description">圆环佩戴周期的通知</string>
+    <string name="notifications_channel_name">提醒</string>
+
+    <!-- Notifications -->
+    <string name="battery_opt_button_label">电池优化：%1$s</string>
+    <string name="battery_opt_status_disabled">已禁用</string>
+    <string name="battery_opt_status_enabled">已启用</string>
+    <string name="battery_opt_status_not_required">不需要</string>
+    <string name="battery_opt_status_unknown">未知</string>
+    <string name="exact_alarm_button_label">精确闹钟：%1$s</string>
+    <string name="exact_alarm_message">精确提醒需要权限。请在系统设置中允许精确闹钟，以便通知准时发出。</string>
+    <string name="exact_alarm_not_supported">此 Android 版本不需要精确闹钟。</string>
+    <string name="exact_alarm_open_settings">打开设置</string>
+    <string name="exact_alarm_status_allowed">已允许</string>
+    <string name="exact_alarm_status_blocked">已阻止</string>
+    <string name="exact_alarm_status_not_required">不需要</string>
+    <string name="exact_alarm_status_unknown">未知</string>
+    <string name="exact_alarm_title">允许精确闹钟</string>
+    <string name="notif_cycle_duration_title">周期长度</string>
+    <string name="notif_insert_in_hours">请在 %1$d 小时内置入圆环！</string>
+    <string name="notif_insert_now">请立即在 %1$s 置入圆环！</string>
+    <string name="notif_insert_title">置入圆环</string>
+    <string name="notif_one_week_remaining">佩戴期还剩一周。</string>
+    <string name="notif_remove_in_hours">请在 %1$d 小时内取出圆环！</string>
+    <string name="notif_remove_now">请立即在 %1$s 取出圆环！</string>
+    <string name="notif_remove_title">取出圆环</string>
+    <string name="notif_two_weeks_remaining">佩戴期还剩两周。</string>
+
+    <!-- Home -->
+    <string name="home_at_time">%1$s</string>
+    <string name="home_background_desc">背景图片</string>
+    <string name="home_days">17</string>
+    <string name="home_days_left">剩余天数</string>
+    <string name="home_days_until_insertion">距离置入天数</string>
+    <string name="home_delay_confirm">更新</string>
+    <string name="home_delay_info_desc">关于延长佩戴圆环的信息</string>
+    <string name="home_delay_info_message"><![CDATA[
+        <b>您忘记取出圆环了</b><br><br>
+        <b>佩戴 3–4 周</b>：避孕保护仍然有效。取出圆环，休息一周（通常会出现撤退性出血），然后置入新的圆环。<br><br>
+        <b>佩戴超过 4 周</b>：避孕保护可能会降低 — 存在怀孕风险。请立即取出圆环，并在置入新圆环前咨询医生（可能需要进行早孕检测或采取额外的避孕措施）。<br><br>
+        <b>注意</b>：如果取出圆环后没有出血，也请咨询医生。<br><br>
+        ]]></string>
+    <string name="home_delay_info_title">信息</string>
+    <string name="home_delay_message">圆环多佩戴了多少天？</string>
+    <string name="home_delay_title">圆环佩戴时间延长</string>
+    <string name="home_insertion_on">置入日期：%1$s</string>
+    <string name="home_insertion_on_placeholder">置入日期：--</string>
+    <string name="home_removal_on">取出日期：%1$s</string>
+    <string name="home_removal_on_placeholder">取出日期：--</string>
+    <string name="home_skip_ring_free_confirm">立即跳过</string>
+    <string name="home_skip_ring_free_info_desc">关于跳过停用期的信息</string>
+    <string name="home_skip_ring_free_info_message"><![CDATA[
+        <b>您想推迟经期</b><br><br>
+        这不是推荐的标准用法，但可行：<br>
+        - 跳过停用周，在取出旧圆环后立即置入新圆环。<br>
+        - 新圆环最多可佩戴 3 周。<br>
+        - 在此期间，可能会出现点滴出血或突破性出血。<br>
+        - 若要触发撤退性出血：提前取出圆环，照常休息一周，然后置入新圆环。<br><br>
+        <b>重要提示</b>：在推迟经期前，请咨询医生建议。
+        ]]></string>
+    <string name="home_skip_ring_free_message">取出圆环后，本周期的下一次置入将立即开始。之后的周期将恢复正常，包含一周的停用期。</string>
+    <string name="home_skip_ring_free_title">跳过停用周</string>
+    <string name="home_special_actions_label">特殊情况</string>
+    <string name="home_special_actions_toggle_close">关闭特殊操作</string>
+    <string name="home_special_actions_toggle_open">开启特殊操作</string>
+
+    <!-- Calendar -->
+    <string name="calendar_month_picker_title">前往月份</string>
+    <string name="calendar_month_selector_desc">选择月份和年份</string>
+    <string name="calendar_next_month_desc">下个月</string>
+    <string name="calendar_previous_month_desc">上个月</string>
+    <string name="calendar_title">日历</string>
+    <string name="calendar_today_button">回到今天</string>
+
+    <!-- Calendar Legend -->
+    <string name="legend_insertion">置入</string>
+    <string name="legend_removal">取出</string>
+    <string name="legend_ring_free">停用期</string>
+    <string name="legend_wear_time">佩戴时间</string>
+
+    <!-- Cycles -->
+    <string name="cycles_clear_history">清除历史记录</string>
+    <string name="cycles_status_inserted">已置入圆环</string>
+    <string name="cycles_status_removed">已取出圆环</string>
+    <string name="cycles_title">周期历史</string>
+
+    <!-- Notes -->
+    <string name="notes_char_count">%1$d 个字符</string>
+    <string name="notes_char_count_default">0 个字符</string>
+    <string name="notes_close_desc">关闭备注</string>
+    <string name="notes_delete">删除</string>
+    <string name="notes_delete_message">您当前的备注将被移除。</string>
+    <string name="notes_delete_title">删除备注？</string>
+    <string name="notes_hint">在这里写下您的备注...</string>
+    <string name="notes_last_saved">保存于：%1$s</string>
+    <string name="notes_not_saved">未保存</string>
+    <string name="notes_open_desc">打开备注</string>
+    <string name="notes_save">保存</string>
+    <string name="notes_saved_toast">备注已保存</string>
+    <string name="notes_title">笔记本</string>
+    <string name="notes_today">今天</string>
+
+    <!-- Widgets -->
+    <string name="widget_large_name">圆环小部件（大）</string>
+    <string name="widget_small_name">圆环小部件（小）</string>
+    <string name="widget_title">后续日期：</string>
+
+    <!-- Navigation -->
+    <string name="nav_calendar">日历</string>
+    <string name="nav_cycles">周期</string>
+    <string name="nav_home">首页</string>
+    <string name="nav_settings">设置</string>
+
+    <!-- Language -->
+    <string name="language_button">已选：%1$s</string>
+    <string name="language_chinese">中文</string>
+    <string name="language_english">英语</string>
+    <string name="language_french">法语</string>
+    <string name="language_german">德语</string>
+    <string name="language_italian">意大利语</string>
+    <string name="language_polish">波兰语</string>
+    <string name="language_portuguese_brazil">葡萄牙语（巴西）</string>
+    <string name="language_russian">俄语</string>
+    <string name="language_spanish">西班牙语</string>
+    <string name="language_system_default">系统默认</string>
+    <string name="language_turkish">土耳其语</string>
+    <string name="language_title">应用语言</string>
+
+    <!-- Backup -->
+    <string name="backup_create">创建备份</string>
+    <string name="backup_created_toast">备份已创建</string>
+    <string name="backup_failed_toast">备份失败</string>
+    <string name="backup_field_app_lock">应用锁已启用</string>
+    <string name="backup_field_app_lock_timeout">自动锁定延迟</string>
+    <string name="backup_field_background_all_screens">所有界面显示背景</string>
+    <string name="backup_field_background_blur_dashboard">主界面背景模糊</string>
+    <string name="backup_field_background_blur_others">其他界面背景模糊</string>
+    <string name="backup_field_background_dim">背景调暗</string>
+    <string name="backup_field_background_image">已选背景图片</string>
+    <string name="backup_field_button_color">按钮颜色</string>
+    <string name="backup_field_calendar_future">日历未来显示范围</string>
+    <string name="backup_field_calendar_past">日历过去显示范围</string>
+    <string name="backup_field_cycle_delay_entries_format">延迟周期条目：%1$d</string>
+    <string name="backup_field_cycle_history">周期历史记录</string>
+    <string name="backup_field_cycle_history_entries_format">%1$d 条条目</string>
+    <string name="backup_field_cycle_history_range_format">%1$d 条条目（%2$s - %3$s）</string>
+    <string name="backup_field_cycle_length">周期长度</string>
+    <string name="backup_field_debug_time">调试时间已启用</string>
+    <string name="backup_field_debug_time_value">调试时间值</string>
+    <string name="backup_field_debug_tools">调试工具已启用</string>
+    <string name="backup_field_exact_alarm_prompted">已显示精确闹钟提示</string>
+    <string name="backup_field_home_circle_color">首页圆环颜色</string>
+    <string name="backup_field_home_circle_style">首页圆环样式</string>
+    <string name="backup_field_last_version">上次应用版本代码</string>
+    <string name="backup_field_navigation_animation">导航动画</string>
+    <string name="backup_field_notes_last_saved">备注上次保存时间</string>
+    <string name="backup_field_notes_text">备注内容</string>
+    <string name="backup_field_notification_flags_format">通知标记：%1$d 条（%2$d 条激活）</string>
+    <string name="backup_field_notification_hashes_format">通知设置快照：%1$d 条</string>
+    <string name="backup_field_reminder_insertion">置入前提醒</string>
+    <string name="backup_field_reminder_removal">取出前提醒</string>
+    <string name="backup_field_skip_ring_free_entries_format">跳过停用周记录：%1$d</string>
+    <string name="backup_field_start_date">置入日期</string>
+    <string name="backup_field_start_time">置入时间</string>
+    <string name="backup_field_tour_shown">功能导览已完成</string>
+    <string name="backup_field_welcome_shown">欢迎对话框已显示</string>
+    <string name="backup_hint_create">将数据保存到文件以便妥善保管。</string>
+    <string name="backup_hint_restore">从之前保存的文件恢复数据。</string>
+    <string name="backup_import_check_message">请检查备份数据。如有需要，可展开详情。\n\n是否继续导入这些数据？</string>
+    <string name="backup_import_check_title">导入检查</string>
+    <string name="backup_import_hide_details">隐藏详情</string>
+    <string name="backup_import_line_format">- %1$s：%2$d 条条目 - %3$s</string>
+    <string name="backup_import_no">否</string>
+    <string name="backup_import_no_entries">无条目</string>
+    <string name="backup_import_section_app">应用设置</string>
+    <string name="backup_import_section_notes">备注数据</string>
+    <string name="backup_import_show_details">显示详情</string>
+    <string name="backup_import_toggle_format">%1$s (%2$d) - %3$s</string>
+    <string name="backup_import_yes">是</string>
+    <string name="backup_invalid_toast">备份无效</string>
+    <string name="backup_no">否</string>
+    <string name="backup_read_failed_toast">无法读取备份</string>
+    <string name="backup_restore">恢复备份</string>
+    <string name="backup_restored_toast">备份已恢复</string>
+    <string name="backup_title">备份</string>
+    <string name="backup_unit_day">天</string>
+    <string name="backup_unit_days">天</string>
+    <string name="backup_unit_month">个月</string>
+    <string name="backup_unit_months">个月</string>
+    <string name="backup_unit_year">年</string>
+    <string name="backup_unit_years">年</string>
+    <string name="backup_unknown">未知</string>
+    <string name="backup_yes">是</string>
+
+    <!-- Update -->
+    <string name="update_available_message">版本 %1$s 已发布。立即安装？</string>
+    <string name="update_available_title">有可用更新</string>
+    <string name="update_available_toast">发现更新。正在下载...</string>
+    <string name="update_backup_message">应用将检查更新。您的数据将保留在设备上，但建议进行备份。\n\n您想创建备份吗？如果您已经创建过或不想创建，请点击“继续”。</string>
+    <string name="update_backup_no">创建备份</string>
+    <string name="update_backup_title">备份</string>
+    <string name="update_backup_yes">继续</string>
+    <string name="update_checking_toast">正在检查更新...</string>
+    <string name="update_download_failed_toast">下载失败。</string>
+    <string name="update_download_title">正在下载更新</string>
+    <string name="update_failed_toast">检查更新失败。</string>
+    <string name="update_install">安装</string>
+    <string name="update_install_prompt_toast">请允许从此应用安装以继续。</string>
+    <string name="update_later">稍后</string>
+    <string name="update_latest_toast">您已是最新版本。</string>
+    <string name="update_no_apk_toast">最新发布版中未找到 APK 文件。</string>
+
+    <!-- Dialogs -->
+    <string name="dialog_cancel">取消</string>
+    <string name="dialog_ok">确定</string>
+
+    <!-- Main -->
+    <string name="main_double_back_exit">双击返回键退出应用</string>
+
+    <!-- Debug -->
+    <string name="debug_base_start">开始日期（基准）</string>
+    <string name="debug_calendar_limits">日历边界</string>
+    <string name="debug_calendar_range">日历范围</string>
+    <string name="debug_current_start">当前开始</string>
+    <string name="debug_cycle_length">周期长度：%1$d 天</string>
+    <string name="debug_dialog_title">调试：通知</string>
+    <string name="debug_disabled_suffix"> (关闭)</string>
+    <string name="debug_future_suffix"> [未来]</string>
+    <string name="debug_hint_clear_time">清除调试时间并恢复系统时间。</string>
+    <string name="debug_hint_info">显示当前周期的详细调试信息。</string>
+    <string name="debug_hint_jump_midnight">将调试时间设为当前调试日的 00:00。</string>
+    <string name="debug_hint_minus_day">将调试时间后退 1 天。</string>
+    <string name="debug_hint_minus_hour">将调试时间后退 1 小时。</string>
+    <string name="debug_hint_plus_day">将调试时间前进 1 天。</string>
+    <string name="debug_hint_plus_hour">将调试时间前进 1 小时。</string>
+    <string name="debug_hint_preset_insertion_at">将调试时间设为准确的置入时间。</string>
+    <string name="debug_hint_preset_insertion_before">将调试时间设为置入前一小时。</string>
+    <string name="debug_hint_preset_removal_at">将调试时间设为准确的取出时间。</string>
+    <string name="debug_hint_preset_removal_before">将调试时间设为取出前一小时。</string>
+    <string name="debug_hint_refresh">立即刷新首页和组件。</string>
+    <string name="debug_hint_set_time">为调试时钟选择特定的日期和时间。</string>
+    <string name="debug_insertion">置入</string>
+    <string name="debug_insertion_reminder">置入提醒：前 %1$d 小时</string>
+    <string name="debug_insertion_reminder_line">置入 (-%1$d 小时)</string>
+    <string name="debug_jump_midnight">已跳至午夜</string>
+    <string name="debug_notified_for_cycle">已为周期计划通知</string>
+    <string name="debug_now">现在</string>
+    <string name="debug_one_week_remaining">剩余 1 周</string>
+    <string name="debug_past_suffix"> [过去]</string>
+    <string name="debug_preset_applied">预设已应用</string>
+    <string name="debug_refreshed">已刷新</string>
+    <string name="debug_removal">取出</string>
+    <string name="debug_removal_reminder">取出提醒：前 %1$d 小时</string>
+    <string name="debug_removal_reminder_line">取出 (-%1$d 小时)</string>
+    <string name="debug_ring_free">停用期：%1$d 天</string>
+    <string name="debug_scheduled_notifications">计划通知</string>
+    <string name="debug_time_cleared">调试时间已清除</string>
+    <string name="debug_time_set">调试时间已设置</string>
+    <string name="debug_time_shift_back">时间已后退</string>
+    <string name="debug_time_shift_forward">时间已前进</string>
+    <string name="debug_time_status_override">正在使用调试时间：%1$s</string>
+    <string name="debug_time_status_system">正在使用系统时间</string>
+    <string name="debug_time_switch_label">使用调试时间</string>
+    <string name="debug_tools_desc">在设置中启用开发者工具。</string>
+    <string name="debug_tools_enable">启用调试工具</string>
+    <string name="debug_tools_title">调试工具</string>
+    <string name="debug_two_weeks_remaining">剩余 2 周</string>
+
+    <!-- Tour -->
+    <string name="tour_body_calendar">置入、取出和停用期一目了然。</string>
+    <string name="tour_body_calendar_legend">这些颜色显示佩戴时间、停用期、取出和置入日期。\n您也可以通过点击图例圆点来更改颜色。</string>
+    <string name="tour_body_cycles">追踪之前的周期及其置入/取出事件。</string>
+    <string name="tour_body_cycles_clear">从列表中删除所有保存的周期条目。</string>
+    <string name="tour_body_delay">如果佩戴时间延长，使用此功能记录额外天数。更多信息可通过“信息”按钮查看。</string>
+    <string name="tour_body_navigation">在此切换首页、日历、周期和设置。</string>
+    <string name="tour_body_notes">保存本周期的提醒和个人笔记。</string>
+    <string name="tour_body_notes_close">点击返回首页。</string>
+    <string name="tour_body_notes_delete">删除当前笔记。</string>
+    <string name="tour_body_notes_editor">在此编写笔记。笔记仅存储在本设备上。</string>
+    <string name="tour_body_notes_save">保存笔记更改。</string>
+    <string name="tour_body_progress">圆环显示距离取出或置入还剩多少天。</string>
+    <string name="tour_body_settings_advanced">点击以展开或折叠高级设置部分。</string>
+    <string name="tour_body_settings_animation">选择切换标签和打开视图时的转场动画。</string>
+    <string name="tour_body_settings_app_lock">打开应用锁对话框，您可以启用/禁用保护并设置自动锁定延迟。</string>
+    <string name="tour_body_settings_background">选择照片以个性化首页背景。</string>
+    <string name="tour_body_settings_backup">创建或恢复数据备份。</string>
+    <string name="tour_body_settings_button_color">更改按钮的主题色。\n这也会同时更改组件的背景色。</string>
+    <string name="tour_body_settings_calendar">选择日历显示过去和未来周期的范围。</string>
+    <string name="tour_body_settings_circle_color">设置首页的圆环颜色。\n这也会同时更改大组件的圆环颜色。</string>
+    <string name="tour_body_settings_circle_style">为首页圆环选择一种样式。</string>
+    <string name="tour_body_settings_cycle">设置置入日期、时间和周期长度。</string>
+    <string name="tour_body_settings_info">显示版本、开发者信息和联系方式链接。</string>
+    <string name="tour_body_settings_language">在不同语言之间切换。</string>
+    <string name="tour_body_settings_notifications">设置置入和取出日的提醒时间。\n如果提醒不准确，请禁用电池优化。</string>
+    <string name="tour_body_settings_reset">删除所有保存的数据并重置应用。</string>
+    <string name="tour_body_settings_update">检查新版本应用并安装。</string>
+    <string name="tour_complete_done">完成</string>
+    <string name="tour_complete_message">您已完成向导。祝您使用 Veri Aristo 愉快！\n如果您以后还需要查看向导，可以在高级设置中重新开启。</string>
+    <string name="tour_complete_subtitle">向导已完成</string>
+    <string name="tour_complete_title">万事俱备！ 🎉</string>
+    <string name="tour_finish">结束</string>
+    <string name="tour_next">下一步</string>
+    <string name="tour_skip">跳过</string>
+    <string name="tour_title_calendar">日历视图</string>
+    <string name="tour_title_calendar_legend">日历图例</string>
+    <string name="tour_title_cycles">周期历史</string>
+    <string name="tour_title_cycles_clear">清除历史记录</string>
+    <string name="tour_title_delay">延迟周期</string>
+    <string name="tour_title_navigation">导航切换</string>
+    <string name="tour_title_notes">快捷笔记</string>
+    <string name="tour_title_notes_close">关闭笔记</string>
+    <string name="tour_title_notes_delete">删除笔记</string>
+    <string name="tour_title_notes_editor">笔记编辑器</string>
+    <string name="tour_title_notes_save">保存笔记</string>
+    <string name="tour_title_progress">周期倒计时</string>
+    <string name="tour_title_settings_advanced">高级设置</string>
+    <string name="tour_title_settings_animation">导航动画</string>
+    <string name="tour_title_settings_app_lock">应用锁</string>
+    <string name="tour_title_settings_background">背景图片</string>
+    <string name="tour_title_settings_backup">备份</string>
+    <string name="tour_title_settings_button_color">按钮颜色</string>
+    <string name="tour_title_settings_calendar">日历范围</string>
+    <string name="tour_title_settings_circle_color">圆环颜色</string>
+    <string name="tour_title_settings_circle_style">圆环样式</string>
+    <string name="tour_title_settings_cycle">周期设置</string>
+    <string name="tour_title_settings_info">应用信息</string>
+    <string name="tour_title_settings_language">语言</string>
+    <string name="tour_title_settings_notifications">提醒</string>
+    <string name="tour_title_settings_reset">重置应用</string>
+    <string name="tour_title_settings_update">更新</string>
+
+    <!-- Welcome -->
+    <string name="welcome_features_body">- 📅 查看置入、取出和停用期的日历视图\n- 🔔 自定义提醒设置\n- 📝 笔记和周期历史\n- 🎨 个性化背景、颜色、语言和组件\n- 💾 备份与恢复</string>
+    <string name="welcome_features_title">应用功能</string>
+    <string name="welcome_info_note">您可以随时在“设置”中打开应用信息。</string>
+    <string name="welcome_intro">通过个人日期、提醒和笔记，随时掌握您的避孕环周期。</string>
+    <string name="welcome_permissions_body">- 🖼️ 媒体访问：选择背景图片\n- 🔔 通知：周期提醒\n- ⏰ 精确闹钟：确保提醒准时</string>
+    <string name="welcome_permissions_title">所需权限</string>
+    <string name="welcome_privacy_note">您的数据仅保存在此设备上。请在设置完成后记得创建备份 😊</string>
+    <string name="welcome_skip_tour">以后再说</string>
+    <string name="welcome_start_tour">开始向导</string>
+    <string name="welcome_subtitle">Veri Aristo 避孕环提醒</string>
+    <string name="welcome_title">欢迎使用 👋</string>
+</resources>

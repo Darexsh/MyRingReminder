@@ -8,6 +8,8 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.UriPermission;
 import android.content.res.ColorStateList;
+import android.graphics.RenderEffect;
+import android.graphics.Shader;
 import android.graphics.drawable.Drawable;
 import android.net.Uri;
 import android.os.Bundle;
@@ -68,6 +70,7 @@ public class HomeFragment extends Fragment {
         final TextView tvDaysNumber = view.findViewById(R.id.tv_days_number);   // TextView to display the number of days left
         final TextView tvDaysLabel = view.findViewById(R.id.tv_days_left_label);    // TextView to display the label for days left
         final ImageView backgroundImageView = view.findViewById(R.id.background_image); // ImageView for the background image
+        final View backgroundDimOverlay = view.findViewById(R.id.background_dim_overlay);
         final MaterialButton btnDelayCycle = view.findViewById(R.id.btn_delay_cycle);
         final MaterialButton btnSkipRingFree = view.findViewById(R.id.btn_skip_ring_free_week);
         final TextView btnDelayInfo = view.findViewById(R.id.btn_delay_info);
@@ -183,6 +186,29 @@ public class HomeFragment extends Fragment {
 
         // Observe changes in the ViewModel
         viewModel.getBackgroundImageUri().observe(getViewLifecycleOwner(), uri -> loadBackgroundImage.run());
+        viewModel.getBackgroundDimPercent().observe(getViewLifecycleOwner(), percent -> {
+            int safePercent = percent != null ? Math.max(0, Math.min(100, percent)) : 0;
+            if (safePercent <= 0) {
+                backgroundDimOverlay.setVisibility(View.GONE);
+                backgroundDimOverlay.setAlpha(0f);
+                return;
+            }
+            backgroundDimOverlay.setAlpha(safePercent / 100f);
+            backgroundDimOverlay.setVisibility(View.VISIBLE);
+        });
+        viewModel.getBackgroundBlurDashboardPercent().observe(getViewLifecycleOwner(), percent -> {
+            if (Build.VERSION.SDK_INT < Build.VERSION_CODES.S) {
+                return;
+            }
+            int safePercent = percent != null ? Math.max(0, Math.min(100, percent)) : 0;
+            float radiusPx = percentToBlurRadiusPx(safePercent);
+            if (radiusPx <= 0f) {
+                backgroundImageView.setRenderEffect(null);
+                return;
+            }
+            backgroundImageView.setRenderEffect(
+                    RenderEffect.createBlurEffect(radiusPx, radiusPx, Shader.TileMode.CLAMP));
+        });
 
         // Observe changes in the ViewModel and update the UI accordingly
         Runnable updateUi = () -> {
@@ -440,6 +466,11 @@ public class HomeFragment extends Fragment {
                 })
                 .start();
         toggle.setContentDescription(getString(R.string.home_special_actions_toggle_open));
+    }
+
+    private float percentToBlurRadiusPx(int percent) {
+        float density = getResources().getDisplayMetrics().density;
+        return (percent / 100f) * 28f * density;
     }
 
     @Override

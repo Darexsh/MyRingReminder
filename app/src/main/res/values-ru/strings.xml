@@ -1,0 +1,533 @@
+<resources>
+    <!-- App -->
+    <string name="app_info_actions_title">Действия</string>
+    <string name="app_info_description">Veri Aristo — это Android-приложение для отслеживания циклов использования контрацептивного кольца. Оно предлагает цветовой календарь для вставки, удаления и перерывов, настраиваемые напоминания, заметки, виджеты, а также резервное копирование. В приложении есть приветственный тур, история циклов и советы по продлению цикла («носить кольцо дольше»). По умолчанию работает в темном режиме, только в книжной ориентации, поддерживает персонализацию (фоны, цвета).\nВсе данные хранятся только на этом устройстве!</string>
+    <string name="app_info_developer">Разработчик: %1$s</string>
+    <string name="app_info_developer_label">Разработчик:</string>
+    <string name="app_info_developer_name">Darexsh (Даниэль Сихлер)</string>
+    <string name="app_info_email">Email: %1$s</string>
+    <string name="app_info_github">GitHub: %1$s</string>
+    <string name="app_info_name">Veri Aristo: Напоминание о кольце</string>
+    <string name="app_info_open_coffee">Купить мне кофе</string>
+    <string name="app_info_open_email">Написать письмо</string>
+    <string name="app_info_open_github">Открыть соцсети</string>
+    <string name="app_info_open_github_profile">Профиль GitHub</string>
+    <string name="app_info_open_telegram_bot">Открыть Telegram-бот</string>
+    <string name="app_info_title">О приложении</string>
+    <string name="app_info_version">Версия %1$s</string>
+    <string name="app_info_version_label">Версия</string>
+    <string name="app_lock_auth_required">Для входа требуется аутентификация.</string>
+    <string name="app_lock_auth_subtitle">Используйте биометрию или PIN-код устройства</string>
+    <string name="app_lock_auth_title">Разблокировать Veri Aristo</string>
+    <string name="app_lock_overlay_subtitle">Разблокируйте, чтобы продолжить</string>
+    <string name="app_lock_overlay_title">Приложение заблокировано</string>
+    <string name="app_lock_overlay_unlock">Разблокировать</string>
+    <string name="app_lock_tools_delay_current">Текущая задержка: %1$s</string>
+    <string name="app_lock_tools_delay_hint">Установите время автоблокировки при переключении между приложениями.</string>
+    <string name="app_lock_tools_title">Блокировка приложения</string>
+    <string name="app_lock_tools_toggle_hint">Включить или выключить защиту приложения.</string>
+    <string name="app_lock_tools_toggle_off">Защита: Выкл</string>
+    <string name="app_lock_tools_toggle_on">Защита: Вкл</string>
+    <string name="app_name">Veri Aristo</string>
+
+    <!-- Section Headers -->
+    <string name="section_advanced">Дополнительно</string>
+    <string name="section_calendar">Календарь</string>
+    <string name="section_cycle">Цикл</string>
+    <string name="section_debug">Отладка</string>
+    <string name="section_design">Дизайн</string>
+    <string name="section_language">Язык</string>
+    <string name="section_notifications">Уведомления</string>
+
+    <!-- Buttons -->
+    <string name="btn_backup">Резервное копирование</string>
+    <string name="btn_debug_clear_time">Очистить время отладки</string>
+    <string name="btn_debug_info">Информация отладки</string>
+    <string name="btn_debug_jump_midnight">Перейти к полночи</string>
+    <string name="btn_debug_minus_day">-1 день</string>
+    <string name="btn_debug_minus_hour">-1 час</string>
+    <string name="btn_debug_plus_day">+1 день</string>
+    <string name="btn_debug_plus_hour">+1 час</string>
+    <string name="btn_debug_preset_insertion_at">Пресет: время вставки</string>
+    <string name="btn_debug_preset_insertion_before">Пресет: вставка -1ч</string>
+    <string name="btn_debug_preset_removal_at">Пресет: время извлечения</string>
+    <string name="btn_debug_preset_removal_before">Пресет: извлечение -1ч</string>
+    <string name="btn_debug_refresh">Обновить интерфейс + виджеты</string>
+    <string name="btn_debug_set_time">Установить время отладки</string>
+    <string name="btn_delay_cycle">Носить кольцо дольше</string>
+    <string name="btn_notification_battery">Выключить оптимизацию батареи</string>
+    <string name="btn_notification_help">Разрешить точные будильники</string>
+    <string name="btn_notification_permission">Разрешение на уведомления</string>
+    <string name="btn_notification_test">Отправить тестовое уведомление</string>
+    <string name="btn_notifications_settings">Настройки уведомлений</string>
+    <string name="btn_reset_app">Сбросить приложение</string>
+    <string name="btn_set_background">Выбрать фоновое изображение</string>
+    <string name="btn_set_calendar_range">Установить диапазон календаря</string>
+    <string name="btn_set_cycle_length">Изменить длину цикла</string>
+    <string name="btn_set_notification_times">Настроить напоминания</string>
+    <string name="btn_set_start_date">Установить дату вставки</string>
+    <string name="btn_set_time">Установить время вставки</string>
+    <string name="btn_skip_ring_free_week">Пропустить неделю без кольца</string>
+    <string name="btn_update_app">Проверить обновления</string>
+    <string name="btn_welcome_tour">Приветственный тур</string>
+
+    <!-- Settings -->
+    <string name="settings_advanced_toggle_desc">Переключить расширенные настройки</string>
+    <string name="settings_app_lock_disable">Отключить</string>
+    <string name="settings_app_lock_disable_message">Приложение будет открываться без биометрии или PIN-кода.</string>
+    <string name="settings_app_lock_disable_title">Отключить блокировку приложения?</string>
+    <string name="settings_app_lock_enable">Включить</string>
+    <string name="settings_app_lock_enable_message">Если включено, приложение будет требовать биометрию или PIN-код/графический ключ/пароль устройства при открытии.</string>
+    <string name="settings_app_lock_enable_title">Включить блокировку приложения?</string>
+    <string name="settings_app_lock_format">Защита приложения: %1$s</string>
+    <string name="settings_app_lock_label">Защита приложения</string>
+    <string name="settings_app_lock_requires_secure_lock">Сначала установите блокировку экрана (PIN/ключ/пароль) для этой функции.</string>
+    <string name="settings_app_lock_status_off">Выкл</string>
+    <string name="settings_app_lock_status_on">Вкл</string>
+    <string name="settings_app_lock_timeout_dialog_title">Задержка автоблокировки</string>
+    <string name="settings_app_lock_timeout_format">Задержка блокировки: %1$s</string>
+    <string name="settings_app_lock_timeout_label">Задержка автоматической блокировки</string>
+    <string name="settings_background_all_screens_format">Фон на всех экранах: %1$s</string>
+    <string name="settings_background_all_screens_label">Фон на всех экранах</string>
+    <string name="settings_background_all_screens_off">Выкл</string>
+    <string name="settings_background_all_screens_on">Вкл</string>
+    <string name="settings_background_blur_dashboard">Главный экран: %1$d%%</string>
+    <string name="settings_background_blur_dashboard_title">Главный экран</string>
+    <string name="settings_background_blur_format">Размытие фона:\nГлавный %1$d%%, Остальные %2$d%%</string>
+    <string name="settings_background_blur_label">Размытие фона</string>
+    <string name="settings_background_blur_others">Другие экраны: %1$d%%</string>
+    <string name="settings_background_blur_others_title">Другие экраны</string>
+    <string name="settings_background_blur_title">Размытие фона</string>
+    <string name="settings_background_blur_unavailable_toast">Доступно только начиная с Android 12</string>
+    <string name="settings_background_dim_format">Затемнение: %1$d%%</string>
+    <string name="settings_background_dim_label">Затемнение фона</string>
+    <string name="settings_background_dim_message">Выберите силу затемнения в процентах.</string>
+    <string name="settings_background_dim_title">Установить затемнение фона</string>
+    <string name="settings_button_color_custom">Свой цвет</string>
+    <string name="settings_button_color_custom_action">Свой цвет</string>
+    <string name="settings_button_color_custom_title">Свой цвет кнопок</string>
+    <string name="settings_button_color_dialog_title">Выберите цвет кнопок</string>
+    <string name="settings_button_color_format">Цвет кнопок</string>
+    <string name="settings_button_color_label">Цвет кнопок</string>
+    <string name="settings_button_color_widget_note">Также обновляет цвет фона виджета.</string>
+    <string name="settings_calendar_insertion_color_custom_title">Свой цвет вставки</string>
+    <string name="settings_calendar_insertion_color_dialog_title">Выберите цвет вставки</string>
+    <string name="settings_calendar_insertion_color_format">Цвет вставки: %1$s</string>
+    <string name="settings_calendar_insertion_color_label">Цвет вставки</string>
+    <string name="settings_calendar_range_back">Назад</string>
+    <string name="settings_calendar_range_button">Диапазон календаря:\n%1$d %2$s назад, %3$d %4$s вперед</string>
+    <string name="settings_calendar_range_forward">Вперед</string>
+    <string name="settings_calendar_range_message">Выберите, на какой период отображать календарь.</string>
+    <string name="settings_calendar_range_title">Установить диапазон календаря</string>
+    <string name="settings_calendar_removal_color_custom_title">Свой цвет извлечения</string>
+    <string name="settings_calendar_removal_color_dialog_title">Выберите цвет извлечения</string>
+    <string name="settings_calendar_removal_color_format">Цвет извлечения: %1$s</string>
+    <string name="settings_calendar_removal_color_label">Цвет извлечения</string>
+    <string name="settings_calendar_ring_free_color_custom_title">Свой цвет перерыва</string>
+    <string name="settings_calendar_ring_free_color_dialog_title">Выберите цвет перерыва</string>
+    <string name="settings_calendar_ring_free_color_format">Цвет без кольца: %1$s</string>
+    <string name="settings_calendar_ring_free_color_label">Цвет без кольца</string>
+    <string name="settings_calendar_wear_color_custom_title">Свой цвет времени ношения</string>
+    <string name="settings_calendar_wear_color_dialog_title">Выберите цвет времени ношения</string>
+    <string name="settings_calendar_wear_color_format">Цвет ношения: %1$s</string>
+    <string name="settings_calendar_wear_color_label">Цвет ношения</string>
+    <string name="settings_circle_color_custom_title">Свой цвет круга на главном</string>
+    <string name="settings_circle_color_dialog_title">Выберите цвет круга</string>
+    <string name="settings_circle_color_format">Цвет круга на главном</string>
+    <string name="settings_circle_color_label">Цвет круга на главном</string>
+    <string name="settings_circle_color_widget_note">Также обновляет цвет кольца в виджете.</string>
+    <string name="settings_circle_style_dialog_title">Стиль круга на главном</string>
+    <string name="settings_circle_style_format">Стиль круга: %1$s</string>
+    <string name="settings_circle_style_label">Стиль круга на главном</string>
+    <string name="settings_cycle_length_button">Длина цикла: %1$d дн.</string>
+    <string name="settings_cycle_length_message">Выберите длину цикла в днях:</string>
+    <string name="settings_cycle_length_title">Установить длину цикла</string>
+    <string name="settings_date_button_format">Дата вставки: %1$02d.%2$02d.%3$d</string>
+    <string name="settings_info_desc">О приложении</string>
+    <string name="settings_navigation_animation_dialog_title">Анимация навигации</string>
+    <string name="settings_navigation_animation_format">Анимация: %1$s</string>
+    <string name="settings_navigation_animation_label">Анимация навигации</string>
+    <string name="settings_notification_before_insertion">Перед вставкой (часов)</string>
+    <string name="settings_notification_before_removal">Перед извлечением (часов)</string>
+    <string name="settings_notification_times_button">Напоминания: %1$дч до извлечения, %2$дч до вставки</string>
+    <string name="settings_notification_times_message">Выберите время в часах (0 = нет).</string>
+    <string name="settings_notification_times_title">Настроить напоминания</string>
+    <string name="settings_permission_message">Требуется разрешение на доступ к изображениям для выбора фона.</string>
+    <string name="settings_permission_title">Требуется разрешение</string>
+    <string name="settings_reset_confirm">Сброс</string>
+    <string name="settings_reset_done">Приложение сброшено</string>
+    <string name="settings_reset_message">Все данные, настройки и заметки будут удалены.</string>
+    <string name="settings_reset_title">Сбросить приложение?</string>
+    <string name="settings_subtitle">Все в одном месте.</string>
+    <string name="settings_time_button_format">Время вставки: %1$02d:%2$02d</string>
+    <string name="settings_title">Настройки</string>
+    <string name="settings_unit_month">Месяц</string>
+    <string name="settings_unit_month_short">мес</string>
+    <string name="settings_unit_year">Год</string>
+    <string name="settings_unit_year_short">г.</string>
+
+    <!-- Notification Settings -->
+    <string name="notification_hint_battery">Отключите оптимизацию батареи, чтобы система не задерживала напоминания.</string>
+    <string name="notification_hint_exact_alarm">Разрешите точные будильники, чтобы напоминания срабатывали вовремя (Android 12+).</string>
+    <string name="notification_hint_permission">Разрешите доступ к уведомлениям, чтобы напоминания могли отображаться (Android 13+).</string>
+    <string name="notification_hint_set_times">Выберите, за сколько часов до извлечения или вставки вы хотите получать напоминания.</string>
+    <string name="notification_open_settings">Открыть настройки уведомлений</string>
+    <string name="notification_permission_button_label">Разрешение на уведомления: %1$s</string>
+    <string name="notification_permission_denied">В разрешении на уведомления отказано.</string>
+    <string name="notification_permission_granted">Разрешение на уведомления предоставлено.</string>
+    <string name="notification_permission_required_message">Пожалуйста, разрешите уведомления для этого приложения, иначе напоминания и тестовые уведомления не смогут отображаться.</string>
+    <string name="notification_permission_required_title">Требуется разрешение на уведомления</string>
+    <string name="notification_permission_status_allowed">разрешено</string>
+    <string name="notification_permission_status_blocked">заблокировано</string>
+    <string name="notification_permission_status_not_required">не требуется</string>
+    <string name="notification_test_blocked_permission">Разрешение на уведомления заблокировано.</string>
+    <string name="notification_test_blocked_system">Уведомления для этого приложения отключены в системных настройках.</string>
+    <string name="notification_test_message">Если вы видите это сообщение, уведомления работают.</string>
+    <string name="notification_test_sent">Тестовое уведомление отправлено.</string>
+    <string name="notification_test_title">Veri Aristo тест</string>
+    <string name="notification_times_button_label">Напоминания:\n%1$дч до извлечения, %2$дч до вставки</string>
+    <string name="notification_times_button_unknown">Напоминания:\nнеизвестно</string>
+    <string name="notifications_channel_description">Уведомления о циклах кольца</string>
+    <string name="notifications_channel_name">Напоминания</string>
+
+    <!-- Notifications -->
+    <string name="battery_opt_button_label">Оптимизация батареи: %1$s</string>
+    <string name="battery_opt_status_disabled">отключена</string>
+    <string name="battery_opt_status_enabled">включена</string>
+    <string name="battery_opt_status_not_required">не требуется</string>
+    <string name="battery_opt_status_unknown">неизвестно</string>
+    <string name="exact_alarm_button_label">Точные будильники: %1$s</string>
+    <string name="exact_alarm_message">Для точных напоминаний требуется разрешение. Пожалуйста, разрешите точные будильники в системных настройках, чтобы уведомления срабатывали вовремя.</string>
+    <string name="exact_alarm_not_supported">Точные будильники не требуются в этой версии Android.</string>
+    <string name="exact_alarm_open_settings">Открыть настройки</string>
+    <string name="exact_alarm_status_allowed">разрешено</string>
+    <string name="exact_alarm_status_blocked">заблокировано</string>
+    <string name="exact_alarm_status_not_required">не требуется</string>
+    <string name="exact_alarm_status_unknown">неизвестно</string>
+    <string name="exact_alarm_title">Разрешить точные будильники</string>
+    <string name="notif_cycle_duration_title">Длина цикла</string>
+    <string name="notif_insert_in_hours">Вставьте кольцо через %1$d ч.!</string>
+    <string name="notif_insert_now">Вставьте кольцо сейчас в %1$s!</string>
+    <string name="notif_insert_title">Вставить кольцо</string>
+    <string name="notif_one_week_remaining">Осталась одна неделя с кольцом.</string>
+    <string name="notif_remove_in_hours">Извлеките кольцо через %1$d ч.!</string>
+    <string name="notif_remove_now">Извлеките кольцо сейчас в %1$s!</string>
+    <string name="notif_remove_title">Извлечь кольцо</string>
+    <string name="notif_two_weeks_remaining">Осталось две недели с кольцом.</string>
+
+    <!-- Home -->
+    <string name="home_at_time">в %1$s</string>
+    <string name="home_background_desc">Фоновое изображение</string>
+    <string name="home_days">17</string>
+    <string name="home_days_left">Дней осталось</string>
+    <string name="home_days_until_insertion">Дней до вставки</string>
+    <string name="home_delay_confirm">Обновить</string>
+    <string name="home_delay_info_desc">Информация о ношении кольца дольше положенного срока</string>
+    <string name="home_delay_info_message"><![CDATA[
+        <b>Вы забыли извлечь кольцо</b><br><br>
+        <b>Кольцо находилось внутри 3–4 недели</b>: Контрацептивная защита сохраняется. Извлеките кольцо, сделайте перерыв на одну неделю (когда обычно происходит кровотечение), затем вставьте новое кольцо.<br><br>
+        <b>Кольцо находилось внутри более 4 недель</b>: Контрацептивная защита может быть снижена — существует риск беременности. Немедленно извлеките кольцо и обратитесь к врачу перед тем, как вставлять новое (может потребоваться тест на беременность или дополнительные методы контрацепции).<br><br>
+        <b>Примечание</b>: Если после извлечения кольца кровотечение не наступило, также обратитесь за медицинской консультацией.<br><br>
+        ]]></string>
+    <string name="home_delay_info_title">Инфо</string>
+    <string name="home_delay_message">На сколько дней дольше носилось кольцо?</string>
+    <string name="home_delay_title">Кольцо носилось дольше</string>
+    <string name="home_insertion_on">Вставка: %1$s</string>
+    <string name="home_insertion_on_placeholder">Вставка: --</string>
+    <string name="home_removal_on">Извлечение: %1$s</string>
+    <string name="home_removal_on_placeholder">Извлечение: --</string>
+    <string name="home_skip_ring_free_confirm">Пропустить</string>
+    <string name="home_skip_ring_free_info_desc">Информация о пропуске недели без кольца</string>
+    <string name="home_skip_ring_free_info_message"><![CDATA[
+        <b>Вы хотите отсрочить менструацию</b><br><br>
+        Это не является рекомендуемым стандартным использованием, но это возможно:<br>
+        - Пропустите неделю без кольца и вставьте новое сразу после извлечения старого.<br>
+        - Новое кольцо может оставаться внутри до 3 недель.<br>
+        - В этот период могут возникать мажущие выделения или прорывные кровотечения.<br>
+        - Чтобы вызвать кровотечение отмены: извлеките кольцо раньше, сделайте обычный недельный перерыв, затем вставьте новое.<br><br>
+        <b>Важно</b>: Проконсультируйтесь с врачом, прежде чем откладывать менструацию.
+        ]]></string>
+    <string name="home_skip_ring_free_message">После извлечения кольца следующая вставка для этого цикла назначается немедленно. Следующие циклы продолжаются в обычном режиме с неделей перерыва.</string>
+    <string name="home_skip_ring_free_title">Пропустить неделю без кольца</string>
+    <string name="home_special_actions_label">Особые случаи</string>
+    <string name="home_special_actions_toggle_close">Закрыть особые действия</string>
+    <string name="home_special_actions_toggle_open">Открыть особые действия</string>
+
+    <!-- Calendar -->
+    <string name="calendar_month_picker_title">Перейти к месяцу</string>
+    <string name="calendar_month_selector_desc">Выбрать месяц и год</string>
+    <string name="calendar_next_month_desc">Следующий месяц</string>
+    <string name="calendar_previous_month_desc">Предыдущий месяц</string>
+    <string name="calendar_title">Календарь</string>
+    <string name="calendar_today_button">Вернуться к текущей дате</string>
+
+    <!-- Calendar Legend -->
+    <string name="legend_insertion">Вставка</string>
+    <string name="legend_removal">Извлечение</string>
+    <string name="legend_ring_free">Без кольца</string>
+    <string name="legend_wear_time">Время ношения</string>
+
+    <!-- Cycles -->
+    <string name="cycles_clear_history">Очистить историю</string>
+    <string name="cycles_status_inserted">Кольцо вставлено</string>
+    <string name="cycles_status_removed">Кольцо извлечено</string>
+    <string name="cycles_title">История циклов</string>
+
+    <!-- Notes -->
+    <string name="notes_char_count">%1$d символов</string>
+    <string name="notes_char_count_default">0 символов</string>
+    <string name="notes_close_desc">Закрыть заметки</string>
+    <string name="notes_delete">Удалить</string>
+    <string name="notes_delete_message">Ваши текущие заметки будут удалены.</string>
+    <string name="notes_delete_title">Удалить заметки?</string>
+    <string name="notes_hint">Напишите здесь ваши заметки...</string>
+    <string name="notes_last_saved">Сохранено: %1$s</string>
+    <string name="notes_not_saved">Не сохранено</string>
+    <string name="notes_open_desc">Открыть заметки</string>
+    <string name="notes_save">Сохранить</string>
+    <string name="notes_saved_toast">Заметки сохранены</string>
+    <string name="notes_title">Блокнот</string>
+    <string name="notes_today">Сегодня</string>
+
+    <!-- Widgets -->
+    <string name="widget_large_name">Виджет кольца (большой)</string>
+    <string name="widget_small_name">Виджет кольца (маленький)</string>
+    <string name="widget_title">Следующие даты:</string>
+
+    <!-- Navigation -->
+    <string name="nav_calendar">Календарь</string>
+    <string name="nav_cycles">Циклы</string>
+    <string name="nav_home">Главная</string>
+    <string name="nav_settings">Настройки</string>
+
+    <!-- Language -->
+    <string name="language_button">Выбрано: %1$s</string>
+    <string name="language_chinese">Китайский</string>
+    <string name="language_english">Английский</string>
+    <string name="language_french">Французский</string>
+    <string name="language_german">Немецкий</string>
+    <string name="language_italian">Итальянский</string>
+    <string name="language_polish">Польский</string>
+    <string name="language_portuguese_brazil">Португальский (Бразилия)</string>
+    <string name="language_russian">Русский</string>
+    <string name="language_spanish">Испанский</string>
+    <string name="language_system_default">Системный по умолчанию</string>
+    <string name="language_turkish">Турецкий</string>
+    <string name="language_title">Язык приложения</string>
+
+    <!-- Backup -->
+    <string name="backup_create">Создать резервную копию</string>
+    <string name="backup_created_toast">Резервная копия создана</string>
+    <string name="backup_failed_toast">Ошибка резервного копирования</string>
+    <string name="backup_field_app_lock">Блокировка приложения включена</string>
+    <string name="backup_field_app_lock_timeout">Задержка автоблокировки</string>
+    <string name="backup_field_background_all_screens">Фон на всех экранах</string>
+    <string name="backup_field_background_blur_dashboard">Размытие фона панели управления</string>
+    <string name="backup_field_background_blur_others">Размытие фона других экранов</string>
+    <string name="backup_field_background_dim">Затемнение фона</string>
+    <string name="backup_field_background_image">Выбрано фоновое изображение</string>
+    <string name="backup_field_button_color">Цвет кнопок</string>
+    <string name="backup_field_calendar_future">Диапазон календаря (будущее)</string>
+    <string name="backup_field_calendar_past">Диапазон календаря (прошлое)</string>
+    <string name="backup_field_cycle_delay_entries_format">Записи о задержках циклов: %1$d</string>
+    <string name="backup_field_cycle_history">История циклов</string>
+    <string name="backup_field_cycle_history_entries_format">Записей: %1$d</string>
+    <string name="backup_field_cycle_history_range_format">Записей: %1$d (%2$s - %3$s)</string>
+    <string name="backup_field_cycle_length">Длина цикла</string>
+    <string name="backup_field_debug_time">Отладочное время включено</string>
+    <string name="backup_field_debug_time_value">Значение отладочного времени</string>
+    <string name="backup_field_debug_tools">Инструменты отладки включены</string>
+    <string name="backup_field_exact_alarm_prompted">Показан запрос на точный будильник</string>
+    <string name="backup_field_home_circle_color">Цвет кольца на главном экране</string>
+    <string name="backup_field_home_circle_style">Стиль кольца на главном экране</string>
+    <string name="backup_field_last_version">Код последней версии приложения</string>
+    <string name="backup_field_navigation_animation">Анимация навигации</string>
+    <string name="backup_field_notes_last_saved">Заметки последний раз сохранены</string>
+    <string name="backup_field_notes_text">Содержимое заметок</string>
+    <string name="backup_field_notification_flags_format">Флаги уведомлений: %1$d записей (%2$d активных)</string>
+    <string name="backup_field_notification_hashes_format">Снимки настроек уведомлений: %1$d записей</string>
+    <string name="backup_field_reminder_insertion">Напоминание перед вставкой</string>
+    <string name="backup_field_reminder_removal">Напоминание перед извлечением</string>
+    <string name="backup_field_skip_ring_free_entries_format">Записи о пропущенных неделях без кольца: %1$d</string>
+    <string name="backup_field_start_date">Дата вставки</string>
+    <string name="backup_field_start_time">Время вставки</string>
+    <string name="backup_field_tour_shown">Обучающий тур уже пройден</string>
+    <string name="backup_field_welcome_shown">Приветственное окно уже показано</string>
+    <string name="backup_hint_create">Сохраните ваши данные в файл для обеспечения их безопасности.</string>
+    <string name="backup_hint_restore">Восстановите данные из ранее сохраненного файла.</string>
+    <string name="backup_import_check_message">Пожалуйста, проверьте данные резервной копии. При необходимости разверните детали.\n\nПродолжить с этими данными?</string>
+    <string name="backup_import_check_title">Проверка импорта</string>
+    <string name="backup_import_hide_details">Скрыть детали</string>
+    <string name="backup_import_line_format">- %1$s: %2$d записей - %3$s</string>
+    <string name="backup_import_no">Нет</string>
+    <string name="backup_import_no_entries">Нет записей</string>
+    <string name="backup_import_section_app">Настройки приложения</string>
+    <string name="backup_import_section_notes">Данные заметок</string>
+    <string name="backup_import_show_details">Показать детали</string>
+    <string name="backup_import_toggle_format">%1$s (%2$d) - %3$s</string>
+    <string name="backup_import_yes">Да</string>
+    <string name="backup_invalid_toast">Некорректная резервная копия</string>
+    <string name="backup_no">Нет</string>
+    <string name="backup_read_failed_toast">Резервная копия не может быть прочитана</string>
+    <string name="backup_restore">Восстановить из копии</string>
+    <string name="backup_restored_toast">Копия восстановлена</string>
+    <string name="backup_title">Резервное копирование</string>
+    <string name="backup_unit_day">день</string>
+    <string name="backup_unit_days">дней</string>
+    <string name="backup_unit_month">месяц</string>
+    <string name="backup_unit_months">месяцев</string>
+    <string name="backup_unit_year">год</string>
+    <string name="backup_unit_years">лет</string>
+    <string name="backup_unknown">Неизвестно</string>
+    <string name="backup_yes">Да</string>
+
+    <!-- Update -->
+    <string name="update_available_message">Доступна версия %1$s. Установить сейчас?</string>
+    <string name="update_available_title">Доступно обновление</string>
+    <string name="update_available_toast">Найдено обновление. Загрузка...</string>
+    <string name="update_backup_message">Приложение проверит наличие обновлений. Ваши данные останутся на устройстве, но рекомендуется сделать резервную копию.\n\nХотите создать резервную копию? Если вы ее уже создали или не хотите этого делать, нажмите «Продолжить».</string>
+    <string name="update_backup_no">Создать резервную копию</string>
+    <string name="update_backup_title">Резервное копирование</string>
+    <string name="update_backup_yes">Продолжить</string>
+    <string name="update_checking_toast">Проверка обновлений...</string>
+    <string name="update_download_failed_toast">Ошибка загрузки.</string>
+    <string name="update_download_title">Загрузка обновления</string>
+    <string name="update_failed_toast">Ошибка проверки обновлений.</string>
+    <string name="update_install">Установить</string>
+    <string name="update_install_prompt_toast">Разрешите установку из этого приложения, чтобы продолжить.</string>
+    <string name="update_later">Позже</string>
+    <string name="update_latest_toast">У вас установлена последняя версия.</string>
+    <string name="update_no_apk_toast">APK-файл в последнем релизе не найден.</string>
+
+    <!-- Dialogs -->
+    <string name="dialog_cancel">Отмена</string>
+    <string name="dialog_ok">ОК</string>
+
+    <!-- Main -->
+    <string name="main_double_back_exit">Нажмите «Назад» дважды, чтобы закрыть приложение</string>
+
+    <!-- Debug -->
+    <string name="debug_base_start">Дата начала (базовая)</string>
+    <string name="debug_calendar_limits">Границы календаря</string>
+    <string name="debug_calendar_range">Диапазон календаря</string>
+    <string name="debug_current_start">Текущее начало</string>
+    <string name="debug_cycle_length">Длина цикла: %1$d дн.</string>
+    <string name="debug_dialog_title">Отладка: Уведомления</string>
+    <string name="debug_disabled_suffix"> (выкл.)</string>
+    <string name="debug_future_suffix"> [будущее]</string>
+    <string name="debug_hint_clear_time">Сбросить отладочное время и вернуться к системному.</string>
+    <string name="debug_hint_info">Показать подробную информацию об отладке текущего цикла.</string>
+    <string name="debug_hint_jump_midnight">Установить отладочное время на 00:00 текущего дня.</string>
+    <string name="debug_hint_minus_day">Перевести отладочное время на 1 день назад.</string>
+    <string name="debug_hint_minus_hour">Перевести отладочное время на 1 час назад.</string>
+    <string name="debug_hint_plus_day">Перевести отладочное время на 1 день вперед.</string>
+    <string name="debug_hint_plus_hour">Перевести отладочное время на 1 час вперед.</string>
+    <string name="debug_hint_preset_insertion_at">Установить отладочное время на точный момент вставки.</string>
+    <string name="debug_hint_preset_insertion_before">Установить отладочное время на один час до вставки.</string>
+    <string name="debug_hint_preset_removal_at">Установить отладочное время на точный момент извлечения.</string>
+    <string name="debug_hint_preset_removal_before">Установить отладочное время на один час до извлечения.</string>
+    <string name="debug_hint_refresh">Обновить главный экран и виджеты сейчас.</string>
+    <string name="debug_hint_set_time">Выбрать конкретную дату и время для отладочных часов.</string>
+    <string name="debug_insertion">Вставка</string>
+    <string name="debug_insertion_reminder">Напоминание о вставке: за %1$d ч.</string>
+    <string name="debug_insertion_reminder_line">Вставка (-%1$d ч.)</string>
+    <string name="debug_jump_midnight">Переход на полночь</string>
+    <string name="debug_notified_for_cycle">Уведомление запланировано для цикла</string>
+    <string name="debug_now">Сейчас</string>
+    <string name="debug_one_week_remaining">Осталась 1 неделя</string>
+    <string name="debug_past_suffix"> [прошлое]</string>
+    <string name="debug_preset_applied">Пресет применен</string>
+    <string name="debug_refreshed">Обновлено</string>
+    <string name="debug_removal">Извлечение</string>
+    <string name="debug_removal_reminder">Напоминание об извлечении: за %1$d ч.</string>
+    <string name="debug_removal_reminder_line">Извлечение (-%1$d ч.)</string>
+    <string name="debug_ring_free">Перерыв: %1$d дн.</string>
+    <string name="debug_scheduled_notifications">Запланированные уведомления</string>
+    <string name="debug_time_cleared">Отладочное время сброшено</string>
+    <string name="debug_time_set">Отладочное время установлено</string>
+    <string name="debug_time_shift_back">Время переведено назад</string>
+    <string name="debug_time_shift_forward">Время переведено вперед</string>
+    <string name="debug_time_status_override">Используется отладочное время: %1$s</string>
+    <string name="debug_time_status_system">Используется системное время</string>
+    <string name="debug_time_switch_label">Использовать отладочное время</string>
+    <string name="debug_tools_desc">Включить инструменты разработчика в Настройках.</string>
+    <string name="debug_tools_enable">Включить инструменты отладки</string>
+    <string name="debug_tools_title">Инструменты отладки</string>
+    <string name="debug_two_weeks_remaining">Осталось 2 недели</string>
+
+    <!-- Tour -->
+    <string name="tour_body_calendar">Просматривайте дни вставки, извлечения и перерыва одним взглядом.</string>
+    <string name="tour_body_calendar_legend">Эти цвета показывают время ношения, перерыв, извлечение и вставку.\nВы можете изменить цвета, нажав на точки в легенде.</string>
+    <string name="tour_body_cycles">Отслеживайте предыдущие циклы и события вставки/извлечения.</string>
+    <string name="tour_body_cycles_clear">Удалить все сохраненные записи циклов из списка.</string>
+    <string name="tour_body_delay">Используйте это, чтобы записать лишние дни, если кольцо носилось дольше. Подробности — по кнопке инфо.</string>
+    <string name="tour_body_navigation">Здесь можно переключаться между главным экраном, календарем, циклами и настройками.</string>
+    <string name="tour_body_notes">Сохраняйте напоминания и личные заметки для этого цикла.</string>
+    <string name="tour_body_notes_close">Нажмите, чтобы вернуться на главный экран.</string>
+    <string name="tour_body_notes_delete">Удалить текущие заметки.</string>
+    <string name="tour_body_notes_editor">Пишите заметки здесь. Они хранятся только на этом устройстве.</string>
+    <string name="tour_body_notes_save">Сохранить изменения в заметках.</string>
+    <string name="tour_body_progress">Это кольцо показывает, сколько дней осталось до извлечения или вставки.</string>
+    <string name="tour_body_settings_advanced">Нажмите, чтобы развернуть или свернуть расширенный раздел.</string>
+    <string name="tour_body_settings_animation">Выберите анимацию переходов между вкладками и экранами.</string>
+    <string name="tour_body_settings_app_lock">Открывает настройки блокировки, где можно включить защиту и задержку автоблокировки.</string>
+    <string name="tour_body_settings_background">Выберите фото для персонализации фона главного экрана.</string>
+    <string name="tour_body_settings_backup">Создайте или восстановите резервную копию данных.</string>
+    <string name="tour_body_settings_button_color">Измените цвет кнопок.\nЭто также изменит фон виджета.</string>
+    <string name="tour_body_settings_calendar">Выберите, насколько далеко календарь показывает прошлые и будущие циклы.</string>
+    <string name="tour_body_settings_circle_color">Установите цвет кольца на главном экране.\nЭто также изменит цвет кольца в большом виджете.</string>
+    <string name="tour_body_settings_circle_style">Выберите стиль кольца для главного экрана.</string>
+    <string name="tour_body_settings_cycle">Установите дату, время вставки и длину цикла.</string>
+    <string name="tour_body_settings_info">Показывает версию, инфо о разработчике и контакты.</string>
+    <string name="tour_body_settings_language">Переключение между языками.</string>
+    <string name="tour_body_settings_notifications">Установите время напоминаний о вставке и извлечении.\nЕсли уведомления не приходят, отключите оптимизацию батареи.</string>
+    <string name="tour_body_settings_reset">Удалить все данные и сбросить приложение.</string>
+    <string name="tour_body_settings_update">Проверяйте и устанавливайте новые версии приложения.</string>
+    <string name="tour_complete_done">Готово</string>
+    <string name="tour_complete_message">Вы завершили тур. Приятного использования Veri Aristo!\nЕсли тур понадобится снова, его можно перезапустить в расширенных настройках.</string>
+    <string name="tour_complete_subtitle">Тур завершен</string>
+    <string name="tour_complete_title">Все готово! 🎉</string>
+    <string name="tour_finish">Завершить</string>
+    <string name="tour_next">Далее</string>
+    <string name="tour_skip">Пропустить</string>
+    <string name="tour_title_calendar">Просмотр календаря</string>
+    <string name="tour_title_calendar_legend">Легенда календаря</string>
+    <string name="tour_title_cycles">История циклов</string>
+    <string name="tour_title_cycles_clear">Очистить историю</string>
+    <string name="tour_title_delay">Продлить цикл</string>
+    <string name="tour_title_navigation">Навигация</string>
+    <string name="tour_title_notes">Быстрые заметки</string>
+    <string name="tour_title_notes_close">Закрыть заметки</string>
+    <string name="tour_title_notes_delete">Удалить заметки</string>
+    <string name="tour_title_notes_editor">Редактор заметок</string>
+    <string name="tour_title_notes_save">Сохранить заметки</string>
+    <string name="tour_title_progress">Обратный отсчет</string>
+    <string name="tour_title_settings_advanced">Расширенные</string>
+    <string name="tour_title_settings_animation">Анимация</string>
+    <string name="tour_title_settings_app_lock">Блокировка приложения</string>
+    <string name="tour_title_settings_background">Фоновое изображение</string>
+    <string name="tour_title_settings_backup">Резервная копия</string>
+    <string name="tour_title_settings_button_color">Цвет кнопок</string>
+    <string name="tour_title_settings_calendar">Диапазон календаря</string>
+    <string name="tour_title_settings_circle_color">Цвет кольца</string>
+    <string name="tour_title_settings_circle_style">Стиль кольца</string>
+    <string name="tour_title_settings_cycle">Настройки цикла</string>
+    <string name="tour_title_settings_info">Об инфо</string>
+    <string name="tour_title_settings_language">Язык</string>
+    <string name="tour_title_settings_notifications">Напоминания</string>
+    <string name="tour_title_settings_reset">Сброс приложения</string>
+    <string name="tour_title_settings_update">Обновления</string>
+
+    <!-- Welcome -->
+    <string name="welcome_features_body">- 📅 Календарь вставки, извлечения и перерывов\n- 🔔 Настраиваемые уведомления\n- 📝 Заметки и история циклов\n- 🎨 Персонализация фона, цветов, языка и виджетов\n- 💾 Резервное копирование и восстановление</string>
+    <string name="welcome_features_title">Функции приложения</string>
+    <string name="welcome_info_note">Вы можете открыть инфо о приложении в любое время в Настройках.</string>
+    <string name="welcome_intro">Следите за циклом контрацептивного кольца с помощью персональных дат, напоминаний и заметок.</string>
+    <string name="welcome_permissions_body">- 🖼️ Доступ к медиафайлам: выбор фонового изображения\n- 🔔 Уведомления: напоминания о цикле\n- ⏰ Точные будильники: точное планирование</string>
+    <string name="welcome_permissions_title">Используемые разрешения</string>
+    <string name="welcome_privacy_note">Ваши данные хранятся только на этом устройстве. Обязательно создайте резервную копию после настройки 😊</string>
+    <string name="welcome_skip_tour">Не сейчас</string>
+    <string name="welcome_start_tour">Начать тур</string>
+    <string name="welcome_subtitle">Напоминание о кольце Veri Aristo</string>
+    <string name="welcome_title">Добро пожаловать 👋</string>
+</resources>

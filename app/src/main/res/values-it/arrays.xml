@@ -1,17 +1,17 @@
 <resources>
     <string-array name="settings_button_color_labels">
-        <item>Rot</item>
-        <item>Pink</item>
-        <item>Orange</item>
-        <item>Bernstein</item>
-        <item>Olive</item>
-        <item>Grün</item>
-        <item>Türkis</item>
-        <item>Blau</item>
-        <item>Indigo</item>
-        <item>Dunkellila</item>
-        <item>Lila</item>
-        <item>Schiefergrau</item>
+        <item>Rosso</item>
+        <item>Rosa</item>
+        <item>Arancione</item>
+        <item>Ambra</item>
+        <item>Oliva</item>
+        <item>Verde</item>
+        <item>Turchese</item>
+        <item>Blu</item>
+        <item>Indaco</item>
+        <item>Viola scuro</item>
+        <item>Viola</item>
+        <item>Grigio ardesia</item>
     </string-array>
 
     <integer-array name="settings_button_color_values">
@@ -30,28 +30,28 @@
     </integer-array>
 
     <string-array name="settings_circle_style_labels">
-        <item>Klassisch</item>
-        <item>Dünn</item>
-        <item>Segmentiert</item>
-        <item>Nur Bogen</item>
-        <item>Markierung</item>
-        <item>Verlauf</item>
-        <item>Leuchten</item>
-        <item>Verlauf mit Leuchten</item>
-        <item>Puls leicht</item>
-        <item>Puls mittel</item>
-        <item>Puls stark</item>
+        <item>Classico</item>
+        <item>Sottile</item>
+        <item>Segmentato</item>
+        <item>Solo arco</item>
+        <item>Indicatore</item>
+        <item>Sfumatura</item>
+        <item>Bagliore</item>
+        <item>Sfumatura con bagliore</item>
+        <item>Impulso leggero</item>
+        <item>Impulso medio</item>
+        <item>Impulso forte</item>
         <item>Halo</item>
     </string-array>
 
     <string-array name="settings_navigation_animation_labels">
-        <item>Schieben</item>
-        <item>Überblenden</item>
-        <item>Zoomen</item>
-        <item>Nach oben schieben</item>
-        <item>Drehen</item>
+        <item>Scorrimento</item>
+        <item>Dissolvenza</item>
+        <item>Zoom</item>
+        <item>Scorrimento verso l\'alto</item>
+        <item>Rotazione</item>
         <item>Pop</item>
-        <item>Keine</item>
+        <item>Nessuna</item>
     </string-array>
 
     <integer-array name="settings_navigation_animation_values">
@@ -65,11 +65,11 @@
     </integer-array>
 
     <string-array name="settings_app_lock_timeout_labels">
-        <item>Sofort</item>
-        <item>30 Sekunden</item>
-        <item>1 Minute</item>
-        <item>5 Minuten</item>
-        <item>15 Minuten</item>
+        <item>Immediatamente</item>
+        <item>30 secondi</item>
+        <item>1 minuto</item>
+        <item>5 minuti</item>
+        <item>15 minuti</item>
     </string-array>
 
     <integer-array name="settings_app_lock_timeout_values">

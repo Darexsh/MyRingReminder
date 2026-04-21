@@ -1,17 +1,17 @@
 <resources>
     <string-array name="settings_button_color_labels">
-        <item>Rot</item>
-        <item>Pink</item>
-        <item>Orange</item>
-        <item>Bernstein</item>
-        <item>Olive</item>
-        <item>Grün</item>
-        <item>Türkis</item>
-        <item>Blau</item>
-        <item>Indigo</item>
-        <item>Dunkellila</item>
-        <item>Lila</item>
-        <item>Schiefergrau</item>
+        <item>红色</item>
+        <item>粉色</item>
+        <item>橙色</item>
+        <item>琥珀色</item>
+        <item>橄榄色</item>
+        <item>绿色</item>
+        <item>青色</item>
+        <item>蓝色</item>
+        <item>靛蓝</item>
+        <item>深紫色</item>
+        <item>紫色</item>
+        <item>石板灰</item>
     </string-array>
 
     <integer-array name="settings_button_color_values">
@@ -30,28 +30,28 @@
     </integer-array>
 
     <string-array name="settings_circle_style_labels">
-        <item>Klassisch</item>
-        <item>Dünn</item>
-        <item>Segmentiert</item>
-        <item>Nur Bogen</item>
-        <item>Markierung</item>
-        <item>Verlauf</item>
-        <item>Leuchten</item>
-        <item>Verlauf mit Leuchten</item>
-        <item>Puls leicht</item>
-        <item>Puls mittel</item>
-        <item>Puls stark</item>
-        <item>Halo</item>
+        <item>经典</item>
+        <item>细线</item>
+        <item>分段</item>
+        <item>仅弧形</item>
+        <item>标记</item>
+        <item>渐变</item>
+        <item>发光</item>
+        <item>渐变发光</item>
+        <item>轻微脉冲</item>
+        <item>中等脉冲</item>
+        <item>强烈脉冲</item>
+        <item>光环</item>
     </string-array>
 
     <string-array name="settings_navigation_animation_labels">
-        <item>Schieben</item>
-        <item>Überblenden</item>
-        <item>Zoomen</item>
-        <item>Nach oben schieben</item>
-        <item>Drehen</item>
-        <item>Pop</item>
-        <item>Keine</item>
+        <item>滑动</item>
+        <item>淡入淡出</item>
+        <item>缩放</item>
+        <item>向上滑动</item>
+        <item>旋转</item>
+        <item>弹出</item>
+        <item>无</item>
     </string-array>
 
     <integer-array name="settings_navigation_animation_values">
@@ -65,11 +65,11 @@
     </integer-array>
 
     <string-array name="settings_app_lock_timeout_labels">
-        <item>Sofort</item>
-        <item>30 Sekunden</item>
-        <item>1 Minute</item>
-        <item>5 Minuten</item>
-        <item>15 Minuten</item>
+        <item>立即</item>
+        <item>30 秒</item>
+        <item>1 分钟</item>
+        <item>5 分钟</item>
+        <item>15 分钟</item>
     </string-array>
 
     <integer-array name="settings_app_lock_timeout_values">

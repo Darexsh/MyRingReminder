@@ -14,6 +14,10 @@ public class SharedViewModel extends ViewModel {
     private final MutableLiveData<Integer> cycleLength = new MutableLiveData<>();
     private final MutableLiveData<Calendar> startDate = new MutableLiveData<>();
     private final MutableLiveData<String> backgroundImageUri = new MutableLiveData<>();
+    private final MutableLiveData<Boolean> backgroundAllScreensEnabled = new MutableLiveData<>();
+    private final MutableLiveData<Integer> backgroundDimPercent = new MutableLiveData<>();
+    private final MutableLiveData<Integer> backgroundBlurDashboardPercent = new MutableLiveData<>();
+    private final MutableLiveData<Integer> backgroundBlurOthersPercent = new MutableLiveData<>();
     private final MutableLiveData<Integer> calendarPastAmount = new MutableLiveData<>();
     private final MutableLiveData<String> calendarPastUnit = new MutableLiveData<>();
     private final MutableLiveData<Integer> calendarFutureAmount = new MutableLiveData<>();
@@ -34,6 +38,10 @@ public class SharedViewModel extends ViewModel {
         cycleLength.setValue(repository.getCycleLength());
         startDate.setValue(repository.getStartDate());
         backgroundImageUri.setValue(repository.getBackgroundImageUri());
+        backgroundAllScreensEnabled.setValue(repository.isBackgroundAllScreensEnabled());
+        backgroundDimPercent.setValue(repository.getBackgroundDimPercent());
+        backgroundBlurDashboardPercent.setValue(repository.getBackgroundBlurDashboardPercent());
+        backgroundBlurOthersPercent.setValue(repository.getBackgroundBlurOthersPercent());
         calendarPastAmount.setValue(repository.getCalendarPastAmount());
         calendarPastUnit.setValue(repository.getCalendarPastUnit());
         calendarFutureAmount.setValue(repository.getCalendarFutureAmount());
@@ -61,6 +69,22 @@ public class SharedViewModel extends ViewModel {
 
     public LiveData<String> getBackgroundImageUri() {
         return backgroundImageUri;
+    }
+
+    public LiveData<Boolean> getBackgroundAllScreensEnabled() {
+        return backgroundAllScreensEnabled;
+    }
+
+    public LiveData<Integer> getBackgroundDimPercent() {
+        return backgroundDimPercent;
+    }
+
+    public LiveData<Integer> getBackgroundBlurDashboardPercent() {
+        return backgroundBlurDashboardPercent;
+    }
+
+    public LiveData<Integer> getBackgroundBlurOthersPercent() {
+        return backgroundBlurOthersPercent;
     }
 
     public LiveData<Integer> getCalendarPastAmount() {
@@ -137,6 +161,26 @@ public class SharedViewModel extends ViewModel {
     public void setBackgroundImageUri(String uri) {
         repository.saveBackgroundImageUri(uri);
         this.backgroundImageUri.setValue(uri);
+    }
+
+    public void setBackgroundAllScreensEnabled(boolean enabled) {
+        repository.setBackgroundAllScreensEnabled(enabled);
+        backgroundAllScreensEnabled.setValue(enabled);
+    }
+
+    public void setBackgroundDimPercent(int percent) {
+        repository.setBackgroundDimPercent(percent);
+        backgroundDimPercent.setValue(percent);
+    }
+
+    public void setBackgroundBlurDashboardPercent(int percent) {
+        repository.setBackgroundBlurDashboardPercent(percent);
+        backgroundBlurDashboardPercent.setValue(percent);
+    }
+
+    public void setBackgroundBlurOthersPercent(int percent) {
+        repository.setBackgroundBlurOthersPercent(percent);
+        backgroundBlurOthersPercent.setValue(percent);
     }
 
     public void setCalendarPastRange(int amount, String unit) {

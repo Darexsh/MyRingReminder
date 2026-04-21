@@ -1,17 +1,17 @@
 <resources>
     <string-array name="settings_button_color_labels">
-        <item>Rot</item>
-        <item>Pink</item>
-        <item>Orange</item>
-        <item>Bernstein</item>
-        <item>Olive</item>
-        <item>Grün</item>
-        <item>Türkis</item>
-        <item>Blau</item>
-        <item>Indigo</item>
-        <item>Dunkellila</item>
-        <item>Lila</item>
-        <item>Schiefergrau</item>
+        <item>Kırmızı</item>
+        <item>Pembe</item>
+        <item>Turuncu</item>
+        <item>Kehribar</item>
+        <item>Zeytin</item>
+        <item>Yeşil</item>
+        <item>Turkuaz</item>
+        <item>Mavi</item>
+        <item>İndigo</item>
+        <item>Koyu mor</item>
+        <item>Mor</item>
+        <item>Arduvaz grisi</item>
     </string-array>
 
     <integer-array name="settings_button_color_values">
@@ -30,28 +30,28 @@
     </integer-array>
 
     <string-array name="settings_circle_style_labels">
-        <item>Klassisch</item>
-        <item>Dünn</item>
-        <item>Segmentiert</item>
-        <item>Nur Bogen</item>
-        <item>Markierung</item>
-        <item>Verlauf</item>
-        <item>Leuchten</item>
-        <item>Verlauf mit Leuchten</item>
-        <item>Puls leicht</item>
-        <item>Puls mittel</item>
-        <item>Puls stark</item>
+        <item>Klasik</item>
+        <item>İnce</item>
+        <item>Parçalı</item>
+        <item>Sadece yay</item>
+        <item>İşaretçi</item>
+        <item>Gradyan</item>
+        <item>Parlama</item>
+        <item>Gradyan parlama</item>
+        <item>Hafif nabız</item>
+        <item>Orta nabız</item>
+        <item>Güçlü nabız</item>
         <item>Halo</item>
     </string-array>
 
     <string-array name="settings_navigation_animation_labels">
-        <item>Schieben</item>
-        <item>Überblenden</item>
-        <item>Zoomen</item>
-        <item>Nach oben schieben</item>
-        <item>Drehen</item>
+        <item>Kaydır</item>
+        <item>Solma</item>
+        <item>Yakınlaştır</item>
+        <item>Yukarı kaydır</item>
+        <item>Döndür</item>
         <item>Pop</item>
-        <item>Keine</item>
+        <item>Yok</item>
     </string-array>
 
     <integer-array name="settings_navigation_animation_values">
@@ -65,11 +65,11 @@
     </integer-array>
 
     <string-array name="settings_app_lock_timeout_labels">
-        <item>Sofort</item>
-        <item>30 Sekunden</item>
-        <item>1 Minute</item>
-        <item>5 Minuten</item>
-        <item>15 Minuten</item>
+        <item>Hemen</item>
+        <item>30 saniye</item>
+        <item>1 dakika</item>
+        <item>5 dakika</item>
+        <item>15 dakika</item>
     </string-array>
 
     <integer-array name="settings_app_lock_timeout_values">

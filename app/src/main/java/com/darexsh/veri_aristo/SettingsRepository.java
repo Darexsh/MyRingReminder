@@ -20,6 +20,10 @@ public class SettingsRepository {
     private static final String KEY_SET_TIME_MINUTE = "set_time_minute";
     private static final String KEY_CYCLE_LENGTH = "cycle_length";
     private static final String KEY_BACKGROUND_IMAGE_URI = "background_image_uri";
+    private static final String KEY_BACKGROUND_ALL_SCREENS = "background_all_screens";
+    private static final String KEY_BACKGROUND_DIM_PERCENT = "background_dim_percent";
+    private static final String KEY_BACKGROUND_BLUR_DASHBOARD_PERCENT = "background_blur_dashboard_percent";
+    private static final String KEY_BACKGROUND_BLUR_OTHERS_PERCENT = "background_blur_others_percent";
     private static final String KEY_CYCLE_HISTORY = "cycle_history";
     private static final String KEY_CALENDAR_PAST_MONTHS = "calendar_past_months";
     private static final String KEY_CALENDAR_FUTURE_YEARS = "calendar_future_years";
@@ -44,7 +48,7 @@ public class SettingsRepository {
     private static final String KEY_EXACT_ALARM_PROMPTED = "exact_alarm_prompted";
     private static final String KEY_APP_LOCK_ENABLED = "app_lock_enabled";
     private static final String KEY_APP_LOCK_TIMEOUT_MS = "app_lock_timeout_ms";
-    public static final int DEFAULT_BUTTON_COLOR = 0xFF6200EE;
+    public static final int DEFAULT_BUTTON_COLOR = 0xFF2E7D32;
     public static final int DEFAULT_HOME_CIRCLE_COLOR = 0xFFBB86FC;
     public static final int DEFAULT_HOME_CIRCLE_STYLE = 0;
     public static final int DEFAULT_CALENDAR_WEAR_COLOR = 0xFF00FF00;
@@ -101,6 +105,62 @@ public class SettingsRepository {
 
     public void saveBackgroundImageUri(String uri) {
         sharedPreferences.edit().putString(KEY_BACKGROUND_IMAGE_URI, uri).apply();
+    }
+
+    public boolean isBackgroundAllScreensEnabled() {
+        return sharedPreferences.getBoolean(KEY_BACKGROUND_ALL_SCREENS, true);
+    }
+
+    public void setBackgroundAllScreensEnabled(boolean enabled) {
+        sharedPreferences.edit().putBoolean(KEY_BACKGROUND_ALL_SCREENS, enabled).apply();
+    }
+
+    public int getBackgroundDimPercent() {
+        int percent = sharedPreferences.getInt(KEY_BACKGROUND_DIM_PERCENT, 50);
+        if (percent < 0) {
+            return 0;
+        }
+        if (percent > 100) {
+            return 100;
+        }
+        return percent;
+    }
+
+    public void setBackgroundDimPercent(int percent) {
+        int clamped = Math.max(0, Math.min(100, percent));
+        sharedPreferences.edit().putInt(KEY_BACKGROUND_DIM_PERCENT, clamped).apply();
+    }
+
+    public int getBackgroundBlurDashboardPercent() {
+        int percent = sharedPreferences.getInt(KEY_BACKGROUND_BLUR_DASHBOARD_PERCENT, 0);
+        if (percent < 0) {
+            return 0;
+        }
+        if (percent > 100) {
+            return 100;
+        }
+        return percent;
+    }
+
+    public void setBackgroundBlurDashboardPercent(int percent) {
+        int clamped = Math.max(0, Math.min(100, percent));
+        sharedPreferences.edit().putInt(KEY_BACKGROUND_BLUR_DASHBOARD_PERCENT, clamped).apply();
+    }
+
+    public int getBackgroundBlurOthersPercent() {
+        int percent = sharedPreferences.getInt(KEY_BACKGROUND_BLUR_OTHERS_PERCENT, 50);
+        if (percent < 0) {
+            return 0;
+        }
+        if (percent > 100) {
+            return 100;
+        }
+        return percent;
+    }
+
+    public void setBackgroundBlurOthersPercent(int percent) {
+        int clamped = Math.max(0, Math.min(100, percent));
+        sharedPreferences.edit().putInt(KEY_BACKGROUND_BLUR_OTHERS_PERCENT, clamped).apply();
     }
 
     public int getCalendarPastAmount() {

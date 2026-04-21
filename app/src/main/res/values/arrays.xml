@@ -79,4 +79,32 @@
         <item>300000</item>
         <item>900000</item>
     </integer-array>
+
+    <string-array name="language_option_labels">
+        <item>@string/language_system_default</item>
+        <item>@string/language_german</item>
+        <item>@string/language_english</item>
+        <item>@string/language_spanish</item>
+        <item>@string/language_french</item>
+        <item>@string/language_portuguese_brazil</item>
+        <item>@string/language_italian</item>
+        <item>@string/language_turkish</item>
+        <item>@string/language_polish</item>
+        <item>@string/language_russian</item>
+        <item>@string/language_chinese</item>
+    </string-array>
+
+    <string-array name="language_option_tags">
+        <item></item>
+        <item>de</item>
+        <item>en</item>
+        <item>es</item>
+        <item>fr</item>
+        <item>pt-BR</item>
+        <item>it</item>
+        <item>tr</item>
+        <item>pl</item>
+        <item>ru</item>
+        <item>zh</item>
+    </string-array>
 </resources>

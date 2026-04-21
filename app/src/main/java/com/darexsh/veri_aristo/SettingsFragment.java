@@ -95,6 +95,9 @@ public class SettingsFragment extends Fragment {
     private MaterialButton btnSetStartDate;
     private MaterialButton btnSetCycleLength;
     private MaterialButton btnSetBackground;
+    private MaterialButton btnBackgroundAllScreens;
+    private MaterialButton btnBackgroundDim;
+    private MaterialButton btnBackgroundBlur;
     private MaterialButton btnSetCalendarRange;
     private MaterialButton btnBackupManage;
     private MaterialButton btnUpdateApp;
@@ -235,6 +238,9 @@ public class SettingsFragment extends Fragment {
         btnSetStartDate = view.findViewById(R.id.btn_set_start_date);
         btnSetCycleLength = view.findViewById(R.id.btn_set_cycle_length);
         btnSetBackground = view.findViewById(R.id.btn_set_background);
+        btnBackgroundAllScreens = view.findViewById(R.id.btn_background_all_screens);
+        btnBackgroundDim = view.findViewById(R.id.btn_background_dim);
+        btnBackgroundBlur = view.findViewById(R.id.btn_background_blur);
         btnSetCalendarRange = view.findViewById(R.id.btn_set_calendar_range);
         MaterialButton btnResetApp = view.findViewById(R.id.btn_reset_app);
         btnBackupManage = view.findViewById(R.id.btn_backup_manage);
@@ -344,6 +350,17 @@ public class SettingsFragment extends Fragment {
                 updateNavigationAnimationButtonText(style);
             }
         });
+        viewModel.getBackgroundAllScreensEnabled().observe(getViewLifecycleOwner(), enabled -> {
+            updateBackgroundAllScreensButtonText(Boolean.TRUE.equals(enabled));
+        });
+        viewModel.getBackgroundDimPercent().observe(getViewLifecycleOwner(), percent -> {
+            if (percent != null) {
+                updateBackgroundDimButtonText(percent);
+            }
+        });
+        Runnable updateBlurButton = this::updateBackgroundBlurButtonText;
+        viewModel.getBackgroundBlurDashboardPercent().observe(getViewLifecycleOwner(), percent -> updateBlurButton.run());
+        viewModel.getBackgroundBlurOthersPercent().observe(getViewLifecycleOwner(), percent -> updateBlurButton.run());
 
 
         // Set up button click listeners
@@ -351,6 +368,18 @@ public class SettingsFragment extends Fragment {
         btnSetStartDate.setOnClickListener(v -> showDatePicker());
         btnSetCycleLength.setOnClickListener(v -> showCycleLengthDialog());
         btnSetBackground.setOnClickListener(v -> checkStoragePermission());
+        btnBackgroundAllScreens.setOnClickListener(v -> {
+            Boolean enabled = viewModel.getBackgroundAllScreensEnabled().getValue();
+            viewModel.setBackgroundAllScreensEnabled(!Boolean.TRUE.equals(enabled));
+        });
+        btnBackgroundDim.setOnClickListener(v -> showBackgroundDimDialog());
+        btnBackgroundBlur.setOnClickListener(v -> {
+            if (!isBackgroundBlurSupported()) {
+                Toast.makeText(requireContext(), R.string.settings_background_blur_unavailable_toast, Toast.LENGTH_SHORT).show();
+                return;
+            }
+            showBackgroundBlurDialog();
+        });
         btnSetCalendarRange.setOnClickListener(v -> showCalendarRangeDialog());
         btnResetApp.setOnClickListener(v -> showResetDialog());
         btnBackupManage.setOnClickListener(v -> showBackupDialog());
@@ -670,20 +699,20 @@ public class SettingsFragment extends Fragment {
     }
 
     private void showLanguageDialog() {
-        String[] options = {
-                getString(R.string.language_system_default),
-                getString(R.string.language_german),
-                getString(R.string.language_english)
-        };
+        String[] options = getResources().getStringArray(R.array.language_option_labels);
+        String[] tags = getResources().getStringArray(R.array.language_option_tags);
+        if (options.length != tags.length || options.length == 0) {
+            return;
+        }
         int selected = getSelectedLanguageIndex();
         AlertDialog dialog = new AlertDialog.Builder(requireContext())
                 .setTitle(R.string.language_title)
                 .setSingleChoiceItems(options, selected, (dlg, which) -> {
-                    if (which == 0) {
+                    String selectedTag = tags[which];
+                    if (selectedTag == null || selectedTag.trim().isEmpty()) {
                         AppCompatDelegate.setApplicationLocales(LocaleListCompat.getEmptyLocaleList());
                     } else {
-                        String tag = which == 1 ? "de" : "en";
-                        AppCompatDelegate.setApplicationLocales(LocaleListCompat.forLanguageTags(tag));
+                        AppCompatDelegate.setApplicationLocales(LocaleListCompat.forLanguageTags(selectedTag));
                     }
                     WidgetUpdater.updateAllWidgets(requireContext());
                     updateLanguageButtonText();
@@ -696,27 +725,56 @@ public class SettingsFragment extends Fragment {
     }
 
     private void updateLanguageButtonText() {
+        String[] labels = getResources().getStringArray(R.array.language_option_labels);
+        String[] tags = getResources().getStringArray(R.array.language_option_tags);
+        if (labels.length != tags.length || labels.length == 0) {
+            btnSetLanguage.setText(getString(R.string.language_button, getString(R.string.language_system_default)));
+            return;
+        }
         LocaleListCompat locales = AppCompatDelegate.getApplicationLocales();
         String label;
         if (locales.isEmpty()) {
             label = getString(R.string.language_system_default);
         } else {
-            String language = Objects.requireNonNull(locales.get(0)).getLanguage();
-            label = "de".equals(language) ? getString(R.string.language_german) : getString(R.string.language_english);
+            String currentTag = Objects.requireNonNull(locales.get(0)).toLanguageTag();
+            int index = findLanguageIndexByTag(tags, currentTag);
+            label = index >= 0 ? labels[index] : currentTag;
         }
         btnSetLanguage.setText(getString(R.string.language_button, label));
     }
 
     private int getSelectedLanguageIndex() {
+        String[] tags = getResources().getStringArray(R.array.language_option_tags);
+        if (tags.length == 0) {
+            return 0;
+        }
         LocaleListCompat locales = AppCompatDelegate.getApplicationLocales();
         if (locales.isEmpty()) {
             return 0;
         }
-        String language = Objects.requireNonNull(locales.get(0)).getLanguage();
-        if ("de".equals(language)) {
-            return 1;
+        String currentTag = Objects.requireNonNull(locales.get(0)).toLanguageTag();
+        int index = findLanguageIndexByTag(tags, currentTag);
+        return index >= 0 ? index : 0;
+    }
+
+    private int findLanguageIndexByTag(String[] tags, @Nullable String currentTag) {
+        if (currentTag == null) {
+            return -1;
         }
-        return 2;
+        String normalizedCurrent = normalizeLanguageTag(currentTag);
+        for (int i = 0; i < tags.length; i++) {
+            if (normalizedCurrent.equals(normalizeLanguageTag(tags[i]))) {
+                return i;
+            }
+        }
+        return -1;
+    }
+
+    private String normalizeLanguageTag(@Nullable String tag) {
+        if (tag == null) {
+            return "";
+        }
+        return tag.trim().replace('_', '-').toLowerCase(Locale.ROOT);
     }
 
     private void showButtonColorDialog() {
@@ -842,6 +900,8 @@ public class SettingsFragment extends Fragment {
         ButtonColorHelper.applyPrimaryColor(btnSetStartDate, color);
         ButtonColorHelper.applyPrimaryColor(btnSetCycleLength, color);
         ButtonColorHelper.applyPrimaryColor(btnSetBackground, color);
+        ButtonColorHelper.applyPrimaryColor(btnBackgroundAllScreens, color);
+        ButtonColorHelper.applyPrimaryColor(btnBackgroundDim, color);
         ButtonColorHelper.applyPrimaryColor(btnSetCalendarRange, color);
         ButtonColorHelper.applyPrimaryColor(btnBackupManage, color);
         ButtonColorHelper.applyPrimaryColor(btnUpdateApp, color);
@@ -853,6 +913,7 @@ public class SettingsFragment extends Fragment {
         ButtonColorHelper.applyPrimaryColor(btnSetCircleColor, color);
         ButtonColorHelper.applyPrimaryColor(btnSetCircleStyle, color);
         ButtonColorHelper.applyPrimaryColor(btnSetNavigationAnimation, color);
+        updateBackgroundBlurAvailability(color);
     }
 
     private void applyDialogButtonColors(@Nullable AlertDialog dialog) {
@@ -916,6 +977,213 @@ public class SettingsFragment extends Fragment {
 
     private void updateButtonColorButtonText() {
         btnSetButtonColor.setText(R.string.settings_button_color_format);
+    }
+
+    private void updateBackgroundAllScreensButtonText(boolean enabled) {
+        String status = getString(enabled
+                ? R.string.settings_background_all_screens_on
+                : R.string.settings_background_all_screens_off);
+        btnBackgroundAllScreens.setText(getString(R.string.settings_background_all_screens_format, status));
+    }
+
+    private void updateBackgroundDimButtonText(int dimPercent) {
+        int safePercent = Math.max(0, Math.min(100, dimPercent));
+        btnBackgroundDim.setText(getString(R.string.settings_background_dim_format, safePercent));
+    }
+
+    private void showBackgroundDimDialog() {
+        Integer currentDim = viewModel.getBackgroundDimPercent().getValue();
+        int initialValue = currentDim != null ? Math.max(0, Math.min(100, currentDim)) : 0;
+        View content = LayoutInflater.from(requireContext())
+                .inflate(R.layout.dialog_background_dim, null);
+        TextView valueText = content.findViewById(R.id.tv_background_dim_value);
+        android.widget.SeekBar seekBar = content.findViewById(R.id.seek_background_dim);
+        MaterialButton btn0 = content.findViewById(R.id.btn_dim_0);
+        MaterialButton btn25 = content.findViewById(R.id.btn_dim_25);
+        MaterialButton btn50 = content.findViewById(R.id.btn_dim_50);
+        MaterialButton btn75 = content.findViewById(R.id.btn_dim_75);
+        MaterialButton btn100 = content.findViewById(R.id.btn_dim_100);
+
+        valueText.setText(initialValue + "%");
+        seekBar.setProgress(initialValue);
+        seekBar.setOnSeekBarChangeListener(new android.widget.SeekBar.OnSeekBarChangeListener() {
+            @Override
+            public void onProgressChanged(android.widget.SeekBar seekBar, int progress, boolean fromUser) {
+                valueText.setText(progress + "%");
+            }
+
+            @Override
+            public void onStartTrackingTouch(android.widget.SeekBar seekBar) {
+            }
+
+            @Override
+            public void onStopTrackingTouch(android.widget.SeekBar seekBar) {
+            }
+        });
+
+        btn0.setOnClickListener(v -> seekBar.setProgress(0));
+        btn25.setOnClickListener(v -> seekBar.setProgress(25));
+        btn50.setOnClickListener(v -> seekBar.setProgress(50));
+        btn75.setOnClickListener(v -> seekBar.setProgress(75));
+        btn100.setOnClickListener(v -> seekBar.setProgress(100));
+
+        Integer accent = viewModel.getButtonColor().getValue();
+        if (accent != null) {
+            int color = accent;
+            valueText.setTextColor(color);
+            seekBar.setProgressTintList(ColorStateList.valueOf(color));
+            seekBar.setThumbTintList(ColorStateList.valueOf(color));
+            styleDimPresetButton(btn0, color);
+            styleDimPresetButton(btn25, color);
+            styleDimPresetButton(btn50, color);
+            styleDimPresetButton(btn75, color);
+            styleDimPresetButton(btn100, color);
+        }
+
+        AlertDialog dialog = new AlertDialog.Builder(requireContext())
+                .setTitle(R.string.settings_background_dim_title)
+                .setView(content)
+                .setPositiveButton(R.string.dialog_ok, (dlg, which) -> viewModel.setBackgroundDimPercent(seekBar.getProgress()))
+                .setNegativeButton(R.string.dialog_cancel, null)
+                .show();
+        applyDialogButtonColors(dialog);
+    }
+
+    private void updateBackgroundBlurButtonText() {
+        Integer dashboard = viewModel.getBackgroundBlurDashboardPercent().getValue();
+        Integer others = viewModel.getBackgroundBlurOthersPercent().getValue();
+        int dashboardValue = dashboard != null ? Math.max(0, Math.min(100, dashboard)) : 0;
+        int othersValue = others != null ? Math.max(0, Math.min(100, others)) : 50;
+        btnBackgroundBlur.setText(getString(R.string.settings_background_blur_format, dashboardValue, othersValue));
+        Integer color = viewModel != null ? viewModel.getButtonColor().getValue() : null;
+        updateBackgroundBlurAvailability(color);
+    }
+
+    private void showBackgroundBlurDialog() {
+        Integer dashboardCurrent = viewModel.getBackgroundBlurDashboardPercent().getValue();
+        Integer othersCurrent = viewModel.getBackgroundBlurOthersPercent().getValue();
+        int dashboardInitial = dashboardCurrent != null ? Math.max(0, Math.min(100, dashboardCurrent)) : 0;
+        int othersInitial = othersCurrent != null ? Math.max(0, Math.min(100, othersCurrent)) : 50;
+        View content = LayoutInflater.from(requireContext())
+                .inflate(R.layout.dialog_background_blur, null);
+        TextView dashboardLabel = content.findViewById(R.id.tv_blur_dashboard_value);
+        TextView othersLabel = content.findViewById(R.id.tv_blur_others_value);
+        android.widget.SeekBar dashboardSeek = content.findViewById(R.id.seek_blur_dashboard);
+        android.widget.SeekBar othersSeek = content.findViewById(R.id.seek_blur_others);
+
+        MaterialButton btnDashboard0 = content.findViewById(R.id.btn_blur_dashboard_0);
+        MaterialButton btnDashboard25 = content.findViewById(R.id.btn_blur_dashboard_25);
+        MaterialButton btnDashboard50 = content.findViewById(R.id.btn_blur_dashboard_50);
+        MaterialButton btnDashboard75 = content.findViewById(R.id.btn_blur_dashboard_75);
+        MaterialButton btnDashboard100 = content.findViewById(R.id.btn_blur_dashboard_100);
+        MaterialButton btnOthers0 = content.findViewById(R.id.btn_blur_others_0);
+        MaterialButton btnOthers25 = content.findViewById(R.id.btn_blur_others_25);
+        MaterialButton btnOthers50 = content.findViewById(R.id.btn_blur_others_50);
+        MaterialButton btnOthers75 = content.findViewById(R.id.btn_blur_others_75);
+        MaterialButton btnOthers100 = content.findViewById(R.id.btn_blur_others_100);
+
+        dashboardLabel.setText(dashboardInitial + "%");
+        othersLabel.setText(othersInitial + "%");
+        dashboardSeek.setProgress(dashboardInitial);
+        othersSeek.setProgress(othersInitial);
+
+        dashboardSeek.setOnSeekBarChangeListener(new android.widget.SeekBar.OnSeekBarChangeListener() {
+            @Override
+            public void onProgressChanged(android.widget.SeekBar seekBar, int progress, boolean fromUser) {
+                dashboardLabel.setText(progress + "%");
+            }
+
+            @Override
+            public void onStartTrackingTouch(android.widget.SeekBar seekBar) {
+            }
+
+            @Override
+            public void onStopTrackingTouch(android.widget.SeekBar seekBar) {
+            }
+        });
+        othersSeek.setOnSeekBarChangeListener(new android.widget.SeekBar.OnSeekBarChangeListener() {
+            @Override
+            public void onProgressChanged(android.widget.SeekBar seekBar, int progress, boolean fromUser) {
+                othersLabel.setText(progress + "%");
+            }
+
+            @Override
+            public void onStartTrackingTouch(android.widget.SeekBar seekBar) {
+            }
+
+            @Override
+            public void onStopTrackingTouch(android.widget.SeekBar seekBar) {
+            }
+        });
+
+        btnDashboard0.setOnClickListener(v -> dashboardSeek.setProgress(0));
+        btnDashboard25.setOnClickListener(v -> dashboardSeek.setProgress(25));
+        btnDashboard50.setOnClickListener(v -> dashboardSeek.setProgress(50));
+        btnDashboard75.setOnClickListener(v -> dashboardSeek.setProgress(75));
+        btnDashboard100.setOnClickListener(v -> dashboardSeek.setProgress(100));
+        btnOthers0.setOnClickListener(v -> othersSeek.setProgress(0));
+        btnOthers25.setOnClickListener(v -> othersSeek.setProgress(25));
+        btnOthers50.setOnClickListener(v -> othersSeek.setProgress(50));
+        btnOthers75.setOnClickListener(v -> othersSeek.setProgress(75));
+        btnOthers100.setOnClickListener(v -> othersSeek.setProgress(100));
+
+        Integer accent = viewModel.getButtonColor().getValue();
+        if (accent != null) {
+            int color = accent;
+            dashboardLabel.setTextColor(color);
+            othersLabel.setTextColor(color);
+            dashboardSeek.setProgressTintList(ColorStateList.valueOf(color));
+            dashboardSeek.setThumbTintList(ColorStateList.valueOf(color));
+            othersSeek.setProgressTintList(ColorStateList.valueOf(color));
+            othersSeek.setThumbTintList(ColorStateList.valueOf(color));
+            styleDimPresetButton(btnDashboard0, color);
+            styleDimPresetButton(btnDashboard25, color);
+            styleDimPresetButton(btnDashboard50, color);
+            styleDimPresetButton(btnDashboard75, color);
+            styleDimPresetButton(btnDashboard100, color);
+            styleDimPresetButton(btnOthers0, color);
+            styleDimPresetButton(btnOthers25, color);
+            styleDimPresetButton(btnOthers50, color);
+            styleDimPresetButton(btnOthers75, color);
+            styleDimPresetButton(btnOthers100, color);
+        }
+
+        AlertDialog dialog = new AlertDialog.Builder(requireContext())
+                .setTitle(R.string.settings_background_blur_title)
+                .setView(content)
+                .setPositiveButton(R.string.dialog_ok, (dlg, which) -> {
+                    viewModel.setBackgroundBlurDashboardPercent(dashboardSeek.getProgress());
+                    viewModel.setBackgroundBlurOthersPercent(othersSeek.getProgress());
+                })
+                .setNegativeButton(R.string.dialog_cancel, null)
+                .show();
+        applyDialogButtonColors(dialog);
+    }
+
+    private void styleDimPresetButton(MaterialButton button, int color) {
+        ButtonColorHelper.applyPrimaryColor(button, color);
+        button.setTextColor(Color.WHITE);
+        button.setStrokeWidth(0);
+    }
+
+    private boolean isBackgroundBlurSupported() {
+        return Build.VERSION.SDK_INT >= Build.VERSION_CODES.S;
+    }
+
+    private void updateBackgroundBlurAvailability(@Nullable Integer accentColor) {
+        if (btnBackgroundBlur == null) {
+            return;
+        }
+        if (isBackgroundBlurSupported()) {
+            int color = accentColor != null ? accentColor : SettingsRepository.DEFAULT_BUTTON_COLOR;
+            ButtonColorHelper.applyPrimaryColor(btnBackgroundBlur, color);
+            btnBackgroundBlur.setTextColor(Color.WHITE);
+            btnBackgroundBlur.setAlpha(1f);
+            return;
+        }
+        btnBackgroundBlur.setBackgroundTintList(ColorStateList.valueOf(Color.parseColor("#5A5A5A")));
+        btnBackgroundBlur.setTextColor(Color.parseColor("#E0E0E0"));
+        btnBackgroundBlur.setAlpha(0.88f);
     }
 
     private void updateCircleColorButtonText() {
@@ -1803,6 +2071,10 @@ public class SettingsFragment extends Fragment {
 
         viewModel.getRepository().saveCycleHistory(new ArrayList<>());
         viewModel.setBackgroundImageUri(null);
+        viewModel.setBackgroundAllScreensEnabled(true);
+        viewModel.setBackgroundDimPercent(50);
+        viewModel.setBackgroundBlurDashboardPercent(0);
+        viewModel.setBackgroundBlurOthersPercent(50);
         viewModel.setCycleLength(21);
         Calendar resetStart = Calendar.getInstance();
         resetStart.set(Calendar.HOUR_OF_DAY, 18);
@@ -1819,7 +2091,19 @@ public class SettingsFragment extends Fragment {
         viewModel.setHomeCircleStyle(SettingsRepository.DEFAULT_HOME_CIRCLE_STYLE);
 
         WidgetUpdater.updateAllWidgets(requireContext());
-        Toast.makeText(requireContext(), R.string.settings_reset_done, Toast.LENGTH_SHORT).show();
+        restartAppAfterReset();
+    }
+
+    private void restartAppAfterReset() {
+        Intent launchIntent = requireContext().getPackageManager()
+                .getLaunchIntentForPackage(requireContext().getPackageName());
+        if (launchIntent == null) {
+            Toast.makeText(requireContext(), R.string.settings_reset_done, Toast.LENGTH_SHORT).show();
+            return;
+        }
+        launchIntent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+        startActivity(launchIntent);
+        requireActivity().finishAffinity();
     }
 
     private void cancelAllScheduledNotifications() {
@@ -2113,6 +2397,14 @@ public class SettingsFragment extends Fragment {
                 return getString(R.string.backup_field_navigation_animation) + ": " + formatNavigationAnimation(value);
             case "background_image_uri":
                 return getString(R.string.backup_field_background_image) + ": " + formatBackgroundImage(value);
+            case "background_all_screens":
+                return getString(R.string.backup_field_background_all_screens) + ": " + formatBoolean(value);
+            case "background_dim_percent":
+                return getString(R.string.backup_field_background_dim) + ": " + prefToInt(value) + "%";
+            case "background_blur_dashboard_percent":
+                return getString(R.string.backup_field_background_blur_dashboard) + ": " + prefToInt(value) + "%";
+            case "background_blur_others_percent":
+                return getString(R.string.backup_field_background_blur_others) + ": " + prefToInt(value) + "%";
             case "user_notes":
                 return getString(R.string.backup_field_notes_text) + ": " + formatNotesPreview(value);
             case "notes_last_saved":
@@ -2315,6 +2607,10 @@ public class SettingsFragment extends Fragment {
 
         SettingsRepository restoredRepository = new SettingsRepository(requireContext());
         viewModel.setBackgroundImageUri(restoredRepository.getBackgroundImageUri());
+        viewModel.setBackgroundAllScreensEnabled(restoredRepository.isBackgroundAllScreensEnabled());
+        viewModel.setBackgroundDimPercent(restoredRepository.getBackgroundDimPercent());
+        viewModel.setBackgroundBlurDashboardPercent(restoredRepository.getBackgroundBlurDashboardPercent());
+        viewModel.setBackgroundBlurOthersPercent(restoredRepository.getBackgroundBlurOthersPercent());
         viewModel.setCycleLength(restoredRepository.getCycleLength());
         viewModel.setStartDate(restoredRepository.getStartDate());
         viewModel.setCalendarPastRange(restoredRepository.getCalendarPastAmount(),

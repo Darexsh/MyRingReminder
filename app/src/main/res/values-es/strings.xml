@@ -1,0 +1,533 @@
+<resources>
+    <!-- App -->
+    <string name="app_info_actions_title">Acciones</string>
+    <string name="app_info_description">Veri Aristo es una aplicación para Android destinada al seguimiento de los ciclos del anillo anticonceptivo. Ofrece un calendario codificado por colores para los días de inserción, extracción y sin anillo, recordatorios personalizables, notas, widgets y funciones de copia de seguridad y restauración. La aplicación incluye un recorrido de bienvenida, un historial de ciclos y orientación para prolongar un ciclo («usar el anillo durante más tiempo»). Se ejecuta en modo oscuro de forma predeterminada, se mantiene en orientación vertical y admite personalizaciones como imágenes de fondo y ajustes de color.\n¡Todos los datos se almacenan únicamente en este dispositivo!</string>
+    <string name="app_info_developer">Desarrollador: %1$s</string>
+    <string name="app_info_developer_label">Desarrollador:</string>
+    <string name="app_info_developer_name">Darexsh por Daniel Sichler</string>
+    <string name="app_info_email">Correo electrónico: %1$s</string>
+    <string name="app_info_github">GitHub: %1$s</string>
+    <string name="app_info_name">Veri Aristo Ring Reminder</string>
+    <string name="app_info_open_coffee">Invítame a un café</string>
+    <string name="app_info_open_email">Escribir correo electrónico</string>
+    <string name="app_info_open_github">Abrir redes sociales</string>
+    <string name="app_info_open_github_profile">Perfil de GitHub</string>
+    <string name="app_info_open_telegram_bot">Abrir bot de Telegram</string>
+    <string name="app_info_title">Información de la aplicación</string>
+    <string name="app_info_version">Versión %1$s</string>
+    <string name="app_info_version_label">Versión</string>
+    <string name="app_lock_auth_required">Se requiere autenticación para abrir la aplicación.</string>
+    <string name="app_lock_auth_subtitle">Utiliza la autenticación biométrica o el PIN del dispositivo</string>
+    <string name="app_lock_auth_title">Desbloquear Veri Aristo</string>
+    <string name="app_lock_overlay_subtitle">Desbloquee para continuar</string>
+    <string name="app_lock_overlay_title">Aplicación bloqueada</string>
+    <string name="app_lock_overlay_unlock">Desbloquear aplicación</string>
+    <string name="app_lock_tools_delay_current">Retardo actual: %1$s</string>
+    <string name="app_lock_tools_delay_hint">Establece cuándo se bloquea automáticamente la aplicación tras cambiar de aplicación.</string>
+    <string name="app_lock_tools_title">Bloqueo de aplicaciones</string>
+    <string name="app_lock_tools_toggle_hint">Activar o desactivar la protección de la aplicación.</string>
+    <string name="app_lock_tools_toggle_off">Bloqueo de la aplicación: Desactivado</string>
+    <string name="app_lock_tools_toggle_on">Bloqueo de la aplicación: Activado</string>
+    <string name="app_name">Veri Aristo</string>
+
+    <!-- Section Headers -->
+    <string name="section_advanced">Avanzado</string>
+    <string name="section_calendar">Calendario</string>
+    <string name="section_cycle">Ciclo</string>
+    <string name="section_debug">Depuración</string>
+    <string name="section_design">Diseño</string>
+    <string name="section_language">Idioma</string>
+    <string name="section_notifications">Notificaciones</string>
+
+    <!-- Buttons -->
+    <string name="btn_backup">Copia de seguridad</string>
+    <string name="btn_debug_clear_time">Borrar tiempo de depuración</string>
+    <string name="btn_debug_info">Información de depuración</string>
+    <string name="btn_debug_jump_midnight">Ir a medianoche</string>
+    <string name="btn_debug_minus_day">-1 día</string>
+    <string name="btn_debug_minus_hour">-1 hora</string>
+    <string name="btn_debug_plus_day">+1 día</string>
+    <string name="btn_debug_plus_hour">+1 hora</string>
+    <string name="btn_debug_preset_insertion_at">Preajuste: hora de inserción</string>
+    <string name="btn_debug_preset_insertion_before">Preajuste: inserción -1 h</string>
+    <string name="btn_debug_preset_removal_at">Preajuste: hora de eliminación</string>
+    <string name="btn_debug_preset_removal_before">Preajuste: retirada -1 h</string>
+    <string name="btn_debug_refresh">Actualizar interfaz de usuario + widgets</string>
+    <string name="btn_debug_set_time">Establecer tiempo de depuración</string>
+    <string name="btn_delay_cycle">Llevar el anillo durante más tiempo</string>
+    <string name="btn_notification_battery">Desactivar la optimización de la batería</string>
+    <string name="btn_notification_help">Permitir alarmas exactas</string>
+    <string name="btn_notification_permission">Permiso de notificaciones</string>
+    <string name="btn_notification_test">Enviar notificación de prueba</string>
+    <string name="btn_notifications_settings">Ajustes de notificaciones</string>
+    <string name="btn_reset_app">Restablecer aplicación</string>
+    <string name="btn_set_background">Elegir imagen de fondo</string>
+    <string name="btn_set_calendar_range">Establecer intervalo del calendario</string>
+    <string name="btn_set_cycle_length">Cambiar duración del ciclo</string>
+    <string name="btn_set_notification_times">Establecer recordatorios</string>
+    <string name="btn_set_start_date">Establecer fecha de inserción</string>
+    <string name="btn_set_time">Establecer hora de inserción</string>
+    <string name="btn_skip_ring_free_week">Omitir semana sin anillos</string>
+    <string name="btn_update_app">Buscar actualizaciones de la aplicación</string>
+    <string name="btn_welcome_tour">Visita de bienvenida</string>
+
+    <!-- Settings -->
+    <string name="settings_advanced_toggle_desc">Activar/desactivar ajustes avanzados</string>
+    <string name="settings_app_lock_disable">Desactivar</string>
+    <string name="settings_app_lock_disable_message">La aplicación se abrirá sin protección biométrica ni PIN.</string>
+    <string name="settings_app_lock_disable_title">¿Desea desactivar el bloqueo de la aplicación?</string>
+    <string name="settings_app_lock_enable">Activar</string>
+    <string name="settings_app_lock_enable_message">Cuando está activado, la aplicación requiere autenticación biométrica o el PIN/patrón/contraseña de su dispositivo al abrirla.</string>
+    <string name="settings_app_lock_enable_title">¿Habilitar el bloqueo de aplicaciones?</string>
+    <string name="settings_app_lock_format">Bloqueo de aplicaciones: %1$s</string>
+    <string name="settings_app_lock_label">Bloqueo de aplicaciones</string>
+    <string name="settings_app_lock_requires_secure_lock">Configure primero un bloqueo de pantalla del dispositivo (PIN/patrón/contraseña) para utilizar el bloqueo de la aplicación.</string>
+    <string name="settings_app_lock_status_off">Desactivado</string>
+    <string name="settings_app_lock_status_on">Activado</string>
+    <string name="settings_app_lock_timeout_dialog_title">Seleccionar tiempo de espera para el bloqueo automático</string>
+    <string name="settings_app_lock_timeout_format">Tiempo de espera para el bloqueo automático: %1$s</string>
+    <string name="settings_app_lock_timeout_label">Tiempo de espera para el bloqueo automático</string>
+    <string name="settings_background_all_screens_format">Fondo en todas las pantallas: %1$s</string>
+    <string name="settings_background_all_screens_label">Fondo en todas las pantallas</string>
+    <string name="settings_background_all_screens_off">Desactivado</string>
+    <string name="settings_background_all_screens_on">Activado</string>
+    <string name="settings_background_blur_dashboard">Panel de control: %1$d%%</string>
+    <string name="settings_background_blur_dashboard_title">Panel de control</string>
+    <string name="settings_background_blur_format">Desenfoque de fondo:\nPanel de control %1$d%%, Otras %2$d%%</string>
+    <string name="settings_background_blur_label">Desenfoque de fondo</string>
+    <string name="settings_background_blur_others">Otras pantallas: %1$d%%</string>
+    <string name="settings_background_blur_others_title">Otras pantallas</string>
+    <string name="settings_background_blur_title">Desenfoque de fondo</string>
+    <string name="settings_background_blur_unavailable_toast">Disponible solo a partir de Android 12</string>
+    <string name="settings_background_dim_format">Atenuación del fondo: %1$d%%</string>
+    <string name="settings_background_dim_label">Atenuación del fondo</string>
+    <string name="settings_background_dim_message">Elige la intensidad del atenuado en porcentaje.</string>
+    <string name="settings_background_dim_title">Configurar atenuación del fondo</string>
+    <string name="settings_button_color_custom">Color personalizado</string>
+    <string name="settings_button_color_custom_action">Color personalizado</string>
+    <string name="settings_button_color_custom_title">Color personalizado del botón</string>
+    <string name="settings_button_color_dialog_title">Seleccionar color del botón</string>
+    <string name="settings_button_color_format">Color del botón</string>
+    <string name="settings_button_color_label">Color del botón</string>
+    <string name="settings_button_color_widget_note">También actualiza el color de fondo del widget.</string>
+    <string name="settings_calendar_insertion_color_custom_title">Color de inserción personalizado</string>
+    <string name="settings_calendar_insertion_color_dialog_title">Elegir color de inserción</string>
+    <string name="settings_calendar_insertion_color_format">Color de inserción: %1$s</string>
+    <string name="settings_calendar_insertion_color_label">Color de inserción</string>
+    <string name="settings_calendar_range_back">Atrás</string>
+    <string name="settings_calendar_range_button">Rango del calendario:\n%1$d %2$s atrás, %3$d %4$s adelante</string>
+    <string name="settings_calendar_range_forward">Adelante</string>
+    <string name="settings_calendar_range_message">Elige el intervalo en el que se mostrará el calendario.</string>
+    <string name="settings_calendar_range_title">Establecer rango del calendario</string>
+    <string name="settings_calendar_removal_color_custom_title">Color de eliminación personalizado</string>
+    <string name="settings_calendar_removal_color_dialog_title">Elegir color de eliminación</string>
+    <string name="settings_calendar_removal_color_format">Color de eliminación: %1$s</string>
+    <string name="settings_calendar_removal_color_label">Color de eliminación</string>
+    <string name="settings_calendar_ring_free_color_custom_title">Color personalizado sin anillos</string>
+    <string name="settings_calendar_ring_free_color_dialog_title">Elegir color sin anillos</string>
+    <string name="settings_calendar_ring_free_color_format">Color de los días sin anillos: %1$s</string>
+    <string name="settings_calendar_ring_free_color_label">Color de los días sin anillos</string>
+    <string name="settings_calendar_wear_color_custom_title">Color personalizado del tiempo de uso</string>
+    <string name="settings_calendar_wear_color_dialog_title">Elegir color del tiempo de uso</string>
+    <string name="settings_calendar_wear_color_format">Color del tiempo de uso: %1$s</string>
+    <string name="settings_calendar_wear_color_label">Color del tiempo de uso</string>
+    <string name="settings_circle_color_custom_title">Color personalizado del círculo de inicio</string>
+    <string name="settings_circle_color_dialog_title">Elegir color del círculo de inicio</string>
+    <string name="settings_circle_color_format">Color del círculo de inicio</string>
+    <string name="settings_circle_color_label">Color del círculo de inicio</string>
+    <string name="settings_circle_color_widget_note">También actualiza el color del anillo del widget.</string>
+    <string name="settings_circle_style_dialog_title">Elegir estilo del círculo de inicio</string>
+    <string name="settings_circle_style_format">Estilo del círculo de inicio: %1$s</string>
+    <string name="settings_circle_style_label">Estilo del círculo de inicio</string>
+    <string name="settings_cycle_length_button">Establecer duración del ciclo: %1$d días</string>
+    <string name="settings_cycle_length_message">Elige la duración del ciclo en días:</string>
+    <string name="settings_cycle_length_title">Establecer duración del ciclo</string>
+    <string name="settings_date_button_format">Establecer fecha de inserción: %1$02d.%2$02d.%3$d</string>
+    <string name="settings_info_desc">Información de la aplicación</string>
+    <string name="settings_navigation_animation_dialog_title">Elegir animación de navegación</string>
+    <string name="settings_navigation_animation_format">Animación de navegación: %1$s</string>
+    <string name="settings_navigation_animation_label">Animación de navegación</string>
+    <string name="settings_notification_before_insertion">Antes de la inserción (horas)</string>
+    <string name="settings_notification_before_removal">Antes de la eliminación (horas)</string>
+    <string name="settings_notification_times_button">Recordatorios: %1$dh antes de la eliminación, %2$dh antes de la inserción</string>
+    <string name="settings_notification_times_message">Elige el plazo en horas (0 = sin recordatorio).</string>
+    <string name="settings_notification_times_title">Configurar recordatorios</string>
+    <string name="settings_permission_message">Se requiere permiso para acceder a las imágenes a fin de seleccionar una imagen de fondo.</string>
+    <string name="settings_permission_title">Se requiere permiso</string>
+    <string name="settings_reset_confirm">Restablecer</string>
+    <string name="settings_reset_done">Restablecimiento de la aplicación</string>
+    <string name="settings_reset_message">Se eliminarán todos los datos guardados, la configuración y las notas.</string>
+    <string name="settings_reset_title">¿Restablecer la aplicación?</string>
+    <string name="settings_subtitle">Todo en un solo lugar.</string>
+    <string name="settings_time_button_format">Establecer hora de inserción: %1$02d:%2$02d</string>
+    <string name="settings_title">Configuración</string>
+    <string name="settings_unit_month">Mes</string>
+    <string name="settings_unit_month_short">mes</string>
+    <string name="settings_unit_year">Año</string>
+    <string name="settings_unit_year_short">año</string>
+
+    <!-- Notification Settings -->
+    <string name="notification_hint_battery">Desactiva la optimización de la batería para que el sistema no retrase los recordatorios.</string>
+    <string name="notification_hint_exact_alarm">Permite las alarmas exactas para que los recordatorios se activen a tiempo (Android 12 y superior).</string>
+    <string name="notification_hint_permission">Permite el acceso a las notificaciones para que puedan aparecer los recordatorios (Android 13+).</string>
+    <string name="notification_hint_set_times">Elige cuántas horas antes de la extracción o la inserción quieres recibir los recordatorios.</string>
+    <string name="notification_open_settings">Abrir ajustes de notificaciones</string>
+    <string name="notification_permission_button_label">Permiso de notificaciones: %1$s</string>
+    <string name="notification_permission_denied">Permiso de notificaciones denegado.</string>
+    <string name="notification_permission_granted">Permiso de notificaciones concedido.</string>
+    <string name="notification_permission_required_message">Por favor, permite las notificaciones para esta aplicación; de lo contrario, no se podrán mostrar los recordatorios ni las notificaciones de prueba.</string>
+    <string name="notification_permission_required_title">Se requiere permiso para notificaciones</string>
+    <string name="notification_permission_status_allowed">Permitido</string>
+    <string name="notification_permission_status_blocked">bloqueado</string>
+    <string name="notification_permission_status_not_required">no requerido</string>
+    <string name="notification_test_blocked_permission">El permiso de notificación está bloqueado.</string>
+    <string name="notification_test_blocked_system">Las notificaciones están desactivadas para esta aplicación en la configuración del sistema.</string>
+    <string name="notification_test_message">Si puedes ver esto, las notificaciones funcionan.</string>
+    <string name="notification_test_sent">Notificación de prueba enviada.</string>
+    <string name="notification_test_title">Prueba de Veri Aristo</string>
+    <string name="notification_times_button_label">Recordatorios:\n%1$ horas antes de la extracción, %2$ horas antes de la inserción</string>
+    <string name="notification_times_button_unknown">Recordatorios:\ndesconocido</string>
+    <string name="notifications_channel_description">Notificaciones para ciclos de anillos</string>
+    <string name="notifications_channel_name">Recordatorios</string>
+
+    <!-- Notifications -->
+    <string name="battery_opt_button_label">Optimización de la batería: %1$s</string>
+    <string name="battery_opt_status_disabled">desactivada</string>
+    <string name="battery_opt_status_enabled">activada</string>
+    <string name="battery_opt_status_not_required">no requerido</string>
+    <string name="battery_opt_status_unknown">desconocido</string>
+    <string name="exact_alarm_button_label">Alarmas exactas: %1$s</string>
+    <string name="exact_alarm_message">Los recordatorios exactos requieren permiso. Por favor, habilita las alarmas exactas en los ajustes del sistema para que las notificaciones se activen a tiempo.</string>
+    <string name="exact_alarm_not_supported">Las alarmas exactas no son necesarias en esta versión de Android.</string>
+    <string name="exact_alarm_open_settings">Abrir ajustes</string>
+    <string name="exact_alarm_status_allowed">Permitido</string>
+    <string name="exact_alarm_status_blocked">bloqueado</string>
+    <string name="exact_alarm_status_not_required">no requerido</string>
+    <string name="exact_alarm_status_unknown">desconocido</string>
+    <string name="exact_alarm_title">Permitir alarmas exactas</string>
+    <string name="notif_cycle_duration_title">Duración del ciclo</string>
+    <string name="notif_insert_in_hours">¡Insertar el anillo en %1$d horas!</string>
+    <string name="notif_insert_now">¡Insertar el anillo ahora a las %1$s!</string>
+    <string name="notif_insert_title">Insertar anillo</string>
+    <string name="notif_one_week_remaining">Queda una semana con el anillo.</string>
+    <string name="notif_remove_in_hours">¡Retirar el anillo en %1$d horas!</string>
+    <string name="notif_remove_now">¡Quita el anillo ahora en %1$s!</string>
+    <string name="notif_remove_title">Quitar el anillo</string>
+    <string name="notif_two_weeks_remaining">Quedan dos semanas con el anillo.</string>
+
+    <!-- Home -->
+    <string name="home_at_time">a las %1$s</string>
+    <string name="home_background_desc">Imagen de fondo</string>
+    <string name="home_days">17</string>
+    <string name="home_days_left">Días restantes</string>
+    <string name="home_days_until_insertion">Días hasta la inserción</string>
+    <string name="home_delay_confirm">Actualizar</string>
+    <string name="home_delay_info_desc">Información sobre el uso prolongado del anillo</string>
+    <string name="home_delay_info_message"><![CDATA[
+            <b>Olvidaste quitarte el anillo</b><br><br>
+            <b>Anillo colocado durante 3–4 semanas</b>: La protección anticonceptiva se mantiene. Quítate el anillo, tómate una semana sin anillo (cuando suele producirse el sangrado) y, a continuación, inserta uno nuevo.<br><br>
+            <b>Anillo colocado durante más de 4 semanas</b>: La protección anticonceptiva puede verse reducida; existe riesgo de embarazo. Retira el anillo inmediatamente y ponte en contacto con tu médico antes de insertar uno nuevo (puede ser necesario realizar una prueba de embarazo o utilizar un método anticonceptivo adicional).<br><br>
+            <b>Nota</b>: Si no se produce sangrado tras retirar el anillo, consulta también a tu médico.<br><br>
+            ]]></string>
+    <string name="home_delay_info_title">Información</string>
+    <string name="home_delay_message">¿Cuántos días más se ha llevado puesto el anillo?</string>
+    <string name="home_delay_title">Anillo llevado más tiempo</string>
+    <string name="home_insertion_on">Inserción en %1$s</string>
+    <string name="home_insertion_on_placeholder">Inserción el --</string>
+    <string name="home_removal_on">Retirada el %1$s</string>
+    <string name="home_removal_on_placeholder">Retirada el --</string>
+    <string name="home_skip_ring_free_confirm">Omitir ahora</string>
+    <string name="home_skip_ring_free_info_desc">Información sobre cómo omitir la semana sin anillo</string>
+    <string name="home_skip_ring_free_info_message"><![CDATA[
+            <b>¿Desea retrasar su periodo?</b><br><br>
+            Este no es el uso estándar recomendado, pero es posible:<br>
+            - Omita la semana sin anillo e inserte uno nuevo inmediatamente después de retirar el anterior.<br>
+            - El nuevo anillo puede permanecer colocado hasta 3 semanas.<br>
+            - Durante este tiempo, pueden producirse manchados o sangrados intermenstruales.<br>
+            - Para provocar el sangrado de abstinencia: retira el anillo antes de lo previsto, haz la pausa habitual de una semana sin anillo y, a continuación, inserta un nuevo anillo.<br><br>
+            <b>Importante</b>: Consulta a tu médico antes de retrasar tu periodo.
+            ]]></string>
+    <string name="home_skip_ring_free_message">Tras eliminar el anillo, la siguiente inserción se programa inmediatamente para este ciclo. Los ciclos siguientes continúan con normalidad con una semana sin anillos.</string>
+    <string name="home_skip_ring_free_title">Omitir semana sin anillos</string>
+    <string name="home_special_actions_label">Casos especiales</string>
+    <string name="home_special_actions_toggle_close">Cerrar acciones especiales</string>
+    <string name="home_special_actions_toggle_open">Abrir acciones especiales</string>
+
+    <!-- Calendar -->
+    <string name="calendar_month_picker_title">Ir al mes</string>
+    <string name="calendar_month_selector_desc">Seleccionar mes y año</string>
+    <string name="calendar_next_month_desc">Próximo mes</string>
+    <string name="calendar_previous_month_desc">Mes anterior</string>
+    <string name="calendar_title">Calendario</string>
+    <string name="calendar_today_button">Volver a la fecha actual</string>
+
+    <!-- Calendar Legend -->
+    <string name="legend_insertion">Inserción</string>
+    <string name="legend_removal">Eliminación</string>
+    <string name="legend_ring_free">Sin anillo</string>
+    <string name="legend_wear_time">Tiempo de uso</string>
+
+    <!-- Cycles -->
+    <string name="cycles_clear_history">Borrar historial</string>
+    <string name="cycles_status_inserted">Anillo insertado</string>
+    <string name="cycles_status_removed">Anillo retirado</string>
+    <string name="cycles_title">Historial de ciclos</string>
+
+    <!-- Notes -->
+    <string name="notes_char_count">%1$d caracteres</string>
+    <string name="notes_char_count_default">0 caracteres</string>
+    <string name="notes_close_desc">Cerrar notas</string>
+    <string name="notes_delete">Eliminar</string>
+    <string name="notes_delete_message">Se eliminarán tus notas actuales.</string>
+    <string name="notes_delete_title">¿Eliminar notas?</string>
+    <string name="notes_hint">Escribe tus notas aquí...</string>
+    <string name="notes_last_saved">Guardado: %1$s</string>
+    <string name="notes_not_saved">No guardado</string>
+    <string name="notes_open_desc">Abrir notas</string>
+    <string name="notes_save">Guardar</string>
+    <string name="notes_saved_toast">Notas guardadas</string>
+    <string name="notes_title">Cuaderno</string>
+    <string name="notes_today">Hoy</string>
+
+    <!-- Widgets -->
+    <string name="widget_large_name">Widget de llamadas (grande)</string>
+    <string name="widget_small_name">Widget de llamadas (pequeño)</string>
+    <string name="widget_title">Próximas fechas de llamadas:</string>
+
+    <!-- Navigation -->
+    <string name="nav_calendar">Calendario</string>
+    <string name="nav_cycles">Ciclos</string>
+    <string name="nav_home">Inicio</string>
+    <string name="nav_settings">Configuración</string>
+
+    <!-- Language -->
+    <string name="language_button">Seleccionado: %1$s</string>
+    <string name="language_chinese">Chino</string>
+    <string name="language_english">Inglés</string>
+    <string name="language_french">Francés</string>
+    <string name="language_german">Alemán</string>
+    <string name="language_italian">Italiano</string>
+    <string name="language_polish">Polaco</string>
+    <string name="language_portuguese_brazil">Portugués (Brasil)</string>
+    <string name="language_russian">Ruso</string>
+    <string name="language_spanish">Español</string>
+    <string name="language_system_default">Idioma predeterminado del sistema</string>
+    <string name="language_turkish">Turco</string>
+    <string name="language_title">Idioma de la aplicación</string>
+
+    <!-- Backup -->
+    <string name="backup_create">Crear copia de seguridad</string>
+    <string name="backup_created_toast">Copia de seguridad creada</string>
+    <string name="backup_failed_toast">Error al crear la copia de seguridad</string>
+    <string name="backup_field_app_lock">Bloqueo de la aplicación activado</string>
+    <string name="backup_field_app_lock_timeout">Retardo de bloqueo automático</string>
+    <string name="backup_field_background_all_screens">Fondo en todas las pantallas</string>
+    <string name="backup_field_background_blur_dashboard">Desenfoque de fondo en el panel de control</string>
+    <string name="backup_field_background_blur_others">Desenfoque de fondo en otras pantallas</string>
+    <string name="backup_field_background_dim">Atenuación de fondo</string>
+    <string name="backup_field_background_image">Imagen de fondo seleccionada</string>
+    <string name="backup_field_button_color">Color de los botones</string>
+    <string name="backup_field_calendar_future">Intervalo futuro del calendario</string>
+    <string name="backup_field_calendar_past">Intervalo pasado del calendario</string>
+    <string name="backup_field_cycle_delay_entries_format">Entradas de ciclo aplazadas: %1$d</string>
+    <string name="backup_field_cycle_history">Historial del ciclo</string>
+    <string name="backup_field_cycle_history_entries_format">%1$d entradas</string>
+    <string name="backup_field_cycle_history_range_format">%1$d entradas (%2$s - %3$s)</string>
+    <string name="backup_field_cycle_length">Duración del ciclo</string>
+    <string name="backup_field_debug_time">Tiempo de depuración habilitado</string>
+    <string name="backup_field_debug_time_value">Valor del tiempo de depuración</string>
+    <string name="backup_field_debug_tools">Herramientas de depuración habilitadas</string>
+    <string name="backup_field_exact_alarm_prompted">Se muestra el aviso de alarma exacto</string>
+    <string name="backup_field_home_circle_color">Color del anillo de inicio</string>
+    <string name="backup_field_home_circle_style">Estilo del círculo de inicio</string>
+    <string name="backup_field_last_version">Código de la última versión de la aplicación</string>
+    <string name="backup_field_navigation_animation">Animación de navegación</string>
+    <string name="backup_field_notes_last_saved">Última fecha de guardado de las notas</string>
+    <string name="backup_field_notes_text">Contenido de las notas</string>
+    <string name="backup_field_notification_flags_format">Indicadores de notificación: %1$d entradas (%2$d activas)</string>
+    <string name="backup_field_notification_hashes_format">Instantáneas de la configuración de notificaciones: %1$d entradas</string>
+    <string name="backup_field_reminder_insertion">Recordatorio antes de la inserción</string>
+    <string name="backup_field_reminder_removal">Recordatorio antes de la eliminación</string>
+    <string name="backup_field_skip_ring_free_entries_format">Entradas de semanas sin anillos omitidas: %1$d</string>
+    <string name="backup_field_start_date">Fecha de inserción</string>
+    <string name="backup_field_start_time">Hora de inserción</string>
+    <string name="backup_field_tour_shown">Recorrido ya completado</string>
+    <string name="backup_field_welcome_shown">Cuadro de diálogo de bienvenida ya mostrado</string>
+    <string name="backup_hint_create">Guarde sus datos en un archivo para mayor seguridad.</string>
+    <string name="backup_hint_restore">Restaure sus datos desde un archivo guardado previamente.</string>
+    <string name="backup_import_check_message">Revise los datos de la copia de seguridad. Expanda los detalles si es necesario.\n\n¿Desea continuar con estos datos?</string>
+    <string name="backup_import_check_title">Comprobación de importación</string>
+    <string name="backup_import_hide_details">Ocultar detalles</string>
+    <string name="backup_import_line_format">- %1$s: %2$d entradas - %3$s</string>
+    <string name="backup_import_no">No</string>
+    <string name="backup_import_no_entries">Sin entradas</string>
+    <string name="backup_import_section_app">Configuración de la aplicación</string>
+    <string name="backup_import_section_notes">Datos de notas</string>
+    <string name="backup_import_show_details">Mostrar detalles</string>
+    <string name="backup_import_toggle_format">%1$s (%2$d) - %3$s</string>
+    <string name="backup_import_yes">Sí</string>
+    <string name="backup_invalid_toast">Copia de seguridad no válida</string>
+    <string name="backup_no">No</string>
+    <string name="backup_read_failed_toast">No se ha podido leer la copia de seguridad</string>
+    <string name="backup_restore">Restaurar copia de seguridad</string>
+    <string name="backup_restored_toast">Copia de seguridad restaurada</string>
+    <string name="backup_title">Copia de seguridad</string>
+    <string name="backup_unit_day">día</string>
+    <string name="backup_unit_days">días</string>
+    <string name="backup_unit_month">mes</string>
+    <string name="backup_unit_months">meses</string>
+    <string name="backup_unit_year">año</string>
+    <string name="backup_unit_years">años</string>
+    <string name="backup_unknown">Desconocido</string>
+    <string name="backup_yes">Sí</string>
+
+    <!-- Update -->
+    <string name="update_available_message">Hay una versión %1$s disponible. ¿Quieres instalarla ahora?</string>
+    <string name="update_available_title">Actualización disponible</string>
+    <string name="update_available_toast">Se ha encontrado una actualización. Descargando...</string>
+    <string name="update_backup_message">La aplicación buscará actualizaciones. Tus datos permanecerán en el dispositivo, pero se recomienda realizar una copia de seguridad.\n\n¿Deseas crear una copia de seguridad? Si ya has creado una o no deseas hacerlo, pulsa Continuar.</string>
+    <string name="update_backup_no">Crear copia de seguridad</string>
+    <string name="update_backup_title">Copia de seguridad</string>
+    <string name="update_backup_yes">Continuar</string>
+    <string name="update_checking_toast">Buscando actualizaciones...</string>
+    <string name="update_download_failed_toast">Error en la descarga.</string>
+    <string name="update_download_title">Descargando actualización</string>
+    <string name="update_failed_toast">Error al comprobar la actualización.</string>
+    <string name="update_install">Instalar</string>
+    <string name="update_install_prompt_toast">Permitir que esta aplicación continúe con la instalación.</string>
+    <string name="update_later">Más tarde</string>
+    <string name="update_latest_toast">Ya tienes la última versión.</string>
+    <string name="update_no_apk_toast">No se ha encontrado ningún APK en la última versión.</string>
+
+    <!-- Dialogs -->
+    <string name="dialog_cancel">Cancelar</string>
+    <string name="dialog_ok">Aceptar</string>
+
+    <!-- Main -->
+    <string name="main_double_back_exit">Pulsa dos veces el botón Atrás para cerrar la aplicación</string>
+
+    <!-- Debug -->
+    <string name="debug_base_start">Fecha de inicio (base)</string>
+    <string name="debug_calendar_limits">Límites del calendario</string>
+    <string name="debug_calendar_range">Rango del calendario</string>
+    <string name="debug_current_start">Inicio actual</string>
+    <string name="debug_cycle_length">Duración del ciclo: %1$d días</string>
+    <string name="debug_dialog_title">Depuración: Notificaciones</string>
+    <string name="debug_disabled_suffix"> (desactivado)</string>
+    <string name="debug_future_suffix"> [futuro]</string>
+    <string name="debug_hint_clear_time">Borrar la hora de depuración y volver a la hora del sistema.</string>
+    <string name="debug_hint_info">Mostrar información detallada de depuración sobre el ciclo actual.</string>
+    <string name="debug_hint_jump_midnight">Establecer la hora de depuración a las 00:00 del día de depuración actual.</string>
+    <string name="debug_hint_minus_day">Retroceder la hora de depuración 1 día.</string>
+    <string name="debug_hint_minus_hour">Retroceder la hora de depuración 1 hora.</string>
+    <string name="debug_hint_plus_day">Avanzar la hora de depuración 1 día.</string>
+    <string name="debug_hint_plus_hour">Avanzar la hora de depuración 1 hora.</string>
+    <string name="debug_hint_preset_insertion_at">Establecer la hora de depuración en la hora exacta de la inserción.</string>
+    <string name="debug_hint_preset_insertion_before">Establecer la hora de depuración una hora antes de la inserción.</string>
+    <string name="debug_hint_preset_removal_at">Establecer la hora de depuración en la hora exacta de la eliminación.</string>
+    <string name="debug_hint_preset_removal_before">Establecer la hora de depuración en una hora antes de la eliminación.</string>
+    <string name="debug_hint_refresh">Actualizar ahora la pantalla de inicio y los widgets.</string>
+    <string name="debug_hint_set_time">Elegir una fecha y hora específicas para el reloj de depuración.</string>
+    <string name="debug_insertion">Inserción</string>
+    <string name="debug_insertion_reminder">Recordatorio de inserción: %1$dh antes</string>
+    <string name="debug_insertion_reminder_line">Inserción (-%1$dh)</string>
+    <string name="debug_jump_midnight">Saltado a medianoche</string>
+    <string name="debug_notified_for_cycle">Notificación programada para el ciclo</string>
+    <string name="debug_now">Ahora</string>
+    <string name="debug_one_week_remaining">Queda 1 semana</string>
+    <string name="debug_past_suffix"> [pasado]</string>
+    <string name="debug_preset_applied">Preajuste aplicado</string>
+    <string name="debug_refreshed">Actualizado</string>
+    <string name="debug_removal">Eliminación</string>
+    <string name="debug_removal_reminder">Recordatorio de eliminación: dentro de %1$dh</string>
+    <string name="debug_removal_reminder_line">Eliminación (-%1$dh)</string>
+    <string name="debug_ring_free">Sin anillos: %1$d días</string>
+    <string name="debug_scheduled_notifications">Notificaciones programadas</string>
+    <string name="debug_time_cleared">Tiempo de depuración borrado</string>
+    <string name="debug_time_set">Tiempo de depuración establecido</string>
+    <string name="debug_time_shift_back">Tiempo retrasado</string>
+    <string name="debug_time_shift_forward">Hora adelantada</string>
+    <string name="debug_time_status_override">Usando tiempo de depuración: %1$s</string>
+    <string name="debug_time_status_system">Usando hora del sistema</string>
+    <string name="debug_time_switch_label">Usar tiempo de depuración</string>
+    <string name="debug_tools_desc">Habilita las herramientas de desarrollo en Ajustes.</string>
+    <string name="debug_tools_enable">Habilitar herramientas de depuración</string>
+    <string name="debug_tools_title">Herramientas de depuración</string>
+    <string name="debug_two_weeks_remaining">Quedan 2 semanas</string>
+
+    <!-- Tour -->
+    <string name="tour_body_calendar">Consulta de un vistazo los días de colocación, retirada y descanso.</string>
+    <string name="tour_body_calendar_legend">Estos colores indican el tiempo de uso, los días de descanso, la retirada y la colocación.\nTambién puedes cambiar los colores tocando los puntos de la leyenda.</string>
+    <string name="tour_body_cycles">Realiza un seguimiento de los ciclos anteriores y de sus eventos de colocación/retirada.</string>
+    <string name="tour_body_cycles_clear">Elimina todas las entradas de ciclos guardadas de la lista.</string>
+    <string name="tour_body_delay">Utiliza esta opción para registrar días adicionales si el anillo se ha llevado puesto durante más tiempo. Hay más información disponible a través del botón de información.</string>
+    <string name="tour_body_navigation">Cambia aquí entre Inicio, Calendario, Ciclos y Ajustes.</string>
+    <string name="tour_body_notes">Guarda recordatorios y notas personales para este ciclo.</string>
+    <string name="tour_body_notes_close">Toca para volver a la pantalla de inicio.</string>
+    <string name="tour_body_notes_delete">Elimina tus notas actuales.</string>
+    <string name="tour_body_notes_editor">Escribe aquí tus notas. Se guardan únicamente en este dispositivo.</string>
+    <string name="tour_body_notes_save">Guarda los cambios en tus notas.</string>
+    <string name="tour_body_progress">Este anillo indica cuántos días quedan hasta la eliminación o la inserción.</string>
+    <string name="tour_body_settings_advanced">Toca para expandir o contraer la sección avanzada.</string>
+    <string name="tour_body_settings_animation">Elige cómo se animan las transiciones de pantalla al cambiar de pestaña y abrir vistas.</string>
+    <string name="tour_body_settings_app_lock">Abre el cuadro de diálogo de bloqueo de la aplicación, donde puedes activar o desactivar la protección y configurar el retraso del bloqueo automático.</string>
+    <string name="tour_body_settings_background">Elige una foto para personalizar el fondo de la pantalla de inicio.</string>
+    <string name="tour_body_settings_backup">Crea o restaura una copia de seguridad de tus datos.</string>
+    <string name="tour_body_settings_button_color">Cambia el color de resaltado de los botones.\nEsto también cambia el fondo del widget.</string>
+    <string name="tour_body_settings_calendar">Elige hasta qué punto del pasado y del futuro se muestran los ciclos en el calendario.</string>
+    <string name="tour_body_settings_circle_color">Establece el color del anillo en la pantalla de inicio.\nEsto también cambia el color del anillo en el widget grande.</string>
+    <string name="tour_body_settings_circle_style">Elige un estilo para el anillo de la pantalla de inicio.</string>
+    <string name="tour_body_settings_cycle">Establece la fecha, la hora y la duración del ciclo de inserción.</string>
+    <string name="tour_body_settings_info">Muestra la versión, la información del desarrollador y los enlaces de contacto.</string>
+    <string name="tour_body_settings_language">Cambiar entre diferentes idiomas.</string>
+    <string name="tour_body_settings_notifications">Configura cuándo deseas recibir recordatorios en los días de inserción y extracción.\nSi los recordatorios no son fiables, desactiva la optimización de la batería y habilita las alarmas exactas en estos ajustes.</string>
+    <string name="tour_body_settings_reset">Elimina todos los datos guardados y restablece la aplicación.</string>
+    <string name="tour_body_settings_update">Busca nuevas versiones de la aplicación e instálalas.</string>
+    <string name="tour_complete_done">Hecho</string>
+    <string name="tour_complete_message">Has completado el recorrido. ¡Disfruta de Veri Aristo!\nSi necesitas volver a realizar el recorrido, puedes reiniciarlo en Ajustes, en la sección avanzada.</string>
+    <string name="tour_complete_subtitle">Recorrido completado</string>
+    <string name="tour_complete_title">¡Todo listo! 🎉</string>
+    <string name="tour_finish">Finalizar</string>
+    <string name="tour_next">Siguiente</string>
+    <string name="tour_skip">Omitir</string>
+    <string name="tour_title_calendar">Vista de calendario</string>
+    <string name="tour_title_calendar_legend">Leyenda del calendario</string>
+    <string name="tour_title_cycles">Historial de ciclos</string>
+    <string name="tour_title_cycles_clear">Borrar historial</string>
+    <string name="tour_title_delay">Retrasar el ciclo</string>
+    <string name="tour_title_navigation">Navegar</string>
+    <string name="tour_title_notes">Notas rápidas</string>
+    <string name="tour_title_notes_close">Cerrar notas</string>
+    <string name="tour_title_notes_delete">Eliminar notas</string>
+    <string name="tour_title_notes_editor">Editor de notas</string>
+    <string name="tour_title_notes_save">Guardar notas</string>
+    <string name="tour_title_progress">Cuenta atrás del recorrido</string>
+    <string name="tour_title_settings_advanced">Avanzado</string>
+    <string name="tour_title_settings_animation">Animación de navegación</string>
+    <string name="tour_title_settings_app_lock">Bloqueo de la aplicación</string>
+    <string name="tour_title_settings_background">Imagen de fondo</string>
+    <string name="tour_title_settings_backup">Copia de seguridad</string>
+    <string name="tour_title_settings_button_color">Color del botón</string>
+    <string name="tour_title_settings_calendar">Rango del calendario</string>
+    <string name="tour_title_settings_circle_color">Color del anillo de inicio</string>
+    <string name="tour_title_settings_circle_style">Estilo del anillo de inicio</string>
+    <string name="tour_title_settings_cycle">Configuración del ciclo</string>
+    <string name="tour_title_settings_info">Información de la aplicación</string>
+    <string name="tour_title_settings_language">Idioma</string>
+    <string name="tour_title_settings_notifications">Recordatorios</string>
+    <string name="tour_title_settings_reset">Restablecer aplicación</string>
+    <string name="tour_title_settings_update">Actualizaciones</string>
+
+    <!-- Welcome -->
+    <string name="welcome_features_body">- 📅 Vista de calendario con días de inserción, retirada y sin anillos\n- 🔔 Recordatorios que puedes personalizar tú mismo\n- 📝 Notas e historial del ciclo\n- 🎨 Personalización del fondo, los colores, el idioma y los widgets\n- 💾 Copia de seguridad y restauración</string>
+    <string name="welcome_features_title">Qué hace esta aplicación</string>
+    <string name="welcome_info_note">Puedes abrir la información de la aplicación en cualquier momento en Ajustes.</string>
+    <string name="welcome_intro">Mantén a la vista tu ciclo del anillo anticonceptivo con tus fechas personales, recordatorios y notas.</string>
+    <string name="welcome_permissions_body">- 🖼️ Acceso a los archivos multimedia: elige una imagen de fondo\n- 🔔 Notificaciones: recordatorios del ciclo\n- ⏰ Alarmas exactas: programación precisa</string>
+    <string name="welcome_permissions_title">Permisos utilizados</string>
+    <string name="welcome_privacy_note">Tus datos se almacenan únicamente en este dispositivo. Asegúrate de crear una copia de seguridad una vez que hayas configurado todos los datos y ajustes 😊</string>
+    <string name="welcome_skip_tour">Ahora no</string>
+    <string name="welcome_start_tour">Iniciar recorrido</string>
+    <string name="welcome_subtitle">Recordatorio de Veri Aristo Ring</string>
+    <string name="welcome_title">Bienvenido 👋</string>
+</resources>

@@ -8,11 +8,16 @@ import android.app.PendingIntent;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.content.UriPermission;
 import android.content.pm.PackageManager;
 import android.content.res.ColorStateList;
 import android.graphics.Color;
+import android.graphics.RenderEffect;
 import android.graphics.drawable.ColorDrawable;
+import android.graphics.drawable.Drawable;
 import android.graphics.Rect;
+import android.graphics.Shader;
+import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
 import android.widget.Toast;
@@ -33,11 +38,16 @@ import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.jakewharton.threetenabp.AndroidThreeTen;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.ImageButton;
 import android.widget.ScrollView;
 import com.google.android.material.button.MaterialButton;
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 import android.util.Log;
 import java.util.concurrent.Executor;
 
@@ -54,6 +64,8 @@ public class MainActivity extends AppCompatActivity {
     private static final String TAG = "MainActivity";
     private FragmentManager fragmentManager;
     private ImageButton btnNotes;
+    private ImageView globalBackgroundImage;
+    private View globalBackgroundDimOverlay;
     private BottomNavigationView bottomNavigationView;
     private View appLockOverlay;
     private MaterialButton btnUnlockApp;
@@ -95,6 +107,8 @@ public class MainActivity extends AppCompatActivity {
 
         fragmentManager = getSupportFragmentManager();
         btnNotes = findViewById(R.id.btn_notes);
+        globalBackgroundImage = findViewById(R.id.global_background_image);
+        globalBackgroundDimOverlay = findViewById(R.id.global_background_dim_overlay);
         bottomNavigationView = findViewById(R.id.bottom_navigation);
         appLockOverlay = findViewById(R.id.app_lock_overlay);
         btnUnlockApp = findViewById(R.id.btn_unlock_app);
@@ -117,6 +131,10 @@ public class MainActivity extends AppCompatActivity {
                 navigationAnimationStyle = style;
             }
         });
+        viewModel.getBackgroundImageUri().observe(this, uri -> refreshGlobalBackgroundImage());
+        viewModel.getBackgroundAllScreensEnabled().observe(this, enabled -> refreshGlobalBackgroundImage());
+        viewModel.getBackgroundDimPercent().observe(this, percent -> refreshGlobalBackgroundDim());
+        viewModel.getBackgroundBlurOthersPercent().observe(this, percent -> refreshGlobalBackgroundBlur());
 
         boolean lockEnabledAtLaunch = viewModel.getRepository().isAppLockEnabled();
         if (!lockEnabledAtLaunch) {
@@ -217,6 +235,122 @@ public class MainActivity extends AppCompatActivity {
         ReminderScheduler.scheduleCurrentCycle(this);
 
         maybeStartWelcomeFlow();
+    }
+
+    private void refreshGlobalBackgroundImage() {
+        if (globalBackgroundImage == null || viewModel == null) {
+            return;
+        }
+        boolean enabled = Boolean.TRUE.equals(viewModel.getBackgroundAllScreensEnabled().getValue());
+        String uriStr = viewModel.getBackgroundImageUri().getValue();
+        if (!enabled) {
+            globalBackgroundImage.setImageDrawable(null);
+            globalBackgroundImage.setVisibility(View.GONE);
+            refreshGlobalBackgroundBlur();
+            return;
+        }
+        if (uriStr == null || uriStr.trim().isEmpty()) {
+            globalBackgroundImage.setImageResource(R.drawable.default_bg);
+            globalBackgroundImage.setVisibility(View.VISIBLE);
+            refreshGlobalBackgroundBlur();
+            return;
+        }
+
+        try {
+            Uri uri = Uri.parse(uriStr);
+            String scheme = uri.getScheme();
+            Drawable drawable;
+            if ("file".equalsIgnoreCase(scheme)) {
+                File file = new File(Objects.requireNonNull(uri.getPath()));
+                if (!file.exists()) {
+                    viewModel.setBackgroundImageUri(null);
+                    globalBackgroundImage.setImageResource(R.drawable.default_bg);
+                    globalBackgroundImage.setVisibility(View.VISIBLE);
+                    refreshGlobalBackgroundBlur();
+                    return;
+                }
+                try (InputStream inputStream = new FileInputStream(file)) {
+                    drawable = Drawable.createFromStream(inputStream, uri.toString());
+                }
+            } else {
+                boolean hasPermission = false;
+                for (UriPermission permission : getContentResolver().getPersistedUriPermissions()) {
+                    if (permission.getUri().equals(uri) && permission.isReadPermission()) {
+                        hasPermission = true;
+                        break;
+                    }
+                }
+                if (!hasPermission) {
+                    viewModel.setBackgroundImageUri(null);
+                    globalBackgroundImage.setImageResource(R.drawable.default_bg);
+                    globalBackgroundImage.setVisibility(View.VISIBLE);
+                    refreshGlobalBackgroundBlur();
+                    return;
+                }
+                try (InputStream inputStream = getContentResolver().openInputStream(uri)) {
+                    drawable = Drawable.createFromStream(inputStream, uri.toString());
+                }
+            }
+            if (drawable == null) {
+                globalBackgroundImage.setImageResource(R.drawable.default_bg);
+                globalBackgroundImage.setVisibility(View.VISIBLE);
+                refreshGlobalBackgroundBlur();
+                return;
+            }
+            globalBackgroundImage.setImageDrawable(drawable);
+            globalBackgroundImage.setVisibility(View.VISIBLE);
+            refreshGlobalBackgroundBlur();
+        } catch (Exception e) {
+            Log.e(TAG, "Failed to load global background image", e);
+            viewModel.setBackgroundImageUri(null);
+            globalBackgroundImage.setImageResource(R.drawable.default_bg);
+            globalBackgroundImage.setVisibility(View.VISIBLE);
+            refreshGlobalBackgroundBlur();
+        }
+    }
+
+    private void refreshGlobalBackgroundDim() {
+        if (globalBackgroundDimOverlay == null || viewModel == null) {
+            return;
+        }
+        boolean enabled = Boolean.TRUE.equals(viewModel.getBackgroundAllScreensEnabled().getValue());
+        Integer dimPercent = viewModel.getBackgroundDimPercent().getValue();
+        int percent = dimPercent != null ? Math.max(0, Math.min(100, dimPercent)) : 0;
+        if (!enabled || percent <= 0) {
+            globalBackgroundDimOverlay.setVisibility(View.GONE);
+            globalBackgroundDimOverlay.setAlpha(0f);
+            return;
+        }
+        globalBackgroundDimOverlay.setAlpha(percent / 100f);
+        globalBackgroundDimOverlay.setVisibility(View.VISIBLE);
+    }
+
+    private void refreshGlobalBackgroundBlur() {
+        if (globalBackgroundImage == null || viewModel == null) {
+            return;
+        }
+        if (Build.VERSION.SDK_INT < Build.VERSION_CODES.S) {
+            return;
+        }
+        boolean enabled = Boolean.TRUE.equals(viewModel.getBackgroundAllScreensEnabled().getValue());
+        if (!enabled || globalBackgroundImage.getVisibility() != View.VISIBLE) {
+            globalBackgroundImage.setRenderEffect(null);
+            return;
+        }
+        Integer blurPercent = viewModel.getBackgroundBlurOthersPercent().getValue();
+        int percent = blurPercent != null ? Math.max(0, Math.min(100, blurPercent)) : 50;
+        float radiusPx = percentToBlurRadiusPx(percent);
+        if (radiusPx <= 0f) {
+            globalBackgroundImage.setRenderEffect(null);
+            return;
+        }
+        globalBackgroundImage.setRenderEffect(
+                RenderEffect.createBlurEffect(radiusPx, radiusPx, Shader.TileMode.CLAMP));
+    }
+
+    private float percentToBlurRadiusPx(int percent) {
+        float density = getResources().getDisplayMetrics().density;
+        return (percent / 100f) * 28f * density;
     }
 
     private void applyBottomNavColors(int selectedColor) {
