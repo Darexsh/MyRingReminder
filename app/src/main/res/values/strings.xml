@@ -472,6 +472,9 @@
     <string name="tour_body_settings_animation">Choose how screen transitions animate when switching tabs and opening views.</string>
     <string name="tour_body_settings_app_lock">Opens the app lock dialog, where you can enable/disable protection and set the auto-lock delay.</string>
     <string name="tour_body_settings_background">Pick a photo to personalize the home background.</string>
+    <string name="tour_body_settings_background_all">Enable this to show your background image on all app screens, not just the home dashboard.</string>
+    <string name="tour_body_settings_background_blur">Set the blur intensity for the home screen and other pages to create a modern look.</string>
+    <string name="tour_body_settings_background_dim">Adjust how dark the background image should be to make text easier to read.</string>
     <string name="tour_body_settings_backup">Create or restore a backup of your data.</string>
     <string name="tour_body_settings_button_color">Change the accent color for buttons.\nThis also changes the widget background.</string>
     <string name="tour_body_settings_calendar">Choose how far the calendar shows past and future cycles.</string>
@@ -506,6 +509,9 @@
     <string name="tour_title_settings_animation">Navigation animation</string>
     <string name="tour_title_settings_app_lock">App lock</string>
     <string name="tour_title_settings_background">Background image</string>
+    <string name="tour_title_settings_background_all">Global Background</string>
+    <string name="tour_title_settings_background_blur">Background Blur</string>
+    <string name="tour_title_settings_background_dim">Background Dimming</string>
     <string name="tour_title_settings_backup">Backup</string>
     <string name="tour_title_settings_button_color">Button color</string>
     <string name="tour_title_settings_calendar">Calendar range</string>

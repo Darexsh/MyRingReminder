@@ -771,6 +771,7 @@ public class MainActivity extends AppCompatActivity {
         View target = step.inActivityView ? findViewById(step.targetViewId)
                 : (fragmentView != null ? fragmentView.findViewById(step.targetViewId) : null);
 
+        Log.d("TourDebug", "Index: " + index + " Attempt: " + attempt + " TargetID: " + step.targetViewId);
         if (target == null) {
             getWindow().getDecorView().postDelayed(() -> showGuidedTourStep(index, attempt + 1), 120);
             return;
@@ -920,7 +921,7 @@ public class MainActivity extends AppCompatActivity {
         List<TourStep> steps = new ArrayList<>();
         steps.add(new TourStep(R.id.nav_home, R.id.circularProgress,
                 R.string.tour_title_progress, R.string.tour_body_progress, 0, false));
-        steps.add(new TourStep(R.id.nav_home, R.id.home_delay_row,
+        steps.add(new TourStep(R.id.nav_home, R.id.btn_special_actions_toggle,
                 R.string.tour_title_delay, R.string.tour_body_delay, 0, false));
         steps.add(new TourStep(R.id.nav_home, R.id.btn_notes,
                 R.string.tour_title_notes, R.string.tour_body_notes, 0, true,
@@ -964,6 +965,15 @@ public class MainActivity extends AppCompatActivity {
                 R.id.settings_scroll, false));
         steps.add(new TourStep(R.id.nav_settings, R.id.btn_set_background,
                 R.string.tour_title_settings_background, R.string.tour_body_settings_background,
+                R.id.settings_scroll, false));
+        steps.add(new TourStep(R.id.nav_settings, R.id.btn_background_all_screens,
+                R.string.tour_title_settings_background_all, R.string.tour_body_settings_background_all,
+                R.id.settings_scroll, false));
+        steps.add(new TourStep(R.id.nav_settings, R.id.btn_background_dim,
+                R.string.tour_title_settings_background_dim, R.string.tour_body_settings_background_dim,
+                R.id.settings_scroll, false));
+        steps.add(new TourStep(R.id.nav_settings, R.id.btn_background_blur,
+                R.string.tour_title_settings_background_blur, R.string.tour_body_settings_background_blur,
                 R.id.settings_scroll, false));
         steps.add(new TourStep(R.id.nav_settings, R.id.btn_set_button_color,
                 R.string.tour_title_settings_button_color, R.string.tour_body_settings_button_color,

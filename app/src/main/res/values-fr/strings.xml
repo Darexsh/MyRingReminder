@@ -472,6 +472,9 @@
     <string name="tour_body_settings_animation">Choisissez l\'animation des transitions lors du changement d\'onglet ou d\'écran.</string>
     <string name="tour_body_settings_app_lock">Ouvre le verrouillage de l\'app, où vous pouvez activer la protection et régler le délai de verrouillage auto.</string>
     <string name="tour_body_settings_background">Choisissez une photo pour personnaliser le fond de l\'écran d\'accueil.</string>
+    <string name="tour_body_settings_background_all">Activez ceci pour afficher votre image de fond sur tous les écrans de l\'application, et pas seulement sur l\'accueil.</string>
+    <string name="tour_body_settings_background_blur">Ajustez le flou de l\'image pour l\'écran d\'accueil et les autres pages afin de créer un look moderne.</string>
+    <string name="tour_body_settings_background_dim">Réglez l\'intensité de l\'assombrissement de l\'image pour rendre le texte plus lisible.</string>
     <string name="tour_body_settings_backup">Créez ou restaurez une sauvegarde de vos données.</string>
     <string name="tour_body_settings_button_color">Changez la couleur d\'accentuation des boutons.\nCela modifie aussi le fond du widget.</string>
     <string name="tour_body_settings_calendar">Choisissez jusqu\'où le calendrier affiche les cycles passés et futurs.</string>
@@ -506,6 +509,9 @@
     <string name="tour_title_settings_animation">Animations</string>
     <string name="tour_title_settings_app_lock">Verrouillage de l\'app</string>
     <string name="tour_title_settings_background">Image d\'arrière-plan</string>
+    <string name="tour_title_settings_background_all">Arrière-plan global</string>
+    <string name="tour_title_settings_background_blur">Flou d\'arrière-plan</string>
+    <string name="tour_title_settings_background_dim">Obscurcissement</string>
     <string name="tour_title_settings_backup">Sauvegarde</string>
     <string name="tour_title_settings_button_color">Couleur des boutons</string>
     <string name="tour_title_settings_calendar">Plage du calendrier</string>

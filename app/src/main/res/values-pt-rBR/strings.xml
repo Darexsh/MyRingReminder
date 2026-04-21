@@ -472,6 +472,9 @@
     <string name="tour_body_settings_animation">Escolha como as transições de tela se animam ao alternar abas.</string>
     <string name="tour_body_settings_app_lock">Abre o bloqueio do app, onde você ativa a proteção e define o tempo de bloqueio automático.</string>
     <string name="tour_body_settings_background">Escolha uma foto para personalizar o fundo da tela inicial.</string>
+    <string name="tour_body_settings_background_all">Ative esta opção para exibir sua imagem de fundo em todas as telas do app, não apenas no início.</string>
+    <string name="tour_body_settings_background_blur">Ajuste o desfoque da imagem para a tela inicial e outras páginas para um visual mais moderno.</string>
+    <string name="tour_body_settings_background_dim">Ajuste o quanto a imagem deve ser escurecida para tornar o texto mais legível.</string>
     <string name="tour_body_settings_backup">Crie ou restaure um backup dos seus dados.</string>
     <string name="tour_body_settings_button_color">Mude a cor de destaque dos botões.\nIsso também muda o fundo do widget.</string>
     <string name="tour_body_settings_calendar">Escolha o quanto o calendário mostra de ciclos passados e futuros.</string>
@@ -506,6 +509,9 @@
     <string name="tour_title_settings_animation">Animações</string>
     <string name="tour_title_settings_app_lock">Bloqueio do app</string>
     <string name="tour_title_settings_background">Imagem de fundo</string>
+    <string name="tour_title_settings_background_all">Fundo em todas as telas</string>
+    <string name="tour_title_settings_background_blur">Desfoque de fundo</string>
+    <string name="tour_title_settings_background_dim">Escurecimento</string>
     <string name="tour_title_settings_backup">Backup</string>
     <string name="tour_title_settings_button_color">Cor dos botões</string>
     <string name="tour_title_settings_calendar">Intervalo do calendário</string>

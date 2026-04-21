@@ -472,6 +472,9 @@
     <string name="tour_body_settings_animation">Scegli come si animano le transizioni tra schede e schermate.</string>
     <string name="tour_body_settings_app_lock">Apre il blocco app, dove puoi attivare la protezione e impostare il ritardo di blocco automatico.</string>
     <string name="tour_body_settings_background">Scegli una foto per personalizzare lo sfondo della home.</string>
+    <string name="tour_body_settings_background_all">Attiva questa opzione per mostrare l\'immagine di sfondo su tutte le schermate dell\'app, non solo nella home.</string>
+    <string name="tour_body_settings_background_blur">Imposta il livello di sfocatura per la home e le altre schermate per un effetto più elegante.</string>
+    <string name="tour_body_settings_background_dim">Regola quanto deve essere scura l\'immagine di sfondo per migliorare la leggibilità del testo.</string>
     <string name="tour_body_settings_backup">Crea o ripristina un backup dei tuoi dati.</string>
     <string name="tour_body_settings_button_color">Cambia il colore principale dei pulsanti.\nQuesto cambia anche lo sfondo del widget.</string>
     <string name="tour_body_settings_calendar">Scegli quanto indietro e avanti il calendario mostra i cicli.</string>
@@ -506,6 +509,9 @@
     <string name="tour_title_settings_animation">Animazioni</string>
     <string name="tour_title_settings_app_lock">Blocco app</string>
     <string name="tour_title_settings_background">Immagine di sfondo</string>
+    <string name="tour_title_settings_background_all">Sfondo globale</string>
+    <string name="tour_title_settings_background_blur">Sfocatura sfondo</string>
+    <string name="tour_title_settings_background_dim">Oscuramento</string>
     <string name="tour_title_settings_backup">Backup</string>
     <string name="tour_title_settings_button_color">Colore pulsanti</string>
     <string name="tour_title_settings_calendar">Intervallo calendario</string>

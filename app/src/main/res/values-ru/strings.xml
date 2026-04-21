@@ -472,6 +472,9 @@
     <string name="tour_body_settings_animation">Выберите анимацию переходов между вкладками и экранами.</string>
     <string name="tour_body_settings_app_lock">Открывает настройки блокировки, где можно включить защиту и задержку автоблокировки.</string>
     <string name="tour_body_settings_background">Выберите фото для персонализации фона главного экрана.</string>
+    <string name="tour_body_settings_background_all">Включите это, чтобы фоновое изображение отображалось на всех экранах приложения, а не только на главном.</string>
+    <string name="tour_body_settings_background_blur">Настройте размытие фона для главного экрана и других страниц для создания современного стиля.</string>
+    <string name="tour_body_settings_background_dim">Настройте уровень затемнения фона, чтобы текст был более читаемым.</string>
     <string name="tour_body_settings_backup">Создайте или восстановите резервную копию данных.</string>
     <string name="tour_body_settings_button_color">Измените цвет кнопок.\nЭто также изменит фон виджета.</string>
     <string name="tour_body_settings_calendar">Выберите, насколько далеко календарь показывает прошлые и будущие циклы.</string>
@@ -506,6 +509,9 @@
     <string name="tour_title_settings_animation">Анимация</string>
     <string name="tour_title_settings_app_lock">Блокировка приложения</string>
     <string name="tour_title_settings_background">Фоновое изображение</string>
+    <string name="tour_title_settings_background_all">Фон на всех экранах</string>
+    <string name="tour_title_settings_background_blur">Размытие фона</string>
+    <string name="tour_title_settings_background_dim">Затемнение фона</string>
     <string name="tour_title_settings_backup">Резервная копия</string>
     <string name="tour_title_settings_button_color">Цвет кнопок</string>
     <string name="tour_title_settings_calendar">Диапазон календаря</string>

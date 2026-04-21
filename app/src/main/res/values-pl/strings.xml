@@ -472,6 +472,9 @@
     <string name="tour_body_settings_animation">Wybierz animację przejść między kartami i widokami.</string>
     <string name="tour_body_settings_app_lock">Otwiera blokadę aplikacji, gdzie możesz włączyć ochronę i ustawić czas autoblokady.</string>
     <string name="tour_body_settings_background">Wybierz zdjęcie, aby spersonalizować tło ekranu głównego.</string>
+    <string name="tour_body_settings_background_all">Włącz tę opcję, aby pokazać obraz tła na wszystkich ekranach aplikacji, a nie tylko na głównym.</string>
+    <string name="tour_body_settings_background_blur">Dostosuj rozmycie tła dla ekranu głównego i pozostałych stron, aby uzyskać nowoczesny wygląd.</string>
+    <string name="tour_body_settings_background_dim">Ustaw stopień przyciemnienia obrazu, aby tekst był bardziej czytelny.</string>
     <string name="tour_body_settings_backup">Utwórz lub przywróć kopię zapasową swoich danych.</string>
     <string name="tour_body_settings_button_color">Zmień kolor akcentu przycisków.\nZmieni to również tło widgetu.</string>
     <string name="tour_body_settings_calendar">Wybierz, jak daleko kalendarz ma pokazywać przeszłe i przyszłe cykle.</string>
@@ -506,6 +509,9 @@
     <string name="tour_title_settings_animation">Animacja nawigacji</string>
     <string name="tour_title_settings_app_lock">Blokada aplikacji</string>
     <string name="tour_title_settings_background">Obraz tła</string>
+    <string name="tour_title_settings_background_all">Tło na wszystkich ekranach</string>
+    <string name="tour_title_settings_background_blur">Rozmycie tła</string>
+    <string name="tour_title_settings_background_dim">Przyciemnienie tła</string>
     <string name="tour_title_settings_backup">Kopia zapasowa</string>
     <string name="tour_title_settings_button_color">Kolor przycisków</string>
     <string name="tour_title_settings_calendar">Zakres kalendarza</string>

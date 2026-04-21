@@ -472,6 +472,9 @@
     <string name="tour_body_settings_animation">Elige cómo se animan las transiciones de pantalla al cambiar de pestaña y abrir vistas.</string>
     <string name="tour_body_settings_app_lock">Abre el cuadro de diálogo de bloqueo de la aplicación, donde puedes activar o desactivar la protección y configurar el retraso del bloqueo automático.</string>
     <string name="tour_body_settings_background">Elige una foto para personalizar el fondo de la pantalla de inicio.</string>
+    <string name="tour_body_settings_background_all">Activa esto para mostrar la imagen de fondo en todas las pantallas de la aplicación, no solo en el inicio.</string>
+    <string name="tour_body_settings_background_blur">Ajusta la intensidad del desenfoque para la pantalla de inicio y otras páginas para un estilo moderno.</string>
+    <string name="tour_body_settings_background_dim">Ajusta qué tan oscura debe ser la imagen de fondo para mejorar la legibilidad del texto.</string>
     <string name="tour_body_settings_backup">Crea o restaura una copia de seguridad de tus datos.</string>
     <string name="tour_body_settings_button_color">Cambia el color de resaltado de los botones.\nEsto también cambia el fondo del widget.</string>
     <string name="tour_body_settings_calendar">Elige hasta qué punto del pasado y del futuro se muestran los ciclos en el calendario.</string>
@@ -506,6 +509,9 @@
     <string name="tour_title_settings_animation">Animación de navegación</string>
     <string name="tour_title_settings_app_lock">Bloqueo de la aplicación</string>
     <string name="tour_title_settings_background">Imagen de fondo</string>
+    <string name="tour_title_settings_background_all">Fondo global</string>
+    <string name="tour_title_settings_background_blur">Desenfoque del fondo</string>
+    <string name="tour_title_settings_background_dim">Atenuación del fondo</string>
     <string name="tour_title_settings_backup">Copia de seguridad</string>
     <string name="tour_title_settings_button_color">Color del botón</string>
     <string name="tour_title_settings_calendar">Rango del calendario</string>

@@ -472,6 +472,9 @@
     <string name="tour_body_settings_animation">Sekme ve ekran geçiş animasyonlarını seçin.</string>
     <string name="tour_body_settings_app_lock">Korumayı etkinleştirebileceğiniz ve kilit gecikmesini ayarlayabileceğiniz uygulama kilidini açar.</string>
     <string name="tour_body_settings_background">Ana ekran arka planını kişiselleştirmek için bir fotoğraf seçin.</string>
+    <string name="tour_body_settings_background_all">Arka plan resminin sadece ana ekranda değil, tüm uygulama ekranlarında gösterilmesi için bunu etkinleştirin.</string>
+    <string name="tour_body_settings_background_blur">Modern bir görünüm için ana ekran ve diğer sayfalar için bulanıklık seviyesini ayarlayın.</string>
+    <string name="tour_body_settings_background_dim">Metnin daha rahat okunması için arka plan resminin ne kadar karanlık olacağını ayarlayın.</string>
     <string name="tour_body_settings_backup">Verilerinizin yedeğini oluşturun veya geri yükleyin.</string>
     <string name="tour_body_settings_button_color">Düğmelerin vurgu rengini değiştirin.\nBu aynı zamanda widget arka planını da değiştirir.</string>
     <string name="tour_body_settings_calendar">Takvimin geçmiş ve gelecek döngüleri ne kadar göstereceğini seçin.</string>
@@ -506,6 +509,9 @@
     <string name="tour_title_settings_animation">Navigasyon animasyonu</string>
     <string name="tour_title_settings_app_lock">Uygulama kilidi</string>
     <string name="tour_title_settings_background">Arka plan resmi</string>
+    <string name="tour_title_settings_background_all">Tüm ekranlarda arka plan</string>
+    <string name="tour_title_settings_background_blur">Arka plan bulanıklığı</string>
+    <string name="tour_title_settings_background_dim">Arka plan karartma</string>
     <string name="tour_title_settings_backup">Yedekleme</string>
     <string name="tour_title_settings_button_color">Düğme rengi</string>
     <string name="tour_title_settings_calendar">Takvim aralığı</string>

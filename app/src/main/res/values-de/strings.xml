@@ -472,6 +472,9 @@
     <string name="tour_body_settings_animation">Wähle, wie Bildschirmübergänge beim Wechseln von Tabs und Öffnen von Ansichten animiert werden.</string>
     <string name="tour_body_settings_app_lock">Öffnet den App-Sperre-Dialog, in dem du den Schutz aktivieren/deaktivieren und die automatische Sperrzeit einstellen kannst.</string>
     <string name="tour_body_settings_background">Wähle ein Foto, um den Startbildschirm zu personalisieren.</string>
+    <string name="tour_body_settings_background_all">Aktiviere dies, um das Hintergrundbild auf allen Bildschirmen der App anzuzeigen, nicht nur auf dem Dashboard.</string>
+    <string name="tour_body_settings_background_blur">Passe die Unschärfe für das Dashboard und andere Seiten an, um ein modernes Design zu erzielen.</string>
+    <string name="tour_body_settings_background_dim">Stelle ein, wie stark das Bild abgedunkelt werden soll, um die Lesbarkeit der Texte zu verbessern.</string>
     <string name="tour_body_settings_backup">Erstelle oder stelle ein Backup deiner Daten wieder her.</string>
     <string name="tour_body_settings_button_color">Ändere die Akzentfarbe für Buttons.\nDies ändert auch den Widget-Hintergrund.</string>
     <string name="tour_body_settings_calendar">Lege fest, wie weit der Kalender vergangene und zukünftige Zyklen anzeigt.</string>
@@ -506,6 +509,9 @@
     <string name="tour_title_settings_animation">Navigationsanimation</string>
     <string name="tour_title_settings_app_lock">App-Sperre</string>
     <string name="tour_title_settings_background">Hintergrundbild</string>
+    <string name="tour_title_settings_background_all">Globaler Hintergrund</string>
+    <string name="tour_title_settings_background_blur">Hintergrund-Unschärfe</string>
+    <string name="tour_title_settings_background_dim">Hintergrund-Abdunkelung</string>
     <string name="tour_title_settings_backup">Backup</string>
     <string name="tour_title_settings_button_color">Button-Farbe</string>
     <string name="tour_title_settings_calendar">Kalender-Reichweite</string>
