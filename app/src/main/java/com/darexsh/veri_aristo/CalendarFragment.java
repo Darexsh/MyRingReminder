@@ -41,8 +41,6 @@ public class CalendarFragment extends Fragment {
     private View legendRemovalView;
     private View legendInsertionView;
     private TextView monthSelectorView;
-    private ImageButton prevMonthButton;
-    private ImageButton nextMonthButton;
     private com.google.android.material.button.MaterialButton todayButton;
     private static final int CALENDAR_ALPHA = 127;
     private static final int LEGEND_ALPHA = 255;
@@ -63,8 +61,8 @@ public class CalendarFragment extends Fragment {
         View view = inflater.inflate(R.layout.fragment_calendar, container, false);
         calendarView = view.findViewById(R.id.calendarView);
         monthSelectorView = view.findViewById(R.id.tv_calendar_month_selector);
-        prevMonthButton = view.findViewById(R.id.btn_calendar_prev);
-        nextMonthButton = view.findViewById(R.id.btn_calendar_next);
+        ImageButton prevMonthButton = view.findViewById(R.id.btn_calendar_prev);
+        ImageButton nextMonthButton = view.findViewById(R.id.btn_calendar_next);
         todayButton = view.findViewById(R.id.btn_calendar_today);
         calendarView.setTopbarVisible(false);
         calendarView.setDynamicHeightEnabled(true);

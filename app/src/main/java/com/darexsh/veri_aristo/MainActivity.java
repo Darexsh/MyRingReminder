@@ -81,6 +81,8 @@ public class MainActivity extends AppCompatActivity {
     private boolean appUnlockedThisSession = false;
     private boolean appMovedToBackground = false;
     private long appBackgroundedAtMillis = 0L;
+    private boolean openUpdateBackupOnNextSettings = false;
+    private boolean startupUpdateCheckConsumed = false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -183,7 +185,14 @@ public class MainActivity extends AppCompatActivity {
                 selectedFragment = new CyclesFragment();
                 btnNotes.setVisibility(View.GONE);
             } else if (id == R.id.nav_settings) {
-                selectedFragment = new SettingsFragment();
+                SettingsFragment settingsFragment = new SettingsFragment();
+                if (openUpdateBackupOnNextSettings) {
+                    Bundle args = new Bundle();
+                    args.putBoolean(SettingsFragment.ARG_OPEN_UPDATE_BACKUP_DIALOG, true);
+                    settingsFragment.setArguments(args);
+                    openUpdateBackupOnNextSettings = false;
+                }
+                selectedFragment = settingsFragment;
                 btnNotes.setVisibility(View.GONE);
             } else {
                 btnNotes.setVisibility(View.GONE);
@@ -198,9 +207,7 @@ public class MainActivity extends AppCompatActivity {
         });
 
         // Listen for back stack changes to manage visibility of the notes button
-        fragmentManager.addOnBackStackChangedListener(() -> {
-            updateNotesButtonVisibility();
-        });
+        fragmentManager.addOnBackStackChangedListener(this::updateNotesButtonVisibility);
         updateNotesButtonVisibility();
 
         // Handle back button presses to navigate through fragments
@@ -316,7 +323,7 @@ public class MainActivity extends AppCompatActivity {
         boolean enabled = Boolean.TRUE.equals(viewModel.getBackgroundAllScreensEnabled().getValue());
         Integer dimPercent = viewModel.getBackgroundDimPercent().getValue();
         int percent = dimPercent != null ? Math.max(0, Math.min(100, dimPercent)) : 0;
-        if (!enabled || percent <= 0) {
+        if (!enabled || percent == 0) {
             globalBackgroundDimOverlay.setVisibility(View.GONE);
             globalBackgroundDimOverlay.setAlpha(0f);
             return;
@@ -400,12 +407,32 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+    }
+
     private void updateNotesButtonVisibility() {
         Fragment currentFragment = fragmentManager.findFragmentById(R.id.fragment_container);
         if (currentFragment instanceof HomeFragment) {
             btnNotes.setVisibility(View.VISIBLE);
         } else {
             btnNotes.setVisibility(View.GONE);
+        }
+    }
+
+    public boolean consumeStartupUpdateCheckRequest() {
+        if (startupUpdateCheckConsumed) {
+            return false;
+        }
+        startupUpdateCheckConsumed = true;
+        return true;
+    }
+
+    public void openUpdateBackupFlowFromHome() {
+        openUpdateBackupOnNextSettings = true;
+        if (bottomNavigationView != null) {
+            bottomNavigationView.setSelectedItemId(R.id.nav_settings);
         }
     }
 

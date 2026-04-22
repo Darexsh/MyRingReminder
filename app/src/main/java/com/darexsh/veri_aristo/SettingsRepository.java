@@ -120,10 +120,7 @@ public class SettingsRepository {
         if (percent < 0) {
             return 0;
         }
-        if (percent > 100) {
-            return 100;
-        }
-        return percent;
+        return Math.min(percent, 100);
     }
 
     public void setBackgroundDimPercent(int percent) {
@@ -136,10 +133,7 @@ public class SettingsRepository {
         if (percent < 0) {
             return 0;
         }
-        if (percent > 100) {
-            return 100;
-        }
-        return percent;
+        return Math.min(percent, 100);
     }
 
     public void setBackgroundBlurDashboardPercent(int percent) {
@@ -152,10 +146,7 @@ public class SettingsRepository {
         if (percent < 0) {
             return 0;
         }
-        if (percent > 100) {
-            return 100;
-        }
-        return percent;
+        return Math.min(percent, 100);
     }
 
     public void setBackgroundBlurOthersPercent(int percent) {

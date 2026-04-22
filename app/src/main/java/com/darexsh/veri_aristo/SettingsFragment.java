@@ -11,6 +11,7 @@ import android.app.PendingIntent;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
+import android.content.ActivityNotFoundException;
 import android.os.Bundle;
 import android.os.Build;
 import android.widget.DatePicker;
@@ -90,6 +91,7 @@ import com.google.gson.JsonParser;
 
 // SettingsFragment allows users to configure app settings such as cycle start date, time, length, and background image
 public class SettingsFragment extends Fragment {
+    public static final String ARG_OPEN_UPDATE_BACKUP_DIALOG = "open_update_backup_dialog";
 
     private MaterialButton btnSetTime;
     private MaterialButton btnSetStartDate;
@@ -350,9 +352,7 @@ public class SettingsFragment extends Fragment {
                 updateNavigationAnimationButtonText(style);
             }
         });
-        viewModel.getBackgroundAllScreensEnabled().observe(getViewLifecycleOwner(), enabled -> {
-            updateBackgroundAllScreensButtonText(Boolean.TRUE.equals(enabled));
-        });
+        viewModel.getBackgroundAllScreensEnabled().observe(getViewLifecycleOwner(), enabled -> updateBackgroundAllScreensButtonText(Boolean.TRUE.equals(enabled)));
         viewModel.getBackgroundDimPercent().observe(getViewLifecycleOwner(), percent -> {
             if (percent != null) {
                 updateBackgroundDimButtonText(percent);
@@ -459,6 +459,10 @@ public class SettingsFragment extends Fragment {
 
         updateLanguageButtonText();
         updateAppLockButtonText();
+        if (getArguments() != null && getArguments().getBoolean(ARG_OPEN_UPDATE_BACKUP_DIALOG, false)) {
+            getArguments().putBoolean(ARG_OPEN_UPDATE_BACKUP_DIALOG, false);
+            view.post(this::showUpdateBackupConfirmDialog);
+        }
 
         return view;
     }
@@ -754,7 +758,7 @@ public class SettingsFragment extends Fragment {
         }
         String currentTag = Objects.requireNonNull(locales.get(0)).toLanguageTag();
         int index = findLanguageIndexByTag(tags, currentTag);
-        return index >= 0 ? index : 0;
+        return Math.max(index, 0);
     }
 
     private int findLanguageIndexByTag(String[] tags, @Nullable String currentTag) {
@@ -1004,12 +1008,12 @@ public class SettingsFragment extends Fragment {
         MaterialButton btn75 = content.findViewById(R.id.btn_dim_75);
         MaterialButton btn100 = content.findViewById(R.id.btn_dim_100);
 
-        valueText.setText(initialValue + "%");
+        valueText.setText(getString(R.string.percent_value, initialValue));
         seekBar.setProgress(initialValue);
         seekBar.setOnSeekBarChangeListener(new android.widget.SeekBar.OnSeekBarChangeListener() {
             @Override
             public void onProgressChanged(android.widget.SeekBar seekBar, int progress, boolean fromUser) {
-                valueText.setText(progress + "%");
+                valueText.setText(getString(R.string.percent_value, progress));
             }
 
             @Override
@@ -1082,15 +1086,15 @@ public class SettingsFragment extends Fragment {
         MaterialButton btnOthers75 = content.findViewById(R.id.btn_blur_others_75);
         MaterialButton btnOthers100 = content.findViewById(R.id.btn_blur_others_100);
 
-        dashboardLabel.setText(dashboardInitial + "%");
-        othersLabel.setText(othersInitial + "%");
+        dashboardLabel.setText(getString(R.string.percent_value, dashboardInitial));
+        othersLabel.setText(getString(R.string.percent_value, othersInitial));
         dashboardSeek.setProgress(dashboardInitial);
         othersSeek.setProgress(othersInitial);
 
         dashboardSeek.setOnSeekBarChangeListener(new android.widget.SeekBar.OnSeekBarChangeListener() {
             @Override
             public void onProgressChanged(android.widget.SeekBar seekBar, int progress, boolean fromUser) {
-                dashboardLabel.setText(progress + "%");
+                dashboardLabel.setText(getString(R.string.percent_value, progress));
             }
 
             @Override
@@ -1104,7 +1108,7 @@ public class SettingsFragment extends Fragment {
         othersSeek.setOnSeekBarChangeListener(new android.widget.SeekBar.OnSeekBarChangeListener() {
             @Override
             public void onProgressChanged(android.widget.SeekBar seekBar, int progress, boolean fromUser) {
-                othersLabel.setText(progress + "%");
+                othersLabel.setText(getString(R.string.percent_value, progress));
             }
 
             @Override
@@ -1229,9 +1233,11 @@ public class SettingsFragment extends Fragment {
             btnToggle.setText(enabled ? R.string.app_lock_tools_toggle_on : R.string.app_lock_tools_toggle_off);
             String currentLabel = getAppLockTimeoutLabel(viewModel.getRepository().getAppLockTimeoutMs());
             btnDelay.setText(getString(R.string.settings_app_lock_timeout_format, currentLabel));
-            tvDelayHint.setText(getString(R.string.app_lock_tools_delay_hint)
-                    + "\n"
-                    + getString(R.string.app_lock_tools_delay_current, currentLabel));
+            tvDelayHint.setText(getString(
+                    R.string.app_lock_tools_delay_hint_with_current,
+                    getString(R.string.app_lock_tools_delay_hint),
+                    getString(R.string.app_lock_tools_delay_current, currentLabel)
+            ));
         };
         refresh.run();
 
@@ -1696,7 +1702,7 @@ public class SettingsFragment extends Fragment {
             } else {
                 downloadProgressBar.setIndeterminate(false);
                 downloadProgressBar.setProgress(percent);
-                downloadProgressText.setText(percent + "%");
+                downloadProgressText.setText(getString(R.string.percent_value, percent));
             }
         });
     }
@@ -2159,13 +2165,10 @@ public class SettingsFragment extends Fragment {
                 Toast.makeText(requireContext(), R.string.backup_read_failed_toast, Toast.LENGTH_SHORT).show();
                 return;
             }
-            java.io.ByteArrayOutputStream buffer = new java.io.ByteArrayOutputStream();
-            byte[] bufferData = new byte[4096];
-            int nRead;
-            while ((nRead = inputStream.read(bufferData, 0, bufferData.length)) != -1) {
-                buffer.write(bufferData, 0, nRead);
+            String json = null;
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
+                json = new String(inputStream.readAllBytes(), StandardCharsets.UTF_8);
             }
-            String json = new String(buffer.toByteArray(), StandardCharsets.UTF_8);
             BackupData backupData = new Gson().fromJson(json, BackupData.class);
             if (backupData == null) {
                 Toast.makeText(requireContext(), R.string.backup_invalid_toast, Toast.LENGTH_SHORT).show();
@@ -2900,13 +2903,13 @@ public class SettingsFragment extends Fragment {
     private void openAppNotificationSettings() {
         Intent intent = new Intent(Settings.ACTION_APP_NOTIFICATION_SETTINGS);
         intent.putExtra(Settings.EXTRA_APP_PACKAGE, requireContext().getPackageName());
-        if (intent.resolveActivity(requireContext().getPackageManager()) != null) {
+        try {
             startActivity(intent);
-            return;
+        } catch (ActivityNotFoundException e) {
+            Intent appDetails = new Intent(Settings.ACTION_APPLICATION_DETAILS_SETTINGS);
+            appDetails.setData(Uri.fromParts("package", requireContext().getPackageName(), null));
+            startActivity(appDetails);
         }
-        Intent appDetails = new Intent(Settings.ACTION_APPLICATION_DETAILS_SETTINGS);
-        appDetails.setData(Uri.fromParts("package", requireContext().getPackageName(), null));
-        startActivity(appDetails);
     }
 
     private void sendTestNotification() {
@@ -2923,14 +2926,12 @@ public class SettingsFragment extends Fragment {
             return;
         }
 
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-            NotificationManager manager = requireContext().getSystemService(NotificationManager.class);
-            if (manager != null) {
-                NotificationChannel channel = manager.getNotificationChannel("reminder_channel");
-                if (channel != null && channel.getImportance() == NotificationManager.IMPORTANCE_NONE) {
-                    showToast(R.string.notification_test_blocked_system);
-                    return;
-                }
+        NotificationManager manager = requireContext().getSystemService(NotificationManager.class);
+        if (manager != null) {
+            NotificationChannel channel = manager.getNotificationChannel("reminder_channel");
+            if (channel != null && channel.getImportance() == NotificationManager.IMPORTANCE_NONE) {
+                showToast(R.string.notification_test_blocked_system);
+                return;
             }
         }
 

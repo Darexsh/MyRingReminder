@@ -23,6 +23,7 @@
     <string name="app_lock_overlay_title">App Locked</string>
     <string name="app_lock_overlay_unlock">Unlock app</string>
     <string name="app_lock_tools_delay_current">Current delay: %1$s</string>
+    <string name="app_lock_tools_delay_hint_with_current">%1$s\n%2$s</string>
     <string name="app_lock_tools_delay_hint">Set when the app locks automatically after switching apps.</string>
     <string name="app_lock_tools_title">App lock</string>
     <string name="app_lock_tools_toggle_hint">Enable or disable app protection.</string>
@@ -185,8 +186,9 @@
     <string name="notification_test_message">If you can see this, notifications work.</string>
     <string name="notification_test_sent">Test notification sent.</string>
     <string name="notification_test_title">Veri Aristo test</string>
-    <string name="notification_times_button_label">Reminders:\n%1$dh before removal, %2$dh before insertion</string>
+    <string name="notification_times_button_label">Reminders:\n%1$d h before removal, %2$d h before insertion</string>
     <string name="notification_times_button_unknown">Reminders:\nunknown</string>
+    <string name="percent_value">%1$d%%</string>
     <string name="notifications_channel_description">Notifications for ring cycles</string>
     <string name="notifications_channel_name">Reminders</string>
 
@@ -398,6 +400,16 @@
     <string name="update_later">Later</string>
     <string name="update_latest_toast">You are on the latest version.</string>
     <string name="update_no_apk_toast">No APK found in the latest release.</string>
+    <string name="update_startup_title">Updates</string>
+    <string name="update_startup_checking">Checking…</string>
+    <string name="update_startup_latest">App up to date</string>
+    <string name="update_startup_failed">Error</string>
+    <string name="update_startup_available">Update: %1$s</string>
+    <string name="update_hero_version_format">v%1$s (%2$d)</string>
+    <string name="update_hero_details_title">Version</string>
+    <string name="update_hero_details_current">Current: %1$s</string>
+    <string name="update_hero_details_latest">New: %1$s</string>
+    <string name="update_hero_details_changelog">Changelog</string>
 
     <!-- Dialogs -->
     <string name="dialog_cancel">Cancel</string>

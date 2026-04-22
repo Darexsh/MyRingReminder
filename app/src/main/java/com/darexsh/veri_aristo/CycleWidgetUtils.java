@@ -242,7 +242,7 @@ public final class CycleWidgetUtils {
             guard++;
         }
 
-        Calendar nextEvent = null;
+        Calendar nextEvent;
         if (now.before(removalDate)) {
             nextEvent = removalDate;
         } else if (now.before(reinsertionDate)) {
@@ -258,7 +258,7 @@ public final class CycleWidgetUtils {
         Calendar nextMidnight = startOfDay(now);
         nextMidnight.add(Calendar.DAY_OF_MONTH, 1);
 
-        long nextEventMillis = nextEvent != null ? nextEvent.getTimeInMillis() : Long.MAX_VALUE;
+        long nextEventMillis = nextEvent.getTimeInMillis();
         long nextMidnightMillis = nextMidnight.getTimeInMillis();
         long nextAt = Math.min(nextEventMillis, nextMidnightMillis);
 

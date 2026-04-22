@@ -185,7 +185,7 @@
     <string name="notification_test_message">Если вы видите это сообщение, уведомления работают.</string>
     <string name="notification_test_sent">Тестовое уведомление отправлено.</string>
     <string name="notification_test_title">Veri Aristo тест</string>
-    <string name="notification_times_button_label">Напоминания:\n%1$дч до извлечения, %2$дч до вставки</string>
+    <string name="notification_times_button_label">Напоминания:\nза %1$d ч до извлечения, за %2$d ч до вставки</string>
     <string name="notification_times_button_unknown">Напоминания:\nнеизвестно</string>
     <string name="notifications_channel_description">Уведомления о циклах кольца</string>
     <string name="notifications_channel_name">Напоминания</string>
@@ -398,6 +398,16 @@
     <string name="update_later">Позже</string>
     <string name="update_latest_toast">У вас установлена последняя версия.</string>
     <string name="update_no_apk_toast">APK-файл в последнем релизе не найден.</string>
+    <string name="update_startup_title">Обновления</string>
+    <string name="update_startup_checking">Поиск…</string>
+    <string name="update_startup_latest">Обновлено</string>
+    <string name="update_startup_failed">Ошибка</string>
+    <string name="update_startup_available">Update: %1$s</string>
+    <string name="update_hero_version_format">v%1$s (%2$d)</string>
+    <string name="update_hero_details_title">Версия</string>
+    <string name="update_hero_details_current">Тек.: %1$s</string>
+    <string name="update_hero_details_latest">Нов.: %1$s</string>
+    <string name="update_hero_details_changelog">Список</string>
 
     <!-- Dialogs -->
     <string name="dialog_cancel">Отмена</string>

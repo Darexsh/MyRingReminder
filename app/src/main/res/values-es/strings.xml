@@ -185,7 +185,7 @@
     <string name="notification_test_message">Si puedes ver esto, las notificaciones funcionan.</string>
     <string name="notification_test_sent">Notificación de prueba enviada.</string>
     <string name="notification_test_title">Prueba de Veri Aristo</string>
-    <string name="notification_times_button_label">Recordatorios:\n%1$ horas antes de la extracción, %2$ horas antes de la inserción</string>
+    <string name="notification_times_button_label">Recordatorios:\n%1$d horas antes de la extracción, %2$d horas antes de la inserción</string>
     <string name="notification_times_button_unknown">Recordatorios:\ndesconocido</string>
     <string name="notifications_channel_description">Notificaciones para ciclos de anillos</string>
     <string name="notifications_channel_name">Recordatorios</string>
@@ -398,6 +398,16 @@
     <string name="update_later">Más tarde</string>
     <string name="update_latest_toast">Ya tienes la última versión.</string>
     <string name="update_no_apk_toast">No se ha encontrado ningún APK en la última versión.</string>
+    <string name="update_startup_title">Updates</string>
+    <string name="update_startup_checking">Buscando…</string>
+    <string name="update_startup_latest">App al día</string>
+    <string name="update_startup_failed">Error</string>
+    <string name="update_startup_available">Update: %1$s</string>
+    <string name="update_hero_version_format">v%1$s (%2$d)</string>
+    <string name="update_hero_details_title">Versión</string>
+    <string name="update_hero_details_current">Actual: %1$s</string>
+    <string name="update_hero_details_latest">Nueva: %1$s</string>
+    <string name="update_hero_details_changelog">Novedades</string>
 
     <!-- Dialogs -->
     <string name="dialog_cancel">Cancelar</string>

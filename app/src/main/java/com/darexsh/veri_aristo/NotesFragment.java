@@ -43,7 +43,7 @@ public class NotesFragment extends Fragment {
     private final Handler autoSaveHandler = new Handler(Looper.getMainLooper());
     private Runnable autoSaveRunnable;
     private boolean isProgrammaticNoteUpdate = false;
-    private static final Pattern DATE_HEADER_LINE_PATTERN = Pattern.compile("(?m)^(?:\\d{2}\\.\\d{2}\\.\\d{4}|[\\p{L}]+,\\s\\d{2}\\.\\d{2}\\.\\d{4})$");
+    private static final Pattern DATE_HEADER_LINE_PATTERN = Pattern.compile("(?m)^(?:\\d{2}\\.\\d{2}\\.\\d{4}|\\p{L}+,\\s\\d{2}\\.\\d{2}\\.\\d{4})$");
 
     private static final String PREF_NAME = "notes_prefs";
     private static final String NOTES_KEY = "user_notes";
@@ -141,7 +141,7 @@ public class NotesFragment extends Fragment {
     public void onResume() {
         super.onResume();
         updateNoteDate();
-        applyDailyDateHeaderIfNeeded(true);
+        applyDailyDateHeaderIfNeeded();
         applyDateHeaderStyling(editTextNotes.getText());
     }
 
@@ -208,7 +208,7 @@ public class NotesFragment extends Fragment {
         tvNoteDate.setText(format.format(new Date()));
     }
 
-    private void applyDailyDateHeaderIfNeeded(boolean persistChanges) {
+    private void applyDailyDateHeaderIfNeeded() {
         String current = editTextNotes.getText().toString();
         String updated = ensureCurrentDateHeader(current);
         if (updated.equals(current)) {
@@ -224,9 +224,7 @@ public class NotesFragment extends Fragment {
 
         updateCharCount(updated.length());
         applyDateHeaderStyling(editTextNotes.getText());
-        if (persistChanges) {
-            saveNotes(false);
-        }
+        saveNotes(false);
     }
 
     private String ensureCurrentDateHeader(String noteText) {

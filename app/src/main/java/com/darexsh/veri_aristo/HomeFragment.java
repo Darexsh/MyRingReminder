@@ -1,12 +1,14 @@
 package com.darexsh.veri_aristo;
 
 import android.annotation.SuppressLint;
+import android.animation.ObjectAnimator;
 import android.app.AlarmManager;
 import android.app.AlertDialog;
 import android.app.PendingIntent;
 import android.content.Context;
 import android.content.Intent;
 import android.content.UriPermission;
+import android.content.pm.PackageInfo;
 import android.content.res.ColorStateList;
 import android.graphics.RenderEffect;
 import android.graphics.Shader;
@@ -20,6 +22,9 @@ import android.text.Html;
 import android.text.Spanned;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
+import androidx.dynamicanimation.animation.DynamicAnimation;
+import androidx.dynamicanimation.animation.SpringAnimation;
+import androidx.dynamicanimation.animation.SpringForce;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -29,15 +34,28 @@ import android.widget.Button;
 import androidx.annotation.Nullable;
 import android.widget.NumberPicker;
 import android.widget.TextView;
+import com.airbnb.lottie.LottieAnimationView;
+import com.airbnb.lottie.LottieDrawable;
 import com.google.android.material.button.MaterialButton;
+import com.google.gson.JsonArray;
+import com.google.gson.JsonElement;
+import com.google.gson.JsonObject;
+import com.google.gson.JsonParser;
+import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStream;
+import java.io.InputStreamReader;
+import java.net.HttpURLConnection;
+import java.net.URL;
+import java.nio.charset.StandardCharsets;
 import java.util.Calendar;
 import java.util.List;
+import java.util.Locale;
 import java.util.Objects;
 import android.util.Log;
+import android.view.animation.LinearInterpolator;
 
 // HomeFragment displays the current cycle status and allows users to manage their cycle settings
 public class HomeFragment extends Fragment {
@@ -54,9 +72,22 @@ public class HomeFragment extends Fragment {
     private float pulsePhase = 0f;
     private boolean pulseUp = true;
     private static final long SPECIAL_ACTIONS_AUTO_HIDE_MS = 7000L;
+    private static final long UPDATE_HERO_AUTO_HIDE_MS = 3000L;
+    private static final long UPDATE_HERO_MIN_CHECK_MS = 1000L;
+    private static final String RELEASES_URL = "https://api.github.com/repos/Darexsh/Veri_Aristo_App/releases";
+    // Temporary UI test switch: force "update available" state even when versions match.
+    private static final boolean FORCE_UPDATE_AVAILABLE_FOR_TEST = false;
     private final Handler uiHandler = new Handler(Looper.getMainLooper());
     @Nullable
     private Runnable specialActionsAutoHideRunnable;
+    @Nullable
+    private Runnable updateHeroAutoHideRunnable;
+    @Nullable
+    private ObjectAnimator updateOrbitAnimator;
+    @Nullable
+    private ReleaseInfo lastReleaseInfo;
+    @Nullable
+    private String currentVersionLabel;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -77,10 +108,18 @@ public class HomeFragment extends Fragment {
         final TextView btnSkipRingFreeInfo = view.findViewById(R.id.btn_skip_ring_free_info);
         final LinearLayout specialActionsPanel = view.findViewById(R.id.home_delay_row);
         final MaterialButton btnSpecialActionsToggle = view.findViewById(R.id.btn_special_actions_toggle);
+        final View updateHeroContainer = view.findViewById(R.id.update_hero_container);
+        final View updateHeroCard = view.findViewById(R.id.update_hero_card);
+        final TextView tvUpdateHeroTitle = view.findViewById(R.id.tv_update_hero_title);
+        final LottieAnimationView lavUpdateHero = view.findViewById(R.id.lav_update_hero_status);
+        final View updateHeroOrbitIcon = view.findViewById(R.id.update_hero_orbit_icon);
+        final TextView tvUpdateHeroStatus = view.findViewById(R.id.tv_update_hero_status);
         final boolean[] specialActionsExpanded = new boolean[]{false};
 
         SharedViewModelFactory factory = new SharedViewModelFactory(requireActivity().getApplication());
         viewModel = new ViewModelProvider(requireActivity(), factory).get(SharedViewModel.class);
+        currentVersionLabel = getCurrentVersionLabel();
+        applyUpdateHeroPillWidth(updateHeroContainer, updateHeroCard);
 
         viewModel.getButtonColor().observe(getViewLifecycleOwner(), color -> {
             if (color != null) {
@@ -188,7 +227,7 @@ public class HomeFragment extends Fragment {
         viewModel.getBackgroundImageUri().observe(getViewLifecycleOwner(), uri -> loadBackgroundImage.run());
         viewModel.getBackgroundDimPercent().observe(getViewLifecycleOwner(), percent -> {
             int safePercent = percent != null ? Math.max(0, Math.min(100, percent)) : 0;
-            if (safePercent <= 0) {
+            if (safePercent == 0) {
                 backgroundDimOverlay.setVisibility(View.GONE);
                 backgroundDimOverlay.setAlpha(0f);
                 return;
@@ -395,9 +434,480 @@ public class HomeFragment extends Fragment {
             showSkipRingFreeWeekDialog(viewModel);
             resetSpecialActionsAutoHide(specialActionsPanel, btnSpecialActionsToggle, specialActionsExpanded);
         });
+        updateHeroCard.setOnClickListener(v -> {
+            v.animate()
+                    .scaleX(0.98f)
+                    .scaleY(0.98f)
+                    .setDuration(70L)
+                    .withEndAction(() -> v.animate().scaleX(1f).scaleY(1f).setDuration(90L).start())
+                    .start();
+            showUpdateHeroDetailsDialog();
+        });
 
         updateUi.run();
+        maybeStartUpdateHeroCheck(
+                updateHeroContainer,
+                tvUpdateHeroTitle,
+                lavUpdateHero,
+                updateHeroOrbitIcon,
+                tvUpdateHeroStatus
+        );
         return view;
+    }
+
+    private void maybeStartUpdateHeroCheck(View container,
+                                           TextView titleBadge,
+                                           LottieAnimationView statusLottie,
+                                           View orbitIcon,
+                                           TextView statusText) {
+        if (!isAdded()) {
+            return;
+        }
+        if (requireActivity() instanceof MainActivity) {
+            MainActivity activity = (MainActivity) requireActivity();
+            if (!activity.consumeStartupUpdateCheckRequest()) {
+                container.setVisibility(View.GONE);
+                return;
+            }
+        }
+
+        showUpdateHero(container, titleBadge, statusLottie, orbitIcon, statusText);
+        new Thread(() -> {
+            try {
+                long startedAt = System.currentTimeMillis();
+                ReleaseInfo releaseInfo = fetchLatestReleaseInfo();
+                long elapsed = System.currentTimeMillis() - startedAt;
+                long waitRemaining = UPDATE_HERO_MIN_CHECK_MS - elapsed;
+                if (waitRemaining > 0L) {
+                    Thread.sleep(waitRemaining);
+                }
+                lastReleaseInfo = releaseInfo;
+                if (releaseInfo == null || releaseInfo.downloadUrl == null) {
+                    showUpdateHeroStatusAndHide(container, titleBadge, statusLottie, orbitIcon, statusText, R.string.update_startup_failed, "!");
+                    return;
+                }
+                String currentVersion = getCurrentVersionName();
+                int compare = FORCE_UPDATE_AVAILABLE_FOR_TEST
+                        ? -1
+                        : compareVersions(currentVersion, releaseInfo.versionName);
+                if (compare >= 0) {
+                    showUpdateHeroStatusAndHide(container, titleBadge, statusLottie, orbitIcon, statusText, R.string.update_startup_latest, "✓");
+                    return;
+                }
+                showUpdateHeroAvailablePersistent(container, titleBadge, statusLottie, orbitIcon, statusText);
+            } catch (Exception e) {
+                Log.e("HomeFragment", "Dashboard update check failed", e);
+                showUpdateHeroStatusAndHide(container, titleBadge, statusLottie, orbitIcon, statusText, R.string.update_startup_failed, "!");
+            }
+        }).start();
+    }
+
+    private void showUpdateHero(View container,
+                                TextView titleBadge,
+                                LottieAnimationView statusLottie,
+                                View orbitIcon,
+                                TextView statusText) {
+        if (!isAdded()) {
+            return;
+        }
+        container.setVisibility(View.VISIBLE);
+        container.setAlpha(0f);
+        container.setTranslationY(-100f);
+        container.animate().alpha(1f).setDuration(220L).start();
+        SpringAnimation springAnimation = new SpringAnimation(container, DynamicAnimation.TRANSLATION_Y, 0f);
+        SpringForce springForce = new SpringForce(0f);
+        springForce.setDampingRatio(0.8f);
+        springForce.setStiffness(400f);
+        springAnimation.setSpring(springForce);
+        springAnimation.start();
+        if (titleBadge != null && statusLottie != null) {
+            morphUpdateHeroBadge(titleBadge, statusLottie, orbitIcon, "↻", true);
+        }
+        if (statusText != null) {
+            setUpdateStatusText(statusText, getString(R.string.update_startup_checking));
+        }
+    }
+
+    private void showUpdateHeroStatusAndHide(View container,
+                                             TextView titleBadge,
+                                             LottieAnimationView statusLottie,
+                                             View orbitIcon,
+                                             TextView statusText,
+                                             int statusResId,
+                                             String badgeSymbol) {
+        if (!isAdded()) {
+            return;
+        }
+        requireActivity().runOnUiThread(() -> {
+            if (!isAdded()) {
+                return;
+            }
+            if (statusText != null) {
+                setUpdateStatusText(statusText, getString(statusResId));
+            }
+            if (titleBadge != null && statusLottie != null) {
+                morphUpdateHeroBadge(titleBadge, statusLottie, orbitIcon, badgeSymbol, false);
+            }
+            if (updateHeroAutoHideRunnable != null) {
+                uiHandler.removeCallbacks(updateHeroAutoHideRunnable);
+            }
+            updateHeroAutoHideRunnable = () -> hideUpdateHero(container);
+            uiHandler.postDelayed(updateHeroAutoHideRunnable, UPDATE_HERO_AUTO_HIDE_MS);
+        });
+    }
+
+    private void showUpdateHeroAvailablePersistent(View container,
+                                                   TextView titleBadge,
+                                                   LottieAnimationView statusLottie,
+                                                   View orbitIcon,
+                                                   TextView statusText) {
+        if (!isAdded()) {
+            return;
+        }
+        requireActivity().runOnUiThread(() -> {
+            if (!isAdded()) {
+                return;
+            }
+            if (statusText != null) {
+                setUpdateStatusText(statusText, getString(R.string.update_available_title));
+            }
+            if (titleBadge != null && statusLottie != null) {
+                morphUpdateHeroBadge(titleBadge, statusLottie, orbitIcon, "↑", false);
+            }
+            // Keep banner visible when an update is available.
+            if (updateHeroAutoHideRunnable != null) {
+                uiHandler.removeCallbacks(updateHeroAutoHideRunnable);
+                updateHeroAutoHideRunnable = null;
+            }
+            container.setAlpha(1f);
+            container.setTranslationY(0f);
+        });
+    }
+
+    private void hideUpdateHero(View container) {
+        if (!isAdded()) {
+            return;
+        }
+        container.animate()
+                .alpha(0f)
+                .translationY(-24f)
+                .setDuration(360L)
+                .withEndAction(() -> {
+                    container.setVisibility(View.GONE);
+                    container.setTranslationY(0f);
+                })
+                .start();
+    }
+
+    private void applyUpdateHeroPillWidth(@Nullable View container, @Nullable View card) {
+        if (container == null || card == null) {
+            return;
+        }
+        container.post(() -> {
+            if (!isAdded()) {
+                return;
+            }
+            int screenWidth = getResources().getDisplayMetrics().widthPixels;
+            int targetWidth = (int) (screenWidth * 0.55f);
+            ViewGroup.LayoutParams params = card.getLayoutParams();
+            if (params != null) {
+                params.width = targetWidth;
+                card.setLayoutParams(params);
+            }
+        });
+    }
+
+    private void morphUpdateHeroBadge(TextView badgeIcon,
+                                      LottieAnimationView statusLottie,
+                                      View orbitIcon,
+                                      String symbol,
+                                      boolean showSpinner) {
+        if (badgeIcon == null || statusLottie == null) {
+            return;
+        }
+        if (showSpinner) {
+            stopOrbitAnimation(orbitIcon);
+            if (orbitIcon != null) {
+                orbitIcon.setVisibility(View.GONE);
+            }
+            badgeIcon.setAlpha(0f);
+            statusLottie.setVisibility(View.VISIBLE);
+            statusLottie.setAlpha(1f);
+            statusLottie.setAnimation("lottie_update_checking.json");
+            statusLottie.setRepeatCount(LottieDrawable.INFINITE);
+            statusLottie.playAnimation();
+            badgeIcon.setText(symbol);
+            return;
+        }
+        statusLottie.cancelAnimation();
+        if ("↑".equals(symbol)) {
+            statusLottie.setVisibility(View.GONE);
+            statusLottie.setAlpha(1f);
+            badgeIcon.setAlpha(0f);
+            if (orbitIcon != null) {
+                orbitIcon.setVisibility(View.VISIBLE);
+                startOrbitAnimation(orbitIcon);
+            }
+            return;
+        }
+        stopOrbitAnimation(orbitIcon);
+        if (orbitIcon != null) {
+            orbitIcon.setVisibility(View.GONE);
+        }
+        boolean playDoneAnimation = "✓".equals(symbol);
+        if (playDoneAnimation) {
+            statusLottie.setAnimation("lottie_update_done.json");
+            statusLottie.setRepeatCount(0);
+            statusLottie.playAnimation();
+        }
+        statusLottie.animate()
+                .alpha(0f)
+                .setStartDelay(playDoneAnimation ? 260L : 60L)
+                .setDuration(playDoneAnimation ? 180L : 140L)
+                .withEndAction(() -> {
+                    statusLottie.cancelAnimation();
+                    statusLottie.setVisibility(View.GONE);
+                    statusLottie.setAlpha(1f);
+                })
+                .start();
+        badgeIcon.setText(symbol);
+        badgeIcon.setScaleX(0.85f);
+        badgeIcon.setScaleY(0.85f);
+        badgeIcon.animate()
+                .alpha(1f)
+                .scaleX(1f)
+                .scaleY(1f)
+                .setDuration(160L)
+                .start();
+    }
+
+    private void startOrbitAnimation(@Nullable View orbitIcon) {
+        if (orbitIcon == null) {
+            return;
+        }
+        stopOrbitAnimation(orbitIcon);
+        updateOrbitAnimator = ObjectAnimator.ofFloat(orbitIcon, View.ROTATION, 0f, 360f);
+        updateOrbitAnimator.setDuration(10000L);
+        updateOrbitAnimator.setRepeatCount(ObjectAnimator.INFINITE);
+        updateOrbitAnimator.setInterpolator(new LinearInterpolator());
+        updateOrbitAnimator.start();
+    }
+
+    private void stopOrbitAnimation(@Nullable View orbitIcon) {
+        if (updateOrbitAnimator != null) {
+            updateOrbitAnimator.cancel();
+            updateOrbitAnimator = null;
+        }
+        if (orbitIcon != null) {
+            orbitIcon.setRotation(0f);
+        }
+    }
+
+    private void setUpdateStatusText(TextView target, String newText) {
+        if (target == null) {
+            return;
+        }
+        target.animate()
+                .alpha(0f)
+                .setDuration(150L)
+                .withEndAction(() -> {
+                    target.setText(newText);
+                    target.animate().alpha(1f).setDuration(150L).start();
+                })
+                .start();
+    }
+
+    private void showUpdateHeroDetailsDialog() {
+        if (!isAdded()) {
+            return;
+        }
+        String current = currentVersionLabel != null ? currentVersionLabel : "—";
+        String latest = (lastReleaseInfo != null && lastReleaseInfo.versionName != null)
+                ? getString(R.string.update_hero_version_format, lastReleaseInfo.versionName, getCurrentVersionCode())
+                : "—";
+
+        StringBuilder body = new StringBuilder();
+        body.append(getString(R.string.update_hero_details_current, current));
+        body.append("\n");
+        body.append(getString(R.string.update_hero_details_latest, latest));
+
+        if (lastReleaseInfo != null && lastReleaseInfo.releaseNotes != null && !lastReleaseInfo.releaseNotes.trim().isEmpty()) {
+            body.append("\n\n");
+            body.append(getString(R.string.update_hero_details_changelog));
+            body.append("\n");
+            body.append(lastReleaseInfo.releaseNotes.trim());
+        }
+
+        AlertDialog.Builder builder = new AlertDialog.Builder(requireContext())
+                .setTitle(R.string.update_hero_details_title)
+                .setMessage(body.toString())
+                .setPositiveButton(R.string.dialog_ok, null);
+
+        if (lastReleaseInfo != null && lastReleaseInfo.downloadUrl != null && lastReleaseInfo.versionName != null) {
+            builder.setNegativeButton(R.string.update_install, (d, w) -> {
+                if (isAdded() && requireActivity() instanceof MainActivity) {
+                    ((MainActivity) requireActivity()).openUpdateBackupFlowFromHome();
+                }
+            });
+        }
+        AlertDialog dialog = builder.show();
+        applyDialogButtonColors(dialog);
+    }
+
+    private ReleaseInfo fetchLatestReleaseInfo() throws IOException {
+        HttpURLConnection connection = null;
+        try {
+            URL url = new URL(RELEASES_URL);
+            connection = (HttpURLConnection) url.openConnection();
+            connection.setConnectTimeout(10000);
+            connection.setReadTimeout(15000);
+            connection.setRequestProperty("Accept", "application/vnd.github+json");
+            connection.setRequestProperty("User-Agent", "Veri-Aristo-App");
+            int status = connection.getResponseCode();
+            if (status != HttpURLConnection.HTTP_OK) {
+                return null;
+            }
+            StringBuilder body = new StringBuilder();
+            try (BufferedReader reader = new BufferedReader(
+                    new InputStreamReader(connection.getInputStream(), StandardCharsets.UTF_8))) {
+                String line;
+                while ((line = reader.readLine()) != null) {
+                    body.append(line);
+                }
+            }
+
+            JsonArray releases = JsonParser.parseString(body.toString()).getAsJsonArray();
+            for (JsonElement element : releases) {
+                JsonObject release = element.getAsJsonObject();
+                boolean isDraft = release.get("draft").getAsBoolean();
+                boolean isPrerelease = release.get("prerelease").getAsBoolean();
+                if (isDraft || isPrerelease) {
+                    continue;
+                }
+                String tag = release.has("tag_name") && !release.get("tag_name").isJsonNull()
+                        ? release.get("tag_name").getAsString()
+                        : null;
+                String versionName = normalizeVersion(tag);
+                String releaseNotes = release.has("body") && !release.get("body").isJsonNull()
+                        ? release.get("body").getAsString()
+                        : null;
+                JsonArray assets = release.getAsJsonArray("assets");
+                String downloadUrl = findApkAssetUrl(assets);
+                return new ReleaseInfo(versionName, downloadUrl, releaseNotes);
+            }
+            return null;
+        } finally {
+            if (connection != null) {
+                connection.disconnect();
+            }
+        }
+    }
+
+    private String findApkAssetUrl(JsonArray assets) {
+        if (assets == null) {
+            return null;
+        }
+        for (JsonElement assetElement : assets) {
+            JsonObject asset = assetElement.getAsJsonObject();
+            String name = asset.has("name") && !asset.get("name").isJsonNull()
+                    ? asset.get("name").getAsString()
+                    : "";
+            if (name.toLowerCase(Locale.US).endsWith(".apk")) {
+                return asset.get("browser_download_url").getAsString();
+            }
+        }
+        return null;
+    }
+
+    private String getCurrentVersionName() {
+        if (!isAdded()) {
+            return null;
+        }
+        try {
+            return requireContext().getPackageManager().getPackageInfo(requireContext().getPackageName(), 0).versionName;
+        } catch (Exception e) {
+            return null;
+        }
+    }
+
+    @SuppressWarnings("deprecation")
+    private int getCurrentVersionCode() {
+        if (!isAdded()) {
+            return 0;
+        }
+        try {
+            PackageInfo info = requireContext().getPackageManager().getPackageInfo(requireContext().getPackageName(), 0);
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.P) {
+                return (int) info.getLongVersionCode();
+            }
+            return info.versionCode;
+        } catch (Exception e) {
+            return 0;
+        }
+    }
+
+    private String getCurrentVersionLabel() {
+        String currentName = getCurrentVersionName();
+        if (currentName == null || currentName.trim().isEmpty()) {
+            return null;
+        }
+        return getString(R.string.update_hero_version_format, currentName, getCurrentVersionCode());
+    }
+
+    private String normalizeVersion(String tag) {
+        if (tag == null) {
+            return null;
+        }
+        String trimmed = tag.trim();
+        if (trimmed.startsWith("v") || trimmed.startsWith("V")) {
+            return trimmed.substring(1);
+        }
+        return trimmed;
+    }
+
+    private int compareVersions(String current, String latest) {
+        if (latest == null) {
+            return 0;
+        }
+        int[] currentParts = parseVersionParts(current);
+        int[] latestParts = parseVersionParts(latest);
+        int max = Math.max(currentParts.length, latestParts.length);
+        for (int i = 0; i < max; i++) {
+            int c = i < currentParts.length ? currentParts[i] : 0;
+            int l = i < latestParts.length ? latestParts[i] : 0;
+            if (c != l) {
+                return Integer.compare(c, l);
+            }
+        }
+        return 0;
+    }
+
+    private int[] parseVersionParts(String version) {
+        if (version == null || version.isEmpty()) {
+            return new int[]{0};
+        }
+        String[] parts = version.split("\\.");
+        int[] result = new int[parts.length];
+        for (int i = 0; i < parts.length; i++) {
+            try {
+                result[i] = Integer.parseInt(parts[i].replaceAll("[^0-9]", ""));
+            } catch (NumberFormatException e) {
+                result[i] = 0;
+            }
+        }
+        return result;
+    }
+
+    private static class ReleaseInfo {
+        final String versionName;
+        final String downloadUrl;
+        final String releaseNotes;
+
+        ReleaseInfo(String versionName, String downloadUrl, String releaseNotes) {
+            this.versionName = versionName;
+            this.downloadUrl = downloadUrl;
+            this.releaseNotes = releaseNotes;
+        }
     }
 
     private void showDelayInfoDialog() {
@@ -479,6 +989,11 @@ public class HomeFragment extends Fragment {
             uiHandler.removeCallbacks(specialActionsAutoHideRunnable);
             specialActionsAutoHideRunnable = null;
         }
+        if (updateHeroAutoHideRunnable != null) {
+            uiHandler.removeCallbacks(updateHeroAutoHideRunnable);
+            updateHeroAutoHideRunnable = null;
+        }
+        stopOrbitAnimation(null);
         super.onDestroyView();
     }
 

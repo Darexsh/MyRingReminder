@@ -185,7 +185,7 @@
     <string name="notification_test_message">Jeśli to widzisz, powiadomienia działają.</string>
     <string name="notification_test_sent">Wysłano powiadomienie testowe.</string>
     <string name="notification_test_title">Veri Aristo test</string>
-    <string name="notification_times_button_label">Przypomnienia:\n%1$dg przed zdjęciem, %2$dg przed założeniem</string>
+    <string name="notification_times_button_label">Przypomnienia:\n%1$d godz. przed zdjęciem, %2$d godz. przed założeniem</string>
     <string name="notification_times_button_unknown">Przypomnienia:\nnieznane</string>
     <string name="notifications_channel_description">Powiadomienia dotyczące cykli pierścienia</string>
     <string name="notifications_channel_name">Przypomnienia</string>
@@ -398,6 +398,16 @@
     <string name="update_later">Później</string>
     <string name="update_latest_toast">Używasz najnowszej wersji.</string>
     <string name="update_no_apk_toast">Nie znaleziono pliku APK w najnowszym wydaniu.</string>
+    <string name="update_startup_title">Aktualizacje</string>
+    <string name="update_startup_checking">Sprawdzam…</string>
+    <string name="update_startup_latest">Aktualna</string>
+    <string name="update_startup_failed">Błąd</string>
+    <string name="update_startup_available">Update: %1$s</string>
+    <string name="update_hero_version_format">v%1$s (%2$d)</string>
+    <string name="update_hero_details_title">Wersja</string>
+    <string name="update_hero_details_current">Obecna: %1$s</string>
+    <string name="update_hero_details_latest">Nowa: %1$s</string>
+    <string name="update_hero_details_changelog">Zmiany</string>
 
     <!-- Dialogs -->
     <string name="dialog_cancel">Anuluj</string>

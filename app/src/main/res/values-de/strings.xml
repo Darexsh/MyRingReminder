@@ -24,6 +24,7 @@
     <string name="app_lock_overlay_unlock">App entsperren</string>
     <string name="app_lock_tools_delay_current">Aktuelle Verzögerung: %1$s</string>
     <string name="app_lock_tools_delay_hint">Lege fest, wann die App automatisch sperrt, nachdem du zu einer anderen App wechselst.</string>
+    <string name="app_lock_tools_delay_hint_with_current">%1$s\n%2$s</string>
     <string name="app_lock_tools_title">App-Sperre</string>
     <string name="app_lock_tools_toggle_hint">App-Schutz aktivieren oder deaktivieren.</string>
     <string name="app_lock_tools_toggle_off">App-Sperre: Aus</string>
@@ -185,8 +186,9 @@
     <string name="notification_test_message">Wenn du das siehst, funktionieren Benachrichtigungen.</string>
     <string name="notification_test_sent">Test-Benachrichtigung gesendet.</string>
     <string name="notification_test_title">Veri Aristo Test</string>
-    <string name="notification_times_button_label">Erinnerungen:\n%1$dh vor Entfernen, %2$dh vor Einsetzen</string>
+    <string name="notification_times_button_label">Erinnerungen:\n%1$d h vor Entfernen, %2$d h vor Einsetzen</string>
     <string name="notification_times_button_unknown">Erinnerungen:\nunbekannt</string>
+    <string name="percent_value">%1$d%%</string>
     <string name="notifications_channel_description">Benachrichtigungen für Verhütungsring-Zyklen</string>
     <string name="notifications_channel_name">Erinnerungen</string>
 
@@ -398,6 +400,16 @@
     <string name="update_later">Später</string>
     <string name="update_latest_toast">Du hast bereits die neueste Version.</string>
     <string name="update_no_apk_toast">Keine APK in der neuesten Version gefunden.</string>
+    <string name="update_startup_title">Updates</string>
+    <string name="update_startup_checking">Prüfe…</string>
+    <string name="update_startup_latest">App aktuell</string>
+    <string name="update_startup_failed">Fehler</string>
+    <string name="update_startup_available">Update: %1$s</string>
+    <string name="update_hero_version_format">v%1$s (%2$d)</string>
+    <string name="update_hero_details_title">Version</string>
+    <string name="update_hero_details_current">Aktuell: %1$s</string>
+    <string name="update_hero_details_latest">Neu: %1$s</string>
+    <string name="update_hero_details_changelog">Changelog</string>
 
     <!-- Dialogs -->
     <string name="dialog_cancel">Abbrechen</string>
