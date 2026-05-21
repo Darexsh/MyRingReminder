@@ -132,7 +132,7 @@ public class SettingsFragment extends Fragment {
     private String[] appLockTimeoutLabels;
     private int[] appLockTimeoutValues;
     private Drawable[] circleStylePreviews;
-    private static final String RELEASES_URL = "https://api.github.com/repos/Darexsh/Veri_Aristo_App/releases";
+    private static final String RELEASES_URL = "https://api.github.com/repos/Darexsh/MyRingReminder/releases";
     private File pendingApkFile;
     private AlertDialog downloadDialog;
     private ProgressBar downloadProgressBar;
@@ -2056,6 +2056,9 @@ public class SettingsFragment extends Fragment {
                 .setView(content)
                 .setPositiveButton(R.string.dialog_ok, null)
                 .show();
+        if (dialog.getWindow() != null) {
+            dialog.getWindow().setBackgroundDrawableResource(R.drawable.bg_app_info_dialog);
+        }
         applyDialogButtonColors(dialog);
     }
 

@@ -74,7 +74,7 @@ public class HomeFragment extends Fragment {
     private static final long SPECIAL_ACTIONS_AUTO_HIDE_MS = 7000L;
     private static final long UPDATE_HERO_AUTO_HIDE_MS = 3000L;
     private static final long UPDATE_HERO_MIN_CHECK_MS = 1000L;
-    private static final String RELEASES_URL = "https://api.github.com/repos/Darexsh/Veri_Aristo_App/releases";
+    private static final String RELEASES_URL = "https://api.github.com/repos/Darexsh/MyRingReminder/releases";
     // Temporary UI test switch: force "update available" state even when versions match.
     private static final boolean FORCE_UPDATE_AVAILABLE_FOR_TEST = false;
     private final Handler uiHandler = new Handler(Looper.getMainLooper());

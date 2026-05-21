@@ -97,7 +97,7 @@
                 app:iconPadding="0dp"
                 app:iconSize="20dp"
                 app:iconTint="@null"
-                app:strokeColor="?attr/colorOnBackground"
+                app:strokeColor="@color/app_info_secondary_action_stroke"
                 app:strokeWidth="1dp" />
 
             <com.google.android.material.button.MaterialButton
@@ -116,7 +116,7 @@
                 app:iconPadding="0dp"
                 app:iconSize="20dp"
                 app:iconTint="@null"
-                app:strokeColor="?attr/colorOnBackground"
+                app:strokeColor="@color/app_info_secondary_action_stroke"
                 app:strokeWidth="1dp" />
 
             <com.google.android.material.button.MaterialButton
@@ -135,7 +135,7 @@
                 app:iconPadding="0dp"
                 app:iconSize="20dp"
                 app:iconTint="@null"
-                app:strokeColor="?attr/colorOnBackground"
+                app:strokeColor="@color/app_info_secondary_action_stroke"
                 app:strokeWidth="1dp" />
 
             <com.google.android.material.button.MaterialButton
@@ -153,7 +153,7 @@
                 app:iconPadding="0dp"
                 app:iconSize="20dp"
                 app:iconTint="@null"
-                app:strokeColor="?attr/colorOnBackground"
+                app:strokeColor="@color/app_info_secondary_action_stroke"
                 app:strokeWidth="1dp" />
         </LinearLayout>
 
@@ -174,7 +174,7 @@
             app:iconPadding="8dp"
             app:iconSize="18dp"
             app:iconTint="?attr/colorOnBackground"
-            app:strokeColor="?attr/colorOutline"
+            app:strokeColor="@color/app_info_secondary_action_stroke"
             app:strokeWidth="1dp" />
 
         <com.google.android.material.button.MaterialButton

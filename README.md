@@ -110,7 +110,7 @@
     * Clone or download the repository from GitHub:
         
         ```bash
-        git clone https://github.com/Darexsh/Veri_Aristo_App.git
+        git clone https://github.com/Darexsh/MyRingReminder.git
         ```
         
     * Open the project in **Android Studio**.
