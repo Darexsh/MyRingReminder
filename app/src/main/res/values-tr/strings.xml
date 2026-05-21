@@ -1,14 +1,15 @@
 <resources>
     <!-- App -->
     <string name="app_info_actions_title">Eylemler</string>
-    <string name="app_info_description">Veri Aristo, kontraseptif halka döngülerini takip etmek için tasarlanmış bir Android uygulamasıdır. Halka takma, çıkarma ve halkasız günler için renk kodlu bir takvim, özelleştirilebilir hatırlatıcılar, notlar, widgetlar ve yedekleme/geri yükleme seçenekleri sunar. Uygulama, hoş geldin turu, döngü geçmişi ve döngüyü uzatma („halkayı daha uzun süre kullan“) rehberliği içerir. Varsayılan olarak karanlık modda çalışır, dikey yönde kalır ve arka plan resimleri ile renk ayarları gibi kişiselleştirmeleri destekler.\nTüm veriler yalnızca bu cihazda saklanır!</string>
+    <string name="app_info_description">MyRingReminder, kontraseptif halka döngülerini yönetmek ve takip etmek için bir Android uygulamasıdır. Uygulama; takma, çıkarma ve halkasız günler için renk kodlu bir takvim, özelleştirilebilir hatırlatıcılar, notlar, widget’lar ve yedekleme/geri yükleme özellikleri sunar. Ayrıca bir hoş geldin turu, döngü geçmişi ve döngüyü uzatma rehberi (“halkayı daha uzun süre kullan”) içerir. Arka plan görselleri ve renk ayarları gibi kişiselleştirme seçenekleri, uygulamayı bireysel olarak uyarlamayı sağlar.\n\nÖnemli not: Bu uygulama yalnızca kişisel organizasyon ve kontraseptif halka döngülerinin takibi için tasarlanmıştır. Tıbbi bir ürün değildir, tıbbi danışmanlığın yerine geçmez ve tıbbi değerlendirme veya teşhise dayanmaz. Kullanım veya sağlıkla ilgili sorularınız varsa tıbbi danışmanlık alın.\n\nTüm veriler yalnızca bu cihazda yerel olarak saklanır.</string>
     <string name="app_info_developer">Geliştirici: %1$s</string>
     <string name="app_info_developer_label">Geliştirici:</string>
     <string name="app_info_developer_name">Daniel Sichler tarafından Darexsh</string>
     <string name="app_info_email">E-posta: %1$s</string>
     <string name="app_info_github">GitHub: %1$s</string>
-    <string name="app_info_name">Veri Aristo Halka Hatırlatıcı</string>
-    <string name="app_info_open_coffee">Bana bir kahve ısmarla</string>
+    <string name="app_info_name">MyRingReminder</string>
+    <string name="app_info_open_coffee">Geliştirmeyi destekle</string>
+    <string name="app_info_open_privacy">Gizlilik Politikası</string>
     <string name="app_info_open_email">E-posta yaz</string>
     <string name="app_info_open_github">Sosyal medyayı aç</string>
     <string name="app_info_open_github_profile">GitHub profili</string>
@@ -18,17 +19,18 @@
     <string name="app_info_version_label">Sürüm</string>
     <string name="app_lock_auth_required">Uygulamayı açmak için kimlik doğrulaması gerekiyor.</string>
     <string name="app_lock_auth_subtitle">Biyometrik doğrulamayı veya cihaz PIN\'ini kullanın</string>
-    <string name="app_lock_auth_title">Veri Aristo\'nun Kilidini Aç</string>
+    <string name="app_lock_auth_title">MyRingReminder\'nun Kilidini Aç</string>
     <string name="app_lock_overlay_subtitle">Devam etmek için kilidi açın</string>
     <string name="app_lock_overlay_title">Uygulama Kilitlendi</string>
     <string name="app_lock_overlay_unlock">Uygulama kilidini aç</string>
     <string name="app_lock_tools_delay_current">Mevcut gecikme: %1$s</string>
+    <string name="app_lock_tools_delay_hint_with_current">%1$s\n%2$s</string>
     <string name="app_lock_tools_delay_hint">Uygulama değiştirildikten sonra uygulamanın ne zaman otomatik olarak kilitleneceğini ayarlayın.</string>
     <string name="app_lock_tools_title">Uygulama kilidi</string>
     <string name="app_lock_tools_toggle_hint">Uygulama korumasını etkinleştirin veya devre dışı bırakın.</string>
     <string name="app_lock_tools_toggle_off">Uygulama kilidi: Kapalı</string>
     <string name="app_lock_tools_toggle_on">Uygulama kilidi: Açık</string>
-    <string name="app_name">Veri Aristo</string>
+    <string name="app_name">MyRingReminder</string>
 
     <!-- Section Headers -->
     <string name="section_advanced">Gelişmiş</string>
@@ -175,6 +177,7 @@
     <string name="notification_permission_button_label">Bildirim izni: %1$s</string>
     <string name="notification_permission_denied">Bildirim izni reddedildi.</string>
     <string name="notification_permission_granted">Bildirim izni verildi.</string>
+    <string name="percent_value">%1$d%%</string>
     <string name="notification_permission_required_message">Lütfen bu uygulama için bildirimlere izin verin, aksi takdirde hatırlatıcılar ve test bildirimleri gösterilemez.</string>
     <string name="notification_permission_required_title">Bildirim izni gerekli</string>
     <string name="notification_permission_status_allowed">izin verildi</string>
@@ -184,7 +187,7 @@
     <string name="notification_test_blocked_system">Sistem ayarlarında bu uygulama için bildirimler devre dışı bırakılmış.</string>
     <string name="notification_test_message">Bunu görebiliyorsanız, bildirimler çalışıyor demektir.</string>
     <string name="notification_test_sent">Test bildirimi gönderildi.</string>
-    <string name="notification_test_title">Veri Aristo testi</string>
+    <string name="notification_test_title">MyRingReminder testi</string>
     <string name="notification_times_button_label">Hatırlatıcılar:\nçıkarmadan %1$d sa önce, yerleştirmeden %2$d sa önce</string>
     <string name="notification_times_button_unknown">Hatırlatıcılar:\nbilinmiyor</string>
     <string name="notifications_channel_description">Halka döngüleri için bildirimler</string>
@@ -497,7 +500,7 @@
     <string name="tour_body_settings_reset">Tüm verileri silin ve uygulamayı sıfırlayın.</string>
     <string name="tour_body_settings_update">Yeni uygulama sürümlerini kontrol edin ve yükleyin.</string>
     <string name="tour_complete_done">Tamam</string>
-    <string name="tour_complete_message">Turu tamamladınız. Veri Aristo\'nun tadını çıkarın!\nTura tekrar ihtiyaç duyarsanız, Gelişmiş ayarlar altından başlatabilirsiniz.</string>
+    <string name="tour_complete_message">Turu tamamladınız. MyRingReminder\'nun tadını çıkarın!\nTura tekrar ihtiyaç duyarsanız, Gelişmiş ayarlar altından başlatabilirsiniz.</string>
     <string name="tour_complete_subtitle">Tur tamamlandı</string>
     <string name="tour_complete_title">Her şey hazır! 🎉</string>
     <string name="tour_finish">Bitir</string>
@@ -544,6 +547,6 @@
     <string name="welcome_privacy_note">Verileriniz yalnızca bu cihazda saklanır. Tüm ayarlar bittiğinde yedek oluşturmayı unutmayın 😊</string>
     <string name="welcome_skip_tour">Şimdi değil</string>
     <string name="welcome_start_tour">Turu başlat</string>
-    <string name="welcome_subtitle">Veri Aristo Halka Hatırlatıcı</string>
+    <string name="welcome_subtitle">MyRingReminder Halka Hatırlatıcı</string>
     <string name="welcome_title">Hoş Geldiniz 👋</string>
 </resources>

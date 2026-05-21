@@ -1,14 +1,15 @@
 <resources>
     <!-- App -->
     <string name="app_info_actions_title">Azioni</string>
-    <string name="app_info_description">Veri Aristo è un\'app Android per monitorare i cicli dell\'anello contraccettivo. Offre un calendario a colori per l\'inserimento, la rimozione e i giorni senza anello, promemoria personalizzabili, note, widget e backup/ripristino. L\'app include un tour di benvenuto, la cronologia dei cicli e indicazioni per prolungare un ciclo (“indossare l\'anello più a lungo”). Funziona in modalità scura per impostazione predefinita, mantiene l\'orientamento verticale e supporta la personalizzazione come immagini di sfondo e colori.\nTutti i dati rimangono memorizzati solo su questo dispositivo!</string>
+    <string name="app_info_description">MyRingReminder è un’app Android per la gestione e il monitoraggio dei cicli dell’anello contraccettivo. L’app offre un calendario con codifica a colori per i giorni di inserimento, rimozione e pausa senza anello, promemoria personalizzabili, note, widget e funzioni di backup/ripristino. Include inoltre un tour di benvenuto, la cronologia dei cicli e una guida per prolungare un ciclo (“indossare l’anello più a lungo”). Opzioni di personalizzazione come immagini di sfondo e impostazioni colore consentono un adattamento individuale.\n\nAvviso importante: questa app è destinata esclusivamente all’organizzazione personale e al monitoraggio dei cicli dell’anello contraccettivo. Non è un prodotto medico, non sostituisce il parere medico e non si basa su valutazioni o diagnosi mediche. In caso di dubbi sull’uso o di problemi di salute, consultare un medico.\n\nTutti i dati sono archiviati esclusivamente in locale su questo dispositivo.</string>
     <string name="app_info_developer">Sviluppatore: %1$s</string>
     <string name="app_info_developer_label">Sviluppatore:</string>
     <string name="app_info_developer_name">Darexsh di Daniel Sichler</string>
     <string name="app_info_email">Email: %1$s</string>
     <string name="app_info_github">GitHub: %1$s</string>
-    <string name="app_info_name">Veri Aristo Ring Reminder</string>
-    <string name="app_info_open_coffee">Offrimi un caffè</string>
+    <string name="app_info_name">MyRingReminder</string>
+    <string name="app_info_open_coffee">Supporta lo sviluppo</string>
+    <string name="app_info_open_privacy">Informativa sulla privacy</string>
     <string name="app_info_open_email">Scrivi email</string>
     <string name="app_info_open_github">Apri social media</string>
     <string name="app_info_open_github_profile">Profilo GitHub</string>
@@ -18,17 +19,18 @@
     <string name="app_info_version_label">Versione</string>
     <string name="app_lock_auth_required">Autenticazione richiesta per aprire l\'app.</string>
     <string name="app_lock_auth_subtitle">Usa l\'autenticazione biometrica o il PIN del dispositivo</string>
-    <string name="app_lock_auth_title">Sblocca Veri Aristo</string>
+    <string name="app_lock_auth_title">Sblocca MyRingReminder</string>
     <string name="app_lock_overlay_subtitle">Sblocca per continuare</string>
     <string name="app_lock_overlay_title">App bloccata</string>
     <string name="app_lock_overlay_unlock">Sblocca app</string>
     <string name="app_lock_tools_delay_current">Ritardo attuale: %1$s</string>
+    <string name="app_lock_tools_delay_hint_with_current">%1$s\n%2$s</string>
     <string name="app_lock_tools_delay_hint">Imposta quando l\'app si blocca automaticamente dopo il cambio di app.</string>
     <string name="app_lock_tools_title">Blocco app</string>
     <string name="app_lock_tools_toggle_hint">Attiva o disattiva la protezione dell\'app.</string>
     <string name="app_lock_tools_toggle_off">Blocco app: Off</string>
     <string name="app_lock_tools_toggle_on">Blocco app: On</string>
-    <string name="app_name">Veri Aristo</string>
+    <string name="app_name">MyRingReminder</string>
 
     <!-- Section Headers -->
     <string name="section_advanced">Avanzate</string>
@@ -175,6 +177,7 @@
     <string name="notification_permission_button_label">Permesso notifiche: %1$s</string>
     <string name="notification_permission_denied">Permesso notifiche negato.</string>
     <string name="notification_permission_granted">Permesso notifiche concesso.</string>
+    <string name="percent_value">%1$d%%</string>
     <string name="notification_permission_required_message">Si prega di consentire le notifiche per questa app, altrimenti i promemoria e le notifiche di prova non potranno essere mostrati.</string>
     <string name="notification_permission_required_title">Permesso notifiche richiesto</string>
     <string name="notification_permission_status_allowed">consentito</string>
@@ -184,7 +187,7 @@
     <string name="notification_test_blocked_system">Le notifiche sono disabilitate per questa app nelle impostazioni di sistema.</string>
     <string name="notification_test_message">Se riesci a vedere questo, le notifiche funzionano.</string>
     <string name="notification_test_sent">Notifica di prova inviata.</string>
-    <string name="notification_test_title">Veri Aristo test</string>
+    <string name="notification_test_title">MyRingReminder test</string>
     <string name="notification_times_button_label">Promemoria:\n%1$d h prima della rimozione, %2$d h prima dell\'inserimento</string>
     <string name="notification_times_button_unknown">Promemoria:\nsconosciuto</string>
     <string name="notifications_channel_description">Notifiche per i cicli dell\'anello</string>
@@ -497,7 +500,7 @@
     <string name="tour_body_settings_reset">Elimina tutti i dati e ripristina l\'app.</string>
     <string name="tour_body_settings_update">Controlla nuove versioni dell\'app e installale.</string>
     <string name="tour_complete_done">Fatto</string>
-    <string name="tour_complete_message">Hai completato il tour. Divertiti con Veri Aristo!\nSe ne hai bisogno, puoi riavviarlo nelle Impostazioni avanzate.</string>
+    <string name="tour_complete_message">Hai completato il tour. Divertiti con MyRingReminder!\nSe ne hai bisogno, puoi riavviarlo nelle Impostazioni avanzate.</string>
     <string name="tour_complete_subtitle">Tour completato</string>
     <string name="tour_complete_title">Tutto pronto! 🎉</string>
     <string name="tour_finish">Fine</string>
@@ -544,6 +547,6 @@
     <string name="welcome_privacy_note">I tuoi dati sono memorizzati solo su questo dispositivo. Assicurati di creare un backup una volta impostati tutti i dati 😊</string>
     <string name="welcome_skip_tour">Non ora</string>
     <string name="welcome_start_tour">Inizia tour</string>
-    <string name="welcome_subtitle">Promemoria anello Veri Aristo</string>
+    <string name="welcome_subtitle">Promemoria anello MyRingReminder</string>
     <string name="welcome_title">Benvenuto 👋</string>
 </resources>

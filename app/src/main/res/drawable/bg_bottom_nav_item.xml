@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<selector xmlns:android="http://schemas.android.com/apk/res/android">
+    <item android:state_checked="true">
+        <layer-list>
+            <item
+                android:gravity="top|center_horizontal"
+                android:top="4dp"
+                android:width="58dp"
+                android:height="32dp">
+                <shape android:shape="rectangle">
+                    <corners android:radius="999dp" />
+                    <solid android:color="#6CA6E3B3" />
+                </shape>
+            </item>
+        </layer-list>
+    </item>
+    <item>
+        <color android:color="@android:color/transparent" />
+    </item>
+</selector>

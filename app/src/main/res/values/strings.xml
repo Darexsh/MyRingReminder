@@ -1,14 +1,15 @@
 <resources>
     <!-- App -->
     <string name="app_info_actions_title">Actions</string>
-    <string name="app_info_description">Veri Aristo is an Android app for tracking contraceptive ring cycles. It offers a color-coded calendar for insertion, removal, and ring-free days, customizable reminders, notes, widgets, and backup/restore. The app includes a welcome tour, cycle history, and guidance for extending a cycle (“wear ring longer”). It runs in dark mode by default, stays in portrait orientation, and supports personalization like background images and color settings.\nAll data remains stored only on this device!</string>
+    <string name="app_info_description">MyRingReminder is an Android app for managing and tracking contraceptive ring cycles. The app provides a color-coded calendar for insertion, removal, and ring-free days, customizable reminders, notes, widgets, and backup/restore features. It also includes a welcome tour, cycle history, and guidance for extending a cycle (“wear ring longer”). Personalization options such as background images and color settings allow individual customization.\n\nImportant note: This app is intended solely for personal organization and tracking of contraceptive ring cycles. It is not a medical product, does not replace medical advice, and is not based on medical evaluation or diagnosis. If you have questions about usage or health concerns, please seek medical advice.\n\nAll data is stored locally on this device only.</string>
     <string name="app_info_developer">Developer: %1$s</string>
     <string name="app_info_developer_label">Developer:</string>
     <string name="app_info_developer_name">Darexsh by Daniel Sichler</string>
     <string name="app_info_email">Email: %1$s</string>
     <string name="app_info_github">GitHub: %1$s</string>
-    <string name="app_info_name">Veri Aristo Ring Reminder</string>
-    <string name="app_info_open_coffee">Buy me a coffee</string>
+    <string name="app_info_name">MyRingReminder</string>
+    <string name="app_info_open_coffee">Entwicklung unterstützen</string>
+    <string name="app_info_open_privacy">Privacy Policy</string>
     <string name="app_info_open_email">Write email</string>
     <string name="app_info_open_github">Open social media</string>
     <string name="app_info_open_github_profile">GitHub profile</string>
@@ -18,7 +19,7 @@
     <string name="app_info_version_label">Version</string>
     <string name="app_lock_auth_required">Authentication required to open the app.</string>
     <string name="app_lock_auth_subtitle">Use biometric authentication or device PIN</string>
-    <string name="app_lock_auth_title">Unlock Veri Aristo</string>
+    <string name="app_lock_auth_title">Unlock MyRingReminder</string>
     <string name="app_lock_overlay_subtitle">Unlock to continue</string>
     <string name="app_lock_overlay_title">App Locked</string>
     <string name="app_lock_overlay_unlock">Unlock app</string>
@@ -29,7 +30,7 @@
     <string name="app_lock_tools_toggle_hint">Enable or disable app protection.</string>
     <string name="app_lock_tools_toggle_off">App lock: Off</string>
     <string name="app_lock_tools_toggle_on">App lock: On</string>
-    <string name="app_name">Veri Aristo</string>
+    <string name="app_name">MyRingReminder</string>
 
     <!-- Section Headers -->
     <string name="section_advanced">Advanced</string>
@@ -185,7 +186,7 @@
     <string name="notification_test_blocked_system">Notifications are disabled for this app in system settings.</string>
     <string name="notification_test_message">If you can see this, notifications work.</string>
     <string name="notification_test_sent">Test notification sent.</string>
-    <string name="notification_test_title">Veri Aristo test</string>
+    <string name="notification_test_title">MyRingReminder test</string>
     <string name="notification_times_button_label">Reminders:\n%1$d h before removal, %2$d h before insertion</string>
     <string name="notification_times_button_unknown">Reminders:\nunknown</string>
     <string name="percent_value">%1$d%%</string>
@@ -499,7 +500,7 @@
     <string name="tour_body_settings_reset">Delete all saved data and reset the app.</string>
     <string name="tour_body_settings_update">Check for new app versions and install them.</string>
     <string name="tour_complete_done">Done</string>
-    <string name="tour_complete_message">You have completed the tour. Enjoy using Veri Aristo!\nIf you need the tour again, you can restart it in Settings under the advanced section.</string>
+    <string name="tour_complete_message">You have completed the tour. Enjoy using MyRingReminder!\nIf you need the tour again, you can restart it in Settings under the advanced section.</string>
     <string name="tour_complete_subtitle">Tour completed</string>
     <string name="tour_complete_title">All set! 🎉</string>
     <string name="tour_finish">Finish</string>
@@ -546,6 +547,6 @@
     <string name="welcome_privacy_note">Your data is stored only on this device. Make sure to create a backup once all data and settings are set 😊</string>
     <string name="welcome_skip_tour">Not now</string>
     <string name="welcome_start_tour">Start tour</string>
-    <string name="welcome_subtitle">Veri Aristo Ring Reminder</string>
+    <string name="welcome_subtitle">MyRingReminder Ring Reminder</string>
     <string name="welcome_title">Welcome 👋</string>
 </resources>

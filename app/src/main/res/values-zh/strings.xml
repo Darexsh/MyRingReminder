@@ -1,14 +1,15 @@
 <resources>
     <!-- App -->
     <string name="app_info_actions_title">操作</string>
-    <string name="app_info_description">Veri Aristo 是一款用于追踪避孕环周期的 Android 应用。它提供彩色编码的日历（显示置入、取出和停用期）、可自定义的提醒、笔记、小组件以及备份/恢复功能。应用包含欢迎引导、周期历史和延长周期指引（“延长佩戴”）。默认开启深色模式，仅限竖屏显示，并支持背景图片和颜色等个性化设置。\n所有数据仅存储在此设备上！</string>
+    <string name="app_info_description">MyRingReminder 是一款用于管理和追踪避孕环周期的 Android 应用。该应用提供用于置入、取出和停环日的彩色编码日历、可自定义提醒、笔记、小组件以及备份/恢复功能。它还包含欢迎引导、周期历史和周期延长说明（“延长佩戴避孕环”）。背景图片和颜色设置等个性化选项可实现个性化调整。\n\n重要提示：本应用仅用于个人组织与避孕环周期追踪。它不是医疗产品，不能替代医疗建议，也不基于医学评估或诊断。如有使用疑问或健康相关问题，请咨询医生。\n\n所有数据仅在本设备本地存储。</string>
     <string name="app_info_developer">开发者：%1$s</string>
     <string name="app_info_developer_label">开发者：</string>
     <string name="app_info_developer_name">Daniel Sichler 创作的 Darexsh</string>
     <string name="app_info_email">电子邮件：%1$s</string>
     <string name="app_info_github">GitHub：%1$s</string>
-    <string name="app_info_name">Veri Aristo 避孕环提醒</string>
-    <string name="app_info_open_coffee">请我喝杯咖啡</string>
+    <string name="app_info_name">MyRingReminder</string>
+    <string name="app_info_open_coffee">支持开发</string>
+    <string name="app_info_open_privacy">隐私政策</string>
     <string name="app_info_open_email">撰写邮件</string>
     <string name="app_info_open_github">打开社交媒体</string>
     <string name="app_info_open_github_profile">GitHub 个人主页</string>
@@ -18,17 +19,18 @@
     <string name="app_info_version_label">版本</string>
     <string name="app_lock_auth_required">打开应用需要身份验证。</string>
     <string name="app_lock_auth_subtitle">使用生物识别或设备 PIN 码</string>
-    <string name="app_lock_auth_title">解锁 Veri Aristo</string>
+    <string name="app_lock_auth_title">解锁 MyRingReminder</string>
     <string name="app_lock_overlay_subtitle">解锁以继续</string>
     <string name="app_lock_overlay_title">应用已锁定</string>
     <string name="app_lock_overlay_unlock">解锁应用</string>
     <string name="app_lock_tools_delay_current">当前延迟：%1$s</string>
+    <string name="app_lock_tools_delay_hint_with_current">%1$s\n%2$s</string>
     <string name="app_lock_tools_delay_hint">设置切换应用后自动锁定的时间。</string>
     <string name="app_lock_tools_title">应用锁</string>
     <string name="app_lock_tools_toggle_hint">启用或禁用应用保护。</string>
     <string name="app_lock_tools_toggle_off">应用锁：关闭</string>
     <string name="app_lock_tools_toggle_on">应用锁：开启</string>
-    <string name="app_name">Veri Aristo</string>
+    <string name="app_name">MyRingReminder</string>
 
     <!-- Section Headers -->
     <string name="section_advanced">高级</string>
@@ -175,6 +177,7 @@
     <string name="notification_permission_button_label">通知权限：%1$s</string>
     <string name="notification_permission_denied">通知权限已被拒绝。</string>
     <string name="notification_permission_granted">通知权限已授予。</string>
+    <string name="percent_value">%1$d%%</string>
     <string name="notification_permission_required_message">请允许此应用的通知权限，否则无法显示提醒和测试通知。</string>
     <string name="notification_permission_required_title">需要通知权限</string>
     <string name="notification_permission_status_allowed">已允许</string>
@@ -184,7 +187,7 @@
     <string name="notification_test_blocked_system">系统设置中已禁用此应用的通知。</string>
     <string name="notification_test_message">如果您能看到此内容，说明通知功能正常。</string>
     <string name="notification_test_sent">测试通知已发送。</string>
-    <string name="notification_test_title">Veri Aristo 测试</string>
+    <string name="notification_test_title">MyRingReminder 测试</string>
     <string name="notification_times_button_label">提醒：\n取出前 %1$d 小时，置入前 %2$d 小时</string>
     <string name="notification_times_button_unknown">提醒：\n未知</string>
     <string name="notifications_channel_description">圆环佩戴周期的通知</string>
@@ -497,7 +500,7 @@
     <string name="tour_body_settings_reset">删除所有保存的数据并重置应用。</string>
     <string name="tour_body_settings_update">检查新版本应用并安装。</string>
     <string name="tour_complete_done">完成</string>
-    <string name="tour_complete_message">您已完成向导。祝您使用 Veri Aristo 愉快！\n如果您以后还需要查看向导，可以在高级设置中重新开启。</string>
+    <string name="tour_complete_message">您已完成向导。祝您使用 MyRingReminder 愉快！\n如果您以后还需要查看向导，可以在高级设置中重新开启。</string>
     <string name="tour_complete_subtitle">向导已完成</string>
     <string name="tour_complete_title">万事俱备！ 🎉</string>
     <string name="tour_finish">结束</string>
@@ -544,6 +547,6 @@
     <string name="welcome_privacy_note">您的数据仅保存在此设备上。请在设置完成后记得创建备份 😊</string>
     <string name="welcome_skip_tour">以后再说</string>
     <string name="welcome_start_tour">开始向导</string>
-    <string name="welcome_subtitle">Veri Aristo 避孕环提醒</string>
+    <string name="welcome_subtitle">MyRingReminder 避孕环提醒</string>
     <string name="welcome_title">欢迎使用 👋</string>
 </resources>

@@ -1,14 +1,15 @@
 <resources>
     <!-- App -->
     <string name="app_info_actions_title">Действия</string>
-    <string name="app_info_description">Veri Aristo — это Android-приложение для отслеживания циклов использования контрацептивного кольца. Оно предлагает цветовой календарь для вставки, удаления и перерывов, настраиваемые напоминания, заметки, виджеты, а также резервное копирование. В приложении есть приветственный тур, история циклов и советы по продлению цикла («носить кольцо дольше»). По умолчанию работает в темном режиме, только в книжной ориентации, поддерживает персонализацию (фоны, цвета).\nВсе данные хранятся только на этом устройстве!</string>
+    <string name="app_info_description">MyRingReminder — это Android-приложение для управления и отслеживания циклов контрацептивного кольца. Приложение предлагает цветовой календарь для дней введения, извлечения и перерывов без кольца, настраиваемые напоминания, заметки, виджеты, а также функции резервного копирования и восстановления. Также доступны приветственный тур, история циклов и инструкция по продлению цикла («носить кольцо дольше»). Параметры персонализации, такие как фоновые изображения и настройки цветов, позволяют индивидуальную настройку.\n\nВажное примечание: это приложение предназначено исключительно для личной организации и отслеживания циклов контрацептивного кольца. Оно не является медицинским изделием, не заменяет консультацию врача и не основано на медицинской оценке или диагнозе. При вопросах по использованию или проблемах со здоровьем обратитесь к врачу.\n\nВсе данные хранятся только локально на этом устройстве.</string>
     <string name="app_info_developer">Разработчик: %1$s</string>
     <string name="app_info_developer_label">Разработчик:</string>
     <string name="app_info_developer_name">Darexsh (Даниэль Сихлер)</string>
     <string name="app_info_email">Email: %1$s</string>
     <string name="app_info_github">GitHub: %1$s</string>
-    <string name="app_info_name">Veri Aristo: Напоминание о кольце</string>
-    <string name="app_info_open_coffee">Купить мне кофе</string>
+    <string name="app_info_name">MyRingReminder</string>
+    <string name="app_info_open_coffee">Поддержать разработку</string>
+    <string name="app_info_open_privacy">Политика конфиденциальности</string>
     <string name="app_info_open_email">Написать письмо</string>
     <string name="app_info_open_github">Открыть соцсети</string>
     <string name="app_info_open_github_profile">Профиль GitHub</string>
@@ -18,17 +19,18 @@
     <string name="app_info_version_label">Версия</string>
     <string name="app_lock_auth_required">Для входа требуется аутентификация.</string>
     <string name="app_lock_auth_subtitle">Используйте биометрию или PIN-код устройства</string>
-    <string name="app_lock_auth_title">Разблокировать Veri Aristo</string>
+    <string name="app_lock_auth_title">Разблокировать MyRingReminder</string>
     <string name="app_lock_overlay_subtitle">Разблокируйте, чтобы продолжить</string>
     <string name="app_lock_overlay_title">Приложение заблокировано</string>
     <string name="app_lock_overlay_unlock">Разблокировать</string>
     <string name="app_lock_tools_delay_current">Текущая задержка: %1$s</string>
+    <string name="app_lock_tools_delay_hint_with_current">%1$s\n%2$s</string>
     <string name="app_lock_tools_delay_hint">Установите время автоблокировки при переключении между приложениями.</string>
     <string name="app_lock_tools_title">Блокировка приложения</string>
     <string name="app_lock_tools_toggle_hint">Включить или выключить защиту приложения.</string>
     <string name="app_lock_tools_toggle_off">Защита: Выкл</string>
     <string name="app_lock_tools_toggle_on">Защита: Вкл</string>
-    <string name="app_name">Veri Aristo</string>
+    <string name="app_name">MyRingReminder</string>
 
     <!-- Section Headers -->
     <string name="section_advanced">Дополнительно</string>
@@ -175,6 +177,7 @@
     <string name="notification_permission_button_label">Разрешение на уведомления: %1$s</string>
     <string name="notification_permission_denied">В разрешении на уведомления отказано.</string>
     <string name="notification_permission_granted">Разрешение на уведомления предоставлено.</string>
+    <string name="percent_value">%1$d%%</string>
     <string name="notification_permission_required_message">Пожалуйста, разрешите уведомления для этого приложения, иначе напоминания и тестовые уведомления не смогут отображаться.</string>
     <string name="notification_permission_required_title">Требуется разрешение на уведомления</string>
     <string name="notification_permission_status_allowed">разрешено</string>
@@ -184,7 +187,7 @@
     <string name="notification_test_blocked_system">Уведомления для этого приложения отключены в системных настройках.</string>
     <string name="notification_test_message">Если вы видите это сообщение, уведомления работают.</string>
     <string name="notification_test_sent">Тестовое уведомление отправлено.</string>
-    <string name="notification_test_title">Veri Aristo тест</string>
+    <string name="notification_test_title">MyRingReminder тест</string>
     <string name="notification_times_button_label">Напоминания:\nза %1$d ч до извлечения, за %2$d ч до вставки</string>
     <string name="notification_times_button_unknown">Напоминания:\nнеизвестно</string>
     <string name="notifications_channel_description">Уведомления о циклах кольца</string>
@@ -497,7 +500,7 @@
     <string name="tour_body_settings_reset">Удалить все данные и сбросить приложение.</string>
     <string name="tour_body_settings_update">Проверяйте и устанавливайте новые версии приложения.</string>
     <string name="tour_complete_done">Готово</string>
-    <string name="tour_complete_message">Вы завершили тур. Приятного использования Veri Aristo!\nЕсли тур понадобится снова, его можно перезапустить в расширенных настройках.</string>
+    <string name="tour_complete_message">Вы завершили тур. Приятного использования MyRingReminder!\nЕсли тур понадобится снова, его можно перезапустить в расширенных настройках.</string>
     <string name="tour_complete_subtitle">Тур завершен</string>
     <string name="tour_complete_title">Все готово! 🎉</string>
     <string name="tour_finish">Завершить</string>
@@ -544,6 +547,6 @@
     <string name="welcome_privacy_note">Ваши данные хранятся только на этом устройстве. Обязательно создайте резервную копию после настройки 😊</string>
     <string name="welcome_skip_tour">Не сейчас</string>
     <string name="welcome_start_tour">Начать тур</string>
-    <string name="welcome_subtitle">Напоминание о кольце Veri Aristo</string>
+    <string name="welcome_subtitle">Напоминание о кольце MyRingReminder</string>
     <string name="welcome_title">Добро пожаловать 👋</string>
 </resources>

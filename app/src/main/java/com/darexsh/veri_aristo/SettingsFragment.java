@@ -1996,13 +1996,10 @@ public class SettingsFragment extends Fragment {
         com.google.android.material.button.MaterialButton openGithub = content.findViewById(R.id.btn_open_github);
         com.google.android.material.button.MaterialButton openTelegramBot = content.findViewById(R.id.btn_open_telegram_bot);
         com.google.android.material.button.MaterialButton openGithubProfile = content.findViewById(R.id.btn_open_github_profile);
+        com.google.android.material.button.MaterialButton openPrivacy = content.findViewById(R.id.btn_open_privacy);
         com.google.android.material.button.MaterialButton openCoffee = content.findViewById(R.id.btn_open_coffee);
         Integer buttonColor = viewModel.getButtonColor().getValue();
         if (buttonColor != null) {
-            ButtonColorHelper.applyPrimaryColor(openEmail, buttonColor);
-            ButtonColorHelper.applyPrimaryColor(openGithub, buttonColor);
-            ButtonColorHelper.applyPrimaryColor(openTelegramBot, buttonColor);
-            ButtonColorHelper.applyPrimaryColor(openGithubProfile, buttonColor);
             ButtonColorHelper.applyPrimaryColor(openCoffee, buttonColor);
         }
 
@@ -2041,6 +2038,11 @@ public class SettingsFragment extends Fragment {
 
         openGithubProfile.setOnClickListener(v -> {
             Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse("https://github.com/Darexsh"));
+            startActivity(intent);
+        });
+
+        openPrivacy.setOnClickListener(v -> {
+            Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse("https://darexsh.github.io/MyRingReminder/privacy-policy.html"));
             startActivity(intent);
         });
 

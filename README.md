@@ -2,7 +2,7 @@
 
 <div align="center">
 
-📱 Veri Aristo App
+📱 MyRingReminder
 ============================
 
 **An Android app for tracking and managing contraceptive ring cycles**  
@@ -30,7 +30,9 @@
 🚀 About the Project
 ==============
 
-**Veri Aristo** is an Android application designed to help users track and manage contraceptive ring cycles. The app provides a calendar-based visualization of insertion, removal, and ring-free days, along with reminders, personal notes, and customizable settings.
+**MyRingReminder** is an Android app for managing and tracking contraceptive ring cycles. The app provides a color-coded calendar for insertion, removal, and ring-free days, customizable reminders, notes, widgets, and backup/restore features. It also includes a welcome tour, cycle history, and guidance for extending a cycle ("Wear ring longer"). Personalization options such as background images and color settings allow individual customization.
+
+**Important note:** This app is intended solely for personal organization and cycle tracking. It is not a medical product, does not replace medical advice, and is not based on medical evaluation or diagnosis. If you have usage questions or health concerns, seek professional medical advice.
 
 * * *
 
@@ -241,6 +243,15 @@
 * 📊 State sharing between fragments is managed via **SharedViewModel** and **LiveData**.
 
 * 🧩 Home‑screen widgets implemented via **AppWidgetProvider**.
+
+* 🔐 All user data is stored locally on the device only.
+
+* * *
+
+🔒 Privacy
+----------
+
+* Privacy Policy: [PRIVACY_POLICY.md](PRIVACY_POLICY.md)
     
 
 * * *

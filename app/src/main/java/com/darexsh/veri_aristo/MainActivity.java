@@ -15,6 +15,9 @@ import android.graphics.Color;
 import android.graphics.RenderEffect;
 import android.graphics.drawable.ColorDrawable;
 import android.graphics.drawable.Drawable;
+import android.graphics.drawable.GradientDrawable;
+import android.graphics.drawable.LayerDrawable;
+import android.graphics.drawable.StateListDrawable;
 import android.graphics.Rect;
 import android.graphics.Shader;
 import android.net.Uri;
@@ -137,6 +140,7 @@ public class MainActivity extends AppCompatActivity {
         viewModel.getBackgroundAllScreensEnabled().observe(this, enabled -> refreshGlobalBackgroundImage());
         viewModel.getBackgroundDimPercent().observe(this, percent -> refreshGlobalBackgroundDim());
         viewModel.getBackgroundBlurOthersPercent().observe(this, percent -> refreshGlobalBackgroundBlur());
+        viewModel.getBackgroundBlurDashboardPercent().observe(this, percent -> refreshGlobalBackgroundBlur());
 
         boolean lockEnabledAtLaunch = viewModel.getRepository().isAppLockEnabled();
         if (!lockEnabledAtLaunch) {
@@ -206,7 +210,7 @@ public class MainActivity extends AppCompatActivity {
             return false;
         });
 
-        // Listen for back stack changes to manage visibility of the notes button
+        // Listen for back stack changes to manage visibility and background behavior
         fragmentManager.addOnBackStackChangedListener(this::updateNotesButtonVisibility);
         updateNotesButtonVisibility();
 
@@ -344,7 +348,9 @@ public class MainActivity extends AppCompatActivity {
             globalBackgroundImage.setRenderEffect(null);
             return;
         }
-        Integer blurPercent = viewModel.getBackgroundBlurOthersPercent().getValue();
+        Integer blurPercent = isHomeFragmentVisible()
+                ? viewModel.getBackgroundBlurDashboardPercent().getValue()
+                : viewModel.getBackgroundBlurOthersPercent().getValue();
         int percent = blurPercent != null ? Math.max(0, Math.min(100, blurPercent)) : 50;
         float radiusPx = percentToBlurRadiusPx(percent);
         if (radiusPx <= 0f) {
@@ -361,15 +367,43 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void applyBottomNavColors(int selectedColor) {
-        int unselectedColor = ContextCompat.getColor(this, android.R.color.darker_gray);
+        if (bottomNavigationView == null) {
+            return;
+        }
+
+        int inactive = Color.parseColor("#D4DCE3");
         int[][] states = new int[][]{
                 new int[]{android.R.attr.state_checked},
                 new int[]{-android.R.attr.state_checked}
         };
-        int[] colors = new int[]{selectedColor, unselectedColor};
-        ColorStateList tintList = new ColorStateList(states, colors);
-        bottomNavigationView.setItemIconTintList(tintList);
-        bottomNavigationView.setItemTextColor(tintList);
+
+        ColorStateList iconTint = new ColorStateList(states, new int[]{Color.WHITE, inactive});
+        ColorStateList textTint = new ColorStateList(states, new int[]{selectedColor, inactive});
+        bottomNavigationView.setItemIconTintList(iconTint);
+        bottomNavigationView.setItemTextColor(textTint);
+        bottomNavigationView.setItemBackground(createBottomNavItemBackground(selectedColor));
+    }
+
+    private Drawable createBottomNavItemBackground(int accentColor) {
+        int pillColor = Color.argb(108, Color.red(accentColor), Color.green(accentColor), Color.blue(accentColor));
+        GradientDrawable pill = new GradientDrawable();
+        pill.setShape(GradientDrawable.RECTANGLE);
+        pill.setCornerRadius(dpToPx(999));
+        pill.setColor(pillColor);
+
+        LayerDrawable checkedLayer = new LayerDrawable(new Drawable[]{pill});
+        checkedLayer.setLayerSize(0, dpToPx(58), dpToPx(32));
+        checkedLayer.setLayerInset(0, 0, dpToPx(4), 0, 0);
+        checkedLayer.setLayerGravity(0, android.view.Gravity.TOP | android.view.Gravity.CENTER_HORIZONTAL);
+
+        StateListDrawable states = new StateListDrawable();
+        states.addState(new int[]{android.R.attr.state_checked}, checkedLayer);
+        states.addState(new int[]{}, new ColorDrawable(Color.TRANSPARENT));
+        return states;
+    }
+
+    private int dpToPx(int dp) {
+        return Math.round(dp * getResources().getDisplayMetrics().density);
     }
 
     @Override
@@ -419,6 +453,12 @@ public class MainActivity extends AppCompatActivity {
         } else {
             btnNotes.setVisibility(View.GONE);
         }
+        refreshGlobalBackgroundBlur();
+    }
+
+    private boolean isHomeFragmentVisible() {
+        Fragment currentFragment = fragmentManager.findFragmentById(R.id.fragment_container);
+        return currentFragment instanceof HomeFragment;
     }
 
     public boolean consumeStartupUpdateCheckRequest() {

@@ -176,6 +176,17 @@ public class HomeFragment extends Fragment {
 
         // Set background image if available
         Runnable loadBackgroundImage = () -> {
+            boolean useGlobalBackground = Boolean.TRUE.equals(viewModel.getBackgroundAllScreensEnabled().getValue());
+            if (useGlobalBackground) {
+                backgroundImageView.setVisibility(View.GONE);
+                backgroundDimOverlay.setVisibility(View.GONE);
+                backgroundDimOverlay.setAlpha(0f);
+                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.S) {
+                    backgroundImageView.setRenderEffect(null);
+                }
+                return;
+            }
+            backgroundImageView.setVisibility(View.VISIBLE);
             String uriStr = viewModel.getBackgroundImageUri().getValue();
 
             if (uriStr != null) {
@@ -225,7 +236,13 @@ public class HomeFragment extends Fragment {
 
         // Observe changes in the ViewModel
         viewModel.getBackgroundImageUri().observe(getViewLifecycleOwner(), uri -> loadBackgroundImage.run());
+        viewModel.getBackgroundAllScreensEnabled().observe(getViewLifecycleOwner(), enabled -> loadBackgroundImage.run());
         viewModel.getBackgroundDimPercent().observe(getViewLifecycleOwner(), percent -> {
+            if (Boolean.TRUE.equals(viewModel.getBackgroundAllScreensEnabled().getValue())) {
+                backgroundDimOverlay.setVisibility(View.GONE);
+                backgroundDimOverlay.setAlpha(0f);
+                return;
+            }
             int safePercent = percent != null ? Math.max(0, Math.min(100, percent)) : 0;
             if (safePercent == 0) {
                 backgroundDimOverlay.setVisibility(View.GONE);
@@ -237,6 +254,10 @@ public class HomeFragment extends Fragment {
         });
         viewModel.getBackgroundBlurDashboardPercent().observe(getViewLifecycleOwner(), percent -> {
             if (Build.VERSION.SDK_INT < Build.VERSION_CODES.S) {
+                return;
+            }
+            if (Boolean.TRUE.equals(viewModel.getBackgroundAllScreensEnabled().getValue())) {
+                backgroundImageView.setRenderEffect(null);
                 return;
             }
             int safePercent = percent != null ? Math.max(0, Math.min(100, percent)) : 0;
