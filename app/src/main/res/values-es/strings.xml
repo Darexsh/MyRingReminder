@@ -549,4 +549,45 @@
     <string name="welcome_start_tour">Iniciar recorrido</string>
     <string name="welcome_subtitle">Recordatorio de MyRingReminder Ring</string>
     <string name="welcome_title">Bienvenido 👋</string>
+
+
+    <!-- Added missing period-tracking strings -->
+    <string name="period_modal_title_for_date">Registro del período: %1$s</string>
+    <string name="period_modal_period_day">Día de período</string>
+    <string name="period_modal_intensity_title">Intensidad del sangrado</string>
+    <string name="period_modal_symptoms_title">Síntomas</string>
+    <string name="period_modal_markers_title">Marcadores</string>
+    <string name="period_modal_intensity_light">Leve</string>
+    <string name="period_modal_intensity_medium">Media</string>
+    <string name="period_modal_intensity_heavy">Fuerte</string>
+    <string name="period_modal_pain">Dolor</string>
+    <string name="period_modal_illness">Malestar</string>
+    <string name="period_modal_start_marker">Inicio del período</string>
+    <string name="period_modal_end_marker">Fin del período</string>
+    <string name="period_modal_clear">Borrar registro</string>
+    <string name="period_modal_validation_intensity_required">Selecciona la intensidad del sangrado.</string>
+    <string name="period_modal_validation_start_end_conflict">Un día no puede ser inicio y fin del período a la vez.</string>
+    <string name="period_modal_save_failed">No se pudo guardar el registro del período.</string>
+    <string name="period_modal_saved_toast">Registro del período guardado.</string>
+    <string name="period_modal_deleted_toast">Registro del período eliminado.</string>
+    <string name="period_modal_only_ring_free_toast">Disponible solo en la semana sin anillo y ±4 días.</string>
+    <string name="period_legend_period">Período</string>
+    <string name="period_legend_pain">Dolor</string>
+    <string name="period_legend_illness">Malestar</string>
+    <string name="period_legend_start_end">S = Inicio, E = Fin</string>
+    <string name="period_legend_start_only">S = Inicio</string>
+    <string name="period_legend_end_only">E = Fin</string>
+    <string name="period_legend_title">Período</string>
+    <string name="calendar_legend_title">Calendario</string>
+    <string name="backup_field_period_tracking">Seguimiento del período</string>
+    <string name="backup_field_period_tracking_entries_format">%1$d registros diarios</string>
+    <string name="tour_body_period_entry">Toca un día para añadir o editar el seguimiento del período.
+La edición solo está disponible durante la semana sin anillo y ±4 días alrededor.</string>
+    <string name="tour_body_period_modal">En el registro del período puedes definir Día de período, intensidad, síntomas (dolor/malestar) y marcadores opcionales de inicio/fin.
+Usa Borrar registro para eliminar los datos guardados de ese día.</string>
+    <string name="tour_body_period_indicators">Los días de período se muestran directamente en el calendario con sombreado por intensidad, puntos indicadores y marcas S/E.
+Así la vista mensual se mantiene clara.</string>
+    <string name="tour_title_period_entry">Registro del período</string>
+    <string name="tour_title_period_modal">Opciones del período</string>
+    <string name="tour_title_period_indicators">Indicadores del período</string>
 </resources>

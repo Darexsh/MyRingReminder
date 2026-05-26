@@ -69,6 +69,8 @@ public class CalendarFragment extends Fragment {
     private Set<CalendarDay> currentPeriodEntryAllowedDays = new HashSet<>();
     private List<RingFreeWindow> currentRingFreeWindows = new ArrayList<>();
     private static final int PERIOD_ENTRY_TOLERANCE_DAYS = 4;
+    private AlertDialog activePeriodEntryDialog;
+    private View activePeriodEntryDialogView;
 
     private static class RingFreeWindow {
         final CalendarDay start;
@@ -1001,6 +1003,7 @@ public class CalendarFragment extends Fragment {
         boolean hasAnotherStartInRingFreeWeek = hasOtherStartInCurrentRingFreeWeek(repository, day, dateKey);
 
         View layout = LayoutInflater.from(requireContext()).inflate(R.layout.dialog_period_entry, null);
+        activePeriodEntryDialogView = layout;
         SwitchMaterial periodDaySwitch = layout.findViewById(R.id.switch_period_day);
         TextView intensityTitle = layout.findViewById(R.id.tv_period_intensity_title);
         TextView symptomsTitle = layout.findViewById(R.id.tv_period_symptoms_title);
@@ -1018,7 +1021,7 @@ public class CalendarFragment extends Fragment {
         MaterialButton btnSave = layout.findViewById(R.id.btn_period_save);
         stylePeriodIntensityChips(light, medium, heavy);
 
-        final boolean[] pendingAutoStartSuggestion = new boolean[]{false};
+        final boolean autoStartSuggestionEligible = existing == null && firstEntryInRingFreeWeek;
         if (existing != null) {
             periodDaySwitch.setChecked(existing.isPeriodDay());
             painChip.setChecked(existing.hasPain());
@@ -1032,8 +1035,6 @@ public class CalendarFragment extends Fragment {
             } else if (existing.getIntensity() == BleedingIntensity.HEAVY) {
                 heavy.setChecked(true);
             }
-        } else if (firstEntryInRingFreeWeek) {
-            pendingAutoStartSuggestion[0] = true;
         }
 
         Runnable toggleEnabledState = () -> {
@@ -1065,9 +1066,11 @@ public class CalendarFragment extends Fragment {
         endChip.setOnCheckedChangeListener((buttonView, isChecked) ->
                 applyMarkerExclusionState(startChip, endChip, hasAnotherStartInRingFreeWeek));
         periodDaySwitch.setOnCheckedChangeListener((buttonView, isChecked) -> {
-            if (isChecked && pendingAutoStartSuggestion[0]) {
+            if (isChecked
+                    && autoStartSuggestionEligible
+                    && !startChip.isChecked()
+                    && !endChip.isChecked()) {
                 startChip.setChecked(true);
-                pendingAutoStartSuggestion[0] = false;
             }
             toggleEnabledState.run();
         });
@@ -1156,8 +1159,63 @@ public class CalendarFragment extends Fragment {
         if (dialog.getWindow() != null) {
             dialog.getWindow().setBackgroundDrawableResource(R.drawable.bg_app_info_dialog);
         }
-        dialog.setOnDismissListener(d -> calendarView.clearSelection());
+        activePeriodEntryDialog = dialog;
+        dialog.setOnDismissListener(d -> {
+            calendarView.clearSelection();
+            activePeriodEntryDialog = null;
+            activePeriodEntryDialogView = null;
+        });
         dialog.show();
+    }
+
+    public boolean ensurePeriodDialogVisibleForTour() {
+        if (!isAdded()) {
+            return false;
+        }
+        if (activePeriodEntryDialog != null && activePeriodEntryDialog.isShowing()) {
+            return true;
+        }
+        CalendarDay targetDay = null;
+        CalendarDay current = calendarView != null ? calendarView.getCurrentDate() : null;
+        if (current != null && currentPeriodEntryAllowedDays.contains(current)) {
+            targetDay = current;
+        } else if (!currentPeriodEntryAllowedDays.isEmpty()) {
+            targetDay = currentPeriodEntryAllowedDays.iterator().next();
+        }
+        if (targetDay == null) {
+            return false;
+        }
+        showPeriodEntryDialog(targetDay);
+        return true;
+    }
+
+    public void dismissPeriodDialogForTour() {
+        if (activePeriodEntryDialog != null && activePeriodEntryDialog.isShowing()) {
+            activePeriodEntryDialog.dismiss();
+        }
+    }
+
+    @Nullable
+    public ViewGroup getPeriodDialogTourHost() {
+        if (activePeriodEntryDialogView instanceof ViewGroup) {
+            return (ViewGroup) activePeriodEntryDialogView;
+        }
+        return null;
+    }
+
+    @Nullable
+    public View findTourTargetView(int targetViewId) {
+        if (activePeriodEntryDialogView != null) {
+            View inDialog = activePeriodEntryDialogView.findViewById(targetViewId);
+            if (inDialog != null) {
+                return inDialog;
+            }
+        }
+        View root = getView();
+        if (root == null) {
+            return null;
+        }
+        return root.findViewById(targetViewId);
     }
 
     private void applyMarkerExclusionState(Chip startChip, Chip endChip, boolean lockStartSelection) {

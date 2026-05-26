@@ -2652,6 +2652,13 @@ public class SettingsFragment extends Fragment {
                 restoredRepository.getCalendarFutureUnit());
         viewModel.setRemovalReminderHours(restoredRepository.getRemovalReminderHours());
         viewModel.setInsertionReminderHours(restoredRepository.getInsertionReminderHours());
+        viewModel.setButtonColor(restoredRepository.getButtonColor());
+        viewModel.setHomeCircleColor(restoredRepository.getHomeCircleColor());
+        viewModel.setHomeCircleStyle(restoredRepository.getHomeCircleStyle());
+        viewModel.setCalendarWearColor(restoredRepository.getCalendarWearColor());
+        viewModel.setCalendarRingFreeColor(restoredRepository.getCalendarRingFreeColor());
+        viewModel.setCalendarRemovalColor(restoredRepository.getCalendarRemovalColor());
+        viewModel.setCalendarInsertionColor(restoredRepository.getCalendarInsertionColor());
         viewModel.setNavigationAnimationStyle(restoredRepository.getNavigationAnimationStyle());
 
         WidgetUpdater.updateAllWidgets(requireContext());

@@ -272,21 +272,21 @@
     <string name="period_modal_intensity_medium">Mittel</string>
     <string name="period_modal_intensity_heavy">Stark</string>
     <string name="period_modal_pain">Schmerzen</string>
-    <string name="period_modal_illness">Krankheit</string>
-    <string name="period_modal_start_marker">Periodenstart</string>
+    <string name="period_modal_illness">Unwohlsein</string>
+    <string name="period_modal_start_marker">Periodenbeginn</string>
     <string name="period_modal_end_marker">Periodenende</string>
     <string name="period_modal_clear">Eintrag löschen</string>
-    <string name="period_modal_validation_intensity_required">Bitte Blutungsstärke auswählen.</string>
-    <string name="period_modal_validation_start_end_conflict">Ein Tag kann nicht gleichzeitig Periodenstart und Periodenende sein.</string>
+    <string name="period_modal_validation_intensity_required">Bitte eine Blutungsstärke auswählen.</string>
+    <string name="period_modal_validation_start_end_conflict">Ein Tag kann nicht gleichzeitig Periodenbeginn und -ende sein.</string>
     <string name="period_modal_save_failed">Periodeneintrag konnte nicht gespeichert werden.</string>
     <string name="period_modal_saved_toast">Periodeneintrag gespeichert.</string>
     <string name="period_modal_deleted_toast">Periodeneintrag gelöscht.</string>
     <string name="period_modal_only_ring_free_toast">Nur in der ringfreien Woche und ±4 Tagen verfügbar.</string>
     <string name="period_legend_period">Periode</string>
     <string name="period_legend_pain">Schmerzen</string>
-    <string name="period_legend_illness">Krankheit</string>
+    <string name="period_legend_illness">Unwohlsein</string>
     <string name="period_legend_start_end">S = Start, E = Ende</string>
-    <string name="period_legend_start_only">S = Start</string>
+    <string name="period_legend_start_only">S = Beginn</string>
     <string name="period_legend_end_only">E = Ende</string>
     <string name="period_legend_title">Periode</string>
     <string name="calendar_legend_title">Kalender</string>
@@ -376,7 +376,7 @@
     <string name="backup_field_notes_text">Notizen-Inhalt</string>
     <string name="backup_field_notification_flags_format">Benachrichtigungs-Flags: %1$d Einträge (%2$d aktiv)</string>
     <string name="backup_field_notification_hashes_format">Benachrichtigungs-Einstellungen Snapshots: %1$d Einträge</string>
-    <string name="backup_field_period_tracking">Perioden-Tracking</string>
+    <string name="backup_field_period_tracking">Periodentracking</string>
     <string name="backup_field_period_tracking_entries_format">%1$d Tageseinträge</string>
     <string name="backup_field_reminder_insertion">Erinnerung vor Einsetzen</string>
     <string name="backup_field_reminder_removal">Erinnerung vor Entfernen</string>
@@ -578,4 +578,16 @@
     <string name="welcome_start_tour">Tour starten</string>
     <string name="welcome_subtitle">MyRingReminder Ring Reminder</string>
     <string name="welcome_title">Willkommen 👋</string>
+
+
+    <!-- Added missing period-tracking strings -->
+    <string name="tour_body_period_entry">Tippe auf einen Tag, um Periodendaten hinzuzufügen oder zu bearbeiten.
+Bearbeitung ist nur in der ringfreien Woche und ±4 Tagen darum möglich.</string>
+    <string name="tour_body_period_modal">Im Periodeneintrag kannst du Periodentag, Stärke, Symptome (Schmerzen/Unwohlsein) und optionale Start/Ende-Markierungen setzen.
+Mit Eintrag löschen entfernst du die gespeicherten Daten dieses Tages.</string>
+    <string name="tour_body_period_indicators">Periodentage werden direkt im Kalender mit Intensitätsfärbung, Indikatorpunkten und S/E-Markierungen angezeigt.
+So bleibt die Monatsübersicht gut lesbar.</string>
+    <string name="tour_title_period_entry">Periodeneintrag</string>
+    <string name="tour_title_period_modal">Periodenoptionen</string>
+    <string name="tour_title_period_indicators">Periodenindikatoren</string>
 </resources>

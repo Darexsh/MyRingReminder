@@ -499,6 +499,9 @@
 
     <!-- Tour -->
     <string name="tour_body_calendar">See insertion, removal, and ring-free days at a glance.</string>
+    <string name="tour_body_period_entry">Tap a day to add or edit period tracking.\nEditing is available only during ring-free week and ±4 days around it.</string>
+    <string name="tour_body_period_modal">In period entry, set Period day, intensity, symptoms (pain/illness), and optional start/end markers.\nUse Clear entry to remove saved data for that day.</string>
+    <string name="tour_body_period_indicators">Period days are shown directly in the calendar with intensity shading, indicator dots, and S/E markers.\nThis keeps monthly overview readable at a glance.</string>
     <string name="tour_body_calendar_legend">These colors show wear time, ring-free days, removal, and insertion.\nYou can also change the colors by tapping the legend dots.</string>
     <string name="tour_body_cycles">Track previous cycles and their insertion/removal events.</string>
     <string name="tour_body_cycles_clear">Remove all saved cycle entries from the list.</string>
@@ -536,6 +539,9 @@
     <string name="tour_next">Next</string>
     <string name="tour_skip">Skip</string>
     <string name="tour_title_calendar">Calendar view</string>
+    <string name="tour_title_period_entry">Period entry</string>
+    <string name="tour_title_period_modal">Period options</string>
+    <string name="tour_title_period_indicators">Period indicators</string>
     <string name="tour_title_calendar_legend">Calendar legend</string>
     <string name="tour_title_cycles">Cycle history</string>
     <string name="tour_title_cycles_clear">Clear history</string>

@@ -549,4 +549,45 @@
     <string name="welcome_start_tour">Начать тур</string>
     <string name="welcome_subtitle">Напоминание о кольце MyRingReminder</string>
     <string name="welcome_title">Добро пожаловать 👋</string>
+
+
+    <!-- Added missing period-tracking strings -->
+    <string name="period_modal_title_for_date">Запись менструации: %1$s</string>
+    <string name="period_modal_period_day">День менструации</string>
+    <string name="period_modal_intensity_title">Интенсивность кровотечения</string>
+    <string name="period_modal_symptoms_title">Симптомы</string>
+    <string name="period_modal_markers_title">Метки</string>
+    <string name="period_modal_intensity_light">Слабое</string>
+    <string name="period_modal_intensity_medium">Среднее</string>
+    <string name="period_modal_intensity_heavy">Сильное</string>
+    <string name="period_modal_pain">Боль</string>
+    <string name="period_modal_illness">Недомогание</string>
+    <string name="period_modal_start_marker">Начало менструации</string>
+    <string name="period_modal_end_marker">Конец менструации</string>
+    <string name="period_modal_clear">Очистить запись</string>
+    <string name="period_modal_validation_intensity_required">Пожалуйста, выберите интенсивность кровотечения.</string>
+    <string name="period_modal_validation_start_end_conflict">День не может быть одновременно началом и концом менструации.</string>
+    <string name="period_modal_save_failed">Не удалось сохранить запись менструации.</string>
+    <string name="period_modal_saved_toast">Запись менструации сохранена.</string>
+    <string name="period_modal_deleted_toast">Запись менструации удалена.</string>
+    <string name="period_modal_only_ring_free_toast">Доступно только в неделю без кольца и ±4 дня.</string>
+    <string name="period_legend_period">Менструация</string>
+    <string name="period_legend_pain">Боль</string>
+    <string name="period_legend_illness">Недомогание</string>
+    <string name="period_legend_start_end">S = Начало, E = Конец</string>
+    <string name="period_legend_start_only">S = Начало</string>
+    <string name="period_legend_end_only">E = Конец</string>
+    <string name="period_legend_title">Менструация</string>
+    <string name="calendar_legend_title">Календарь</string>
+    <string name="backup_field_period_tracking">Отслеживание менструации</string>
+    <string name="backup_field_period_tracking_entries_format">%1$d дневных записей</string>
+    <string name="tour_body_period_entry">Нажмите на день, чтобы добавить или изменить данные менструации.
+Редактирование доступно только в неделю без кольца и ±4 дня вокруг неё.</string>
+    <string name="tour_body_period_modal">В записи менструации можно указать День менструации, интенсивность, симптомы (боль/недомогание) и дополнительные метки начала/конца.
+Используйте Очистить запись, чтобы удалить данные за этот день.</string>
+    <string name="tour_body_period_indicators">Дни менструации отображаются прямо в календаре с оттенком интенсивности, точками-индикаторами и метками S/E.
+Так месячный обзор остаётся читаемым.</string>
+    <string name="tour_title_period_entry">Запись менструации</string>
+    <string name="tour_title_period_modal">Параметры менструации</string>
+    <string name="tour_title_period_indicators">Индикаторы менструации</string>
 </resources>

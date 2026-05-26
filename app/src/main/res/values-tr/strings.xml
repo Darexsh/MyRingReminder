@@ -549,4 +549,45 @@
     <string name="welcome_start_tour">Turu başlat</string>
     <string name="welcome_subtitle">MyRingReminder Halka Hatırlatıcı</string>
     <string name="welcome_title">Hoş Geldiniz 👋</string>
+
+
+    <!-- Added missing period-tracking strings -->
+    <string name="period_modal_title_for_date">Adet kaydı: %1$s</string>
+    <string name="period_modal_period_day">Adet günü</string>
+    <string name="period_modal_intensity_title">Kanama yoğunluğu</string>
+    <string name="period_modal_symptoms_title">Belirtiler</string>
+    <string name="period_modal_markers_title">İşaretler</string>
+    <string name="period_modal_intensity_light">Hafif</string>
+    <string name="period_modal_intensity_medium">Orta</string>
+    <string name="period_modal_intensity_heavy">Yoğun</string>
+    <string name="period_modal_pain">Ağrı</string>
+    <string name="period_modal_illness">Halsizlik</string>
+    <string name="period_modal_start_marker">Adet başlangıcı</string>
+    <string name="period_modal_end_marker">Adet bitişi</string>
+    <string name="period_modal_clear">Kaydı temizle</string>
+    <string name="period_modal_validation_intensity_required">Lütfen kanama yoğunluğunu seçin.</string>
+    <string name="period_modal_validation_start_end_conflict">Bir gün aynı anda hem başlangıç hem bitiş olamaz.</string>
+    <string name="period_modal_save_failed">Adet kaydı kaydedilemedi.</string>
+    <string name="period_modal_saved_toast">Adet kaydı kaydedildi.</string>
+    <string name="period_modal_deleted_toast">Adet kaydı silindi.</string>
+    <string name="period_modal_only_ring_free_toast">Yalnızca halkasız hafta ve ±4 gün içinde kullanılabilir.</string>
+    <string name="period_legend_period">Adet</string>
+    <string name="period_legend_pain">Ağrı</string>
+    <string name="period_legend_illness">Halsizlik</string>
+    <string name="period_legend_start_end">S = Başlangıç, E = Bitiş</string>
+    <string name="period_legend_start_only">S = Başlangıç</string>
+    <string name="period_legend_end_only">E = Bitiş</string>
+    <string name="period_legend_title">Adet</string>
+    <string name="calendar_legend_title">Takvim</string>
+    <string name="backup_field_period_tracking">Adet takibi</string>
+    <string name="backup_field_period_tracking_entries_format">%1$d günlük kayıt</string>
+    <string name="tour_body_period_entry">Adet takibini eklemek veya düzenlemek için bir güne dokunun.
+Düzenleme yalnızca halkasız hafta ve çevresindeki ±4 gün içinde mümkündür.</string>
+    <string name="tour_body_period_modal">Adet kaydında Adet günü, yoğunluk, belirtiler (ağrı/halsizlik) ve isteğe bağlı başlangıç/bitiş işaretlerini ayarlayabilirsiniz.
+O güne ait kayıtlı verileri kaldırmak için Kaydı temizle seçeneğini kullanın.</string>
+    <string name="tour_body_period_indicators">Adet günleri takvimde yoğunluk gölgelendirmesi, gösterge noktaları ve S/E işaretleriyle doğrudan gösterilir.
+Böylece aylık görünüm okunabilir kalır.</string>
+    <string name="tour_title_period_entry">Adet kaydı</string>
+    <string name="tour_title_period_modal">Adet seçenekleri</string>
+    <string name="tour_title_period_indicators">Adet göstergeleri</string>
 </resources>

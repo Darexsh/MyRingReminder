@@ -549,4 +549,45 @@
     <string name="welcome_start_tour">Démarrer la visite</string>
     <string name="welcome_subtitle">Rappel d\'anneau MyRingReminder</string>
     <string name="welcome_title">Bienvenue 👋</string>
+
+
+    <!-- Added missing period-tracking strings -->
+    <string name="period_modal_title_for_date">Entrée des règles : %1$s</string>
+    <string name="period_modal_period_day">Jour de règles</string>
+    <string name="period_modal_intensity_title">Intensité des saignements</string>
+    <string name="period_modal_symptoms_title">Symptômes</string>
+    <string name="period_modal_markers_title">Repères</string>
+    <string name="period_modal_intensity_light">Légère</string>
+    <string name="period_modal_intensity_medium">Moyenne</string>
+    <string name="period_modal_intensity_heavy">Forte</string>
+    <string name="period_modal_pain">Douleur</string>
+    <string name="period_modal_illness">Malaise</string>
+    <string name="period_modal_start_marker">Début des règles</string>
+    <string name="period_modal_end_marker">Fin des règles</string>
+    <string name="period_modal_clear">Effacer l’entrée</string>
+    <string name="period_modal_validation_intensity_required">Veuillez sélectionner l’intensité des saignements.</string>
+    <string name="period_modal_validation_start_end_conflict">Un jour ne peut pas être à la fois début et fin des règles.</string>
+    <string name="period_modal_save_failed">Impossible d’enregistrer l’entrée des règles.</string>
+    <string name="period_modal_saved_toast">Entrée des règles enregistrée.</string>
+    <string name="period_modal_deleted_toast">Entrée des règles supprimée.</string>
+    <string name="period_modal_only_ring_free_toast">Disponible uniquement pendant la semaine sans anneau et ±4 jours.</string>
+    <string name="period_legend_period">Règles</string>
+    <string name="period_legend_pain">Douleur</string>
+    <string name="period_legend_illness">Malaise</string>
+    <string name="period_legend_start_end">S = Début, E = Fin</string>
+    <string name="period_legend_start_only">S = Début</string>
+    <string name="period_legend_end_only">E = Fin</string>
+    <string name="period_legend_title">Règles</string>
+    <string name="calendar_legend_title">Calendrier</string>
+    <string name="backup_field_period_tracking">Suivi des règles</string>
+    <string name="backup_field_period_tracking_entries_format">%1$d entrées journalières</string>
+    <string name="tour_body_period_entry">Appuyez sur un jour pour ajouter ou modifier le suivi des règles.
+La modification est disponible uniquement pendant la semaine sans anneau et ±4 jours autour.</string>
+    <string name="tour_body_period_modal">Dans l’entrée des règles, vous pouvez définir le jour de règles, l’intensité, les symptômes (douleur/malaise) et des repères début/fin optionnels.
+Utilisez Effacer l’entrée pour supprimer les données enregistrées de ce jour.</string>
+    <string name="tour_body_period_indicators">Les jours de règles sont affichés directement dans le calendrier avec nuance d’intensité, points indicateurs et repères S/E.
+La vue mensuelle reste ainsi lisible.</string>
+    <string name="tour_title_period_entry">Entrée des règles</string>
+    <string name="tour_title_period_modal">Options des règles</string>
+    <string name="tour_title_period_indicators">Indicateurs des règles</string>
 </resources>

@@ -834,9 +834,23 @@ public class MainActivity extends AppCompatActivity {
         }
 
         Fragment currentFragment = fragmentManager.findFragmentById(R.id.fragment_container);
+        ViewGroup activityHost = findViewById(android.R.id.content);
+        reattachTourOverlay(activityHost);
         View fragmentView = currentFragment != null ? currentFragment.getView() : null;
-        View target = step.inActivityView ? findViewById(step.targetViewId)
-                : (fragmentView != null ? fragmentView.findViewById(step.targetViewId) : null);
+        View target;
+        if (step.inActivityView) {
+            target = findViewById(step.targetViewId);
+        } else {
+            target = fragmentView != null ? fragmentView.findViewById(step.targetViewId) : null;
+            if ((target == null || target.getVisibility() != View.VISIBLE)
+                    && step.targetViewId == R.id.legend_tables_row
+                    && fragmentView != null) {
+                View fallbackLegend = fragmentView.findViewById(R.id.legend_original_row);
+                if (fallbackLegend != null && fallbackLegend.getVisibility() == View.VISIBLE) {
+                    target = fallbackLegend;
+                }
+            }
+        }
 
         Log.d("TourDebug", "Index: " + index + " Attempt: " + attempt + " TargetID: " + step.targetViewId);
         if (target == null) {
@@ -864,6 +878,20 @@ public class MainActivity extends AppCompatActivity {
 
         tourIndex = index;
         tourOverlay.setStep(step.titleRes, step.bodyRes, index == tourSteps.size() - 1, target);
+    }
+
+    private void reattachTourOverlay(ViewGroup host) {
+        if (tourOverlay == null || host == null) {
+            return;
+        }
+        android.view.ViewParent currentParent = tourOverlay.getParent();
+        if (currentParent == host) {
+            return;
+        }
+        if (currentParent instanceof ViewGroup) {
+            ((ViewGroup) currentParent).removeView(tourOverlay);
+        }
+        host.addView(tourOverlay);
     }
 
     private void finishGuidedTour() {
@@ -1011,6 +1039,12 @@ public class MainActivity extends AppCompatActivity {
 
         steps.add(new TourStep(R.id.nav_calendar, R.id.calendarView,
                 R.string.tour_title_calendar, R.string.tour_body_calendar, 0, false));
+        steps.add(new TourStep(R.id.nav_calendar, R.id.calendarView,
+                R.string.tour_title_period_entry, R.string.tour_body_period_entry, 0, false));
+        steps.add(new TourStep(R.id.nav_calendar, R.id.calendarView,
+                R.string.tour_title_period_modal, R.string.tour_body_period_modal, 0, false));
+        steps.add(new TourStep(R.id.nav_calendar, R.id.calendarView,
+                R.string.tour_title_period_indicators, R.string.tour_body_period_indicators, 0, false));
         steps.add(new TourStep(R.id.nav_calendar, R.id.legend_tables_row,
                 R.string.tour_title_calendar_legend, R.string.tour_body_calendar_legend, 0, false));
 

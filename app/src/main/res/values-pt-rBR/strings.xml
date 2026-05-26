@@ -549,4 +549,45 @@
     <string name="welcome_start_tour">Iniciar tour</string>
     <string name="welcome_subtitle">Lembrete de Anel MyRingReminder</string>
     <string name="welcome_title">Bem-vinda 👋</string>
+
+
+    <!-- Added missing period-tracking strings -->
+    <string name="period_modal_title_for_date">Registro menstrual: %1$s</string>
+    <string name="period_modal_period_day">Dia menstrual</string>
+    <string name="period_modal_intensity_title">Intensidade do sangramento</string>
+    <string name="period_modal_symptoms_title">Sintomas</string>
+    <string name="period_modal_markers_title">Marcadores</string>
+    <string name="period_modal_intensity_light">Leve</string>
+    <string name="period_modal_intensity_medium">Médio</string>
+    <string name="period_modal_intensity_heavy">Intenso</string>
+    <string name="period_modal_pain">Dor</string>
+    <string name="period_modal_illness">Mal-estar</string>
+    <string name="period_modal_start_marker">Início da menstruação</string>
+    <string name="period_modal_end_marker">Fim da menstruação</string>
+    <string name="period_modal_clear">Limpar registro</string>
+    <string name="period_modal_validation_intensity_required">Selecione a intensidade do sangramento.</string>
+    <string name="period_modal_validation_start_end_conflict">Um dia não pode ser início e fim da menstruação ao mesmo tempo.</string>
+    <string name="period_modal_save_failed">Não foi possível salvar o registro menstrual.</string>
+    <string name="period_modal_saved_toast">Registro menstrual salvo.</string>
+    <string name="period_modal_deleted_toast">Registro menstrual excluído.</string>
+    <string name="period_modal_only_ring_free_toast">Disponível apenas na semana sem anel e ±4 dias.</string>
+    <string name="period_legend_period">Menstruação</string>
+    <string name="period_legend_pain">Dor</string>
+    <string name="period_legend_illness">Mal-estar</string>
+    <string name="period_legend_start_end">S = Início, E = Fim</string>
+    <string name="period_legend_start_only">S = Início</string>
+    <string name="period_legend_end_only">E = Fim</string>
+    <string name="period_legend_title">Menstruação</string>
+    <string name="calendar_legend_title">Calendário</string>
+    <string name="backup_field_period_tracking">Acompanhamento menstrual</string>
+    <string name="backup_field_period_tracking_entries_format">%1$d registros diários</string>
+    <string name="tour_body_period_entry">Toque em um dia para adicionar ou editar o acompanhamento menstrual.
+A edição está disponível apenas durante a semana sem anel e ±4 dias ao redor.</string>
+    <string name="tour_body_period_modal">No registro menstrual, você pode definir Dia menstrual, intensidade, sintomas (dor/mal-estar) e marcadores opcionais de início/fim.
+Use Limpar registro para remover os dados salvos desse dia.</string>
+    <string name="tour_body_period_indicators">Os dias menstruais são exibidos diretamente no calendário com tonalidade de intensidade, pontos indicadores e marcadores S/E.
+Assim a visão mensal continua clara.</string>
+    <string name="tour_title_period_entry">Registro menstrual</string>
+    <string name="tour_title_period_modal">Opções menstruais</string>
+    <string name="tour_title_period_indicators">Indicadores menstruais</string>
 </resources>

@@ -39,19 +39,20 @@ Status legend: `[ ]` pending, `[-]` in progress, `[x]` done
 - [x] Resolve visual priority/layout for multiple indicators
 
 ### Phase 4: Day Detail View
-- [ ] Extend selected-day detail output
-- [ ] Show: period yes/no, intensity, start/end, pain, illness
-- [ ] Add empty state for days without data
-- [ ] Ensure detail updates instantly after save/clear
+- [x] Extend selected-day detail output (N/A: covered by direct edit modal)
+- [x] Show: period yes/no, intensity, start/end, pain, illness (N/A: covered by direct edit modal)
+- [x] Add empty state for days without data (N/A: covered by direct edit modal)
+- [x] Ensure detail updates instantly after save/clear (N/A: covered by direct edit modal)
 
 ### Phase 5: QA and Regression Safety
-- [ ] Edge-case checks (start=end same day, toggling period off, past/future dates)
-- [ ] Confirm no breakage in existing cycle calendar logic
-- [ ] Confirm reminders/notifications unaffected
-- [ ] Confirm widgets unaffected
-- [ ] Backup/restore round-trip verification
-- [ ] Final UX cleanup for uncluttered layout
-- [ ] Welcome Tour implementation of all new features
+- [x] Edge-case checks (start=end same day, toggling period off, past/future dates)
+- [x] Confirm no breakage in existing cycle calendar logic
+- [x] Confirm reminders/notifications unaffected
+- [x] Confirm widgets unaffected
+- [x] Backup/restore round-trip verification
+- [x] Final UX cleanup for uncluttered layout
+- [x] Welcome Tour implementation of all new features
+- [ ] Add all missing strings
 
 ### Phase 6: Release Readiness
 - [ ] Update README/help text for new feature

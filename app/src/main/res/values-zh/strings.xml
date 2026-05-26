@@ -549,4 +549,45 @@
     <string name="welcome_start_tour">开始向导</string>
     <string name="welcome_subtitle">MyRingReminder 避孕环提醒</string>
     <string name="welcome_title">欢迎使用 👋</string>
+
+
+    <!-- Added missing period-tracking strings -->
+    <string name="period_modal_title_for_date">经期记录：%1$s</string>
+    <string name="period_modal_period_day">经期日</string>
+    <string name="period_modal_intensity_title">出血强度</string>
+    <string name="period_modal_symptoms_title">症状</string>
+    <string name="period_modal_markers_title">标记</string>
+    <string name="period_modal_intensity_light">轻</string>
+    <string name="period_modal_intensity_medium">中</string>
+    <string name="period_modal_intensity_heavy">重</string>
+    <string name="period_modal_pain">疼痛</string>
+    <string name="period_modal_illness">不适</string>
+    <string name="period_modal_start_marker">经期开始</string>
+    <string name="period_modal_end_marker">经期结束</string>
+    <string name="period_modal_clear">清除记录</string>
+    <string name="period_modal_validation_intensity_required">请选择出血强度。</string>
+    <string name="period_modal_validation_start_end_conflict">一天不能同时是经期开始和结束。</string>
+    <string name="period_modal_save_failed">无法保存经期记录。</string>
+    <string name="period_modal_saved_toast">经期记录已保存。</string>
+    <string name="period_modal_deleted_toast">经期记录已删除。</string>
+    <string name="period_modal_only_ring_free_toast">仅在无环周及其前后 ±4 天可用。</string>
+    <string name="period_legend_period">经期</string>
+    <string name="period_legend_pain">疼痛</string>
+    <string name="period_legend_illness">不适</string>
+    <string name="period_legend_start_end">S = 开始，E = 结束</string>
+    <string name="period_legend_start_only">S = 开始</string>
+    <string name="period_legend_end_only">E = 结束</string>
+    <string name="period_legend_title">经期</string>
+    <string name="calendar_legend_title">日历</string>
+    <string name="backup_field_period_tracking">经期追踪</string>
+    <string name="backup_field_period_tracking_entries_format">%1$d 条每日记录</string>
+    <string name="tour_body_period_entry">点击某一天可添加或编辑经期追踪。
+仅可在无环周及其前后 ±4 天内编辑。</string>
+    <string name="tour_body_period_modal">在经期记录中，可设置经期日、强度、症状（疼痛/不适）以及可选的开始/结束标记。
+使用“清除记录”可删除该日已保存的数据。</string>
+    <string name="tour_body_period_indicators">经期日会直接显示在日历中，包括强度底色、指示点和 S/E 标记。
+这样月视图依然清晰易读。</string>
+    <string name="tour_title_period_entry">经期记录</string>
+    <string name="tour_title_period_modal">经期选项</string>
+    <string name="tour_title_period_indicators">经期指示</string>
 </resources>
