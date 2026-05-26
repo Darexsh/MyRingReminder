@@ -263,6 +263,33 @@
     <string name="calendar_previous_month_desc">Vorheriger Monat</string>
     <string name="calendar_title">Kalender</string>
     <string name="calendar_today_button">Zurück zum aktuellen Datum</string>
+    <string name="period_modal_title_for_date">Periodeneintrag: %1$s</string>
+    <string name="period_modal_period_day">Periodentag</string>
+    <string name="period_modal_intensity_title">Blutungsstärke</string>
+    <string name="period_modal_symptoms_title">Symptome</string>
+    <string name="period_modal_markers_title">Markierungen</string>
+    <string name="period_modal_intensity_light">Leicht</string>
+    <string name="period_modal_intensity_medium">Mittel</string>
+    <string name="period_modal_intensity_heavy">Stark</string>
+    <string name="period_modal_pain">Schmerzen</string>
+    <string name="period_modal_illness">Krankheit</string>
+    <string name="period_modal_start_marker">Periodenstart</string>
+    <string name="period_modal_end_marker">Periodenende</string>
+    <string name="period_modal_clear">Eintrag löschen</string>
+    <string name="period_modal_validation_intensity_required">Bitte Blutungsstärke auswählen.</string>
+    <string name="period_modal_validation_start_end_conflict">Ein Tag kann nicht gleichzeitig Periodenstart und Periodenende sein.</string>
+    <string name="period_modal_save_failed">Periodeneintrag konnte nicht gespeichert werden.</string>
+    <string name="period_modal_saved_toast">Periodeneintrag gespeichert.</string>
+    <string name="period_modal_deleted_toast">Periodeneintrag gelöscht.</string>
+    <string name="period_modal_only_ring_free_toast">Nur in der ringfreien Woche und ±4 Tagen verfügbar.</string>
+    <string name="period_legend_period">Periode</string>
+    <string name="period_legend_pain">Schmerzen</string>
+    <string name="period_legend_illness">Krankheit</string>
+    <string name="period_legend_start_end">S = Start, E = Ende</string>
+    <string name="period_legend_start_only">S = Start</string>
+    <string name="period_legend_end_only">E = Ende</string>
+    <string name="period_legend_title">Periode</string>
+    <string name="calendar_legend_title">Kalender</string>
 
     <!-- Calendar Legend -->
     <string name="legend_insertion">Einsetzen</string>
@@ -349,6 +376,8 @@
     <string name="backup_field_notes_text">Notizen-Inhalt</string>
     <string name="backup_field_notification_flags_format">Benachrichtigungs-Flags: %1$d Einträge (%2$d aktiv)</string>
     <string name="backup_field_notification_hashes_format">Benachrichtigungs-Einstellungen Snapshots: %1$d Einträge</string>
+    <string name="backup_field_period_tracking">Perioden-Tracking</string>
+    <string name="backup_field_period_tracking_entries_format">%1$d Tageseinträge</string>
     <string name="backup_field_reminder_insertion">Erinnerung vor Einsetzen</string>
     <string name="backup_field_reminder_removal">Erinnerung vor Entfernen</string>
     <string name="backup_field_skip_ring_free_entries_format">Übersprungene ringfreie Wochen: %1$d</string>

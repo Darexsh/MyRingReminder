@@ -2295,6 +2295,11 @@ public class SettingsFragment extends Fragment {
             consumed.add("cycle_history");
             appendLine(builder, getString(R.string.backup_field_cycle_history) + ": " + formatCycleHistory(all.get("cycle_history")));
         }
+        if (all.containsKey("period_day_entries")) {
+            consumed.add("period_day_entries");
+            appendLine(builder, getString(R.string.backup_field_period_tracking) + ": "
+                    + formatPeriodTrackingEntries(all.get("period_day_entries")));
+        }
 
         int notificationFlags = 0;
         int notificationFlagsTrue = 0;
@@ -2602,6 +2607,26 @@ public class SettingsFragment extends Fragment {
                     format.format(new java.util.Date(minStart)),
                     format.format(new java.util.Date(maxEnd))
             );
+        } catch (Exception ignored) {
+            return getString(R.string.backup_unknown);
+        }
+    }
+
+    private String formatPeriodTrackingEntries(PrefValue value) {
+        String raw = prefToString(value, "");
+        if (raw.trim().isEmpty()) {
+            return getString(R.string.backup_import_no_entries);
+        }
+        try {
+            JsonElement element = JsonParser.parseString(raw);
+            if (!element.isJsonObject()) {
+                return getString(R.string.backup_unknown);
+            }
+            int entries = element.getAsJsonObject().size();
+            if (entries == 0) {
+                return getString(R.string.backup_import_no_entries);
+            }
+            return getString(R.string.backup_field_period_tracking_entries_format, entries);
         } catch (Exception ignored) {
             return getString(R.string.backup_unknown);
         }

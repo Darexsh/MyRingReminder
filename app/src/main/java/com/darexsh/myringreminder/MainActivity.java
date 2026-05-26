@@ -1011,7 +1011,7 @@ public class MainActivity extends AppCompatActivity {
 
         steps.add(new TourStep(R.id.nav_calendar, R.id.calendarView,
                 R.string.tour_title_calendar, R.string.tour_body_calendar, 0, false));
-        steps.add(new TourStep(R.id.nav_calendar, R.id.calendar_legend_row,
+        steps.add(new TourStep(R.id.nav_calendar, R.id.legend_tables_row,
                 R.string.tour_title_calendar_legend, R.string.tour_body_calendar_legend, 0, false));
 
         steps.add(new TourStep(R.id.nav_cycles, R.id.tv_history_title,

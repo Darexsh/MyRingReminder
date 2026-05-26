@@ -263,6 +263,33 @@
     <string name="calendar_previous_month_desc">Previous month</string>
     <string name="calendar_title">Calendar</string>
     <string name="calendar_today_button">Back to current date</string>
+    <string name="period_modal_title_for_date">Period entry: %1$s</string>
+    <string name="period_modal_period_day">Period day</string>
+    <string name="period_modal_intensity_title">Bleeding intensity</string>
+    <string name="period_modal_symptoms_title">Symptoms</string>
+    <string name="period_modal_markers_title">Markers</string>
+    <string name="period_modal_intensity_light">Light</string>
+    <string name="period_modal_intensity_medium">Medium</string>
+    <string name="period_modal_intensity_heavy">Heavy</string>
+    <string name="period_modal_pain">Pain</string>
+    <string name="period_modal_illness">Illness</string>
+    <string name="period_modal_start_marker">Period start</string>
+    <string name="period_modal_end_marker">Period end</string>
+    <string name="period_modal_clear">Clear entry</string>
+    <string name="period_modal_validation_intensity_required">Please select bleeding intensity.</string>
+    <string name="period_modal_validation_start_end_conflict">A day cannot be both period start and period end.</string>
+    <string name="period_modal_save_failed">Could not save period entry.</string>
+    <string name="period_modal_saved_toast">Period entry saved.</string>
+    <string name="period_modal_deleted_toast">Period entry deleted.</string>
+    <string name="period_modal_only_ring_free_toast">Available only in ring-free week and ±4 days.</string>
+    <string name="period_legend_period">Period</string>
+    <string name="period_legend_pain">Pain</string>
+    <string name="period_legend_illness">Illness</string>
+    <string name="period_legend_start_end">S = Start, E = End</string>
+    <string name="period_legend_start_only">S = Start</string>
+    <string name="period_legend_end_only">E = End</string>
+    <string name="period_legend_title">Period</string>
+    <string name="calendar_legend_title">Calendar</string>
 
     <!-- Calendar Legend -->
     <string name="legend_insertion">Insertion</string>
@@ -349,6 +376,8 @@
     <string name="backup_field_notes_text">Notes content</string>
     <string name="backup_field_notification_flags_format">Notification flags: %1$d entries (%2$d active)</string>
     <string name="backup_field_notification_hashes_format">Notification settings snapshots: %1$d entries</string>
+    <string name="backup_field_period_tracking">Period tracking</string>
+    <string name="backup_field_period_tracking_entries_format">%1$d day entries</string>
     <string name="backup_field_reminder_insertion">Reminder before insertion</string>
     <string name="backup_field_reminder_removal">Reminder before removal</string>
     <string name="backup_field_skip_ring_free_entries_format">Skipped ring-free week entries: %1$d</string>

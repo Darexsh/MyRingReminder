@@ -5,27 +5,15 @@
     android:layout_height="match_parent"
     android:padding="16dp">
 
-    <TextView
-        android:id="@+id/title_text"
-        android:text="@string/calendar_title"
-        android:textSize="26sp"
-        android:textStyle="bold"
-        android:layout_marginBottom="16dp"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent" />
-
     <LinearLayout
         android:id="@+id/calendar_nav_row"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginTop="16dp"
+        android:layout_marginTop="8dp"
         android:layout_marginBottom="8dp"
         android:gravity="center_vertical"
         android:orientation="horizontal"
-        app:layout_constraintTop_toBottomOf="@id/title_text"
+        app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent">
 
@@ -104,103 +92,386 @@
         app:layout_constraintEnd_toEndOf="parent" />
 
     <LinearLayout
-        android:id="@+id/calendar_legend_row"
+        android:id="@+id/legend_tables_row"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        android:gravity="center"
-        android:paddingTop="8dp"
+        android:layout_marginTop="8dp"
         android:paddingBottom="8dp"
+        android:orientation="horizontal"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent">
 
-        <!-- Green (Wear time) -->
+        <LinearLayout
+            android:id="@+id/legend_period_column"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="8dp"
+            android:layout_marginEnd="8dp"
+            android:layout_weight="1"
+            android:gravity="center_horizontal"
+            android:orientation="vertical">
+
+            <TextView
+                android:layout_width="112dp"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="6dp"
+                android:gravity="start"
+                android:text="@string/period_legend_title"
+                android:textSize="15sp"
+                android:textStyle="bold" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:minHeight="34dp"
+                android:gravity="center"
+                android:paddingStart="4dp"
+                android:paddingEnd="4dp"
+                android:orientation="horizontal">
+
+                <LinearLayout
+                    android:layout_width="112dp"
+                    android:layout_height="wrap_content"
+                    android:gravity="start|center_vertical"
+                    android:orientation="horizontal">
+
+                    <View
+                        android:layout_width="8dp"
+                        android:layout_height="8dp"
+                        android:layout_marginEnd="4dp"
+                        android:background="@drawable/circle_red" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/period_legend_period"
+                        android:textSize="14sp" />
+                </LinearLayout>
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="2dp"
+                android:minHeight="34dp"
+                android:gravity="center"
+                android:paddingStart="4dp"
+                android:paddingEnd="4dp"
+                android:orientation="horizontal">
+
+                <LinearLayout
+                    android:layout_width="112dp"
+                    android:layout_height="wrap_content"
+                    android:gravity="start|center_vertical"
+                    android:orientation="horizontal">
+
+                    <View
+                        android:layout_width="8dp"
+                        android:layout_height="8dp"
+                        android:layout_marginEnd="4dp"
+                        android:background="@drawable/circle_yellow" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/period_legend_pain"
+                        android:textSize="14sp" />
+                </LinearLayout>
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="2dp"
+                android:minHeight="34dp"
+                android:gravity="center"
+                android:paddingStart="4dp"
+                android:paddingEnd="4dp"
+                android:orientation="horizontal">
+
+                <LinearLayout
+                    android:layout_width="112dp"
+                    android:layout_height="wrap_content"
+                    android:gravity="start|center_vertical"
+                    android:orientation="horizontal">
+
+                    <View
+                        android:layout_width="8dp"
+                        android:layout_height="8dp"
+                        android:layout_marginEnd="4dp"
+                        android:background="@drawable/circle_cyan" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/period_legend_illness"
+                        android:textSize="14sp" />
+                </LinearLayout>
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="112dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="4dp"
+                android:orientation="vertical">
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:gravity="start"
+                    android:text="@string/period_legend_start_only"
+                    android:textSize="14sp"
+                    android:textStyle="bold" />
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:gravity="start"
+                    android:text="@string/period_legend_end_only"
+                    android:textSize="14sp"
+                    android:textStyle="bold" />
+            </LinearLayout>
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/legend_calendar_column"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="8dp"
+            android:layout_marginEnd="8dp"
+            android:layout_weight="1"
+            android:gravity="center_horizontal"
+            android:orientation="vertical">
+
+            <TextView
+                android:layout_width="128dp"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="6dp"
+                android:gravity="start"
+                android:text="@string/calendar_legend_title"
+                android:textSize="15sp"
+                android:textStyle="bold" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:minHeight="36dp"
+                android:gravity="center"
+                android:paddingStart="6dp"
+                android:paddingEnd="6dp"
+                android:orientation="horizontal">
+
+                <LinearLayout
+                    android:layout_width="128dp"
+                    android:layout_height="wrap_content"
+                    android:gravity="start|center_vertical"
+                    android:orientation="horizontal">
+
+                    <View
+                        android:id="@+id/view_legend_wear"
+                        android:layout_width="14dp"
+                        android:layout_height="14dp"
+                        android:layout_marginEnd="8dp"
+                        android:background="@drawable/circle_green" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/legend_wear_time"
+                        android:textSize="14sp" />
+                </LinearLayout>
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="2dp"
+                android:minHeight="36dp"
+                android:gravity="center"
+                android:paddingStart="6dp"
+                android:paddingEnd="6dp"
+                android:orientation="horizontal">
+
+                <LinearLayout
+                    android:layout_width="128dp"
+                    android:layout_height="wrap_content"
+                    android:gravity="start|center_vertical"
+                    android:orientation="horizontal">
+
+                    <View
+                        android:id="@+id/view_legend_ring_free"
+                        android:layout_width="14dp"
+                        android:layout_height="14dp"
+                        android:layout_marginEnd="8dp"
+                        android:background="@drawable/circle_red" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/legend_ring_free"
+                        android:textSize="14sp" />
+                </LinearLayout>
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="2dp"
+                android:minHeight="36dp"
+                android:gravity="center"
+                android:paddingStart="6dp"
+                android:paddingEnd="6dp"
+                android:orientation="horizontal">
+
+                <LinearLayout
+                    android:layout_width="128dp"
+                    android:layout_height="wrap_content"
+                    android:gravity="start|center_vertical"
+                    android:orientation="horizontal">
+
+                    <View
+                        android:id="@+id/view_legend_removal"
+                        android:layout_width="14dp"
+                        android:layout_height="14dp"
+                        android:layout_marginEnd="8dp"
+                        android:background="@drawable/circle_yellow" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/legend_removal"
+                        android:textSize="14sp" />
+                </LinearLayout>
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="2dp"
+                android:minHeight="36dp"
+                android:gravity="center"
+                android:paddingStart="6dp"
+                android:paddingEnd="6dp"
+                android:orientation="horizontal">
+
+                <LinearLayout
+                    android:layout_width="128dp"
+                    android:layout_height="wrap_content"
+                    android:gravity="start|center_vertical"
+                    android:orientation="horizontal">
+
+                    <View
+                        android:id="@+id/view_legend_insertion"
+                        android:layout_width="14dp"
+                        android:layout_height="14dp"
+                        android:layout_marginEnd="8dp"
+                        android:background="@drawable/circle_cyan" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/legend_insertion"
+                        android:textSize="14sp" />
+                </LinearLayout>
+            </LinearLayout>
+        </LinearLayout>
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/legend_original_row"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:paddingTop="8dp"
+        android:paddingBottom="8dp"
+        android:gravity="center"
+        android:orientation="horizontal"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent">
+
         <LinearLayout
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:orientation="vertical"
             android:layout_margin="8dp"
-            android:gravity="center">
+            android:gravity="center"
+            android:orientation="vertical">
 
             <View
-                android:id="@+id/view_legend_wear"
+                android:id="@+id/view_legend_wear_original"
                 android:layout_width="20dp"
                 android:layout_height="20dp"
                 android:background="@drawable/circle_green" />
 
             <TextView
-                android:text="@string/legend_wear_time"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:textSize="14sp"
-                android:layout_marginTop="4dp" />
+                android:layout_marginTop="4dp"
+                android:text="@string/legend_wear_time"
+                android:textSize="14sp" />
         </LinearLayout>
 
-        <!-- Red (Ring-free days) -->
         <LinearLayout
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:orientation="vertical"
             android:layout_margin="8dp"
-            android:gravity="center">
+            android:gravity="center"
+            android:orientation="vertical">
 
             <View
-                android:id="@+id/view_legend_ring_free"
+                android:id="@+id/view_legend_ring_free_original"
                 android:layout_width="20dp"
                 android:layout_height="20dp"
                 android:background="@drawable/circle_red" />
 
             <TextView
-                android:text="@string/legend_ring_free"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:textSize="14sp"
-                android:layout_marginTop="4dp" />
+                android:layout_marginTop="4dp"
+                android:text="@string/legend_ring_free"
+                android:textSize="14sp" />
         </LinearLayout>
 
-        <!-- Yellow (Removal) -->
         <LinearLayout
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:orientation="vertical"
             android:layout_margin="8dp"
-            android:gravity="center">
+            android:gravity="center"
+            android:orientation="vertical">
 
             <View
-                android:id="@+id/view_legend_removal"
+                android:id="@+id/view_legend_removal_original"
                 android:layout_width="20dp"
                 android:layout_height="20dp"
                 android:background="@drawable/circle_yellow" />
 
             <TextView
-                android:text="@string/legend_removal"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:textSize="14sp"
-                android:layout_marginTop="4dp" />
+                android:layout_marginTop="4dp"
+                android:text="@string/legend_removal"
+                android:textSize="14sp" />
         </LinearLayout>
 
-        <!-- Cyan (Insertion) -->
         <LinearLayout
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:orientation="vertical"
             android:layout_margin="8dp"
-            android:gravity="center">
+            android:gravity="center"
+            android:orientation="vertical">
 
             <View
-                android:id="@+id/view_legend_insertion"
+                android:id="@+id/view_legend_insertion_original"
                 android:layout_width="20dp"
                 android:layout_height="20dp"
                 android:background="@drawable/circle_cyan" />
 
             <TextView
-                android:text="@string/legend_insertion"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:textSize="14sp"
-                android:layout_marginTop="4dp" />
+                android:layout_marginTop="4dp"
+                android:text="@string/legend_insertion"
+                android:textSize="14sp" />
         </LinearLayout>
     </LinearLayout>
 

@@ -20,16 +20,27 @@ import android.widget.TextView;
 import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.NumberPicker;
+import android.widget.LinearLayout;
 import android.content.res.ColorStateList;
 import androidx.core.graphics.ColorUtils;
+import com.google.android.material.switchmaterial.SwitchMaterial;
+import com.google.android.material.chip.Chip;
+import com.google.android.material.chip.ChipGroup;
+import com.google.android.material.button.MaterialButton;
 import com.prolificinteractive.materialcalendarview.CalendarDay;
 import com.prolificinteractive.materialcalendarview.MaterialCalendarView;
 import com.prolificinteractive.materialcalendarview.DayViewDecorator;
 import com.prolificinteractive.materialcalendarview.DayViewFacade;
 import java.text.DateFormatSymbols;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.Collections;
+import java.util.Comparator;
+import java.util.List;
 import java.util.Locale;
+import java.util.HashSet;
+import java.util.Map;
 import java.util.Set;
 
 public class CalendarFragment extends Fragment {
@@ -40,6 +51,14 @@ public class CalendarFragment extends Fragment {
     private View legendRingFreeView;
     private View legendRemovalView;
     private View legendInsertionView;
+    private View legendTablesRow;
+    private View legendPeriodColumn;
+    private View legendCalendarColumn;
+    private View legendOriginalRow;
+    private View legendWearOriginalView;
+    private View legendRingFreeOriginalView;
+    private View legendRemovalOriginalView;
+    private View legendInsertionOriginalView;
     private TextView monthSelectorView;
     private com.google.android.material.button.MaterialButton todayButton;
     private static final int CALENDAR_ALPHA = 127;
@@ -47,6 +66,19 @@ public class CalendarFragment extends Fragment {
     private int[] colorValues;
     private String[] colorLabels;
     private boolean calendarUpdateScheduled = false;
+    private Set<CalendarDay> currentPeriodEntryAllowedDays = new HashSet<>();
+    private List<RingFreeWindow> currentRingFreeWindows = new ArrayList<>();
+    private static final int PERIOD_ENTRY_TOLERANCE_DAYS = 4;
+
+    private static class RingFreeWindow {
+        final CalendarDay start;
+        final CalendarDay end;
+
+        RingFreeWindow(CalendarDay start, CalendarDay end) {
+            this.start = start;
+            this.end = end;
+        }
+    }
 
     private interface ColorConsumer {
         void accept(int color);
@@ -66,17 +98,38 @@ public class CalendarFragment extends Fragment {
         todayButton = view.findViewById(R.id.btn_calendar_today);
         calendarView.setTopbarVisible(false);
         calendarView.setDynamicHeightEnabled(true);
-        calendarView.setSelectionMode(MaterialCalendarView.SELECTION_MODE_NONE);
+        calendarView.setSelectionMode(MaterialCalendarView.SELECTION_MODE_SINGLE);
         calendarView.setDateTextAppearance(R.style.Theme_MyRingReminder);
         calendarView.post(() -> tintCalendarArrows(resolveCalendarHeaderColor()));
         calendarView.setOnMonthChangedListener((widget, date) -> {
             updateMonthSelectorText();
             updateTodayButtonVisibility();
+            updateLegendModeForCurrentMonth();
+        });
+        calendarView.setOnDateChangedListener((widget, date, selected) -> {
+            if (currentPeriodEntryAllowedDays.contains(date)) {
+                showPeriodEntryDialog(date);
+            } else {
+                android.widget.Toast.makeText(
+                        requireContext(),
+                        R.string.period_modal_only_ring_free_toast,
+                        android.widget.Toast.LENGTH_SHORT
+                ).show();
+                calendarView.clearSelection();
+            }
         });
         legendWearView = view.findViewById(R.id.view_legend_wear);
         legendRingFreeView = view.findViewById(R.id.view_legend_ring_free);
         legendRemovalView = view.findViewById(R.id.view_legend_removal);
         legendInsertionView = view.findViewById(R.id.view_legend_insertion);
+        legendTablesRow = view.findViewById(R.id.legend_tables_row);
+        legendPeriodColumn = view.findViewById(R.id.legend_period_column);
+        legendCalendarColumn = view.findViewById(R.id.legend_calendar_column);
+        legendOriginalRow = view.findViewById(R.id.legend_original_row);
+        legendWearOriginalView = view.findViewById(R.id.view_legend_wear_original);
+        legendRingFreeOriginalView = view.findViewById(R.id.view_legend_ring_free_original);
+        legendRemovalOriginalView = view.findViewById(R.id.view_legend_removal_original);
+        legendInsertionOriginalView = view.findViewById(R.id.view_legend_insertion_original);
         if (monthSelectorView != null) {
             monthSelectorView.setOnClickListener(v -> showMonthYearPickerDialog());
         }
@@ -98,8 +151,24 @@ public class CalendarFragment extends Fragment {
                     viewModel::setCalendarWearColor
             ));
         }
+        if (legendWearOriginalView != null) {
+            legendWearOriginalView.setOnClickListener(v -> showLegendColorDialog(
+                    R.string.settings_calendar_wear_color_dialog_title,
+                    R.string.settings_calendar_wear_color_custom_title,
+                    getCalendarWearColor(),
+                    viewModel::setCalendarWearColor
+            ));
+        }
         if (legendRingFreeView != null) {
             legendRingFreeView.setOnClickListener(v -> showLegendColorDialog(
+                    R.string.settings_calendar_ring_free_color_dialog_title,
+                    R.string.settings_calendar_ring_free_color_custom_title,
+                    getCalendarRingFreeColor(),
+                    viewModel::setCalendarRingFreeColor
+            ));
+        }
+        if (legendRingFreeOriginalView != null) {
+            legendRingFreeOriginalView.setOnClickListener(v -> showLegendColorDialog(
                     R.string.settings_calendar_ring_free_color_dialog_title,
                     R.string.settings_calendar_ring_free_color_custom_title,
                     getCalendarRingFreeColor(),
@@ -114,8 +183,24 @@ public class CalendarFragment extends Fragment {
                     viewModel::setCalendarRemovalColor
             ));
         }
+        if (legendRemovalOriginalView != null) {
+            legendRemovalOriginalView.setOnClickListener(v -> showLegendColorDialog(
+                    R.string.settings_calendar_removal_color_dialog_title,
+                    R.string.settings_calendar_removal_color_custom_title,
+                    getCalendarRemovalColor(),
+                    viewModel::setCalendarRemovalColor
+            ));
+        }
         if (legendInsertionView != null) {
             legendInsertionView.setOnClickListener(v -> showLegendColorDialog(
+                    R.string.settings_calendar_insertion_color_dialog_title,
+                    R.string.settings_calendar_insertion_color_custom_title,
+                    getCalendarInsertionColor(),
+                    viewModel::setCalendarInsertionColor
+            ));
+        }
+        if (legendInsertionOriginalView != null) {
+            legendInsertionOriginalView.setOnClickListener(v -> showLegendColorDialog(
                     R.string.settings_calendar_insertion_color_dialog_title,
                     R.string.settings_calendar_insertion_color_custom_title,
                     getCalendarInsertionColor(),
@@ -187,6 +272,7 @@ public class CalendarFragment extends Fragment {
         updateLegendColors();
         updateMonthSelectorText();
         updateTodayButtonVisibility();
+        updateLegendModeForCurrentMonth();
     }
 
     // Retrieve start date
@@ -255,6 +341,97 @@ public class CalendarFragment extends Fragment {
         if (!snapshot.insertionDays.isEmpty()) {
             calendarView.addDecorator(new SetDayDecorator(insertionColor, snapshot.insertionDays));
         }
+        applyPeriodTrackingDecorators();
+        currentRingFreeWindows = buildRingFreeWindows(snapshot.ringFreeDays);
+        currentPeriodEntryAllowedDays = buildAllowedPeriodEntryDays(currentRingFreeWindows, PERIOD_ENTRY_TOLERANCE_DAYS);
+    }
+
+    private void applyPeriodTrackingDecorators() {
+        Map<String, PeriodDayEntry> allEntries = viewModel.getRepository().getAllPeriodDayEntries();
+        if (allEntries == null || allEntries.isEmpty()) {
+            return;
+        }
+
+        Set<CalendarDay> lightDays = new HashSet<>();
+        Set<CalendarDay> mediumDays = new HashSet<>();
+        Set<CalendarDay> heavyDays = new HashSet<>();
+        Set<CalendarDay> bloodDays = new HashSet<>();
+        Set<CalendarDay> painDays = new HashSet<>();
+        Set<CalendarDay> illnessDays = new HashSet<>();
+        Set<CalendarDay> startDays = new HashSet<>();
+        Set<CalendarDay> endDays = new HashSet<>();
+
+        for (Map.Entry<String, PeriodDayEntry> item : allEntries.entrySet()) {
+            PeriodDayEntry entry = item.getValue();
+            if (entry == null || !entry.isPeriodDay()) {
+                continue;
+            }
+            CalendarDay day = parseCalendarDayKey(item.getKey());
+            if (day == null) {
+                continue;
+            }
+            bloodDays.add(day);
+            if (entry.getIntensity() == BleedingIntensity.LIGHT) {
+                lightDays.add(day);
+            } else if (entry.getIntensity() == BleedingIntensity.MEDIUM) {
+                mediumDays.add(day);
+            } else if (entry.getIntensity() == BleedingIntensity.HEAVY) {
+                heavyDays.add(day);
+            }
+            if (entry.hasPain()) {
+                painDays.add(day);
+            }
+            if (entry.hasIllness()) {
+                illnessDays.add(day);
+            }
+            if (entry.isStart()) {
+                startDays.add(day);
+            }
+            if (entry.isEnd()) {
+                endDays.add(day);
+            }
+        }
+
+        if (!lightDays.isEmpty()) {
+            calendarView.addDecorator(new SetDayDecorator(0x88EF9A9A, lightDays));
+        }
+        if (!mediumDays.isEmpty()) {
+            calendarView.addDecorator(new SetDayDecorator(0x99EF5350, mediumDays));
+        }
+        if (!heavyDays.isEmpty()) {
+            calendarView.addDecorator(new SetDayDecorator(0xCCB71C1C, heavyDays));
+        }
+
+        if (!bloodDays.isEmpty()) {
+            calendarView.addDecorator(new DaySpanDecorator(bloodDays, new IndicatorDotSpan(0, 0xFFFF5252, 5.6f)));
+        }
+        if (!painDays.isEmpty()) {
+            calendarView.addDecorator(new DaySpanDecorator(painDays, new IndicatorDotSpan(-20f, 0xFFFFB300, 5.6f)));
+        }
+        if (!illnessDays.isEmpty()) {
+            calendarView.addDecorator(new DaySpanDecorator(illnessDays, new IndicatorDotSpan(20f, 0xFF40C4FF, 5.6f)));
+        }
+        if (!startDays.isEmpty()) {
+            calendarView.addDecorator(new DaySpanDecorator(startDays, new CornerLabelSpan("S", -27f, 0xFFFFFFFF)));
+        }
+        if (!endDays.isEmpty()) {
+            calendarView.addDecorator(new DaySpanDecorator(endDays, new CornerLabelSpan("E", 27f, 0xFFFFFFFF)));
+        }
+    }
+
+    @Nullable
+    private CalendarDay parseCalendarDayKey(String key) {
+        if (key == null || key.length() != 10) {
+            return null;
+        }
+        try {
+            int year = Integer.parseInt(key.substring(0, 4));
+            int month = Integer.parseInt(key.substring(5, 7));
+            int day = Integer.parseInt(key.substring(8, 10));
+            return CalendarDay.from(year, month, day);
+        } catch (Exception ignored) {
+            return null;
+        }
     }
 
     private void tintCalendarArrows(int color) {
@@ -266,6 +443,10 @@ public class CalendarFragment extends Fragment {
         applyLegendColor(legendRingFreeView, getCalendarRingFreeColor());
         applyLegendColor(legendRemovalView, getCalendarRemovalColor());
         applyLegendColor(legendInsertionView, getCalendarInsertionColor());
+        applyLegendColor(legendWearOriginalView, getCalendarWearColor());
+        applyLegendColor(legendRingFreeOriginalView, getCalendarRingFreeColor());
+        applyLegendColor(legendRemovalOriginalView, getCalendarRemovalColor());
+        applyLegendColor(legendInsertionOriginalView, getCalendarInsertionColor());
         applyTodayButtonStyle();
     }
 
@@ -512,6 +693,116 @@ public class CalendarFragment extends Fragment {
         }
     }
 
+    private static class DaySpanDecorator implements DayViewDecorator {
+        private final Set<CalendarDay> days;
+        private final LineBackgroundSpan span;
+
+        DaySpanDecorator(Set<CalendarDay> days, LineBackgroundSpan span) {
+            this.days = days;
+            this.span = span;
+        }
+
+        @Override
+        public boolean shouldDecorate(CalendarDay day) {
+            return days.contains(day);
+        }
+
+        @Override
+        public void decorate(DayViewFacade view) {
+            view.addSpan(span);
+        }
+    }
+
+    private static class IndicatorDotSpan implements LineBackgroundSpan {
+        private final float xOffset;
+        private final int color;
+        private final float radius;
+
+        IndicatorDotSpan(float xOffset, int color, float radius) {
+            this.xOffset = xOffset;
+            this.color = color;
+            this.radius = radius;
+        }
+
+        @Override
+        public void drawBackground(@NonNull android.graphics.Canvas canvas,
+                                   @NonNull Paint paint,
+                                   int left,
+                                   int right,
+                                   int top,
+                                   int baseline,
+                                   int bottom,
+                                   @NonNull CharSequence text,
+                                   int start,
+                                   int end,
+                                   int lineNum) {
+            int oldColor = paint.getColor();
+            Paint.Style oldStyle = paint.getStyle();
+            float oldStroke = paint.getStrokeWidth();
+            paint.setColor(color);
+            paint.setStyle(Paint.Style.FILL);
+            float cx = (left + right) / 2f + xOffset;
+            float cy = bottom + 2f;
+            canvas.drawCircle(cx, cy, radius + 2.6f, outlinePaint(0xF0111111));
+            canvas.drawCircle(cx, cy, radius + 1.2f, outlinePaint(0xCCFFFFFF));
+            canvas.drawCircle(cx, cy, radius, paint);
+            paint.setColor(oldColor);
+            paint.setStyle(oldStyle);
+            paint.setStrokeWidth(oldStroke);
+        }
+    }
+
+    private static class CornerLabelSpan implements LineBackgroundSpan {
+        private final String label;
+        private final float xOffset;
+        private final int color;
+
+        CornerLabelSpan(String label, float xOffset, int color) {
+            this.label = label;
+            this.xOffset = xOffset;
+            this.color = color;
+        }
+
+        @Override
+        public void drawBackground(@NonNull android.graphics.Canvas canvas,
+                                   @NonNull Paint paint,
+                                   int left,
+                                   int right,
+                                   int top,
+                                   int baseline,
+                                   int bottom,
+                                   @NonNull CharSequence text,
+                                   int start,
+                                   int end,
+                                   int lineNum) {
+            int oldColor = paint.getColor();
+            float oldTextSize = paint.getTextSize();
+            Paint.Align oldAlign = paint.getTextAlign();
+            Paint.Style oldStyle = paint.getStyle();
+            paint.setColor(color);
+            paint.setTextSize(oldTextSize * 0.78f);
+            paint.setTextAlign(Paint.Align.CENTER);
+            float x = (left + right) / 2f + xOffset;
+            float y = top + 21f;
+            float circleRadius = paint.getTextSize() * 0.58f;
+            canvas.drawCircle(x, y - paint.getTextSize() * 0.34f, circleRadius, outlinePaint(0xB0111111));
+            paint.setStyle(Paint.Style.FILL);
+            canvas.drawText(label, x, y, paint);
+            paint.setColor(oldColor);
+            paint.setTextSize(oldTextSize);
+            paint.setTextAlign(oldAlign);
+            paint.setStyle(oldStyle);
+        }
+    }
+
+
+    private static Paint outlinePaint(int color) {
+        Paint p = new Paint(Paint.ANTI_ALIAS_FLAG);
+        p.setColor(color);
+        p.setStyle(Paint.Style.FILL);
+        return p;
+    }
+
     // Today border decorator
     private static class TodayBorderDecorator implements DayViewDecorator {
         private final CalendarDay today = CalendarDay.today();
@@ -653,4 +944,380 @@ public class CalendarFragment extends Fragment {
                 && currentDay.getMonth() == now.get(Calendar.MONTH) + 1;
         todayButton.setVisibility(sameMonth ? View.GONE : View.VISIBLE);
     }
+
+    private void updateLegendModeForCurrentMonth() {
+        if (legendTablesRow == null || legendPeriodColumn == null || legendCalendarColumn == null
+                || legendOriginalRow == null || calendarView == null || viewModel == null) {
+            return;
+        }
+        LinearLayout legendRow = (LinearLayout) legendTablesRow;
+        CalendarDay current = calendarView.getCurrentDate();
+        if (current == null) {
+            return;
+        }
+        boolean hasPeriodData = hasPeriodEntryInMonth(current.getYear(), current.getMonth());
+        legendPeriodColumn.setVisibility(hasPeriodData ? View.VISIBLE : View.GONE);
+        legendOriginalRow.setVisibility(hasPeriodData ? View.GONE : View.VISIBLE);
+        legendTablesRow.setVisibility(hasPeriodData ? View.VISIBLE : View.GONE);
+
+        LinearLayout.LayoutParams params = (LinearLayout.LayoutParams) legendCalendarColumn.getLayoutParams();
+        if (hasPeriodData) {
+            legendRow.setGravity(android.view.Gravity.NO_GRAVITY);
+            params.width = 0;
+            params.weight = 1f;
+        }
+        legendCalendarColumn.setLayoutParams(params);
+    }
+
+    private boolean hasPeriodEntryInMonth(int year, int monthOneBased) {
+        Map<String, PeriodDayEntry> entries = viewModel.getRepository().getAllPeriodDayEntries();
+        if (entries == null || entries.isEmpty()) {
+            return false;
+        }
+        for (Map.Entry<String, PeriodDayEntry> item : entries.entrySet()) {
+            PeriodDayEntry entry = item.getValue();
+            if (entry == null || !entry.isPeriodDay()) {
+                continue;
+            }
+            CalendarDay day = parseCalendarDayKey(item.getKey());
+            if (day == null) {
+                continue;
+            }
+            if (day.getYear() == year && day.getMonth() == monthOneBased) {
+                return true;
+            }
+        }
+        return false;
+    }
+
+    private void showPeriodEntryDialog(@NonNull CalendarDay day) {
+        SettingsRepository repository = viewModel.getRepository();
+        Calendar selectedDay = Calendar.getInstance();
+        selectedDay.set(day.getYear(), day.getMonth() - 1, day.getDay(), 0, 0, 0);
+        selectedDay.set(Calendar.MILLISECOND, 0);
+        String dateKey = repository.buildPeriodDateKey(selectedDay);
+        PeriodDayEntry existing = repository.getPeriodDayEntry(dateKey);
+        boolean firstEntryInRingFreeWeek = isFirstPeriodEntryInCurrentRingFreeWeek(repository, day, dateKey);
+        boolean hasAnotherStartInRingFreeWeek = hasOtherStartInCurrentRingFreeWeek(repository, day, dateKey);
+
+        View layout = LayoutInflater.from(requireContext()).inflate(R.layout.dialog_period_entry, null);
+        SwitchMaterial periodDaySwitch = layout.findViewById(R.id.switch_period_day);
+        TextView intensityTitle = layout.findViewById(R.id.tv_period_intensity_title);
+        TextView symptomsTitle = layout.findViewById(R.id.tv_period_symptoms_title);
+        TextView markersTitle = layout.findViewById(R.id.tv_period_markers_title);
+        ChipGroup intensityGroup = layout.findViewById(R.id.chip_group_intensity);
+        Chip light = layout.findViewById(R.id.chip_intensity_light);
+        Chip medium = layout.findViewById(R.id.chip_intensity_medium);
+        Chip heavy = layout.findViewById(R.id.chip_intensity_heavy);
+        Chip painChip = layout.findViewById(R.id.chip_pain);
+        Chip illnessChip = layout.findViewById(R.id.chip_illness);
+        Chip startChip = layout.findViewById(R.id.chip_start);
+        Chip endChip = layout.findViewById(R.id.chip_end);
+        MaterialButton btnDelete = layout.findViewById(R.id.btn_period_delete);
+        MaterialButton btnCancel = layout.findViewById(R.id.btn_period_cancel);
+        MaterialButton btnSave = layout.findViewById(R.id.btn_period_save);
+        stylePeriodIntensityChips(light, medium, heavy);
+
+        final boolean[] pendingAutoStartSuggestion = new boolean[]{false};
+        if (existing != null) {
+            periodDaySwitch.setChecked(existing.isPeriodDay());
+            painChip.setChecked(existing.hasPain());
+            illnessChip.setChecked(existing.hasIllness());
+            startChip.setChecked(existing.isStart());
+            endChip.setChecked(existing.isEnd());
+            if (existing.getIntensity() == BleedingIntensity.LIGHT) {
+                light.setChecked(true);
+            } else if (existing.getIntensity() == BleedingIntensity.MEDIUM) {
+                medium.setChecked(true);
+            } else if (existing.getIntensity() == BleedingIntensity.HEAVY) {
+                heavy.setChecked(true);
+            }
+        } else if (firstEntryInRingFreeWeek) {
+            pendingAutoStartSuggestion[0] = true;
+        }
+
+        Runnable toggleEnabledState = () -> {
+            boolean enabled = periodDaySwitch.isChecked();
+            intensityTitle.setEnabled(enabled);
+            symptomsTitle.setEnabled(enabled);
+            markersTitle.setEnabled(enabled);
+            light.setEnabled(enabled);
+            medium.setEnabled(enabled);
+            heavy.setEnabled(enabled);
+            painChip.setEnabled(enabled);
+            illnessChip.setEnabled(enabled);
+            startChip.setEnabled(enabled);
+            endChip.setEnabled(enabled);
+            if (!enabled) {
+                intensityGroup.clearCheck();
+                painChip.setChecked(false);
+                illnessChip.setChecked(false);
+                startChip.setChecked(false);
+                endChip.setChecked(false);
+                startChip.setEnabled(false);
+                endChip.setEnabled(false);
+            } else {
+                applyMarkerExclusionState(startChip, endChip, hasAnotherStartInRingFreeWeek);
+            }
+        };
+        startChip.setOnCheckedChangeListener((buttonView, isChecked) ->
+                applyMarkerExclusionState(startChip, endChip, hasAnotherStartInRingFreeWeek));
+        endChip.setOnCheckedChangeListener((buttonView, isChecked) ->
+                applyMarkerExclusionState(startChip, endChip, hasAnotherStartInRingFreeWeek));
+        periodDaySwitch.setOnCheckedChangeListener((buttonView, isChecked) -> {
+            if (isChecked && pendingAutoStartSuggestion[0]) {
+                startChip.setChecked(true);
+                pendingAutoStartSuggestion[0] = false;
+            }
+            toggleEnabledState.run();
+        });
+        toggleEnabledState.run();
+
+        String dateLabel = String.format(Locale.getDefault(), "%02d.%02d.%04d", day.getDay(), day.getMonth(), day.getYear());
+        Integer accentColor = viewModel != null ? viewModel.getButtonColor().getValue() : null;
+        if (accentColor != null) {
+            btnSave.setTextColor(accentColor);
+            btnCancel.setTextColor(accentColor);
+            btnDelete.setTextColor(accentColor);
+        }
+
+        AlertDialog dialog = new AlertDialog.Builder(requireContext())
+                .setTitle(getString(R.string.period_modal_title_for_date, dateLabel))
+                .setView(layout)
+                .create();
+
+        btnSave.setOnClickListener(v -> {
+            boolean isPeriodDay = periodDaySwitch.isChecked();
+            BleedingIntensity intensity = null;
+            int checkedId = intensityGroup.getCheckedChipId();
+            if (checkedId == light.getId()) {
+                intensity = BleedingIntensity.LIGHT;
+            } else if (checkedId == medium.getId()) {
+                intensity = BleedingIntensity.MEDIUM;
+            } else if (checkedId == heavy.getId()) {
+                intensity = BleedingIntensity.HEAVY;
+            }
+
+            if (isPeriodDay && intensity == null) {
+                android.widget.Toast.makeText(
+                        requireContext(),
+                        R.string.period_modal_validation_intensity_required,
+                        android.widget.Toast.LENGTH_SHORT
+                ).show();
+                return;
+            }
+
+            boolean saved = repository.savePeriodDayEntry(
+                    selectedDay,
+                    isPeriodDay,
+                    intensity,
+                    painChip.isChecked(),
+                    illnessChip.isChecked(),
+                    startChip.isChecked(),
+                    endChip.isChecked()
+            );
+            if (!saved) {
+                android.widget.Toast.makeText(
+                        requireContext(),
+                        R.string.period_modal_save_failed,
+                        android.widget.Toast.LENGTH_SHORT
+                ).show();
+                return;
+            }
+            android.widget.Toast.makeText(
+                    requireContext(),
+                    R.string.period_modal_saved_toast,
+                    android.widget.Toast.LENGTH_SHORT
+            ).show();
+            dialog.dismiss();
+            calendarView.clearSelection();
+            requestCalendarUpdate();
+        });
+
+        btnCancel.setOnClickListener(v -> {
+            dialog.dismiss();
+            calendarView.clearSelection();
+        });
+
+        btnDelete.setOnClickListener(v -> {
+            repository.deletePeriodDayEntry(dateKey);
+            android.widget.Toast.makeText(
+                    requireContext(),
+                    R.string.period_modal_deleted_toast,
+                    android.widget.Toast.LENGTH_SHORT
+            ).show();
+            dialog.dismiss();
+            calendarView.clearSelection();
+            requestCalendarUpdate();
+        });
+        btnDelete.setEnabled(existing != null);
+        btnDelete.setAlpha(existing != null ? 1f : 0.4f);
+
+        if (dialog.getWindow() != null) {
+            dialog.getWindow().setBackgroundDrawableResource(R.drawable.bg_app_info_dialog);
+        }
+        dialog.setOnDismissListener(d -> calendarView.clearSelection());
+        dialog.show();
+    }
+
+    private void applyMarkerExclusionState(Chip startChip, Chip endChip, boolean lockStartSelection) {
+        if (startChip.isChecked()) {
+            endChip.setChecked(false);
+            endChip.setEnabled(false);
+            startChip.setEnabled(true);
+            return;
+        }
+        if (endChip.isChecked()) {
+            startChip.setChecked(false);
+            startChip.setEnabled(false);
+            endChip.setEnabled(true);
+            return;
+        }
+        startChip.setEnabled(!lockStartSelection);
+        endChip.setEnabled(true);
+    }
+
+    private boolean hasOtherStartInCurrentRingFreeWeek(SettingsRepository repository,
+                                                       CalendarDay selectedDay,
+                                                       String selectedDateKey) {
+        RingFreeWindow window = findWindowForDay(selectedDay);
+        if (window == null) {
+            return false;
+        }
+        Map<String, PeriodDayEntry> allEntries = repository.getAllPeriodDayEntries();
+        for (CalendarDay ringFreeDay : daysForWindowWithTolerance(window, PERIOD_ENTRY_TOLERANCE_DAYS)) {
+            Calendar day = Calendar.getInstance();
+            day.set(ringFreeDay.getYear(), ringFreeDay.getMonth() - 1, ringFreeDay.getDay(), 0, 0, 0);
+            day.set(Calendar.MILLISECOND, 0);
+            String dateKey = repository.buildPeriodDateKey(day);
+            if (selectedDateKey.equals(dateKey)) {
+                continue;
+            }
+            PeriodDayEntry entry = allEntries.get(dateKey);
+            if (entry != null && entry.isPeriodDay() && entry.isStart()) {
+                return true;
+            }
+        }
+        return false;
+    }
+
+    private void stylePeriodIntensityChips(Chip light, Chip medium, Chip heavy) {
+        styleIntensityChip(light, 0x33FF8A80, 0xFFE57373);
+        styleIntensityChip(medium, 0x33EF5350, 0xFFEF5350);
+        styleIntensityChip(heavy, 0x33C62828, 0xFFC62828);
+    }
+
+    private void styleIntensityChip(Chip chip, int uncheckedBg, int checkedBg) {
+        int uncheckedText = 0xFFD8D8D8;
+        int checkedText = 0xFFFFFFFF;
+        int[][] states = new int[][]{
+                new int[]{android.R.attr.state_checked},
+                new int[]{}
+        };
+        int[] bgColors = new int[]{checkedBg, uncheckedBg};
+        int[] textColors = new int[]{checkedText, uncheckedText};
+        chip.setChipBackgroundColor(ColorStateList.valueOf(uncheckedBg));
+        chip.setChipBackgroundColor(new ColorStateList(states, bgColors));
+        chip.setTextColor(new ColorStateList(states, textColors));
+    }
+
+    private boolean isFirstPeriodEntryInCurrentRingFreeWeek(SettingsRepository repository,
+                                                            CalendarDay selectedDay,
+                                                            String selectedDateKey) {
+        RingFreeWindow window = findWindowForDay(selectedDay);
+        if (window == null) {
+            return false;
+        }
+        Map<String, PeriodDayEntry> allEntries = repository.getAllPeriodDayEntries();
+        for (CalendarDay ringFreeDay : daysForWindowWithTolerance(window, PERIOD_ENTRY_TOLERANCE_DAYS)) {
+            Calendar day = Calendar.getInstance();
+            day.set(ringFreeDay.getYear(), ringFreeDay.getMonth() - 1, ringFreeDay.getDay(), 0, 0, 0);
+            day.set(Calendar.MILLISECOND, 0);
+            String dateKey = repository.buildPeriodDateKey(day);
+            if (selectedDateKey.equals(dateKey)) {
+                continue;
+            }
+            PeriodDayEntry entry = allEntries.get(dateKey);
+            if (entry != null && entry.isPeriodDay()) {
+                return false;
+            }
+        }
+        return true;
+    }
+
+    private List<RingFreeWindow> buildRingFreeWindows(Set<CalendarDay> ringFreeDays) {
+        if (ringFreeDays == null || ringFreeDays.isEmpty()) {
+            return new ArrayList<>();
+        }
+        List<CalendarDay> sorted = new ArrayList<>(ringFreeDays);
+        Collections.sort(sorted, Comparator.comparingLong(this::toDayMillis));
+        List<RingFreeWindow> windows = new ArrayList<>();
+        CalendarDay runStart = sorted.get(0);
+        CalendarDay runEnd = sorted.get(0);
+        for (int i = 1; i < sorted.size(); i++) {
+            CalendarDay current = sorted.get(i);
+            long diffDays = (toDayMillis(current) - toDayMillis(runEnd)) / (24L * 60L * 60L * 1000L);
+            if (diffDays == 1L) {
+                runEnd = current;
+            } else {
+                windows.add(new RingFreeWindow(runStart, runEnd));
+                runStart = current;
+                runEnd = current;
+            }
+        }
+        windows.add(new RingFreeWindow(runStart, runEnd));
+        return windows;
+    }
+
+    private Set<CalendarDay> buildAllowedPeriodEntryDays(List<RingFreeWindow> windows, int toleranceDays) {
+        Set<CalendarDay> allowed = new HashSet<>();
+        for (RingFreeWindow window : windows) {
+            allowed.addAll(daysForWindowWithTolerance(window, toleranceDays));
+        }
+        return allowed;
+    }
+
+    private Set<CalendarDay> daysForWindowWithTolerance(RingFreeWindow window, int toleranceDays) {
+        Set<CalendarDay> days = new HashSet<>();
+        Calendar start = fromCalendarDay(window.start);
+        Calendar end = fromCalendarDay(window.end);
+        start.add(Calendar.DAY_OF_MONTH, -toleranceDays);
+        end.add(Calendar.DAY_OF_MONTH, toleranceDays);
+        while (!start.after(end)) {
+            days.add(toCalendarDay(start));
+            start.add(Calendar.DAY_OF_MONTH, 1);
+        }
+        return days;
+    }
+
+    private RingFreeWindow findWindowForDay(CalendarDay day) {
+        if (currentRingFreeWindows == null || currentRingFreeWindows.isEmpty()) {
+            return null;
+        }
+        long target = toDayMillis(day);
+        for (RingFreeWindow window : currentRingFreeWindows) {
+            Calendar start = fromCalendarDay(window.start);
+            Calendar end = fromCalendarDay(window.end);
+            start.add(Calendar.DAY_OF_MONTH, -PERIOD_ENTRY_TOLERANCE_DAYS);
+            end.add(Calendar.DAY_OF_MONTH, PERIOD_ENTRY_TOLERANCE_DAYS);
+            long startMillis = start.getTimeInMillis();
+            long endMillis = end.getTimeInMillis();
+            if (target >= startMillis && target <= endMillis) {
+                return window;
+            }
+        }
+        return null;
+    }
+
+    private Calendar fromCalendarDay(CalendarDay day) {
+        Calendar calendar = Calendar.getInstance();
+        calendar.set(day.getYear(), day.getMonth() - 1, day.getDay(), 0, 0, 0);
+        calendar.set(Calendar.MILLISECOND, 0);
+        return calendar;
+    }
+
+    private long toDayMillis(CalendarDay day) {
+        return fromCalendarDay(day).getTimeInMillis();
+    }
+
 }
