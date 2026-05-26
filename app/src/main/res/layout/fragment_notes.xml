@@ -60,7 +60,7 @@
                 android:layout_marginStart="18dp"
                 android:background="#E57373"/>
 
-            <com.darexsh.veri_aristo.LinedEditText
+            <com.darexsh.myringreminder.LinedEditText
                 android:id="@+id/editText_notes"
             android:hint="@string/notes_hint"
             android:layout_width="match_parent"

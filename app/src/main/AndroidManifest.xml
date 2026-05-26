@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
-    package="com.darexsh.veri_aristo">
+    package="com.darexsh.myringreminder">
 
     <uses-permission android:name="android.permission.POST_NOTIFICATIONS" />
     <uses-permission android:name="android.permission.USE_BIOMETRIC" />
@@ -51,7 +51,7 @@
             android:name=".WidgetUpdateReceiver"
             android:exported="true">
             <intent-filter>
-                <action android:name="com.darexsh.veri_aristo.ACTION_WIDGET_UPDATE" />
+                <action android:name="com.darexsh.myringreminder.ACTION_WIDGET_UPDATE" />
                 <action android:name="android.intent.action.BOOT_COMPLETED" />
                 <action android:name="android.intent.action.DATE_CHANGED" />
                 <action android:name="android.intent.action.TIME_SET" />

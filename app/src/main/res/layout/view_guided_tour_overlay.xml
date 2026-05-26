@@ -3,7 +3,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-    <com.darexsh.veri_aristo.GuidedTourHighlightView
+    <com.darexsh.myringreminder.GuidedTourHighlightView
         android:id="@+id/tour_highlight"
         android:layout_width="match_parent"
         android:layout_height="match_parent" />

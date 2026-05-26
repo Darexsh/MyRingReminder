@@ -20,7 +20,7 @@
         android:orientation="horizontal"
         android:gravity="center_vertical">
 
-        <com.darexsh.veri_aristo.HsvColorWheelView
+        <com.darexsh.myringreminder.HsvColorWheelView
             android:id="@+id/color_wheel"
             android:layout_width="0dp"
             android:layout_height="180dp"

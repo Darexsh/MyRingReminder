@@ -3,14 +3,14 @@ plugins {
 }
 
 android {
-    namespace 'com.darexsh.veri_aristo'
+    namespace 'com.darexsh.myringreminder'
     compileSdk 35
 
     defaultConfig {
-        applicationId "com.darexsh.veri_aristo"
+        applicationId "com.darexsh.myringreminder"
         minSdk 26
         targetSdk 35
-        versionCode 8
+        versionCode 9
         versionName "1.3.4.1"
 
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"

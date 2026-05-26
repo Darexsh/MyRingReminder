@@ -7,7 +7,7 @@ Daniel Sichler (Darexsh)
 Email: sichler.daniel@gmail.com
 
 ## 2. Scope
-This policy applies to the MyRingReminder Android app (`com.darexsh.veri_aristo`) distributed via this repository/APK releases.
+This policy applies to the MyRingReminder Android app (`com.darexsh.myringreminder`) distributed via this repository/APK releases.
 
 ## 3. What MyRingReminder processes
 MyRingReminder processes app data required for cycle tracking and personalization, including:

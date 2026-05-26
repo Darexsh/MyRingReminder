@@ -121,7 +121,7 @@
         
 2. **Install via the provided APK**:
     
-    * Download the APK from the repository (`veri_aristo_app.apk`).
+    * Download the APK from the repository (`myringreminder_app.apk`).
         
     * 🔒 Enable installation from unknown sources if prompted (required on Android 8+).
         

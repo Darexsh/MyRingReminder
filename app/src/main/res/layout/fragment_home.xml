@@ -36,7 +36,7 @@
             android:clipToPadding="false"
             android:layout_marginBottom="16dp">
 
-            <com.darexsh.veri_aristo.HomeCircleView
+            <com.darexsh.myringreminder.HomeCircleView
                 android:id="@+id/circularProgress"
                 android:layout_width="400dp"
                 android:layout_height="400dp"
