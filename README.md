@@ -40,6 +40,8 @@
 ----------
 
 * 📅 **Cycle Tracking**: Visualize insertion, removal, ring-free, and active days with color-coded calendar highlights; tap legend dots to recolor.
+
+* 🩸 **Period Tracking (Ring-Free Window)**: Tap calendar days during ring-free week (and ±4 days) to add/edit period entries with bleeding intensity, pain level (light/medium/strong), additional symptoms (for example malaise, nausea, fatigue, dizziness, diarrhea), and optional start/end markers.
     
 * 🔔 **Reminders**: Custom reminder lead times for insertion/removal, with automatic rescheduling.
     
@@ -162,6 +164,8 @@
     * Use the left/right arrows to move between months.
 
     * Tap the month label to choose a specific month and year.
+
+    * During ring-free week and ±4 days, tap a day to open **Period Entry** and save period details (intensity, pain level, symptoms, start/end markers).
             
 3. **Get Notifications**:
     

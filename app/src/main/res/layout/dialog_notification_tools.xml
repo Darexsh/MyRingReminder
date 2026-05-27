@@ -1,9 +1,22 @@
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    android:orientation="vertical"
-    android:padding="16dp">
+    android:layout_height="wrap_content">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:padding="16dp">
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/notification_section_quick_actions"
+        android:textStyle="bold"
+        android:textSize="13sp"
+        android:textColor="?attr/colorOnBackground"
+        android:layout_marginBottom="8dp" />
 
     <com.google.android.material.button.MaterialButton
         android:id="@+id/btn_notification_times"
@@ -26,6 +39,43 @@
         android:textColor="?attr/colorOnBackground"
         android:layout_marginTop="4dp"
         android:layout_marginBottom="12dp" />
+
+    <com.google.android.material.button.MaterialButton
+        android:id="@+id/btn_notification_test"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/btn_notification_test"
+        android:textAllCaps="false"
+        android:textSize="15sp"
+        app:cornerRadius="12dp"
+        app:backgroundTint="#6200EE"
+        android:textColor="#FFFFFF" />
+
+    <TextView
+        android:id="@+id/tv_notification_test_hint"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/notification_test_hint_short"
+        android:textSize="12sp"
+        android:textStyle="italic"
+        android:textColor="?attr/colorOnBackground"
+        android:layout_marginTop="4dp"
+        android:layout_marginBottom="12dp" />
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:layout_marginBottom="12dp"
+        android:background="#26FFFFFF" />
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/notification_section_permissions_reliability"
+        android:textStyle="bold"
+        android:textSize="13sp"
+        android:textColor="?attr/colorOnBackground"
+        android:layout_marginBottom="8dp" />
 
     <com.google.android.material.button.MaterialButton
         android:id="@+id/btn_notification_permission"
@@ -99,15 +149,5 @@
         android:layout_marginTop="4dp"
         android:layout_marginBottom="12dp" />
 
-    <com.google.android.material.button.MaterialButton
-        android:id="@+id/btn_notification_test"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="@string/btn_notification_test"
-        android:textAllCaps="false"
-        android:textSize="15sp"
-        app:cornerRadius="12dp"
-        app:backgroundTint="#6200EE"
-        android:textColor="#FFFFFF" />
-
-</LinearLayout>
+    </LinearLayout>
+</ScrollView>

@@ -225,51 +225,15 @@
                     android:padding="12dp">
 
                     <com.google.android.material.button.MaterialButton
-                        android:id="@+id/btn_set_background"
+                        android:id="@+id/btn_background_tools"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:text="@string/btn_set_background"
+                        android:text="@string/settings_background_tools_label"
                         android:textAllCaps="false"
                         android:textSize="15sp"
                         app:cornerRadius="12dp"
                         app:backgroundTint="#6200EE"
                         android:textColor="#FFFFFF" />
-
-                    <com.google.android.material.button.MaterialButton
-                        android:id="@+id/btn_background_all_screens"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:text="@string/settings_background_all_screens_label"
-                        android:textAllCaps="false"
-                        android:textSize="15sp"
-                        app:cornerRadius="12dp"
-                        app:backgroundTint="#6200EE"
-                        android:textColor="#FFFFFF"
-                        android:layout_marginTop="10dp" />
-
-                    <com.google.android.material.button.MaterialButton
-                        android:id="@+id/btn_background_dim"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:text="@string/settings_background_dim_label"
-                        android:textAllCaps="false"
-                        android:textSize="15sp"
-                        app:cornerRadius="12dp"
-                        app:backgroundTint="#6200EE"
-                        android:textColor="#FFFFFF"
-                        android:layout_marginTop="10dp" />
-
-                    <com.google.android.material.button.MaterialButton
-                        android:id="@+id/btn_background_blur"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:text="@string/settings_background_blur_label"
-                        android:textAllCaps="false"
-                        android:textSize="15sp"
-                        app:cornerRadius="12dp"
-                        app:backgroundTint="#6200EE"
-                        android:textColor="#FFFFFF"
-                        android:layout_marginTop="10dp" />
 
                     <com.google.android.material.button.MaterialButton
                         android:id="@+id/btn_set_button_color"

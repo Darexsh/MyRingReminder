@@ -100,6 +100,12 @@
     <string name="settings_background_blur_others">其他界面：%1$d%%</string>
     <string name="settings_background_blur_others_title">其他界面</string>
     <string name="settings_background_blur_title">背景模糊</string>
+    <string name="settings_background_tools_label">背景设置</string>
+    <string name="settings_background_tools_format">背景设置：%1$s</string>
+    <string name="settings_background_tools_hint_pick">为应用选择一张背景图片。</string>
+    <string name="settings_background_tools_hint_all_screens">开启或关闭在所有页面显示背景图片。</string>
+    <string name="settings_background_tools_hint_dim">调整背景变暗以提升可读性。</string>
+    <string name="settings_background_tools_hint_blur">调整主页与其他页面的模糊强度。</string>
     <string name="settings_background_blur_unavailable_toast">仅支持 Android 12 及以上版本</string>
     <string name="settings_background_dim_format">背景亮度调节：%1$d%%</string>
     <string name="settings_background_dim_label">背景暗度</string>
@@ -172,6 +178,8 @@
     <string name="notification_hint_battery">禁用电池优化，以便系统不会延迟提醒。</string>
     <string name="notification_hint_exact_alarm">允许精确闹钟，以便提醒准时发出（Android 12+）。</string>
     <string name="notification_hint_permission">允许通知访问，以便显示提醒（Android 13+）。</string>
+    <string name="notification_section_quick_actions">快捷操作</string>
+    <string name="notification_section_permissions_reliability">权限与可靠性</string>
     <string name="notification_hint_set_times">选择在取出或置入前多少小时接收提醒。</string>
     <string name="notification_open_settings">打开通知设置</string>
     <string name="notification_permission_button_label">通知权限：%1$s</string>
@@ -186,6 +194,7 @@
     <string name="notification_test_blocked_permission">通知权限已被阻止。</string>
     <string name="notification_test_blocked_system">系统设置中已禁用此应用的通知。</string>
     <string name="notification_test_message">如果您能看到此内容，说明通知功能正常。</string>
+    <string name="notification_test_hint_short">发送测试通知以检查功能是否正常。</string>
     <string name="notification_test_sent">测试通知已发送。</string>
     <string name="notification_test_title">MyRingReminder 测试</string>
     <string name="notification_times_button_label">提醒：\n取出前 %1$d 小时，置入前 %2$d 小时</string>
@@ -271,8 +280,16 @@
     <string name="period_modal_intensity_light">轻度</string>
     <string name="period_modal_intensity_medium">中等</string>
     <string name="period_modal_intensity_heavy">严重</string>
+    <string name="period_modal_pain_title">疼痛程度</string>
+    <string name="period_modal_pain_light">轻度</string>
+    <string name="period_modal_pain_medium">中度</string>
+    <string name="period_modal_pain_strong">重度</string>
     <string name="period_modal_pain">疼痛</string>
-    <string name="period_modal_illness">疾病</string>
+    <string name="period_modal_illness">不适</string>
+    <string name="period_modal_symptom_nausea">恶心</string>
+    <string name="period_modal_symptom_fatigue">疲劳</string>
+    <string name="period_modal_symptom_dizziness">头晕</string>
+    <string name="period_modal_symptom_diarrhea">腹泻</string>
     <string name="period_modal_start_marker">经期开始</string>
     <string name="period_modal_end_marker">经期结束</string>
     <string name="period_modal_clear">删除记录</string>
@@ -284,7 +301,7 @@
     <string name="period_modal_only_ring_free_toast">仅在无环周及前后 ±4 天可用。</string>
     <string name="period_legend_period">经期</string>
     <string name="period_legend_pain">疼痛</string>
-    <string name="period_legend_illness">疾病</string>
+    <string name="period_legend_illness">症状</string>
     <string name="period_legend_start_end">S = 开始, E = 结束</string>
     <string name="period_legend_start_only">S = 开始</string>
     <string name="period_legend_end_only">E = 结束</string>
@@ -513,7 +530,7 @@
     <string name="tour_body_settings_advanced">点击以展开或折叠高级设置部分。</string>
     <string name="tour_body_settings_animation">选择切换标签和打开视图时的转场动画。</string>
     <string name="tour_body_settings_app_lock">打开应用锁对话框，您可以启用/禁用保护并设置自动锁定延迟。</string>
-    <string name="tour_body_settings_background">选择照片以个性化首页背景。</string>
+    <string name="tour_body_settings_background">你可以在这里设置背景相关选项。</string>
     <string name="tour_body_settings_background_all">启用此项可在应用的所有屏幕上显示背景图，而不仅仅是在首页。</string>
     <string name="tour_body_settings_background_blur">调整首页和其他页面的背景模糊程度，打造现代化的视觉效果。</string>
     <string name="tour_body_settings_background_dim">调整背景图的暗度，以提高文字的可读性。</string>
@@ -566,22 +583,22 @@
     <string name="tour_title_settings_reset">重置应用</string>
     <string name="tour_title_settings_update">更新</string>
     <string name="tour_body_period_entry">点击某一天可添加或编辑经期追踪。 仅可在无环周及其前后 ±4 天内编辑。</string>
-    <string name="tour_body_period_modal">在经期记录中，可设置经期日、强度、症状（疼痛/不适）以及可选的开始/结束标记。 使用“清除记录”可删除该日已保存的数据。</string>
+    <string name="tour_body_period_modal">在经期记录中，你可以设置经期日、出血强度、疼痛等级（轻度/中度/重度）、附加症状以及可选的开始/结束标记。\n使用“清除记录”可删除该日期已保存的数据。</string>
     <string name="tour_body_period_indicators">经期日会直接显示在日历中，包括强度底色、指示点和 S/E 标记。 这样月视图依然清晰易读。</string>
     <string name="tour_title_period_entry">经期记录</string>
     <string name="tour_title_period_modal">经期选项</string>
     <string name="tour_title_period_indicators">经期指示</string>
 
     <!-- Welcome -->
-    <string name="welcome_features_body">- 📅 查看置入、取出和停用期的日历视图\n- 🔔 自定义提醒设置\n- 📝 笔记和周期历史\n- 🎨 个性化背景、颜色、语言和组件\n- 💾 备份与恢复</string>
+    <string name="welcome_features_body">- 📅 插入、取出和无环日的日历视图\n- 🩸 带有强度和症状记录的经期追踪\n- 🔔 可自定义提醒\n- 📝 笔记和周期历史\n- 🎨 背景、颜色、语言和小组件个性化\n- 💾 备份与恢复</string>
     <string name="welcome_features_title">应用功能</string>
     <string name="welcome_info_note">您可以随时在“设置”中打开应用信息。</string>
-    <string name="welcome_intro">通过个人日期、提醒和笔记，随时掌握您的避孕环周期。</string>
+    <string name="welcome_intro">通过你的个人日期、提醒和笔记，持续掌握避孕环周期和经期追踪。</string>
     <string name="welcome_permissions_body">- 🖼️ 媒体访问：选择背景图片\n- 🔔 通知：周期提醒\n- ⏰ 精确闹钟：确保提醒准时</string>
     <string name="welcome_permissions_title">所需权限</string>
     <string name="welcome_privacy_note">您的数据仅保存在此设备上。请在设置完成后记得创建备份 😊</string>
     <string name="welcome_skip_tour">以后再说</string>
     <string name="welcome_start_tour">开始向导</string>
-    <string name="welcome_subtitle">MyRingReminder 避孕环提醒</string>
+    <string name="welcome_subtitle">MyRingReminder</string>
     <string name="welcome_title">欢迎使用 👋</string>
 </resources>

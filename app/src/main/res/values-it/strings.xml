@@ -100,6 +100,12 @@
     <string name="settings_background_blur_others">Altre schermate: %1$d%%</string>
     <string name="settings_background_blur_others_title">Altre schermate</string>
     <string name="settings_background_blur_title">Sfocatura sfondo</string>
+    <string name="settings_background_tools_label">Impostazioni sfondo</string>
+    <string name="settings_background_tools_format">Impostazioni sfondo: %1$s</string>
+    <string name="settings_background_tools_hint_pick">Scegli un\'immagine di sfondo per l\'app.</string>
+    <string name="settings_background_tools_hint_all_screens">Attiva o disattiva lo sfondo su tutte le schermate.</string>
+    <string name="settings_background_tools_hint_dim">Regola l\'oscuramento dello sfondo per una migliore leggibilità.</string>
+    <string name="settings_background_tools_hint_blur">Regola la sfocatura per dashboard e altre schermate.</string>
     <string name="settings_background_blur_unavailable_toast">Disponibile solo da Android 12</string>
     <string name="settings_background_dim_format">Oscuramento: %1$d%%</string>
     <string name="settings_background_dim_label">Oscuramento sfondo</string>
@@ -172,6 +178,8 @@
     <string name="notification_hint_battery">Disattiva l\'ottimizzazione della batteria in modo che il sistema non ritardi i promemoria.</string>
     <string name="notification_hint_exact_alarm">Consenti allarmi precisi affinché i promemoria vengano attivati in tempo (Android 12+).</string>
     <string name="notification_hint_permission">Consenti l\'accesso alle notifiche affinché i promemoria possano apparire (Android 13+).</string>
+    <string name="notification_section_quick_actions">Azioni rapide</string>
+    <string name="notification_section_permissions_reliability">Autorizzazioni e affidabilità</string>
     <string name="notification_hint_set_times">Scegli quante ore prima della rimozione o dell\'inserimento desideri i promemoria.</string>
     <string name="notification_open_settings">Apri impostazioni notifiche</string>
     <string name="notification_permission_button_label">Permesso notifiche: %1$s</string>
@@ -186,6 +194,7 @@
     <string name="notification_test_blocked_permission">Il permesso di notifica è bloccato.</string>
     <string name="notification_test_blocked_system">Le notifiche sono disabilitate per questa app nelle impostazioni di sistema.</string>
     <string name="notification_test_message">Se riesci a vedere questo, le notifiche funzionano.</string>
+    <string name="notification_test_hint_short">Invia una notifica di test per verificare il corretto funzionamento.</string>
     <string name="notification_test_sent">Notifica di prova inviata.</string>
     <string name="notification_test_title">MyRingReminder test</string>
     <string name="notification_times_button_label">Promemoria:\n%1$d h prima della rimozione, %2$d h prima dell\'inserimento</string>
@@ -271,8 +280,16 @@
     <string name="period_modal_intensity_light">Leggero</string>
     <string name="period_modal_intensity_medium">Medio</string>
     <string name="period_modal_intensity_heavy">Forte</string>
+    <string name="period_modal_pain_title">Livello di dolore</string>
+    <string name="period_modal_pain_light">Lieve</string>
+    <string name="period_modal_pain_medium">Medio</string>
+    <string name="period_modal_pain_strong">Forte</string>
     <string name="period_modal_pain">Dolore</string>
-    <string name="period_modal_illness">Malattia</string>
+    <string name="period_modal_illness">Malessere</string>
+    <string name="period_modal_symptom_nausea">Nausea</string>
+    <string name="period_modal_symptom_fatigue">Affaticamento</string>
+    <string name="period_modal_symptom_dizziness">Capogiri</string>
+    <string name="period_modal_symptom_diarrhea">Diarrea</string>
     <string name="period_modal_start_marker">Inizio del ciclo</string>
     <string name="period_modal_end_marker">Fine del ciclo</string>
     <string name="period_modal_clear">Elimina registrazione</string>
@@ -284,7 +301,7 @@
     <string name="period_modal_only_ring_free_toast">Disponibile solo durante la settimana senza anello e ±4 giorni.</string>
     <string name="period_legend_period">Ciclo</string>
     <string name="period_legend_pain">Dolore</string>
-    <string name="period_legend_illness">Malattia</string>
+    <string name="period_legend_illness">Sintomi</string>
     <string name="period_legend_start_end">S = Inizio, E = Fine</string>
     <string name="period_legend_start_only">S = Inizio</string>
     <string name="period_legend_end_only">E = Fine</string>
@@ -513,7 +530,7 @@
     <string name="tour_body_settings_advanced">Tocca per espandere o comprimere la sezione avanzata.</string>
     <string name="tour_body_settings_animation">Scegli come si animano le transizioni tra schede e schermate.</string>
     <string name="tour_body_settings_app_lock">Apre il blocco app, dove puoi attivare la protezione e impostare il ritardo di blocco automatico.</string>
-    <string name="tour_body_settings_background">Scegli una foto per personalizzare lo sfondo della home.</string>
+    <string name="tour_body_settings_background">Qui puoi configurare le impostazioni dello sfondo.</string>
     <string name="tour_body_settings_background_all">Attiva questa opzione per mostrare l\'immagine di sfondo su tutte le schermate dell\'app, non solo nella home.</string>
     <string name="tour_body_settings_background_blur">Imposta il livello di sfocatura per la home e le altre schermate per un effetto più elegante.</string>
     <string name="tour_body_settings_background_dim">Regola quanto deve essere scura l\'immagine di sfondo per migliorare la leggibilità del testo.</string>
@@ -566,22 +583,22 @@
     <string name="tour_title_settings_reset">Ripristina app</string>
     <string name="tour_title_settings_update">Aggiornamenti</string>
     <string name="tour_body_period_entry">Tocca un giorno per aggiungere o modificare il monitoraggio del ciclo. La modifica è disponibile solo durante la settimana senza anello e ±4 giorni intorno.</string>
-    <string name="tour_body_period_modal">Nella voce ciclo puoi impostare Giorno di ciclo, intensità, sintomi (dolore/malessere) e indicatori opzionali di inizio/fine. Usa Cancella voce per rimuovere i dati salvati di quel giorno.</string>
+    <string name="tour_body_period_modal">Nella voce del ciclo puoi impostare giorno delle mestruazioni, intensità del sanguinamento, livello di dolore (lieve/medio/forte), sintomi aggiuntivi e marcatori opzionali di inizio/fine.\nUsa \"Elimina voce\" per rimuovere i dati salvati di quel giorno.</string>
     <string name="tour_body_period_indicators">I giorni di ciclo sono mostrati direttamente nel calendario con sfumatura di intensità, punti indicatore e marker S/E. Così la panoramica mensile resta leggibile.</string>
     <string name="tour_title_period_entry">Voce ciclo</string>
     <string name="tour_title_period_modal">Opzioni ciclo</string>
     <string name="tour_title_period_indicators">Indicatori ciclo</string>
 
     <!-- Welcome -->
-    <string name="welcome_features_body">- 📅 Vista calendario dei giorni di inserimento, rimozione e pausa\n- 🔔 Promemoria personalizzabili\n- 📝 Note e cronologia dei cicli\n- 🎨 Personalizzazione di sfondo, colori, lingua e widget\n- 💾 Backup e ripristino</string>
+    <string name="welcome_features_body">- 📅 Vista calendario dei giorni di inserimento, rimozione e pausa\n- 🩸 Monitoraggio del ciclo mestruale con registri di intensità e sintomi\n- 🔔 Promemoria personalizzabili\n- 📝 Note e cronologia dei cicli\n- 🎨 Personalizzazione di sfondo, colori, lingua e widget\n- 💾 Backup e ripristino</string>
     <string name="welcome_features_title">Cosa fa questa app</string>
     <string name="welcome_info_note">Puoi aprire le info dell\'app in qualsiasi momento nelle Impostazioni.</string>
-    <string name="welcome_intro">Tieni d\'occhio il tuo ciclo dell\'anello contraccettivo con date personali, promemoria e note.</string>
+    <string name="welcome_intro">Tieni sotto controllo il ciclo dell\'anello contraccettivo e il monitoraggio del ciclo mestruale con i tuoi dati personali, promemoria e note.</string>
     <string name="welcome_permissions_body">- 🖼️ Accesso media: scegli un\'immagine di sfondo\n- 🔔 Notifiche: promemoria del ciclo\n- ⏰ Allarmi precisi: pianificazione accurata</string>
     <string name="welcome_permissions_title">Permessi utilizzati</string>
     <string name="welcome_privacy_note">I tuoi dati sono memorizzati solo su questo dispositivo. Assicurati di creare un backup una volta impostati tutti i dati 😊</string>
     <string name="welcome_skip_tour">Non ora</string>
     <string name="welcome_start_tour">Inizia tour</string>
-    <string name="welcome_subtitle">Promemoria anello MyRingReminder</string>
+    <string name="welcome_subtitle">MyRingReminder</string>
     <string name="welcome_title">Benvenuto 👋</string>
 </resources>

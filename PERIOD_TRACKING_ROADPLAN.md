@@ -52,9 +52,9 @@ Status legend: `[ ]` pending, `[-]` in progress, `[x]` done
 - [x] Backup/restore round-trip verification
 - [x] Final UX cleanup for uncluttered layout
 - [x] Welcome Tour implementation of all new features
-- [ ] Add all missing strings
+- [x] Add all missing strings
 
 ### Phase 6: Release Readiness
-- [ ] Update README/help text for new feature
-- [ ] Add/update screenshots (if needed)
-- [ ] Final acceptance criteria pass against your checklist
+- [x] Update README/help text for new feature
+- [x] Add/update screenshots (if needed)
+- [x] Final acceptance criteria pass against your checklist

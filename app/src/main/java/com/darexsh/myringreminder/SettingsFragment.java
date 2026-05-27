@@ -30,6 +30,7 @@ import android.graphics.SweepGradient;
 import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.Drawable;
 import android.graphics.Typeface;
+import android.animation.ValueAnimator;
 import android.text.SpannableString;
 import android.text.Spanned;
 import android.text.style.ForegroundColorSpan;
@@ -72,6 +73,7 @@ import java.util.Calendar;
 import java.text.SimpleDateFormat;
 import java.util.Locale;
 import java.util.ArrayList;
+import java.util.List;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.TreeMap;
@@ -96,10 +98,7 @@ public class SettingsFragment extends Fragment {
     private MaterialButton btnSetTime;
     private MaterialButton btnSetStartDate;
     private MaterialButton btnSetCycleLength;
-    private MaterialButton btnSetBackground;
-    private MaterialButton btnBackgroundAllScreens;
-    private MaterialButton btnBackgroundDim;
-    private MaterialButton btnBackgroundBlur;
+    private MaterialButton btnBackgroundTools;
     private MaterialButton btnSetCalendarRange;
     private MaterialButton btnBackupManage;
     private MaterialButton btnUpdateApp;
@@ -138,6 +137,9 @@ public class SettingsFragment extends Fragment {
     private ProgressBar downloadProgressBar;
     private TextView downloadProgressText;
     private AlertDialog notificationToolsDialog;
+    private AlertDialog backgroundToolsDialog;
+    private View backgroundToolsDialogView;
+    private final List<ValueAnimator> notificationWarningAnimators = new ArrayList<>();
 
     private interface ColorConsumer {
         void accept(int color);
@@ -239,10 +241,7 @@ public class SettingsFragment extends Fragment {
         btnSetTime = view.findViewById(R.id.btn_set_time);
         btnSetStartDate = view.findViewById(R.id.btn_set_start_date);
         btnSetCycleLength = view.findViewById(R.id.btn_set_cycle_length);
-        btnSetBackground = view.findViewById(R.id.btn_set_background);
-        btnBackgroundAllScreens = view.findViewById(R.id.btn_background_all_screens);
-        btnBackgroundDim = view.findViewById(R.id.btn_background_dim);
-        btnBackgroundBlur = view.findViewById(R.id.btn_background_blur);
+        btnBackgroundTools = view.findViewById(R.id.btn_background_tools);
         btnSetCalendarRange = view.findViewById(R.id.btn_set_calendar_range);
         MaterialButton btnResetApp = view.findViewById(R.id.btn_reset_app);
         btnBackupManage = view.findViewById(R.id.btn_backup_manage);
@@ -367,19 +366,7 @@ public class SettingsFragment extends Fragment {
         btnSetTime.setOnClickListener(v -> showTimePicker());
         btnSetStartDate.setOnClickListener(v -> showDatePicker());
         btnSetCycleLength.setOnClickListener(v -> showCycleLengthDialog());
-        btnSetBackground.setOnClickListener(v -> checkStoragePermission());
-        btnBackgroundAllScreens.setOnClickListener(v -> {
-            Boolean enabled = viewModel.getBackgroundAllScreensEnabled().getValue();
-            viewModel.setBackgroundAllScreensEnabled(!Boolean.TRUE.equals(enabled));
-        });
-        btnBackgroundDim.setOnClickListener(v -> showBackgroundDimDialog());
-        btnBackgroundBlur.setOnClickListener(v -> {
-            if (!isBackgroundBlurSupported()) {
-                Toast.makeText(requireContext(), R.string.settings_background_blur_unavailable_toast, Toast.LENGTH_SHORT).show();
-                return;
-            }
-            showBackgroundBlurDialog();
-        });
+        btnBackgroundTools.setOnClickListener(v -> showBackgroundToolsDialog());
         btnSetCalendarRange.setOnClickListener(v -> showCalendarRangeDialog());
         btnResetApp.setOnClickListener(v -> showResetDialog());
         btnBackupManage.setOnClickListener(v -> showBackupDialog());
@@ -903,9 +890,7 @@ public class SettingsFragment extends Fragment {
         ButtonColorHelper.applyPrimaryColor(btnSetTime, color);
         ButtonColorHelper.applyPrimaryColor(btnSetStartDate, color);
         ButtonColorHelper.applyPrimaryColor(btnSetCycleLength, color);
-        ButtonColorHelper.applyPrimaryColor(btnSetBackground, color);
-        ButtonColorHelper.applyPrimaryColor(btnBackgroundAllScreens, color);
-        ButtonColorHelper.applyPrimaryColor(btnBackgroundDim, color);
+        ButtonColorHelper.applyPrimaryColor(btnBackgroundTools, color);
         ButtonColorHelper.applyPrimaryColor(btnSetCalendarRange, color);
         ButtonColorHelper.applyPrimaryColor(btnBackupManage, color);
         ButtonColorHelper.applyPrimaryColor(btnUpdateApp, color);
@@ -923,6 +908,9 @@ public class SettingsFragment extends Fragment {
     private void applyDialogButtonColors(@Nullable AlertDialog dialog) {
         if (dialog == null || viewModel == null) {
             return;
+        }
+        if (dialog.getWindow() != null) {
+            dialog.getWindow().setBackgroundDrawableResource(R.drawable.bg_app_info_dialog);
         }
         Integer color = viewModel.getButtonColor().getValue();
         if (color == null) {
@@ -984,15 +972,14 @@ public class SettingsFragment extends Fragment {
     }
 
     private void updateBackgroundAllScreensButtonText(boolean enabled) {
-        String status = getString(enabled
-                ? R.string.settings_background_all_screens_on
-                : R.string.settings_background_all_screens_off);
-        btnBackgroundAllScreens.setText(getString(R.string.settings_background_all_screens_format, status));
+        if (btnBackgroundTools == null) {
+            return;
+        }
+        btnBackgroundTools.setText(R.string.settings_background_tools_label);
     }
 
     private void updateBackgroundDimButtonText(int dimPercent) {
-        int safePercent = Math.max(0, Math.min(100, dimPercent));
-        btnBackgroundDim.setText(getString(R.string.settings_background_dim_format, safePercent));
+        // Handled in background tools dialog button labels.
     }
 
     private void showBackgroundDimDialog() {
@@ -1054,11 +1041,6 @@ public class SettingsFragment extends Fragment {
     }
 
     private void updateBackgroundBlurButtonText() {
-        Integer dashboard = viewModel.getBackgroundBlurDashboardPercent().getValue();
-        Integer others = viewModel.getBackgroundBlurOthersPercent().getValue();
-        int dashboardValue = dashboard != null ? Math.max(0, Math.min(100, dashboard)) : 0;
-        int othersValue = others != null ? Math.max(0, Math.min(100, others)) : 50;
-        btnBackgroundBlur.setText(getString(R.string.settings_background_blur_format, dashboardValue, othersValue));
         Integer color = viewModel != null ? viewModel.getButtonColor().getValue() : null;
         updateBackgroundBlurAvailability(color);
     }
@@ -1164,6 +1146,138 @@ public class SettingsFragment extends Fragment {
         applyDialogButtonColors(dialog);
     }
 
+    private void showBackgroundToolsDialog() {
+        View content = LayoutInflater.from(requireContext())
+                .inflate(R.layout.dialog_background_tools, null);
+        backgroundToolsDialogView = content;
+        MaterialButton btnPick = content.findViewById(R.id.btn_background_tools_pick);
+        MaterialButton btnAllScreens = content.findViewById(R.id.btn_background_tools_all_screens);
+        MaterialButton btnDim = content.findViewById(R.id.btn_background_tools_dim);
+        MaterialButton btnBlur = content.findViewById(R.id.btn_background_tools_blur);
+
+        Integer color = viewModel.getButtonColor().getValue();
+        if (color != null) {
+            ButtonColorHelper.applyPrimaryColor(btnPick, color);
+            ButtonColorHelper.applyPrimaryColor(btnAllScreens, color);
+            ButtonColorHelper.applyPrimaryColor(btnDim, color);
+            ButtonColorHelper.applyPrimaryColor(btnBlur, color);
+            btnPick.setTextColor(Color.WHITE);
+            btnAllScreens.setTextColor(Color.WHITE);
+            btnDim.setTextColor(Color.WHITE);
+            btnBlur.setTextColor(Color.WHITE);
+        }
+
+        Boolean enabled = viewModel.getBackgroundAllScreensEnabled().getValue();
+        String status = getString(Boolean.TRUE.equals(enabled)
+                ? R.string.settings_background_all_screens_on
+                : R.string.settings_background_all_screens_off);
+        btnAllScreens.setText(getString(R.string.settings_background_all_screens_format, status));
+
+        Integer currentDim = viewModel.getBackgroundDimPercent().getValue();
+        int dim = currentDim != null ? Math.max(0, Math.min(100, currentDim)) : 0;
+        btnDim.setText(getString(R.string.settings_background_dim_format, dim));
+
+        Integer dashboard = viewModel.getBackgroundBlurDashboardPercent().getValue();
+        Integer others = viewModel.getBackgroundBlurOthersPercent().getValue();
+        int dashboardValue = dashboard != null ? Math.max(0, Math.min(100, dashboard)) : 0;
+        int othersValue = others != null ? Math.max(0, Math.min(100, others)) : 50;
+        btnBlur.setText(getString(R.string.settings_background_blur_format, dashboardValue, othersValue));
+        if (!isBackgroundBlurSupported()) {
+            btnBlur.setAlpha(0.75f);
+        }
+
+        AlertDialog dialog = new AlertDialog.Builder(requireContext())
+                .setTitle(R.string.settings_background_tools_label)
+                .setView(content)
+                .setNegativeButton(R.string.dialog_cancel, null)
+                .show();
+        backgroundToolsDialog = dialog;
+        applyDialogButtonColors(dialog);
+        dialog.setOnDismissListener(d -> {
+            backgroundToolsDialog = null;
+            backgroundToolsDialogView = null;
+        });
+
+        btnPick.setOnClickListener(v -> {
+            dialog.dismiss();
+            checkStoragePermission();
+        });
+        btnAllScreens.setOnClickListener(v -> {
+            Boolean current = viewModel.getBackgroundAllScreensEnabled().getValue();
+            viewModel.setBackgroundAllScreensEnabled(!Boolean.TRUE.equals(current));
+            dialog.dismiss();
+            showBackgroundToolsDialog();
+        });
+        btnDim.setOnClickListener(v -> {
+            dialog.dismiss();
+            showBackgroundDimDialog();
+        });
+        btnBlur.setOnClickListener(v -> {
+            dialog.dismiss();
+            if (!isBackgroundBlurSupported()) {
+                Toast.makeText(requireContext(), R.string.settings_background_blur_unavailable_toast, Toast.LENGTH_SHORT).show();
+                return;
+            }
+            showBackgroundBlurDialog();
+        });
+    }
+
+    private boolean isBackgroundToolsDialogTarget(int targetViewId) {
+        return targetViewId == R.id.btn_background_tools_pick
+                || targetViewId == R.id.btn_background_tools_all_screens
+                || targetViewId == R.id.btn_background_tools_dim
+                || targetViewId == R.id.btn_background_tools_blur;
+    }
+
+    public boolean ensureBackgroundToolsDialogVisibleForTour(int targetViewId) {
+        if (!isBackgroundToolsDialogTarget(targetViewId)) {
+            if (backgroundToolsDialog != null && backgroundToolsDialog.isShowing()) {
+                backgroundToolsDialog.dismiss();
+            }
+            return false;
+        }
+        if (backgroundToolsDialog != null && backgroundToolsDialog.isShowing()) {
+            return true;
+        }
+        showBackgroundToolsDialog();
+        return backgroundToolsDialog != null && backgroundToolsDialog.isShowing();
+    }
+
+    public boolean isBackgroundToolsDialogTourTarget(int targetViewId) {
+        return isBackgroundToolsDialogTarget(targetViewId);
+    }
+
+    @Nullable
+    public ViewGroup getBackgroundToolsDialogTourHost(int targetViewId) {
+        if (!isBackgroundToolsDialogTarget(targetViewId)
+                || backgroundToolsDialog == null
+                || !backgroundToolsDialog.isShowing()
+                || backgroundToolsDialog.getWindow() == null) {
+            return null;
+        }
+        View contentRoot = backgroundToolsDialog.getWindow().findViewById(android.R.id.content);
+        if (contentRoot instanceof ViewGroup) {
+            return (ViewGroup) contentRoot;
+        }
+        View decor = backgroundToolsDialog.getWindow().getDecorView();
+        return decor instanceof ViewGroup ? (ViewGroup) decor : null;
+    }
+
+    @Nullable
+    public View findTourTargetView(int targetViewId) {
+        if (backgroundToolsDialogView != null) {
+            View inDialog = backgroundToolsDialogView.findViewById(targetViewId);
+            if (inDialog != null) {
+                return inDialog;
+            }
+        }
+        View root = getView();
+        if (root == null) {
+            return null;
+        }
+        return root.findViewById(targetViewId);
+    }
+
     private void styleDimPresetButton(MaterialButton button, int color) {
         ButtonColorHelper.applyPrimaryColor(button, color);
         button.setTextColor(Color.WHITE);
@@ -1175,19 +1289,13 @@ public class SettingsFragment extends Fragment {
     }
 
     private void updateBackgroundBlurAvailability(@Nullable Integer accentColor) {
-        if (btnBackgroundBlur == null) {
+        if (btnBackgroundTools == null) {
             return;
         }
-        if (isBackgroundBlurSupported()) {
-            int color = accentColor != null ? accentColor : SettingsRepository.DEFAULT_BUTTON_COLOR;
-            ButtonColorHelper.applyPrimaryColor(btnBackgroundBlur, color);
-            btnBackgroundBlur.setTextColor(Color.WHITE);
-            btnBackgroundBlur.setAlpha(1f);
-            return;
-        }
-        btnBackgroundBlur.setBackgroundTintList(ColorStateList.valueOf(Color.parseColor("#5A5A5A")));
-        btnBackgroundBlur.setTextColor(Color.parseColor("#E0E0E0"));
-        btnBackgroundBlur.setAlpha(0.88f);
+        int color = accentColor != null ? accentColor : SettingsRepository.DEFAULT_BUTTON_COLOR;
+        ButtonColorHelper.applyPrimaryColor(btnBackgroundTools, color);
+        btnBackgroundTools.setTextColor(Color.WHITE);
+        btnBackgroundTools.setAlpha(1f);
     }
 
     private void updateCircleColorButtonText() {
@@ -1672,6 +1780,7 @@ public class SettingsFragment extends Fragment {
                     .setCancelable(false)
                     .create();
             downloadDialog.show();
+            applyDialogButtonColors(downloadDialog);
         });
     }
 
@@ -2868,6 +2977,10 @@ public class SettingsFragment extends Fragment {
                 .show();
         notificationToolsDialog = dialog;
         applyDialogButtonColors(dialog);
+        dialog.setOnDismissListener(d -> {
+            stopNotificationWarningAnimations();
+            notificationToolsDialog = null;
+        });
 
         btnTimes.setOnClickListener(v -> {
             dialog.dismiss();
@@ -2892,20 +3005,91 @@ public class SettingsFragment extends Fragment {
         if (root == null) {
             return;
         }
+        stopNotificationWarningAnimations();
         MaterialButton btnExact = root.findViewById(R.id.btn_notification_exact);
         if (btnExact == null) {
             return;
         }
         MaterialButton btnPermission = root.findViewById(R.id.btn_notification_permission);
         if (btnPermission != null) {
-            btnPermission.setText(getString(R.string.notification_permission_button_label, getNotificationPermissionStatusText()));
+            boolean permissionBlocked = isNotificationPermissionBlocked();
+            String permissionText = getString(
+                    R.string.notification_permission_button_label,
+                    getNotificationPermissionStatusText()
+            );
+            btnPermission.setText(permissionBlocked ? "⚠ " + permissionText : permissionText);
+            applyNotificationStatusStyle(btnPermission, permissionBlocked);
+            if (permissionBlocked) {
+                startNotificationWarningAnimation(btnPermission);
+            }
         }
-        btnExact.setText(getString(R.string.exact_alarm_button_label, getExactAlarmStatusText()));
+        boolean exactAlarmBlocked = isExactAlarmBlocked();
+        String exactText = getString(R.string.exact_alarm_button_label, getExactAlarmStatusText());
+        btnExact.setText(exactAlarmBlocked ? "⚠ " + exactText : exactText);
+        applyNotificationStatusStyle(btnExact, exactAlarmBlocked);
+        if (exactAlarmBlocked) {
+            startNotificationWarningAnimation(btnExact);
+        }
         MaterialButton btnBattery = root.findViewById(R.id.btn_notification_battery_opt);
         if (btnBattery != null) {
-            btnBattery.setText(getString(R.string.battery_opt_button_label, getBatteryOptStatusText()));
+            boolean batteryRisk = isBatteryOptimizationEnabled();
+            String batteryText = getString(R.string.battery_opt_button_label, getBatteryOptStatusText());
+            btnBattery.setText(batteryRisk ? "⚠ " + batteryText : batteryText);
+            applyNotificationStatusStyle(btnBattery, batteryRisk);
+            if (batteryRisk) {
+                startNotificationWarningAnimation(btnBattery);
+            }
         }
         updateNotificationTimesButtonLabel(root);
+    }
+
+    private void startNotificationWarningAnimation(@NonNull MaterialButton button) {
+        button.setAlpha(1f);
+        button.setScaleX(1f);
+        button.setScaleY(1f);
+
+        ValueAnimator shimmer = ValueAnimator.ofFloat(0.55f, 1f);
+        shimmer.setDuration(750L);
+        shimmer.setRepeatMode(ValueAnimator.REVERSE);
+        shimmer.setRepeatCount(ValueAnimator.INFINITE);
+        shimmer.addUpdateListener(anim -> {
+            float v = (float) anim.getAnimatedValue();
+            button.setAlpha(v);
+            float scale = 0.995f + (v * 0.01f);
+            button.setScaleX(scale);
+            button.setScaleY(scale);
+        });
+        shimmer.start();
+        notificationWarningAnimators.add(shimmer);
+    }
+
+    private void stopNotificationWarningAnimations() {
+        for (ValueAnimator animator : notificationWarningAnimators) {
+            if (animator != null) {
+                animator.cancel();
+            }
+        }
+        notificationWarningAnimators.clear();
+    }
+
+    private void applyNotificationStatusStyle(@NonNull MaterialButton button, boolean blocked) {
+        Integer accent = viewModel != null ? viewModel.getButtonColor().getValue() : null;
+        int normalColor = accent != null ? accent : 0xFF6200EE;
+        int warningColor = 0xFFD32F2F;
+        int target = blocked ? warningColor : normalColor;
+        button.setStrokeColor(ColorStateList.valueOf(target));
+        button.setTextColor(target);
+        button.setStrokeWidth((int) (blocked ? 3 * getResources().getDisplayMetrics().density : 2 * getResources().getDisplayMetrics().density));
+    }
+
+    private boolean isNotificationPermissionBlocked() {
+        if (Build.VERSION.SDK_INT < Build.VERSION_CODES.TIRAMISU) {
+            return false;
+        }
+        return ContextCompat.checkSelfPermission(
+                requireContext(),
+                Manifest.permission.POST_NOTIFICATIONS
+        ) != PackageManager.PERMISSION_GRANTED;
     }
 
     private String getNotificationPermissionStatusText() {
@@ -2997,6 +3181,14 @@ public class SettingsFragment extends Fragment {
         return getString(R.string.exact_alarm_status_blocked);
     }
 
+    private boolean isExactAlarmBlocked() {
+        if (Build.VERSION.SDK_INT < Build.VERSION_CODES.S) {
+            return false;
+        }
+        AlarmManager alarmManager = (AlarmManager) requireContext().getSystemService(Context.ALARM_SERVICE);
+        return alarmManager == null || !alarmManager.canScheduleExactAlarms();
+    }
+
     private String getBatteryOptStatusText() {
         android.os.PowerManager powerManager =
                 (android.os.PowerManager) requireContext().getSystemService(Context.POWER_SERVICE);
@@ -3007,6 +3199,15 @@ public class SettingsFragment extends Fragment {
         return ignoring
                 ? getString(R.string.battery_opt_status_disabled)
                 : getString(R.string.battery_opt_status_enabled);
+    }
+
+    private boolean isBatteryOptimizationEnabled() {
+        android.os.PowerManager powerManager =
+                (android.os.PowerManager) requireContext().getSystemService(Context.POWER_SERVICE);
+        if (powerManager == null) {
+            return false;
+        }
+        return !powerManager.isIgnoringBatteryOptimizations(requireContext().getPackageName());
     }
 
     private void updateNotificationTimesButtonLabel(View root) {

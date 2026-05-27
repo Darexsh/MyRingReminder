@@ -58,6 +58,47 @@
     </com.google.android.material.chip.ChipGroup>
 
     <TextView
+        android:id="@+id/tv_period_pain_title"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="12dp"
+        android:text="@string/period_modal_pain_title"
+        android:textStyle="bold" />
+
+    <com.google.android.material.chip.ChipGroup
+        android:id="@+id/chip_group_pain"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        app:singleSelection="true"
+        app:selectionRequired="false">
+
+        <com.google.android.material.chip.Chip
+            android:id="@+id/chip_pain_light"
+            style="@style/Widget.MaterialComponents.Chip.Filter"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:checkedIconVisible="true"
+            android:text="@string/period_modal_pain_light" />
+
+        <com.google.android.material.chip.Chip
+            android:id="@+id/chip_pain_medium"
+            style="@style/Widget.MaterialComponents.Chip.Filter"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:checkedIconVisible="true"
+            android:text="@string/period_modal_pain_medium" />
+
+        <com.google.android.material.chip.Chip
+            android:id="@+id/chip_pain_strong"
+            style="@style/Widget.MaterialComponents.Chip.Filter"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:checkedIconVisible="true"
+            android:text="@string/period_modal_pain_strong" />
+    </com.google.android.material.chip.ChipGroup>
+
+    <TextView
         android:id="@+id/tv_period_symptoms_title"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -73,18 +114,39 @@
         app:singleLine="false">
 
         <com.google.android.material.chip.Chip
-            android:id="@+id/chip_pain"
-            style="@style/Widget.MaterialComponents.Chip.Filter"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/period_modal_pain" />
-
-        <com.google.android.material.chip.Chip
-            android:id="@+id/chip_illness"
+            android:id="@+id/chip_symptom_illness"
             style="@style/Widget.MaterialComponents.Chip.Filter"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/period_modal_illness" />
+
+        <com.google.android.material.chip.Chip
+            android:id="@+id/chip_symptom_nausea"
+            style="@style/Widget.MaterialComponents.Chip.Filter"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/period_modal_symptom_nausea" />
+
+        <com.google.android.material.chip.Chip
+            android:id="@+id/chip_symptom_fatigue"
+            style="@style/Widget.MaterialComponents.Chip.Filter"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/period_modal_symptom_fatigue" />
+
+        <com.google.android.material.chip.Chip
+            android:id="@+id/chip_symptom_dizziness"
+            style="@style/Widget.MaterialComponents.Chip.Filter"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/period_modal_symptom_dizziness" />
+
+        <com.google.android.material.chip.Chip
+            android:id="@+id/chip_symptom_diarrhea"
+            style="@style/Widget.MaterialComponents.Chip.Filter"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/period_modal_symptom_diarrhea" />
     </com.google.android.material.chip.ChipGroup>
 
     <TextView

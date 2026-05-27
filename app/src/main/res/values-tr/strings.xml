@@ -100,6 +100,12 @@
     <string name="settings_background_blur_others">Diğer ekranlar: %1$d%%</string>
     <string name="settings_background_blur_others_title">Diğer ekranlar</string>
     <string name="settings_background_blur_title">Arka plan bulanıklığı</string>
+    <string name="settings_background_tools_label">Arka plan ayarları</string>
+    <string name="settings_background_tools_format">Arka plan ayarları: %1$s</string>
+    <string name="settings_background_tools_hint_pick">Uygulama için bir arka plan resmi seçin.</string>
+    <string name="settings_background_tools_hint_all_screens">Arka planı tüm ekranlarda açın veya kapatın.</string>
+    <string name="settings_background_tools_hint_dim">Daha iyi okunabilirlik için karartmayı ayarlayın.</string>
+    <string name="settings_background_tools_hint_blur">Panel ve diğer ekranlar için bulanıklığı ayarlayın.</string>
     <string name="settings_background_blur_unavailable_toast">Yalnızca Android 12 ve üzeri sürümlerde kullanılabilir</string>
     <string name="settings_background_dim_format">Arka plan karartma: %1$d%%</string>
     <string name="settings_background_dim_label">Arka plan karartma</string>
@@ -172,6 +178,8 @@
     <string name="notification_hint_battery">Sistemin hatırlatıcıları geciktirmemesi için pil optimizasyonunu devre dışı bırakın.</string>
     <string name="notification_hint_exact_alarm">Hatırlatıcıların zamanında çalması için tam alarmlara izin verin (Android 12+).</string>
     <string name="notification_hint_permission">Hatırlatıcıların görünebilmesi için bildirim erişimine izin verin (Android 13+).</string>
+    <string name="notification_section_quick_actions">Hızlı işlemler</string>
+    <string name="notification_section_permissions_reliability">İzinler ve güvenilirlik</string>
     <string name="notification_hint_set_times">Çıkarmadan veya yerleştirmeden kaç saat önce hatırlatıcı istediğinizi seçin.</string>
     <string name="notification_open_settings">Bildirim ayarlarını aç</string>
     <string name="notification_permission_button_label">Bildirim izni: %1$s</string>
@@ -186,6 +194,7 @@
     <string name="notification_test_blocked_permission">Bildirim izni engellendi.</string>
     <string name="notification_test_blocked_system">Sistem ayarlarında bu uygulama için bildirimler devre dışı bırakılmış.</string>
     <string name="notification_test_message">Bunu görebiliyorsanız, bildirimler çalışıyor demektir.</string>
+    <string name="notification_test_hint_short">Çalışmayı doğrulamak için test bildirimi gönderin.</string>
     <string name="notification_test_sent">Test bildirimi gönderildi.</string>
     <string name="notification_test_title">MyRingReminder testi</string>
     <string name="notification_times_button_label">Hatırlatıcılar:\nçıkarmadan %1$d sa önce, yerleştirmeden %2$d sa önce</string>
@@ -271,8 +280,16 @@
     <string name="period_modal_intensity_light">Hafif</string>
     <string name="period_modal_intensity_medium">Orta</string>
     <string name="period_modal_intensity_heavy">Yoğun</string>
+    <string name="period_modal_pain_title">Ağrı seviyesi</string>
+    <string name="period_modal_pain_light">Hafif</string>
+    <string name="period_modal_pain_medium">Orta</string>
+    <string name="period_modal_pain_strong">Şiddetli</string>
     <string name="period_modal_pain">Ağrı</string>
-    <string name="period_modal_illness">Hastalık</string>
+    <string name="period_modal_illness">Halsizlik</string>
+    <string name="period_modal_symptom_nausea">Mide bulantısı</string>
+    <string name="period_modal_symptom_fatigue">Yorgunluk</string>
+    <string name="period_modal_symptom_dizziness">Baş dönmesi</string>
+    <string name="period_modal_symptom_diarrhea">İshal</string>
     <string name="period_modal_start_marker">Adet başlangıcı</string>
     <string name="period_modal_end_marker">Adet sonu</string>
     <string name="period_modal_clear">Kaydı sil</string>
@@ -284,7 +301,7 @@
     <string name="period_modal_only_ring_free_toast">Yalnızca halkasız hafta ve ±4 gün içinde kullanılabilir.</string>
     <string name="period_legend_period">Adet</string>
     <string name="period_legend_pain">Ağrı</string>
-    <string name="period_legend_illness">Hastalık</string>
+    <string name="period_legend_illness">Belirtiler</string>
     <string name="period_legend_start_end">S = Başlangıç, E = Bitiş</string>
     <string name="period_legend_start_only">S = Başlangıç</string>
     <string name="period_legend_end_only">E = Bitiş</string>
@@ -513,7 +530,7 @@
     <string name="tour_body_settings_advanced">Gelişmiş bölümü genişletmek veya daraltmak için dokunun.</string>
     <string name="tour_body_settings_animation">Sekme ve ekran geçiş animasyonlarını seçin.</string>
     <string name="tour_body_settings_app_lock">Korumayı etkinleştirebileceğiniz ve kilit gecikmesini ayarlayabileceğiniz uygulama kilidini açar.</string>
-    <string name="tour_body_settings_background">Ana ekran arka planını kişiselleştirmek için bir fotoğraf seçin.</string>
+    <string name="tour_body_settings_background">Burada arka plan ayarlarını yapılandırabilirsiniz.</string>
     <string name="tour_body_settings_background_all">Arka plan resminin sadece ana ekranda değil, tüm uygulama ekranlarında gösterilmesi için bunu etkinleştirin.</string>
     <string name="tour_body_settings_background_blur">Modern bir görünüm için ana ekran ve diğer sayfalar için bulanıklık seviyesini ayarlayın.</string>
     <string name="tour_body_settings_background_dim">Metnin daha rahat okunması için arka plan resminin ne kadar karanlık olacağını ayarlayın.</string>
@@ -566,22 +583,22 @@
     <string name="tour_title_settings_reset">Uygulamayı sıfırla</string>
     <string name="tour_title_settings_update">Güncellemeler</string>
     <string name="tour_body_period_entry">Adet takibini eklemek veya düzenlemek için bir güne dokunun. Düzenleme yalnızca halkasız hafta ve çevresindeki ±4 gün içinde mümkündür.</string>
-    <string name="tour_body_period_modal">Adet kaydında Adet günü, yoğunluk, belirtiler (ağrı/halsizlik) ve isteğe bağlı başlangıç/bitiş işaretlerini ayarlayabilirsiniz. O güne ait kayıtlı verileri kaldırmak için Kaydı temizle seçeneğini kullanın.</string>
+    <string name="tour_body_period_modal">Adet kaydında adet günü, kanama yoğunluğu, ağrı seviyesi (hafif/orta/şiddetli), ek belirtiler ve isteğe bağlı başlangıç/bitiş işaretleyicilerini ayarlayabilirsin.\nO güne ait kayıtlı verileri silmek için \"Kaydı temizle\" seçeneğini kullan.</string>
     <string name="tour_body_period_indicators">Adet günleri takvimde yoğunluk gölgelendirmesi, gösterge noktaları ve S/E işaretleriyle doğrudan gösterilir. Böylece aylık görünüm okunabilir kalır.</string>
     <string name="tour_title_period_entry">Adet kaydı</string>
     <string name="tour_title_period_modal">Adet seçenekleri</string>
     <string name="tour_title_period_indicators">Adet göstergeleri</string>
 
     <!-- Welcome -->
-    <string name="welcome_features_body">- 📅 Yerleştirme, çıkarma ve halkasız günler için takvim görünümü\n- 🔔 Özelleştirilebilir hatırlatıcılar\n- 📝 Notlar ve döngü geçmişi\n- 🎨 Arka plan, renk, dil ve widget kişiselleştirme\n- 💾 Yedekleme ve geri yükleme</string>
+    <string name="welcome_features_body">- 📅 Takma, çıkarma ve halkasız günlerin takvim görünümü\n- 🩸 Yoğunluk ve belirti girişleriyle adet takibi\n- 🔔 Özelleştirilebilir hatırlatıcılar\n- 📝 Notlar ve döngü geçmişi\n- 🎨 Arka plan, renkler, dil ve widget\'lar için kişiselleştirme\n- 💾 Yedekleme ve geri yükleme</string>
     <string name="welcome_features_title">Bu uygulama ne yapar?</string>
     <string name="welcome_info_note">Uygulama bilgilerini Ayarlar\'dan istediğiniz zaman açabilirsiniz.</string>
-    <string name="welcome_intro">Kişisel tarihleriniz, hatırlatıcılarınız ve notlarınızla doğum kontrol halkası döngünüzü takip edin.</string>
+    <string name="welcome_intro">Kişisel tarihlerin, hatırlatıcıların ve notlarınla doğum kontrol halkası döngünü ve adet takibini kontrol altında tut.</string>
     <string name="welcome_permissions_body">- 🖼️ Medya erişimi: arka plan resmi seçin\n- 🔔 Bildirimler: döngü hatırlatıcıları\n- ⏰ Hassas alarmlar: kesin zamanlama</string>
     <string name="welcome_permissions_title">Kullanılan izinler</string>
     <string name="welcome_privacy_note">Verileriniz yalnızca bu cihazda saklanır. Tüm ayarlar bittiğinde yedek oluşturmayı unutmayın 😊</string>
     <string name="welcome_skip_tour">Şimdi değil</string>
     <string name="welcome_start_tour">Turu başlat</string>
-    <string name="welcome_subtitle">MyRingReminder Halka Hatırlatıcı</string>
+    <string name="welcome_subtitle">MyRingReminder</string>
     <string name="welcome_title">Hoş Geldiniz 👋</string>
 </resources>

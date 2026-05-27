@@ -100,6 +100,12 @@
     <string name="settings_background_blur_others">Другие экраны: %1$d%%</string>
     <string name="settings_background_blur_others_title">Другие экраны</string>
     <string name="settings_background_blur_title">Размытие фона</string>
+    <string name="settings_background_tools_label">Настройки фона</string>
+    <string name="settings_background_tools_format">Настройки фона: %1$s</string>
+    <string name="settings_background_tools_hint_pick">Выберите фоновое изображение для приложения.</string>
+    <string name="settings_background_tools_hint_all_screens">Включите или отключите фон на всех экранах.</string>
+    <string name="settings_background_tools_hint_dim">Настройте затемнение фона для лучшей читаемости.</string>
+    <string name="settings_background_tools_hint_blur">Настройте размытие для главного и других экранов.</string>
     <string name="settings_background_blur_unavailable_toast">Доступно только начиная с Android 12</string>
     <string name="settings_background_dim_format">Затемнение: %1$d%%</string>
     <string name="settings_background_dim_label">Затемнение фона</string>
@@ -172,6 +178,8 @@
     <string name="notification_hint_battery">Отключите оптимизацию батареи, чтобы система не задерживала напоминания.</string>
     <string name="notification_hint_exact_alarm">Разрешите точные будильники, чтобы напоминания срабатывали вовремя (Android 12+).</string>
     <string name="notification_hint_permission">Разрешите доступ к уведомлениям, чтобы напоминания могли отображаться (Android 13+).</string>
+    <string name="notification_section_quick_actions">Быстрые действия</string>
+    <string name="notification_section_permissions_reliability">Разрешения и надежность</string>
     <string name="notification_hint_set_times">Выберите, за сколько часов до извлечения или вставки вы хотите получать напоминания.</string>
     <string name="notification_open_settings">Открыть настройки уведомлений</string>
     <string name="notification_permission_button_label">Разрешение на уведомления: %1$s</string>
@@ -186,6 +194,7 @@
     <string name="notification_test_blocked_permission">Разрешение на уведомления заблокировано.</string>
     <string name="notification_test_blocked_system">Уведомления для этого приложения отключены в системных настройках.</string>
     <string name="notification_test_message">Если вы видите это сообщение, уведомления работают.</string>
+    <string name="notification_test_hint_short">Отправьте тестовое уведомление, чтобы проверить работу функции.</string>
     <string name="notification_test_sent">Тестовое уведомление отправлено.</string>
     <string name="notification_test_title">MyRingReminder тест</string>
     <string name="notification_times_button_label">Напоминания:\nза %1$d ч до извлечения, за %2$d ч до вставки</string>
@@ -271,8 +280,16 @@
     <string name="period_modal_intensity_light">Лёгкое</string>
     <string name="period_modal_intensity_medium">Среднее</string>
     <string name="period_modal_intensity_heavy">Сильное</string>
+    <string name="period_modal_pain_title">Уровень боли</string>
+    <string name="period_modal_pain_light">Слабая</string>
+    <string name="period_modal_pain_medium">Средняя</string>
+    <string name="period_modal_pain_strong">Сильная</string>
     <string name="period_modal_pain">Боль</string>
-    <string name="period_modal_illness">Заболевание</string>
+    <string name="period_modal_illness">Недомогание</string>
+    <string name="period_modal_symptom_nausea">Тошнота</string>
+    <string name="period_modal_symptom_fatigue">Усталость</string>
+    <string name="period_modal_symptom_dizziness">Головокружение</string>
+    <string name="period_modal_symptom_diarrhea">Диарея</string>
     <string name="period_modal_start_marker">Начало менструации</string>
     <string name="period_modal_end_marker">Конец менструации</string>
     <string name="period_modal_clear">Удалить запись</string>
@@ -284,7 +301,7 @@
     <string name="period_modal_only_ring_free_toast">Доступно только во время недели без кольца и ±4 дней.</string>
     <string name="period_legend_period">Менструация</string>
     <string name="period_legend_pain">Боль</string>
-    <string name="period_legend_illness">Заболевание</string>
+    <string name="period_legend_illness">Симптомы</string>
     <string name="period_legend_start_end">S = Начало, E = Конец</string>
     <string name="period_legend_start_only">S = Начало</string>
     <string name="period_legend_end_only">E = Конец</string>
@@ -513,7 +530,7 @@
     <string name="tour_body_settings_advanced">Нажмите, чтобы развернуть или свернуть расширенный раздел.</string>
     <string name="tour_body_settings_animation">Выберите анимацию переходов между вкладками и экранами.</string>
     <string name="tour_body_settings_app_lock">Открывает настройки блокировки, где можно включить защиту и задержку автоблокировки.</string>
-    <string name="tour_body_settings_background">Выберите фото для персонализации фона главного экрана.</string>
+    <string name="tour_body_settings_background">Здесь вы можете настроить параметры фона.</string>
     <string name="tour_body_settings_background_all">Включите это, чтобы фоновое изображение отображалось на всех экранах приложения, а не только на главном.</string>
     <string name="tour_body_settings_background_blur">Настройте размытие фона для главного экрана и других страниц для создания современного стиля.</string>
     <string name="tour_body_settings_background_dim">Настройте уровень затемнения фона, чтобы текст был более читаемым.</string>
@@ -566,22 +583,22 @@
     <string name="tour_title_settings_reset">Сброс приложения</string>
     <string name="tour_title_settings_update">Обновления</string>
     <string name="tour_body_period_entry">Нажмите на день, чтобы добавить или изменить данные менструации. Редактирование доступно только в неделю без кольца и ±4 дня вокруг неё.</string>
-    <string name="tour_body_period_modal">В записи менструации можно указать День менструации, интенсивность, симптомы (боль/недомогание) и дополнительные метки начала/конца. Используйте Очистить запись, чтобы удалить данные за этот день.</string>
+    <string name="tour_body_period_modal">В записи менструации можно указать день менструации, интенсивность кровотечения, уровень боли (слабая/средняя/сильная), дополнительные симптомы и необязательные маркеры начала/конца.\nИспользуйте "Очистить запись", чтобы удалить сохраненные данные за этот день.</string>
     <string name="tour_body_period_indicators">Дни менструации отображаются прямо в календаре с оттенком интенсивности, точками-индикаторами и метками S/E. Так месячный обзор остаётся читаемым.</string>
     <string name="tour_title_period_entry">Запись менструации</string>
     <string name="tour_title_period_modal">Параметры менструации</string>
     <string name="tour_title_period_indicators">Индикаторы менструации</string>
 
     <!-- Welcome -->
-    <string name="welcome_features_body">- 📅 Календарь вставки, извлечения и перерывов\n- 🔔 Настраиваемые уведомления\n- 📝 Заметки и история циклов\n- 🎨 Персонализация фона, цветов, языка и виджетов\n- 💾 Резервное копирование и восстановление</string>
+    <string name="welcome_features_body">- 📅 Календарный вид дней установки, снятия и перерыва\n- 🩸 Отслеживание менструации с записями интенсивности и симптомов\n- 🔔 Настраиваемые напоминания\n- 📝 Заметки и история циклов\n- 🎨 Персонализация фона, цветов, языка и виджетов\n- 💾 Резервное копирование и восстановление</string>
     <string name="welcome_features_title">Функции приложения</string>
     <string name="welcome_info_note">Вы можете открыть инфо о приложении в любое время в Настройках.</string>
-    <string name="welcome_intro">Следите за циклом контрацептивного кольца с помощью персональных дат, напоминаний и заметок.</string>
+    <string name="welcome_intro">Держите под контролем цикл контрацептивного кольца и отслеживание менструации с вашими личными данными, напоминаниями и заметками.</string>
     <string name="welcome_permissions_body">- 🖼️ Доступ к медиафайлам: выбор фонового изображения\n- 🔔 Уведомления: напоминания о цикле\n- ⏰ Точные будильники: точное планирование</string>
     <string name="welcome_permissions_title">Используемые разрешения</string>
     <string name="welcome_privacy_note">Ваши данные хранятся только на этом устройстве. Обязательно создайте резервную копию после настройки 😊</string>
     <string name="welcome_skip_tour">Не сейчас</string>
     <string name="welcome_start_tour">Начать тур</string>
-    <string name="welcome_subtitle">Напоминание о кольце MyRingReminder</string>
+    <string name="welcome_subtitle">MyRingReminder</string>
     <string name="welcome_title">Добро пожаловать 👋</string>
 </resources>

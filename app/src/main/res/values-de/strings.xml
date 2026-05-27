@@ -100,6 +100,12 @@
     <string name="settings_background_blur_others">Andere Bildschirme: %1$d%%</string>
     <string name="settings_background_blur_others_title">Andere Bildschirme</string>
     <string name="settings_background_blur_title">Hintergrund-Unschärfe</string>
+    <string name="settings_background_tools_label">Hintergrund-Einstellungen</string>
+    <string name="settings_background_tools_format">Hintergrund-Einstellungen: %1$s</string>
+    <string name="settings_background_tools_hint_pick">Wähle ein Hintergrundbild für die App aus.</string>
+    <string name="settings_background_tools_hint_all_screens">Aktiviere oder deaktiviere das Hintergrundbild auf allen Bildschirmen.</string>
+    <string name="settings_background_tools_hint_dim">Passe die Abdunkelung für bessere Lesbarkeit an.</string>
+    <string name="settings_background_tools_hint_blur">Passe die Unschärfe für Dashboard und andere Seiten an.</string>
     <string name="settings_background_blur_unavailable_toast">Nur ab Android 12 verfügbar</string>
     <string name="settings_background_dim_format">Hintergrundabdunkelung: %1$d%%</string>
     <string name="settings_background_dim_label">Hintergrundabdunkelung</string>
@@ -172,6 +178,8 @@
     <string name="notification_hint_battery">Deaktiviere die Akku-Optimierung, damit das System Erinnerungen nicht verzögert.</string>
     <string name="notification_hint_exact_alarm">Erlaube exakte Alarme, damit Erinnerungen pünktlich erscheinen (Android 12+).</string>
     <string name="notification_hint_permission">Erlaube Benachrichtigungen, damit Erinnerungen angezeigt werden können (Android 13+).</string>
+    <string name="notification_section_quick_actions">Schnellaktionen</string>
+    <string name="notification_section_permissions_reliability">Berechtigungen &amp; Zuverlässigkeit</string>
     <string name="notification_hint_set_times">Lege fest, wie viele Stunden vor Entfernen oder Einsetzen du erinnert werden möchtest.</string>
     <string name="notification_open_settings">Benachrichtigungseinstellungen öffnen</string>
     <string name="notification_permission_button_label">Benachrichtigungsberechtigung: %1$s</string>
@@ -185,6 +193,7 @@
     <string name="notification_test_blocked_permission">Benachrichtigungsberechtigung ist blockiert.</string>
     <string name="notification_test_blocked_system">Benachrichtigungen sind für diese App in den Systemeinstellungen deaktiviert.</string>
     <string name="notification_test_message">Wenn du das siehst, funktionieren Benachrichtigungen.</string>
+    <string name="notification_test_hint_short">Test-Benachrichtigung senden, um die Funktion zu prüfen.</string>
     <string name="notification_test_sent">Test-Benachrichtigung gesendet.</string>
     <string name="notification_test_title">MyRingReminder Test</string>
     <string name="notification_times_button_label">Erinnerungen:\n%1$d h vor Entfernen, %2$d h vor Einsetzen</string>
@@ -271,8 +280,16 @@
     <string name="period_modal_intensity_light">Leicht</string>
     <string name="period_modal_intensity_medium">Mittel</string>
     <string name="period_modal_intensity_heavy">Stark</string>
+    <string name="period_modal_pain_title">Schmerzstärke</string>
+    <string name="period_modal_pain_light">Leicht</string>
+    <string name="period_modal_pain_medium">Mittel</string>
+    <string name="period_modal_pain_strong">Stark</string>
     <string name="period_modal_pain">Schmerzen</string>
-    <string name="period_modal_illness">Krankheit</string>
+    <string name="period_modal_illness">Unwohlsein</string>
+    <string name="period_modal_symptom_nausea">Übelkeit</string>
+    <string name="period_modal_symptom_fatigue">Müdigkeit</string>
+    <string name="period_modal_symptom_dizziness">Schwindel</string>
+    <string name="period_modal_symptom_diarrhea">Durchfall</string>
     <string name="period_modal_start_marker">Periodenbeginn</string>
     <string name="period_modal_end_marker">Periodenende</string>
     <string name="period_modal_clear">Eintrag löschen</string>
@@ -284,7 +301,7 @@
     <string name="period_modal_only_ring_free_toast">Nur in der ringfreien Woche und ±4 Tagen verfügbar.</string>
     <string name="period_legend_period">Periode</string>
     <string name="period_legend_pain">Schmerzen</string>
-    <string name="period_legend_illness">Krankheit</string>
+    <string name="period_legend_illness">Symptome</string>
     <string name="period_legend_start_end">S = Start, E = Ende</string>
     <string name="period_legend_start_only">S = Beginn</string>
     <string name="period_legend_end_only">E = Ende</string>
@@ -513,7 +530,7 @@
     <string name="tour_body_settings_advanced">Tippe, um den erweiterten Bereich ein- oder auszublenden.</string>
     <string name="tour_body_settings_animation">Wähle, wie Bildschirmübergänge beim Wechseln von Tabs und Öffnen von Ansichten animiert werden.</string>
     <string name="tour_body_settings_app_lock">Öffnet den App-Sperre-Dialog, in dem du den Schutz aktivieren/deaktivieren und die automatische Sperrzeit einstellen kannst.</string>
-    <string name="tour_body_settings_background">Wähle ein Foto, um den Startbildschirm zu personalisieren.</string>
+    <string name="tour_body_settings_background">Hier kannst du Einstellungen zum Hintergrund festlegen.</string>
     <string name="tour_body_settings_background_all">Aktiviere dies, um das Hintergrundbild auf allen Bildschirmen der App anzuzeigen, nicht nur auf dem Dashboard.</string>
     <string name="tour_body_settings_background_blur">Passe die Unschärfe für das Dashboard und andere Seiten an, um ein modernes Design zu erzielen.</string>
     <string name="tour_body_settings_background_dim">Stelle ein, wie stark das Bild abgedunkelt werden soll, um die Lesbarkeit der Texte zu verbessern.</string>
@@ -566,22 +583,22 @@
     <string name="tour_title_settings_reset">App zurücksetzen</string>
     <string name="tour_title_settings_update">Updates</string>
     <string name="tour_body_period_entry">Tippe auf einen Tag, um Perioden-Einträge hinzuzufügen oder zu bearbeiten.\nBearbeiten ist nur während der ringfreien Woche und ±4 Tage darum herum verfügbar.</string>
-    <string name="tour_body_period_modal">Lege im Perioden-Eintrag Periodentag, Blutungsstärke, Symptome (Schmerzen/Krankheit) sowie optionale Start-/Endmarkierungen fest.\nVerwende „Eintrag löschen“, um gespeicherte Daten für diesen Tag zu entfernen.</string>
+    <string name="tour_body_period_modal">Im Periodeneintrag kannst du Periodentag, Blutungsstärke, Schmerzstärke (leicht/mittel/stark), zusätzliche Symptome sowie optionale Start-/Endmarker festlegen.\nNutze "Eintrag löschen", um gespeicherte Daten für diesen Tag zu entfernen.</string>
     <string name="tour_body_period_indicators">Periodentage werden direkt im Kalender mit Intensitätsschattierung, Indikatorpunkten und S/E-Markierungen angezeigt.\nDadurch bleibt die Monatsübersicht auf einen Blick gut lesbar.</string>
     <string name="tour_title_period_entry">Periodeneintrag</string>
     <string name="tour_title_period_modal">Periodenoptionen</string>
     <string name="tour_title_period_indicators">Periodenindikatoren</string>
 
     <!-- Welcome -->
-    <string name="welcome_features_body">- 📅 Kalenderansicht von Einsetz-, Entfern- und ringfreien Tagen\n- 🔔 Selbst anpassbare Erinnerungen\n- 📝 Notizen und Zyklus-Historie\n- 🎨 Personalisierung von Hintergrund, Farben, Sprache und Widgets\n- 💾 Backup und Wiederherstellung</string>
+    <string name="welcome_features_body">- 📅 Kalenderansicht von Einsetz-, Entfern- und ringfreien Tagen\n- 🩸 Perioden-Tracking mit Stärke- und Symptom-Einträgen\n- 🔔 Selbst anpassbare Erinnerungen\n- 📝 Notizen und Zyklus-Historie\n- 🎨 Personalisierung von Hintergrund, Farben, Sprache und Widgets\n- 💾 Backup und Wiederherstellung</string>
     <string name="welcome_features_title">Was diese App kann</string>
     <string name="welcome_info_note">Du kannst die App-Info jederzeit in den Einstellungen öffnen.</string>
-    <string name="welcome_intro">Behalte deinen Verhütungsring-Zyklus mit deinen persönlichen Daten, Erinnerungen und Notizen im Blick.</string>
+    <string name="welcome_intro">Behalte deinen Verhütungsring-Zyklus und dein Perioden-Tracking mit deinen persönlichen Daten, Erinnerungen und Notizen im Blick.</string>
     <string name="welcome_permissions_body">- 🖼️ Medienzugriff: Hintergrundbild auswählen\n- 🔔 Benachrichtigungen: Zyklus-Erinnerungen\n- ⏰ Exakte Alarme: präzise Terminierung</string>
     <string name="welcome_permissions_title">Verwendete Berechtigungen</string>
     <string name="welcome_privacy_note">Deine Daten werden nur auf diesem Gerät gespeichert. Erstelle nach dem Einrichten aller Daten und Einstellungen unbedingt ein Backup 😊</string>
     <string name="welcome_skip_tour">Nicht jetzt</string>
     <string name="welcome_start_tour">Tour starten</string>
-    <string name="welcome_subtitle">MyRingReminder Ring Reminder</string>
+    <string name="welcome_subtitle">MyRingReminder</string>
     <string name="welcome_title">Willkommen 👋</string>
 </resources>

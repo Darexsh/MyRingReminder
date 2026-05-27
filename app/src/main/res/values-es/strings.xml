@@ -100,6 +100,12 @@
     <string name="settings_background_blur_others">Otras pantallas: %1$d%%</string>
     <string name="settings_background_blur_others_title">Otras pantallas</string>
     <string name="settings_background_blur_title">Desenfoque de fondo</string>
+    <string name="settings_background_tools_label">Ajustes de fondo</string>
+    <string name="settings_background_tools_format">Ajustes de fondo: %1$s</string>
+    <string name="settings_background_tools_hint_pick">Elige una imagen de fondo para la app.</string>
+    <string name="settings_background_tools_hint_all_screens">Activa o desactiva la imagen de fondo en todas las pantallas.</string>
+    <string name="settings_background_tools_hint_dim">Ajusta el oscurecimiento del fondo para mejorar la legibilidad.</string>
+    <string name="settings_background_tools_hint_blur">Ajusta el desenfoque para panel principal y otras pantallas.</string>
     <string name="settings_background_blur_unavailable_toast">Disponible solo a partir de Android 12</string>
     <string name="settings_background_dim_format">Atenuación del fondo: %1$d%%</string>
     <string name="settings_background_dim_label">Atenuación del fondo</string>
@@ -172,6 +178,8 @@
     <string name="notification_hint_battery">Desactiva la optimización de la batería para que el sistema no retrase los recordatorios.</string>
     <string name="notification_hint_exact_alarm">Permite las alarmas exactas para que los recordatorios se activen a tiempo (Android 12 y superior).</string>
     <string name="notification_hint_permission">Permite el acceso a las notificaciones para que puedan aparecer los recordatorios (Android 13+).</string>
+    <string name="notification_section_quick_actions">Acciones rápidas</string>
+    <string name="notification_section_permissions_reliability">Permisos y fiabilidad</string>
     <string name="notification_hint_set_times">Elige cuántas horas antes de la extracción o la inserción quieres recibir los recordatorios.</string>
     <string name="notification_open_settings">Abrir ajustes de notificaciones</string>
     <string name="notification_permission_button_label">Permiso de notificaciones: %1$s</string>
@@ -186,6 +194,7 @@
     <string name="notification_test_blocked_permission">El permiso de notificación está bloqueado.</string>
     <string name="notification_test_blocked_system">Las notificaciones están desactivadas para esta aplicación en la configuración del sistema.</string>
     <string name="notification_test_message">Si puedes ver esto, las notificaciones funcionan.</string>
+    <string name="notification_test_hint_short">Envía una notificación de prueba para comprobar la funcionalidad.</string>
     <string name="notification_test_sent">Notificación de prueba enviada.</string>
     <string name="notification_test_title">Prueba de MyRingReminder</string>
     <string name="notification_times_button_label">Recordatorios:\n%1$d horas antes de la extracción, %2$d horas antes de la inserción</string>
@@ -271,8 +280,16 @@
     <string name="period_modal_intensity_light">Leve</string>
     <string name="period_modal_intensity_medium">Moderado</string>
     <string name="period_modal_intensity_heavy">Intenso</string>
+    <string name="period_modal_pain_title">Nivel de dolor</string>
+    <string name="period_modal_pain_light">Leve</string>
+    <string name="period_modal_pain_medium">Moderado</string>
+    <string name="period_modal_pain_strong">Fuerte</string>
     <string name="period_modal_pain">Dolor</string>
-    <string name="period_modal_illness">Enfermedad</string>
+    <string name="period_modal_illness">Malestar</string>
+    <string name="period_modal_symptom_nausea">Náuseas</string>
+    <string name="period_modal_symptom_fatigue">Fatiga</string>
+    <string name="period_modal_symptom_dizziness">Mareo</string>
+    <string name="period_modal_symptom_diarrhea">Diarrea</string>
     <string name="period_modal_start_marker">Inicio del período</string>
     <string name="period_modal_end_marker">Fin del período</string>
     <string name="period_modal_clear">Eliminar registro</string>
@@ -284,7 +301,7 @@
     <string name="period_modal_only_ring_free_toast">Disponible solo durante la semana sin anillo y ±4 días.</string>
     <string name="period_legend_period">Período</string>
     <string name="period_legend_pain">Dolor</string>
-    <string name="period_legend_illness">Enfermedad</string>
+    <string name="period_legend_illness">Síntomas</string>
     <string name="period_legend_start_end">S = Inicio, E = Fin</string>
     <string name="period_legend_start_only">S = Inicio</string>
     <string name="period_legend_end_only">E = Fin</string>
@@ -513,7 +530,7 @@
     <string name="tour_body_settings_advanced">Toca para expandir o contraer la sección avanzada.</string>
     <string name="tour_body_settings_animation">Elige cómo se animan las transiciones de pantalla al cambiar de pestaña y abrir vistas.</string>
     <string name="tour_body_settings_app_lock">Abre el cuadro de diálogo de bloqueo de la aplicación, donde puedes activar o desactivar la protección y configurar el retraso del bloqueo automático.</string>
-    <string name="tour_body_settings_background">Elige una foto para personalizar el fondo de la pantalla de inicio.</string>
+    <string name="tour_body_settings_background">Aquí puedes configurar los ajustes del fondo.</string>
     <string name="tour_body_settings_background_all">Activa esto para mostrar la imagen de fondo en todas las pantallas de la aplicación, no solo en el inicio.</string>
     <string name="tour_body_settings_background_blur">Ajusta la intensidad del desenfoque para la pantalla de inicio y otras páginas para un estilo moderno.</string>
     <string name="tour_body_settings_background_dim">Ajusta qué tan oscura debe ser la imagen de fondo para mejorar la legibilidad del texto.</string>
@@ -566,22 +583,22 @@
     <string name="tour_title_settings_reset">Restablecer aplicación</string>
     <string name="tour_title_settings_update">Actualizaciones</string>
     <string name="tour_body_period_entry">Toca un día para añadir o editar registros del período.\nLa edición solo está disponible durante la semana sin anillo y ±4 días alrededor.</string>
-    <string name="tour_body_period_modal">En el registro del período puedes establecer el día del período, la intensidad, los síntomas (dolor/enfermedad) y marcadores opcionales de inicio/fin.\nUtiliza \"Eliminar registro\" para borrar los datos guardados de ese día.</string>
+    <string name="tour_body_period_modal">En el registro del período puedes definir día del período, intensidad del sangrado, nivel de dolor (leve/moderado/fuerte), síntomas adicionales y marcadores opcionales de inicio/fin.\nUsa "Eliminar registro" para borrar los datos guardados de ese día.</string>
     <string name="tour_body_period_indicators">Los días del período se muestran directamente en el calendario con sombreado de intensidad, puntos indicadores y marcadores S/E.\nEsto mantiene una vista mensual clara de un vistazo.</string>
     <string name="tour_title_period_entry">Registro del período</string>
     <string name="tour_title_period_modal">Opciones del período</string>
     <string name="tour_title_period_indicators">Indicadores del período</string>
 
     <!-- Welcome -->
-    <string name="welcome_features_body">- 📅 Vista de calendario con días de inserción, retirada y sin anillos\n- 🔔 Recordatorios que puedes personalizar tú mismo\n- 📝 Notas e historial del ciclo\n- 🎨 Personalización del fondo, los colores, el idioma y los widgets\n- 💾 Copia de seguridad y restauración</string>
+    <string name="welcome_features_body">- 📅 Vista de calendario de los días de inserción, retirada y sin anillo\n- 🩸 Seguimiento del período con registros de intensidad y síntomas\n- 🔔 Recordatorios que puedes personalizar\n- 📝 Notas e historial del ciclo\n- 🎨 Personalización de fondo, colores, idioma y widgets\n- 💾 Copia de seguridad y restauración</string>
     <string name="welcome_features_title">Qué hace esta aplicación</string>
     <string name="welcome_info_note">Puedes abrir la información de la aplicación en cualquier momento en Ajustes.</string>
-    <string name="welcome_intro">Mantén a la vista tu ciclo del anillo anticonceptivo con tus fechas personales, recordatorios y notas.</string>
+    <string name="welcome_intro">Mantén bajo control tu ciclo del anillo anticonceptivo y el seguimiento del período con tus datos personales, recordatorios y notas.</string>
     <string name="welcome_permissions_body">- 🖼️ Acceso a los archivos multimedia: elige una imagen de fondo\n- 🔔 Notificaciones: recordatorios del ciclo\n- ⏰ Alarmas exactas: programación precisa</string>
     <string name="welcome_permissions_title">Permisos utilizados</string>
     <string name="welcome_privacy_note">Tus datos se almacenan únicamente en este dispositivo. Asegúrate de crear una copia de seguridad una vez que hayas configurado todos los datos y ajustes 😊</string>
     <string name="welcome_skip_tour">Ahora no</string>
     <string name="welcome_start_tour">Iniciar recorrido</string>
-    <string name="welcome_subtitle">Recordatorio de MyRingReminder Ring</string>
+    <string name="welcome_subtitle">MyRingReminder</string>
     <string name="welcome_title">Bienvenido 👋</string>
 </resources>

@@ -100,6 +100,12 @@
     <string name="settings_background_blur_others">Other screens: %1$d%%</string>
     <string name="settings_background_blur_others_title">Other screens</string>
     <string name="settings_background_blur_title">Background blur</string>
+    <string name="settings_background_tools_label">Background settings</string>
+    <string name="settings_background_tools_format">Background settings: %1$s</string>
+    <string name="settings_background_tools_hint_pick">Choose a background image for your app.</string>
+    <string name="settings_background_tools_hint_all_screens">Enable or disable your background image on all screens.</string>
+    <string name="settings_background_tools_hint_dim">Adjust background dimming for better readability.</string>
+    <string name="settings_background_tools_hint_blur">Adjust blur intensity for dashboard and other screens.</string>
     <string name="settings_background_blur_unavailable_toast">Available from Android 12 only</string>
     <string name="settings_background_dim_format">Background dimming: %1$d%%</string>
     <string name="settings_background_dim_label">Background dimming</string>
@@ -172,6 +178,8 @@
     <string name="notification_hint_battery">Disable battery optimization so the system does not delay reminders.</string>
     <string name="notification_hint_exact_alarm">Allow exact alarms so reminders fire on time (Android 12+).</string>
     <string name="notification_hint_permission">Allow notification access so reminders can appear (Android 13+).</string>
+    <string name="notification_section_quick_actions">Quick actions</string>
+    <string name="notification_section_permissions_reliability">Permissions &amp; reliability</string>
     <string name="notification_hint_set_times">Choose how many hours before removal or insertion you want reminders.</string>
     <string name="notification_open_settings">Open notification settings</string>
     <string name="notification_permission_button_label">Notification permission: %1$s</string>
@@ -185,6 +193,7 @@
     <string name="notification_test_blocked_permission">Notification permission is blocked.</string>
     <string name="notification_test_blocked_system">Notifications are disabled for this app in system settings.</string>
     <string name="notification_test_message">If you can see this, notifications work.</string>
+    <string name="notification_test_hint_short">Send a test notification to verify functionality.</string>
     <string name="notification_test_sent">Test notification sent.</string>
     <string name="notification_test_title">MyRingReminder test</string>
     <string name="notification_times_button_label">Reminders:\n%1$d h before removal, %2$d h before insertion</string>
@@ -271,8 +280,16 @@
     <string name="period_modal_intensity_light">Light</string>
     <string name="period_modal_intensity_medium">Medium</string>
     <string name="period_modal_intensity_heavy">Heavy</string>
+    <string name="period_modal_pain_title">Pain level</string>
+    <string name="period_modal_pain_light">Light</string>
+    <string name="period_modal_pain_medium">Medium</string>
+    <string name="period_modal_pain_strong">Strong</string>
     <string name="period_modal_pain">Pain</string>
     <string name="period_modal_illness">Illness</string>
+    <string name="period_modal_symptom_nausea">Nausea</string>
+    <string name="period_modal_symptom_fatigue">Fatigue</string>
+    <string name="period_modal_symptom_dizziness">Dizziness</string>
+    <string name="period_modal_symptom_diarrhea">Diarrhea</string>
     <string name="period_modal_start_marker">Period start</string>
     <string name="period_modal_end_marker">Period end</string>
     <string name="period_modal_clear">Clear entry</string>
@@ -284,7 +301,7 @@
     <string name="period_modal_only_ring_free_toast">Available only in ring-free week and ±4 days.</string>
     <string name="period_legend_period">Period</string>
     <string name="period_legend_pain">Pain</string>
-    <string name="period_legend_illness">Illness</string>
+    <string name="period_legend_illness">Symptoms</string>
     <string name="period_legend_start_end">S = Start, E = End</string>
     <string name="period_legend_start_only">S = Start</string>
     <string name="period_legend_end_only">E = End</string>
@@ -500,7 +517,7 @@
     <!-- Tour -->
     <string name="tour_body_calendar">See insertion, removal, and ring-free days at a glance.</string>
     <string name="tour_body_period_entry">Tap a day to add or edit period tracking.\nEditing is available only during ring-free week and ±4 days around it.</string>
-    <string name="tour_body_period_modal">In period entry, set Period day, intensity, symptoms (pain/illness), and optional start/end markers.\nUse Clear entry to remove saved data for that day.</string>
+    <string name="tour_body_period_modal">In period entry, set Period day, bleeding intensity, pain level (light/medium/strong), additional symptoms, and optional start/end markers.\nUse Clear entry to remove saved data for that day.</string>
     <string name="tour_body_period_indicators">Period days are shown directly in the calendar with intensity shading, indicator dots, and S/E markers.\nThis keeps monthly overview readable at a glance.</string>
     <string name="tour_body_calendar_legend">These colors show wear time, ring-free days, removal, and insertion.\nYou can also change the colors by tapping the legend dots.</string>
     <string name="tour_body_cycles">Track previous cycles and their insertion/removal events.</string>
@@ -516,7 +533,7 @@
     <string name="tour_body_settings_advanced">Tap to expand or collapse the advanced section.</string>
     <string name="tour_body_settings_animation">Choose how screen transitions animate when switching tabs and opening views.</string>
     <string name="tour_body_settings_app_lock">Opens the app lock dialog, where you can enable/disable protection and set the auto-lock delay.</string>
-    <string name="tour_body_settings_background">Pick a photo to personalize the home background.</string>
+    <string name="tour_body_settings_background">Here you can configure background settings.</string>
     <string name="tour_body_settings_background_all">Enable this to show your background image on all app screens, not just the home dashboard.</string>
     <string name="tour_body_settings_background_blur">Set the blur intensity for the home screen and other pages to create a modern look.</string>
     <string name="tour_body_settings_background_dim">Adjust how dark the background image should be to make text easier to read.</string>
@@ -573,15 +590,15 @@
     <string name="tour_title_settings_update">Updates</string>
 
     <!-- Welcome -->
-    <string name="welcome_features_body">- 📅 Calendar view of insertion, removal, and ring-free days\n- 🔔 Reminders you can customize yourself\n- 📝 Notes and cycle history\n- 🎨 Personalization for background, colors, language, and widgets\n- 💾 Backup and restore</string>
+    <string name="welcome_features_body">- 📅 Calendar view of insertion, removal, and ring-free days\n- 🩸 Period tracking with intensity and symptom entries\n- 🔔 Reminders you can customize yourself\n- 📝 Notes and cycle history\n- 🎨 Personalization for background, colors, language, and widgets\n- 💾 Backup and restore</string>
     <string name="welcome_features_title">What this app does</string>
     <string name="welcome_info_note">You can open App info anytime in Settings.</string>
-    <string name="welcome_intro">Keep your contraceptive ring cycle in view with your personal dates, reminders, and notes.</string>
+    <string name="welcome_intro">Keep your contraceptive ring cycle and period tracking in view with your personal dates, reminders, and notes.</string>
     <string name="welcome_permissions_body">- 🖼️ Media access: choose a background image\n- 🔔 Notifications: cycle reminders\n- ⏰ Exact alarms: precise scheduling</string>
     <string name="welcome_permissions_title">Permissions used</string>
     <string name="welcome_privacy_note">Your data is stored only on this device. Make sure to create a backup once all data and settings are set 😊</string>
     <string name="welcome_skip_tour">Not now</string>
     <string name="welcome_start_tour">Start tour</string>
-    <string name="welcome_subtitle">MyRingReminder Ring Reminder</string>
+    <string name="welcome_subtitle">MyRingReminder</string>
     <string name="welcome_title">Welcome 👋</string>
 </resources>

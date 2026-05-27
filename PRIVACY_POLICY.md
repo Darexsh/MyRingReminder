@@ -1,6 +1,6 @@
 # Privacy Policy – MyRingReminder
 
-Last updated: 2026-05-21
+Last updated: 2026-05-27
 
 ## 1. Controller
 Daniel Sichler (Darexsh)  
@@ -12,6 +12,7 @@ This policy applies to the MyRingReminder Android app (`com.darexsh.myringremind
 ## 3. What MyRingReminder processes
 MyRingReminder processes app data required for cycle tracking and personalization, including:
 - cycle dates and cycle history
+- period tracking entries (for example period day flag, bleeding intensity, symptom flags such as pain/illness, optional start/end markers)
 - reminder settings and notification times
 - notes entered by the user
 - design preferences (colors/background/language)
@@ -21,6 +22,8 @@ MyRingReminder processes app data required for cycle tracking and personalizatio
 MyRingReminder stores your data locally on your device (for example via SharedPreferences/local app storage).
 
 MyRingReminder does not upload your personal cycle data or notes to the developer.
+
+If you use backup/restore, backup data is exported/imported as a local file selected by you via the Android file picker.
 
 ## 5. Permissions used
 MyRingReminder may request permissions required for app features, such as:
@@ -35,6 +38,8 @@ Based on the current implementation, MyRingReminder does **not** include third-p
 
 ## 7. Network and external links
 MyRingReminder is local-first for core functionality and does not require a dedicated backend API for cycle tracking.
+
+For update checks, MyRingReminder can request release metadata from the public GitHub Releases API for this project.
 
 On user action, MyRingReminder can open external destinations via system intents, including:
 - email (`mailto:`)

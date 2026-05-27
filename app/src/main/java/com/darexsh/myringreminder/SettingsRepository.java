@@ -564,8 +564,12 @@ public class SettingsRepository {
     public boolean savePeriodDayEntry(Calendar day,
                                       boolean periodDay,
                                       BleedingIntensity intensity,
-                                      boolean pain,
-                                      boolean illness,
+                                      PainSeverity painSeverity,
+                                      boolean symptomIllness,
+                                      boolean symptomNausea,
+                                      boolean symptomFatigue,
+                                      boolean symptomDizziness,
+                                      boolean symptomDiarrhea,
                                       boolean start,
                                       boolean end) {
         String dateKey = buildPeriodDateKey(day);
@@ -573,8 +577,12 @@ public class SettingsRepository {
                 dateKey,
                 periodDay,
                 intensity,
-                pain,
-                illness,
+                painSeverity,
+                symptomIllness,
+                symptomNausea,
+                symptomFatigue,
+                symptomDizziness,
+                symptomDiarrhea,
                 start,
                 end,
                 System.currentTimeMillis()
@@ -614,15 +622,26 @@ public class SettingsRepository {
         }
         boolean periodDay = raw.isPeriodDay();
         BleedingIntensity intensity = raw.getIntensity();
-        boolean pain = raw.hasPain();
-        boolean illness = raw.hasIllness();
+        PainSeverity painSeverity = raw.getPainSeverity();
+        if (painSeverity == null) {
+            painSeverity = raw.hasPain() ? PainSeverity.MEDIUM : PainSeverity.NONE;
+        }
+        boolean symptomIllness = raw.isSymptomIllness() || raw.hasIllness();
+        boolean symptomNausea = raw.isSymptomNausea();
+        boolean symptomFatigue = raw.isSymptomFatigue();
+        boolean symptomDizziness = raw.isSymptomDizziness();
+        boolean symptomDiarrhea = raw.isSymptomDiarrhea();
         boolean start = raw.isStart();
         boolean end = raw.isEnd();
 
         if (!periodDay) {
             intensity = null;
-            pain = false;
-            illness = false;
+            painSeverity = PainSeverity.NONE;
+            symptomIllness = false;
+            symptomNausea = false;
+            symptomFatigue = false;
+            symptomDizziness = false;
+            symptomDiarrhea = false;
             start = false;
             end = false;
         } else if (intensity == null) {
@@ -634,7 +653,20 @@ public class SettingsRepository {
             updatedAt = System.currentTimeMillis();
         }
 
-        return new PeriodDayEntry(dateKey, periodDay, intensity, pain, illness, start, end, updatedAt);
+        return new PeriodDayEntry(
+                dateKey,
+                periodDay,
+                intensity,
+                painSeverity,
+                symptomIllness,
+                symptomNausea,
+                symptomFatigue,
+                symptomDizziness,
+                symptomDiarrhea,
+                start,
+                end,
+                updatedAt
+        );
     }
 
     private void persistPeriodDayEntries(Map<String, PeriodDayEntry> entries) {

@@ -383,7 +383,7 @@ public class CalendarFragment extends Fragment {
             if (entry.hasPain()) {
                 painDays.add(day);
             }
-            if (entry.hasIllness()) {
+            if (entry.hasAnyAdditionalSymptoms()) {
                 illnessDays.add(day);
             }
             if (entry.isStart()) {
@@ -527,6 +527,9 @@ public class CalendarFragment extends Fragment {
         cancelButton.setOnClickListener(v -> dialog.dismiss());
 
         dialog.show();
+        if (dialog.getWindow() != null) {
+            dialog.getWindow().setBackgroundDrawableResource(R.drawable.bg_app_info_dialog);
+        }
         applyDialogButtonColors(dialog);
     }
 
@@ -549,6 +552,9 @@ public class CalendarFragment extends Fragment {
                 .setPositiveButton(R.string.dialog_ok, (dlg, which) -> onSelect.accept(pendingColor[0]))
                 .setNegativeButton(R.string.dialog_cancel, null)
                 .show();
+        if (dialog.getWindow() != null) {
+            dialog.getWindow().setBackgroundDrawableResource(R.drawable.bg_app_info_dialog);
+        }
         applyDialogButtonColors(dialog);
     }
 
@@ -910,6 +916,9 @@ public class CalendarFragment extends Fragment {
                 })
                 .setNegativeButton(R.string.dialog_cancel, null)
                 .show();
+        if (dialog.getWindow() != null) {
+            dialog.getWindow().setBackgroundDrawableResource(R.drawable.bg_app_info_dialog);
+        }
         applyDialogButtonColors(dialog);
     }
 
@@ -1006,14 +1015,22 @@ public class CalendarFragment extends Fragment {
         activePeriodEntryDialogView = layout;
         SwitchMaterial periodDaySwitch = layout.findViewById(R.id.switch_period_day);
         TextView intensityTitle = layout.findViewById(R.id.tv_period_intensity_title);
+        TextView painTitle = layout.findViewById(R.id.tv_period_pain_title);
         TextView symptomsTitle = layout.findViewById(R.id.tv_period_symptoms_title);
         TextView markersTitle = layout.findViewById(R.id.tv_period_markers_title);
         ChipGroup intensityGroup = layout.findViewById(R.id.chip_group_intensity);
+        ChipGroup painGroup = layout.findViewById(R.id.chip_group_pain);
         Chip light = layout.findViewById(R.id.chip_intensity_light);
         Chip medium = layout.findViewById(R.id.chip_intensity_medium);
         Chip heavy = layout.findViewById(R.id.chip_intensity_heavy);
-        Chip painChip = layout.findViewById(R.id.chip_pain);
-        Chip illnessChip = layout.findViewById(R.id.chip_illness);
+        Chip painLightChip = layout.findViewById(R.id.chip_pain_light);
+        Chip painMediumChip = layout.findViewById(R.id.chip_pain_medium);
+        Chip painStrongChip = layout.findViewById(R.id.chip_pain_strong);
+        Chip illnessChip = layout.findViewById(R.id.chip_symptom_illness);
+        Chip nauseaChip = layout.findViewById(R.id.chip_symptom_nausea);
+        Chip fatigueChip = layout.findViewById(R.id.chip_symptom_fatigue);
+        Chip dizzinessChip = layout.findViewById(R.id.chip_symptom_dizziness);
+        Chip diarrheaChip = layout.findViewById(R.id.chip_symptom_diarrhea);
         Chip startChip = layout.findViewById(R.id.chip_start);
         Chip endChip = layout.findViewById(R.id.chip_end);
         MaterialButton btnDelete = layout.findViewById(R.id.btn_period_delete);
@@ -1024,8 +1041,22 @@ public class CalendarFragment extends Fragment {
         final boolean autoStartSuggestionEligible = existing == null && firstEntryInRingFreeWeek;
         if (existing != null) {
             periodDaySwitch.setChecked(existing.isPeriodDay());
-            painChip.setChecked(existing.hasPain());
-            illnessChip.setChecked(existing.hasIllness());
+            PainSeverity painSeverity = existing.getPainSeverity();
+            if (painSeverity == null) {
+                painSeverity = existing.hasPain() ? PainSeverity.MEDIUM : PainSeverity.NONE;
+            }
+            if (painSeverity == PainSeverity.LIGHT) {
+                painLightChip.setChecked(true);
+            } else if (painSeverity == PainSeverity.MEDIUM) {
+                painMediumChip.setChecked(true);
+            } else if (painSeverity == PainSeverity.STRONG) {
+                painStrongChip.setChecked(true);
+            }
+            illnessChip.setChecked(existing.isSymptomIllness() || existing.hasIllness());
+            nauseaChip.setChecked(existing.isSymptomNausea());
+            fatigueChip.setChecked(existing.isSymptomFatigue());
+            dizzinessChip.setChecked(existing.isSymptomDizziness());
+            diarrheaChip.setChecked(existing.isSymptomDiarrhea());
             startChip.setChecked(existing.isStart());
             endChip.setChecked(existing.isEnd());
             if (existing.getIntensity() == BleedingIntensity.LIGHT) {
@@ -1040,19 +1071,30 @@ public class CalendarFragment extends Fragment {
         Runnable toggleEnabledState = () -> {
             boolean enabled = periodDaySwitch.isChecked();
             intensityTitle.setEnabled(enabled);
+            painTitle.setEnabled(enabled);
             symptomsTitle.setEnabled(enabled);
             markersTitle.setEnabled(enabled);
             light.setEnabled(enabled);
             medium.setEnabled(enabled);
             heavy.setEnabled(enabled);
-            painChip.setEnabled(enabled);
+            painLightChip.setEnabled(enabled);
+            painMediumChip.setEnabled(enabled);
+            painStrongChip.setEnabled(enabled);
             illnessChip.setEnabled(enabled);
+            nauseaChip.setEnabled(enabled);
+            fatigueChip.setEnabled(enabled);
+            dizzinessChip.setEnabled(enabled);
+            diarrheaChip.setEnabled(enabled);
             startChip.setEnabled(enabled);
             endChip.setEnabled(enabled);
             if (!enabled) {
                 intensityGroup.clearCheck();
-                painChip.setChecked(false);
+                painGroup.clearCheck();
                 illnessChip.setChecked(false);
+                nauseaChip.setChecked(false);
+                fatigueChip.setChecked(false);
+                dizzinessChip.setChecked(false);
+                diarrheaChip.setChecked(false);
                 startChip.setChecked(false);
                 endChip.setChecked(false);
                 startChip.setEnabled(false);
@@ -1100,6 +1142,15 @@ public class CalendarFragment extends Fragment {
             } else if (checkedId == heavy.getId()) {
                 intensity = BleedingIntensity.HEAVY;
             }
+            PainSeverity painSeverity = PainSeverity.NONE;
+            int painCheckedId = painGroup.getCheckedChipId();
+            if (painCheckedId == painLightChip.getId()) {
+                painSeverity = PainSeverity.LIGHT;
+            } else if (painCheckedId == painMediumChip.getId()) {
+                painSeverity = PainSeverity.MEDIUM;
+            } else if (painCheckedId == painStrongChip.getId()) {
+                painSeverity = PainSeverity.STRONG;
+            }
 
             if (isPeriodDay && intensity == null) {
                 android.widget.Toast.makeText(
@@ -1114,8 +1165,12 @@ public class CalendarFragment extends Fragment {
                     selectedDay,
                     isPeriodDay,
                     intensity,
-                    painChip.isChecked(),
+                    painSeverity,
                     illnessChip.isChecked(),
+                    nauseaChip.isChecked(),
+                    fatigueChip.isChecked(),
+                    dizzinessChip.isChecked(),
+                    diarrheaChip.isChecked(),
                     startChip.isChecked(),
                     endChip.isChecked()
             );
@@ -1278,6 +1333,7 @@ public class CalendarFragment extends Fragment {
         chip.setChipBackgroundColor(new ColorStateList(states, bgColors));
         chip.setTextColor(new ColorStateList(states, textColors));
     }
+
 
     private boolean isFirstPeriodEntryInCurrentRingFreeWeek(SettingsRepository repository,
                                                             CalendarDay selectedDay,
