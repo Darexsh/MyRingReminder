@@ -1,7 +1,7 @@
 <resources>
     <!-- App -->
     <string name="app_info_actions_title">Ações</string>
-    <string name="app_info_description">MyRingReminder é um app Android para gerenciar e acompanhar ciclos do anel contraceptivo. O app oferece um calendário com código de cores para dias de inserção, remoção e pausa sem anel, lembretes personalizáveis, notas, widgets e funções de backup/restauração. Também inclui tour de boas-vindas, histórico de ciclos e orientação para prolongar um ciclo (“usar o anel por mais tempo”). Opções de personalização, como imagens de fundo e configurações de cor, permitem ajuste individual.\n\nAviso importante: este app destina-se exclusivamente à organização pessoal e ao acompanhamento de ciclos do anel contraceptivo. Não é um produto médico, não substitui orientação médica e não se baseia em avaliação ou diagnóstico médico. Em caso de dúvidas sobre uso ou questões de saúde, procure orientação médica.\n\nTodos os dados são armazenados apenas localmente neste dispositivo.</string>
+    <string name="app_info_description">MyRingReminder é um aplicativo Android para gerenciamento e acompanhamento dos ciclos do anel contraceptivo. O aplicativo oferece um calendário com cores para os dias de inserção, remoção e período sem anel, lembretes personalizáveis, notas, widgets e recursos de backup/restauração. Também inclui um tour de boas-vindas, histórico de ciclos, orientações para prolongar um ciclo ("usar o anel por mais tempo"), acompanhamento menstrual durante a semana sem anel e uma visualização dedicada de Detalhes do período com filtros de intervalo e exportação de PDF formatado. Opções de personalização, como imagens de fundo e configurações de cores, permitem ajustes individuais.\n\nAviso importante: Este aplicativo destina-se exclusivamente à organização pessoal e ao acompanhamento dos ciclos do anel contraceptivo. Não é um produto médico, não substitui orientação médica e não se baseia em avaliações ou diagnósticos médicos. Se tiver dúvidas sobre o uso ou questões relacionadas à saúde, procure orientação médica.\n\nTodos os dados são armazenados apenas localmente neste dispositivo.</string>
     <string name="app_info_developer">Desenvolvedor: %1$s</string>
     <string name="app_info_developer_label">Desenvolvedor:</string>
     <string name="app_info_developer_name">Darexsh por Daniel Sichler</string>
@@ -100,6 +100,12 @@
     <string name="settings_background_blur_others">Outras telas: %1$d%%</string>
     <string name="settings_background_blur_others_title">Outras telas</string>
     <string name="settings_background_blur_title">Desfoque de fundo</string>
+    <string name="settings_background_tools_label">Configurações de fundo</string>
+    <string name="settings_background_tools_format">Configurações de fundo: %1$s</string>
+    <string name="settings_background_tools_hint_pick">Escolha uma imagem de fundo para o app.</string>
+    <string name="settings_background_tools_hint_all_screens">Ative ou desative o fundo em todas as telas.</string>
+    <string name="settings_background_tools_hint_dim">Ajuste o escurecimento para melhorar a leitura.</string>
+    <string name="settings_background_tools_hint_blur">Ajuste o desfoque para painel e outras telas.</string>
     <string name="settings_background_blur_unavailable_toast">Disponível apenas a partir do Android 12</string>
     <string name="settings_background_dim_format">Escurecimento: %1$d%%</string>
     <string name="settings_background_dim_label">Escurecimento de fundo</string>
@@ -172,6 +178,8 @@
     <string name="notification_hint_battery">Desative a otimização de bateria para que o sistema não atrase os lembretes.</string>
     <string name="notification_hint_exact_alarm">Permita alarmes exatos para que os lembretes toquem na hora certa (Android 12+).</string>
     <string name="notification_hint_permission">Permita o acesso às notificações para que os lembretes possam aparecer (Android 13+).</string>
+    <string name="notification_section_quick_actions">Ações rápidas</string>
+    <string name="notification_section_permissions_reliability">Permissões e confiabilidade</string>
     <string name="notification_hint_set_times">Escolha quantas horas antes da remoção ou inserção você deseja receber os lembretes.</string>
     <string name="notification_open_settings">Abrir configurações de notificação</string>
     <string name="notification_permission_button_label">Permissão de notificação: %1$s</string>
@@ -185,7 +193,8 @@
     <string name="notification_permission_status_not_required">não necessária</string>
     <string name="notification_test_blocked_permission">A permissão de notificação está bloqueada.</string>
     <string name="notification_test_blocked_system">As notificações estão desativadas para este aplicativo nas configurações do sistema.</string>
-    <string name="notification_test_message">Se você consegue ver isso, as notificações estão funcionando.</string>
+    <string name="notification_test_message">Se você consegue ver isso, as notificações estão a funcionar.</string>
+    <string name="notification_test_hint_short">Envie uma notificação de teste para verificar o funcionamento.</string>
     <string name="notification_test_sent">Notificação de teste enviada.</string>
     <string name="notification_test_title">MyRingReminder test</string>
     <string name="notification_times_button_label">Lembretes:\n%1$d h antes da remoção, %2$d h antes da inserção</string>
@@ -253,8 +262,8 @@
     <string name="home_skip_ring_free_message">Após a remoção do anel, a próxima inserção é definida imediatamente para este ciclo. Os ciclos seguintes continuam normalmente com uma semana sem anel.</string>
     <string name="home_skip_ring_free_title">Pular semana sem anel</string>
     <string name="home_special_actions_label">Casos especiais</string>
-    <string name="home_special_actions_toggle_close">Fechar ações especiais</string>
-    <string name="home_special_actions_toggle_open">Abrir ações especiais</string>
+    <string name="home_special_actions_toggle_close">Fechar casos especiais</string>
+    <string name="home_special_actions_toggle_open">Abrir casos especiais</string>
 
     <!-- Calendar -->
     <string name="calendar_month_picker_title">Ir para o mês</string>
@@ -263,6 +272,69 @@
     <string name="calendar_previous_month_desc">Mês anterior</string>
     <string name="calendar_title">Calendário</string>
     <string name="calendar_today_button">Voltar para a data atual</string>
+    <string name="btn_period_details">Detalhes do período</string>
+    <string name="btn_period_details_save_pdf">Salvar como PDF</string>
+    <string name="period_details_pdf_file_name">detalhes_periodo_%1$s.pdf</string>
+    <string name="period_details_pdf_saved">PDF salvo com sucesso.</string>
+    <string name="period_details_pdf_save_failed">Falha ao salvar o PDF.</string>
+    <string name="period_details_pdf_no_data">Não há registros de período para exportar.</string>
+    <string name="period_details_pdf_summary_title">Resumo</string>
+    <string name="period_details_pdf_summary_entries">Registros: %1$d</string>
+    <string name="period_details_pdf_summary_starts">Inícios do período: %1$d</string>
+    <string name="period_details_pdf_summary_ends">Fins do período: %1$d</string>
+    <string name="period_details_pdf_summary_pain_days">Dias com dor: %1$d</string>
+    <string name="period_details_pdf_created_at">Criado em: %1$s</string>
+    <string name="period_details_pdf_page_number">Página %1$d</string>
+    <string name="period_details_pdf_legend_title">Legenda</string>
+    <string name="period_details_pdf_legend_pain_badge">Marcador de dor / sintoma</string>
+    <string name="period_details_pdf_legend_symptom_badge">Marcador de sintoma</string>
+    <string name="period_details_pdf_anomalies_title">Destaques</string>
+    <string name="period_details_pdf_anomalies_longest_streak">Maior sequência: %1$d dias</string>
+    <string name="period_details_pdf_anomalies_symptom_days">Dias com sintomas: %1$d</string>
+    <string name="period_details_pdf_anomalies_strong_pain_days">Dias com dor forte: %1$d</string>
+    <string name="period_details_pdf_notes_title">Notas</string>
+    <string name="period_details_range_label">Período</string>
+    <string name="period_details_range_3m">3 meses</string>
+    <string name="period_details_range_6m">6 meses</string>
+    <string name="period_details_range_12m">12 meses</string>
+    <string name="period_details_range_all">Tudo</string>
+    <string name="period_details_range_between">%1$s - %2$s</string>
+    <string name="period_details_empty">Sem registros de período neste intervalo.</string>
+    <string name="period_modal_title_for_date">Registro menstrual: %1$s</string>
+    <string name="period_modal_period_day">Dia da menstruação</string>
+    <string name="period_modal_intensity_title">Intensidade do sangramento</string>
+    <string name="period_modal_symptoms_title">Sintomas</string>
+    <string name="period_modal_markers_title">Marcadores</string>
+    <string name="period_modal_intensity_light">Leve</string>
+    <string name="period_modal_intensity_medium">Moderado</string>
+    <string name="period_modal_intensity_heavy">Intenso</string>
+    <string name="period_modal_pain_title">Nível da dor</string>
+    <string name="period_modal_pain_light">Leve</string>
+    <string name="period_modal_pain_medium">Moderada</string>
+    <string name="period_modal_pain_strong">Forte</string>
+    <string name="period_modal_pain">Dor</string>
+    <string name="period_modal_illness">Mal-estar</string>
+    <string name="period_modal_symptom_nausea">Náusea</string>
+    <string name="period_modal_symptom_fatigue">Fadiga</string>
+    <string name="period_modal_symptom_dizziness">Tontura</string>
+    <string name="period_modal_symptom_diarrhea">Diarreia</string>
+    <string name="period_modal_start_marker">Início da menstruação</string>
+    <string name="period_modal_end_marker">Fim da menstruação</string>
+    <string name="period_modal_clear">Excluir registro</string>
+    <string name="period_modal_validation_intensity_required">Selecione a intensidade do sangramento.</string>
+    <string name="period_modal_validation_start_end_conflict">Um dia não pode ser ao mesmo tempo o início e o fim da menstruação.</string>
+    <string name="period_modal_save_failed">Não foi possível salvar o registro menstrual.</string>
+    <string name="period_modal_saved_toast">Registro menstrual salvo.</string>
+    <string name="period_modal_deleted_toast">Registro menstrual excluído.</string>
+    <string name="period_modal_only_ring_free_toast">Disponível apenas durante a semana sem anel e ±4 dias.</string>
+    <string name="period_legend_period">Menstruação</string>
+    <string name="period_legend_pain">Dor</string>
+    <string name="period_legend_illness">Sintomas</string>
+    <string name="period_legend_start_end">S = Início, E = Fim</string>
+    <string name="period_legend_start_only">S = Início</string>
+    <string name="period_legend_end_only">E = Fim</string>
+    <string name="period_legend_title">Menstruação</string>
+    <string name="calendar_legend_title">Calendário</string>
 
     <!-- Calendar Legend -->
     <string name="legend_insertion">Inserção</string>
@@ -349,6 +421,8 @@
     <string name="backup_field_notes_text">Conteúdo das notas</string>
     <string name="backup_field_notification_flags_format">Sinalizadores de notificação: %1$d entradas (%2$d ativas)</string>
     <string name="backup_field_notification_hashes_format">Snapshots de configurações de notificação: %1$d entradas</string>
+    <string name="backup_field_period_tracking">Acompanhamento menstrual</string>
+    <string name="backup_field_period_tracking_entries_format">%1$d entradas diárias</string>
     <string name="backup_field_reminder_insertion">Lembrete antes da inserção</string>
     <string name="backup_field_reminder_removal">Lembrete antes da remoção</string>
     <string name="backup_field_skip_ring_free_entries_format">Entradas de semanas sem anel puladas: %1$d</string>
@@ -356,9 +430,9 @@
     <string name="backup_field_start_time">Hora de inserção</string>
     <string name="backup_field_tour_shown">Tour já concluído</string>
     <string name="backup_field_welcome_shown">Diálogo de boas-vindas já exibido</string>
-    <string name="backup_hint_create">Salve seus dados em um arquivo para segurança.</string>
+    <string name="backup_hint_create">Salve seus dados num arquivo para segurança.</string>
     <string name="backup_hint_restore">Restaure seus dados de um arquivo salvo anteriormente.</string>
-    <string name="backup_import_check_message">Por favor, revise os dados do backup. Expanda os detalhes se necessário.\n\nProsseguir com estes dados?</string>
+    <string name="backup_import_check_message">Por favor, reveja os dados do ‘backup’. Expanda os detalhes se necessário.\n\nProsseguir com estes dados?</string>
     <string name="backup_import_check_title">Verificação de importação</string>
     <string name="backup_import_hide_details">Ocultar detalhes</string>
     <string name="backup_import_line_format">- %1$s: %2$d entradas - %3$s</string>
@@ -371,7 +445,7 @@
     <string name="backup_import_yes">Sim</string>
     <string name="backup_invalid_toast">Backup inválido</string>
     <string name="backup_no">Não</string>
-    <string name="backup_read_failed_toast">O backup não pôde ser lido</string>
+    <string name="backup_read_failed_toast">O ‘backup’ não pôde ser lido</string>
     <string name="backup_restore">Restaurar backup</string>
     <string name="backup_restored_toast">Backup restaurado</string>
     <string name="backup_title">Backup</string>
@@ -388,7 +462,7 @@
     <string name="update_available_message">A versão %1$s está disponível. Instalar agora?</string>
     <string name="update_available_title">Atualização disponível</string>
     <string name="update_available_toast">Atualização encontrada. Baixando...</string>
-    <string name="update_backup_message">O aplicativo verificará se há atualizações. Seus dados permanecem no dispositivo, mas um backup é recomendado.\n\nDeseja criar um backup? Se você já criou um ou não quer criar, toque em Continuar.</string>
+    <string name="update_backup_message">O aplicativo verificará se há atualizações. Os seus dados permanecem no dispositivo, mas um backup é recomendado.\n\nDeseja criar um backup? Se você já criou um ou não quer criar, toque em Continuar.</string>
     <string name="update_backup_no">Criar backup</string>
     <string name="update_backup_title">Backup</string>
     <string name="update_backup_yes">Continuar</string>
@@ -484,7 +558,7 @@
     <string name="tour_body_settings_advanced">Toque para expandir ou recolher a seção avançada.</string>
     <string name="tour_body_settings_animation">Escolha como as transições de tela se animam ao alternar abas.</string>
     <string name="tour_body_settings_app_lock">Abre o bloqueio do app, onde você ativa a proteção e define o tempo de bloqueio automático.</string>
-    <string name="tour_body_settings_background">Escolha uma foto para personalizar o fundo da tela inicial.</string>
+    <string name="tour_body_settings_background">Aqui você pode configurar as opções de fundo.</string>
     <string name="tour_body_settings_background_all">Ative esta opção para exibir sua imagem de fundo em todas as telas do app, não apenas no início.</string>
     <string name="tour_body_settings_background_blur">Ajuste o desfoque da imagem para a tela inicial e outras páginas para um visual mais moderno.</string>
     <string name="tour_body_settings_background_dim">Ajuste o quanto a imagem deve ser escurecida para tornar o texto mais legível.</string>
@@ -536,17 +610,28 @@
     <string name="tour_title_settings_notifications">Lembretes</string>
     <string name="tour_title_settings_reset">Resetar app</string>
     <string name="tour_title_settings_update">Atualizações</string>
+    <string name="tour_body_period_entry">Toque em um dia para adicionar ou editar o acompanhamento menstrual. A edição está disponível apenas durante a semana sem anel e ±4 dias ao redor.</string>
+    <string name="tour_body_period_modal">No registro do período, você pode definir dia do período, intensidade do sangramento, nível de dor (leve/moderada/forte), sintomas adicionais e marcadores opcionais de início/fim.\nUse "Excluir registro" para remover os dados salvos desse dia.</string>
+    <string name="tour_body_period_indicators">Os dias menstruais são exibidos diretamente no calendário com tonalidade de intensidade, pontos indicadores e marcadores S/E.\nPara meses com registros menstruais, você também pode abrir Detalhes do período e exportar um relatório PDF formatado.</string>
+    <string name="tour_title_period_entry">Registro menstrual</string>
+    <string name="tour_title_period_modal">Opções menstruais</string>
+    <string name="tour_title_period_indicators">Indicadores menstruais</string>
 
     <!-- Welcome -->
-    <string name="welcome_features_body">- 📅 Calendário de dias de inserção, remoção e intervalo\n- 🔔 Lembretes personalizáveis\n- 📝 Notas e histórico de ciclos\n- 🎨 Personalização de fundo, cores, idioma e widgets\n- 💾 Backup e restauração</string>
+    <string name="welcome_features_body">- 📅 Visualização de calendário dos dias de inserção, remoção e pausa sem anel\n- 🩸 Acompanhamento do período com registros de intensidade e sintomas\n- 📄 Detalhes do período com visão por intervalo e exportação em PDF\n- 🔔 Lembretes personalizáveis\n- 📝 Notas e histórico de ciclos\n- 🎨 Personalização de fundo, cores, idioma e widgets\n- 💾 Backup e restauração</string>
     <string name="welcome_features_title">O que este app faz</string>
     <string name="welcome_info_note">Você pode abrir as informações do app a qualquer momento nas Configurações.</string>
-    <string name="welcome_intro">Mantenha seu ciclo do anel anticoncepcional sob controle com datas pessoais, lembretes e notas.</string>
+    <string name="welcome_intro">Mantenha seu ciclo do anel contraceptivo e o acompanhamento do período em vista com seus dados pessoais, lembretes e anotações.</string>
     <string name="welcome_permissions_body">- 🖼️ Acesso a mídia: escolha uma imagem de fundo\n- 🔔 Notificações: lembretes de ciclo\n- ⏰ Alarmes exatos: agendamento preciso</string>
     <string name="welcome_permissions_title">Permissões utilizadas</string>
     <string name="welcome_privacy_note">Seus dados são salvos apenas neste dispositivo. Certifique-se de criar um backup após configurar tudo 😊</string>
     <string name="welcome_skip_tour">Agora não</string>
     <string name="welcome_start_tour">Iniciar tour</string>
-    <string name="welcome_subtitle">Lembrete de Anel MyRingReminder</string>
+    <string name="welcome_subtitle">MyRingReminder</string>
     <string name="welcome_title">Bem-vinda 👋</string>
+    <string name="period_details_pdf_notification_channel_name">Exportações em PDF</string>
+    <string name="period_details_pdf_notification_channel_desc">Notificações para PDFs salvos com detalhes do período.</string>
+    <string name="period_details_pdf_notification_title">PDF salvo</string>
+    <string name="period_details_pdf_notification_text">Toque para abrir o PDF exportado com os detalhes do período.</string>
+    <string name="period_details_pdf_open_action">Abrir PDF</string>
 </resources>

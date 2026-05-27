@@ -5,7 +5,6 @@ import android.graphics.Canvas;
 import android.graphics.Paint;
 import android.graphics.PorterDuff;
 import android.graphics.PorterDuffXfermode;
-import android.graphics.Rect;
 import android.graphics.RectF;
 import android.util.AttributeSet;
 import android.util.TypedValue;
@@ -20,6 +19,7 @@ public class GuidedTourHighlightView extends View {
     private final Paint outlinePaint = new Paint(Paint.ANTI_ALIAS_FLAG);
     private final RectF targetRect = new RectF();
     private final int[] viewLocation = new int[2];
+    private final int[] targetLocation = new int[2];
     private float cornerRadiusPx;
     private float paddingPx;
     private boolean hasTarget = false;
@@ -56,18 +56,19 @@ public class GuidedTourHighlightView extends View {
             invalidate();
             return;
         }
-
-        Rect rect = new Rect();
-        boolean visible = target.getGlobalVisibleRect(rect);
-        if (!visible) {
+        if (!target.isShown() || target.getWidth() <= 0 || target.getHeight() <= 0) {
             hasTarget = false;
             invalidate();
             return;
         }
 
-        getLocationInWindow(viewLocation);
-        rect.offset(-viewLocation[0], -viewLocation[1]);
-        targetRect.set(rect);
+        getLocationOnScreen(viewLocation);
+        target.getLocationOnScreen(targetLocation);
+        float left = targetLocation[0] - viewLocation[0];
+        float top = targetLocation[1] - viewLocation[1];
+        float right = left + target.getWidth();
+        float bottom = top + target.getHeight();
+        targetRect.set(left, top, right, bottom);
         targetRect.inset(-paddingPx, -paddingPx);
         hasTarget = true;
         invalidate();

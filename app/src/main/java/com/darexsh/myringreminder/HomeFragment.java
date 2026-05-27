@@ -936,11 +936,12 @@ public class HomeFragment extends Fragment {
                 getString(R.string.home_delay_info_message),
                 Html.FROM_HTML_MODE_LEGACY
         );
-        new AlertDialog.Builder(requireContext())
+        AlertDialog dialog = new AlertDialog.Builder(requireContext())
                 .setTitle(R.string.home_delay_info_title)
                 .setMessage(message)
                 .setPositiveButton(R.string.dialog_ok, null)
                 .show();
+        applyDialogButtonColors(dialog);
     }
 
     private void showSkipRingFreeInfoDialog() {
@@ -948,11 +949,12 @@ public class HomeFragment extends Fragment {
                 getString(R.string.home_skip_ring_free_info_message),
                 Html.FROM_HTML_MODE_LEGACY
         );
-        new AlertDialog.Builder(requireContext())
+        AlertDialog dialog = new AlertDialog.Builder(requireContext())
                 .setTitle(R.string.home_delay_info_title)
                 .setMessage(message)
                 .setPositiveButton(R.string.dialog_ok, null)
                 .show();
+        applyDialogButtonColors(dialog);
     }
 
     private void applyDelayInfoIconTint(@Nullable TextView button, int buttonColor) {
@@ -1209,6 +1211,9 @@ public class HomeFragment extends Fragment {
         if (dialog == null || viewModel == null) {
             return;
         }
+        if (dialog.getWindow() != null) {
+            dialog.getWindow().setBackgroundDrawableResource(R.drawable.bg_app_info_dialog);
+        }
         Integer color = viewModel.getButtonColor().getValue();
         if (color == null) {
             return;
@@ -1245,11 +1250,11 @@ public class HomeFragment extends Fragment {
         layout.setPadding(padding, padding, padding, padding);
         layout.addView(picker);
 
-        new AlertDialog.Builder(requireContext())
+        AlertDialog dialog = new AlertDialog.Builder(requireContext())
                 .setTitle(R.string.home_delay_title)
                 .setMessage(R.string.home_delay_message)
                 .setView(layout)
-                .setPositiveButton(R.string.home_delay_confirm, (dialog, which) -> {
+                .setPositiveButton(R.string.home_delay_confirm, (d, which) -> {
                     Calendar baseStart = viewModel.getStartDate().getValue();
                     Integer cycleLength = viewModel.getCycleLength().getValue();
                     if (baseStart == null || cycleLength == null) {
@@ -1307,13 +1312,14 @@ public class HomeFragment extends Fragment {
                 })
                 .setNegativeButton(R.string.dialog_cancel, null)
                 .show();
+        applyDialogButtonColors(dialog);
     }
 
     private void showSkipRingFreeWeekDialog(SharedViewModel viewModel) {
-        new AlertDialog.Builder(requireContext())
+        AlertDialog dialog = new AlertDialog.Builder(requireContext())
                 .setTitle(R.string.home_skip_ring_free_title)
                 .setMessage(R.string.home_skip_ring_free_message)
-                .setPositiveButton(R.string.home_skip_ring_free_confirm, (dialog, which) -> {
+                .setPositiveButton(R.string.home_skip_ring_free_confirm, (d, which) -> {
                     Calendar baseStart = viewModel.getStartDate().getValue();
                     Integer cycleLength = viewModel.getCycleLength().getValue();
                     if (baseStart == null || cycleLength == null) {
@@ -1371,6 +1377,7 @@ public class HomeFragment extends Fragment {
                 })
                 .setNegativeButton(R.string.dialog_cancel, null)
                 .show();
+        applyDialogButtonColors(dialog);
     }
 
     private static Calendar startOfDay(Calendar source) {

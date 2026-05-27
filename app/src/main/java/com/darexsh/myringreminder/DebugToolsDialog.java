@@ -37,6 +37,9 @@ public final class DebugToolsDialog {
                 .setView(layout)
                 .setPositiveButton(R.string.dialog_ok, null)
                 .show();
+        if (dialog.getWindow() != null) {
+            dialog.getWindow().setBackgroundDrawableResource(R.drawable.bg_app_info_dialog);
+        }
 
         toggle.setOnCheckedChangeListener((buttonView, isChecked) -> {
             repository.setDebugToolsEnabled(isChecked);

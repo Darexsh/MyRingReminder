@@ -113,6 +113,9 @@ public class NotesFragment extends Fragment {
                 })
                 .setNegativeButton(R.string.dialog_cancel, null)
                 .show();
+            if (confirmDialog.getWindow() != null) {
+                confirmDialog.getWindow().setBackgroundDrawableResource(R.drawable.bg_app_info_dialog);
+            }
             Integer buttonColor = viewModel.getButtonColor().getValue();
             if (buttonColor != null) {
                 Button positive = confirmDialog.getButton(AlertDialog.BUTTON_POSITIVE);

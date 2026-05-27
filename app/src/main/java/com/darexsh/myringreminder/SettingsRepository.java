@@ -8,7 +8,11 @@ import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 import java.lang.reflect.Type;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Locale;
+import java.util.Map;
+import java.util.regex.Pattern;
 
 public class SettingsRepository {
 
@@ -48,6 +52,8 @@ public class SettingsRepository {
     private static final String KEY_EXACT_ALARM_PROMPTED = "exact_alarm_prompted";
     private static final String KEY_APP_LOCK_ENABLED = "app_lock_enabled";
     private static final String KEY_APP_LOCK_TIMEOUT_MS = "app_lock_timeout_ms";
+    private static final String KEY_PERIOD_DAY_ENTRIES = "period_day_entries";
+    private static final Pattern PERIOD_DAY_KEY_PATTERN = Pattern.compile("^\\d{4}-\\d{2}-\\d{2}$");
     public static final int DEFAULT_BUTTON_COLOR = 0xFF2E7D32;
     public static final int DEFAULT_HOME_CIRCLE_COLOR = 0xFFBB86FC;
     public static final int DEFAULT_HOME_CIRCLE_STYLE = 0;
@@ -496,5 +502,176 @@ public class SettingsRepository {
         int month = cal.get(Calendar.MONTH) + 1;
         int day = cal.get(Calendar.DAY_OF_MONTH);
         return "skip_ring_free_" + year + "_" + month + "_" + day;
+    }
+
+    public Map<String, PeriodDayEntry> getAllPeriodDayEntries() {
+        Gson gson = new Gson();
+        String json = sharedPreferences.getString(KEY_PERIOD_DAY_ENTRIES, null);
+        Type type = new TypeToken<Map<String, PeriodDayEntry>>() {}.getType();
+        Map<String, PeriodDayEntry> fromPrefs = gson.fromJson(json, type);
+        Map<String, PeriodDayEntry> result = new HashMap<>();
+        if (fromPrefs == null || fromPrefs.isEmpty()) {
+            return result;
+        }
+        boolean needsRewrite = false;
+        for (Map.Entry<String, PeriodDayEntry> entry : fromPrefs.entrySet()) {
+            String dateKey = entry.getKey();
+            PeriodDayEntry sanitized = sanitizePeriodDayEntry(dateKey, entry.getValue());
+            if (sanitized != null) {
+                result.put(dateKey, sanitized);
+                if (entry.getValue() == null || sanitized != entry.getValue()) {
+                    needsRewrite = true;
+                }
+            } else {
+                needsRewrite = true;
+            }
+        }
+        if (needsRewrite) {
+            persistPeriodDayEntries(result);
+        }
+        return result;
+    }
+
+    public PeriodDayEntry getPeriodDayEntry(String dateKey) {
+        if (!isValidPeriodDateKey(dateKey)) {
+            return null;
+        }
+        return getAllPeriodDayEntries().get(dateKey);
+    }
+
+    public PeriodDayEntry getPeriodDayEntry(Calendar day) {
+        return getPeriodDayEntry(buildPeriodDateKey(day));
+    }
+
+    public boolean savePeriodDayEntry(PeriodDayEntry entry) {
+        if (entry == null) {
+            return false;
+        }
+        String dateKey = entry.getDateKey();
+        if (!isValidPeriodDateKey(dateKey)) {
+            return false;
+        }
+        PeriodDayEntry sanitized = sanitizePeriodDayEntry(dateKey, entry);
+        if (sanitized == null) {
+            return false;
+        }
+        Map<String, PeriodDayEntry> all = getAllPeriodDayEntries();
+        all.put(dateKey, sanitized);
+        persistPeriodDayEntries(all);
+        return true;
+    }
+
+    public boolean savePeriodDayEntry(Calendar day,
+                                      boolean periodDay,
+                                      BleedingIntensity intensity,
+                                      PainSeverity painSeverity,
+                                      boolean symptomIllness,
+                                      boolean symptomNausea,
+                                      boolean symptomFatigue,
+                                      boolean symptomDizziness,
+                                      boolean symptomDiarrhea,
+                                      boolean start,
+                                      boolean end) {
+        String dateKey = buildPeriodDateKey(day);
+        PeriodDayEntry entry = new PeriodDayEntry(
+                dateKey,
+                periodDay,
+                intensity,
+                painSeverity,
+                symptomIllness,
+                symptomNausea,
+                symptomFatigue,
+                symptomDizziness,
+                symptomDiarrhea,
+                start,
+                end,
+                System.currentTimeMillis()
+        );
+        return savePeriodDayEntry(entry);
+    }
+
+    public void deletePeriodDayEntry(String dateKey) {
+        if (!isValidPeriodDateKey(dateKey)) {
+            return;
+        }
+        Map<String, PeriodDayEntry> all = getAllPeriodDayEntries();
+        if (all.remove(dateKey) != null) {
+            persistPeriodDayEntries(all);
+        }
+    }
+
+    public void deletePeriodDayEntry(Calendar day) {
+        deletePeriodDayEntry(buildPeriodDateKey(day));
+    }
+
+    public String buildPeriodDateKey(Calendar day) {
+        Calendar safeDay = (Calendar) day.clone();
+        int year = safeDay.get(Calendar.YEAR);
+        int month = safeDay.get(Calendar.MONTH) + 1;
+        int dayOfMonth = safeDay.get(Calendar.DAY_OF_MONTH);
+        return String.format(Locale.US, "%04d-%02d-%02d", year, month, dayOfMonth);
+    }
+
+    private boolean isValidPeriodDateKey(String dateKey) {
+        return dateKey != null && PERIOD_DAY_KEY_PATTERN.matcher(dateKey).matches();
+    }
+
+    private PeriodDayEntry sanitizePeriodDayEntry(String dateKey, PeriodDayEntry raw) {
+        if (!isValidPeriodDateKey(dateKey) || raw == null) {
+            return null;
+        }
+        boolean periodDay = raw.isPeriodDay();
+        BleedingIntensity intensity = raw.getIntensity();
+        PainSeverity painSeverity = raw.getPainSeverity();
+        if (painSeverity == null) {
+            painSeverity = raw.hasPain() ? PainSeverity.MEDIUM : PainSeverity.NONE;
+        }
+        boolean symptomIllness = raw.isSymptomIllness() || raw.hasIllness();
+        boolean symptomNausea = raw.isSymptomNausea();
+        boolean symptomFatigue = raw.isSymptomFatigue();
+        boolean symptomDizziness = raw.isSymptomDizziness();
+        boolean symptomDiarrhea = raw.isSymptomDiarrhea();
+        boolean start = raw.isStart();
+        boolean end = raw.isEnd();
+
+        if (!periodDay) {
+            intensity = null;
+            painSeverity = PainSeverity.NONE;
+            symptomIllness = false;
+            symptomNausea = false;
+            symptomFatigue = false;
+            symptomDizziness = false;
+            symptomDiarrhea = false;
+            start = false;
+            end = false;
+        } else if (intensity == null) {
+            return null;
+        }
+
+        long updatedAt = raw.getUpdatedAt();
+        if (updatedAt <= 0L) {
+            updatedAt = System.currentTimeMillis();
+        }
+
+        return new PeriodDayEntry(
+                dateKey,
+                periodDay,
+                intensity,
+                painSeverity,
+                symptomIllness,
+                symptomNausea,
+                symptomFatigue,
+                symptomDizziness,
+                symptomDiarrhea,
+                start,
+                end,
+                updatedAt
+        );
+    }
+
+    private void persistPeriodDayEntries(Map<String, PeriodDayEntry> entries) {
+        Gson gson = new Gson();
+        String json = gson.toJson(entries != null ? entries : new HashMap<>());
+        sharedPreferences.edit().putString(KEY_PERIOD_DAY_ENTRIES, json).apply();
     }
 }

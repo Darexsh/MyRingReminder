@@ -834,9 +834,39 @@ public class MainActivity extends AppCompatActivity {
         }
 
         Fragment currentFragment = fragmentManager.findFragmentById(R.id.fragment_container);
+        SettingsFragment settingsFragment = currentFragment instanceof SettingsFragment
+                ? (SettingsFragment) currentFragment
+                : null;
+        if (settingsFragment != null) {
+            settingsFragment.ensureBackgroundToolsDialogVisibleForTour(step.targetViewId);
+        }
+        ViewGroup host = findViewById(android.R.id.content);
+        boolean useDialogHost = false;
+        if (settingsFragment != null && settingsFragment.isBackgroundToolsDialogTourTarget(step.targetViewId)) {
+            ViewGroup dialogHost = settingsFragment.getBackgroundToolsDialogTourHost(step.targetViewId);
+            if (dialogHost != null) {
+                host = dialogHost;
+                useDialogHost = true;
+            }
+        }
+        reattachTourOverlay(host, useDialogHost);
         View fragmentView = currentFragment != null ? currentFragment.getView() : null;
-        View target = step.inActivityView ? findViewById(step.targetViewId)
-                : (fragmentView != null ? fragmentView.findViewById(step.targetViewId) : null);
+        View target;
+        if (step.inActivityView) {
+            target = findViewById(step.targetViewId);
+        } else {
+            target = settingsFragment != null
+                    ? settingsFragment.findTourTargetView(step.targetViewId)
+                    : (fragmentView != null ? fragmentView.findViewById(step.targetViewId) : null);
+            if ((target == null || target.getVisibility() != View.VISIBLE)
+                    && step.targetViewId == R.id.legend_tables_row
+                    && fragmentView != null) {
+                View fallbackLegend = fragmentView.findViewById(R.id.legend_original_row);
+                if (fallbackLegend != null && fallbackLegend.getVisibility() == View.VISIBLE) {
+                    target = fallbackLegend;
+                }
+            }
+        }
 
         Log.d("TourDebug", "Index: " + index + " Attempt: " + attempt + " TargetID: " + step.targetViewId);
         if (target == null) {
@@ -846,7 +876,7 @@ public class MainActivity extends AppCompatActivity {
 
         if (step.scrollViewId != 0 && fragmentView != null) {
             ScrollView scrollView = fragmentView.findViewById(step.scrollViewId);
-            if (scrollView != null) {
+            if (scrollView != null && isDescendantOf(target, scrollView)) {
                 if (!isTargetVisible(scrollView, target)) {
                     scrollToView(scrollView, target);
                     getWindow().getDecorView().postDelayed(() ->
@@ -864,6 +894,20 @@ public class MainActivity extends AppCompatActivity {
 
         tourIndex = index;
         tourOverlay.setStep(step.titleRes, step.bodyRes, index == tourSteps.size() - 1, target);
+    }
+
+    private void reattachTourOverlay(ViewGroup host, boolean dialogHost) {
+        if (tourOverlay == null || host == null) {
+            return;
+        }
+        android.view.ViewParent currentParent = tourOverlay.getParent();
+        if (currentParent == host) {
+            return;
+        }
+        if (currentParent instanceof ViewGroup) {
+            ((ViewGroup) currentParent).removeView(tourOverlay);
+        }
+        host.addView(tourOverlay);
     }
 
     private void finishGuidedTour() {
@@ -910,6 +954,9 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void scrollToView(ScrollView scrollView, View target) {
+        if (!isDescendantOf(target, scrollView)) {
+            return;
+        }
         scrollView.post(() -> {
             Rect rect = new Rect();
             target.getDrawingRect(rect);
@@ -976,12 +1023,30 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private boolean isTargetVisible(ScrollView scrollView, View target) {
+        if (!isDescendantOf(target, scrollView)) {
+            return true;
+        }
         Rect rect = new Rect();
         target.getDrawingRect(rect);
         scrollView.offsetDescendantRectToMyCoords(target, rect);
         int scrollTop = scrollView.getScrollY();
         int scrollBottom = scrollTop + scrollView.getHeight();
         return rect.top >= scrollTop && rect.bottom <= scrollBottom;
+    }
+
+    private boolean isDescendantOf(View child, ViewGroup ancestor) {
+        View current = child;
+        while (current != null) {
+            if (current == ancestor) {
+                return true;
+            }
+            android.view.ViewParent parent = current.getParent();
+            if (!(parent instanceof View)) {
+                return false;
+            }
+            current = (View) parent;
+        }
+        return false;
     }
 
     private List<TourStep> buildTourSteps() {
@@ -1011,7 +1076,13 @@ public class MainActivity extends AppCompatActivity {
 
         steps.add(new TourStep(R.id.nav_calendar, R.id.calendarView,
                 R.string.tour_title_calendar, R.string.tour_body_calendar, 0, false));
-        steps.add(new TourStep(R.id.nav_calendar, R.id.calendar_legend_row,
+        steps.add(new TourStep(R.id.nav_calendar, R.id.calendarView,
+                R.string.tour_title_period_entry, R.string.tour_body_period_entry, 0, false));
+        steps.add(new TourStep(R.id.nav_calendar, R.id.calendarView,
+                R.string.tour_title_period_modal, R.string.tour_body_period_modal, 0, false));
+        steps.add(new TourStep(R.id.nav_calendar, R.id.calendarView,
+                R.string.tour_title_period_indicators, R.string.tour_body_period_indicators, 0, false));
+        steps.add(new TourStep(R.id.nav_calendar, R.id.legend_tables_row,
                 R.string.tour_title_calendar_legend, R.string.tour_body_calendar_legend, 0, false));
 
         steps.add(new TourStep(R.id.nav_cycles, R.id.tv_history_title,
@@ -1030,16 +1101,19 @@ public class MainActivity extends AppCompatActivity {
         steps.add(new TourStep(R.id.nav_settings, R.id.btn_notification_group,
                 R.string.tour_title_settings_notifications, R.string.tour_body_settings_notifications,
                 R.id.settings_scroll, false));
-        steps.add(new TourStep(R.id.nav_settings, R.id.btn_set_background,
-                R.string.tour_title_settings_background, R.string.tour_body_settings_background,
+        steps.add(new TourStep(R.id.nav_settings, R.id.btn_background_tools,
+                R.string.settings_background_tools_label, R.string.tour_body_settings_background,
                 R.id.settings_scroll, false));
-        steps.add(new TourStep(R.id.nav_settings, R.id.btn_background_all_screens,
+        steps.add(new TourStep(R.id.nav_settings, R.id.btn_background_tools_pick,
+                R.string.btn_set_background, R.string.settings_background_tools_hint_pick,
+                R.id.settings_scroll, false));
+        steps.add(new TourStep(R.id.nav_settings, R.id.btn_background_tools_all_screens,
                 R.string.tour_title_settings_background_all, R.string.tour_body_settings_background_all,
                 R.id.settings_scroll, false));
-        steps.add(new TourStep(R.id.nav_settings, R.id.btn_background_dim,
+        steps.add(new TourStep(R.id.nav_settings, R.id.btn_background_tools_dim,
                 R.string.tour_title_settings_background_dim, R.string.tour_body_settings_background_dim,
                 R.id.settings_scroll, false));
-        steps.add(new TourStep(R.id.nav_settings, R.id.btn_background_blur,
+        steps.add(new TourStep(R.id.nav_settings, R.id.btn_background_tools_blur,
                 R.string.tour_title_settings_background_blur, R.string.tour_body_settings_background_blur,
                 R.id.settings_scroll, false));
         steps.add(new TourStep(R.id.nav_settings, R.id.btn_set_button_color,
