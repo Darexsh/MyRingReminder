@@ -1,7 +1,7 @@
 <resources>
     <!-- App -->
     <string name="app_info_actions_title">Aktionen</string>
-    <string name="app_info_description">MyRingReminder ist eine Android-App zur Verwaltung und Nachverfolgung von Verhütungsring-Zyklen. Die App bietet einen farbcodierten Kalender für Einsetz-, Entnahme- und ringfreie Tage, individuell anpassbare Erinnerungen, Notizen, Widgets sowie Funktionen für Backup und Wiederherstellung. Zusätzlich enthält sie eine Willkommenstour, eine Zyklus-Historie und eine Anleitung zur Zyklusverlängerung („Ring länger tragen“). Verschiedene Personalisierungsoptionen wie Hintergrundbilder und Farbeinstellungen ermöglichen eine individuelle Anpassung.\n\nWichtiger Hinweis: Diese App dient ausschließlich der persönlichen Organisation und dem Tracking von Verhütungsring-Zyklen. Sie stellt kein medizinisches Produkt dar, ersetzt keine medizinische Beratung und basiert nicht auf medizinischer Bewertung oder Diagnose. Bei Fragen zur Anwendung oder gesundheitlichen Anliegen sollte ärztlicher Rat eingeholt werden.\n\nAlle Daten werden ausschließlich lokal auf diesem Gerät gespeichert.</string>
+    <string name="app_info_description">MyRingReminder ist eine Android-App zur Verwaltung und Nachverfolgung von Verhütungsring-Zyklen. Die App bietet einen farbcodierten Kalender für Einsetz-, Entfernungs- und ringfreie Tage, anpassbare Erinnerungen, Notizen, Widgets sowie Sicherungs- und Wiederherstellungsfunktionen. Zusätzlich enthält sie eine Willkommenstour, einen Zyklusverlauf, Hinweise zum Verlängern eines Zyklus (\"Ring länger tragen\") sowie Einträge für die Periode während der ringfreien Woche. Personalisierungsoptionen wie Hintergrundbilder und Farbeinstellungen ermöglichen eine individuelle Anpassung.\n\nWichtiger Hinweis: Diese App dient ausschließlich der persönlichen Organisation und Nachverfolgung von Verhütungsring-Zyklen. Sie ist kein Medizinprodukt, ersetzt keine medizinische Beratung und basiert nicht auf medizinischer Beurteilung oder Diagnose. Bei Fragen zur Anwendung oder gesundheitlichen Beschwerden wenden Sie sich bitte an medizinisches Fachpersonal.\n\nAlle Daten werden ausschließlich lokal auf diesem Gerät gespeichert.</string>
     <string name="app_info_developer">Entwickler: %1$s</string>
     <string name="app_info_developer_label">Entwickler:</string>
     <string name="app_info_developer_name">Darexsh by Daniel Sichler</string>
@@ -105,14 +105,14 @@
     <string name="settings_background_dim_label">Hintergrundabdunkelung</string>
     <string name="settings_background_dim_message">Wähle die Abdunkelungsstärke in Prozent.</string>
     <string name="settings_background_dim_title">Hintergrundabdunkelung einstellen</string>
-    <string name="settings_button_color_custom">Benutzerdefinierte Farbe</string>
-    <string name="settings_button_color_custom_action">Benutzerdefinierte Farbe</string>
-    <string name="settings_button_color_custom_title">Benutzerdefinierte Button-Farbe</string>
+    <string name="settings_button_color_custom">Eigene Farbe</string>
+    <string name="settings_button_color_custom_action">Eigene Farbe</string>
+    <string name="settings_button_color_custom_title">Eigene Button-Farbe</string>
     <string name="settings_button_color_dialog_title">Button-Farbe auswählen</string>
     <string name="settings_button_color_format">Button-Farbe</string>
     <string name="settings_button_color_label">Button-Farbe</string>
     <string name="settings_button_color_widget_note">Aktualisiert auch die Widget-Hintergrundfarbe.</string>
-    <string name="settings_calendar_insertion_color_custom_title">Benutzerdefinierte Einsetz-Farbe</string>
+    <string name="settings_calendar_insertion_color_custom_title">Eigene Einsetz-Farbe</string>
     <string name="settings_calendar_insertion_color_dialog_title">Einsetz-Farbe auswählen</string>
     <string name="settings_calendar_insertion_color_format">Einsetz-Farbe: %1$s</string>
     <string name="settings_calendar_insertion_color_label">Einsetz-Farbe</string>
@@ -121,19 +121,19 @@
     <string name="settings_calendar_range_forward">Voraus</string>
     <string name="settings_calendar_range_message">Lege fest, wie weit der Kalender angezeigt werden soll.</string>
     <string name="settings_calendar_range_title">Kalender-Reichweite festlegen</string>
-    <string name="settings_calendar_removal_color_custom_title">Benutzerdefinierte Entfern-Farbe</string>
+    <string name="settings_calendar_removal_color_custom_title">Eigene Entfern-Farbe</string>
     <string name="settings_calendar_removal_color_dialog_title">Entfern-Farbe auswählen</string>
     <string name="settings_calendar_removal_color_format">Entfern-Farbe: %1$s</string>
     <string name="settings_calendar_removal_color_label">Entfern-Farbe</string>
-    <string name="settings_calendar_ring_free_color_custom_title">Benutzerdefinierte ringfreie Farbe</string>
+    <string name="settings_calendar_ring_free_color_custom_title">Eigene ringfreie Farbe</string>
     <string name="settings_calendar_ring_free_color_dialog_title">Ringfreie Farbe auswählen</string>
     <string name="settings_calendar_ring_free_color_format">Ringfreie Farbe: %1$s</string>
     <string name="settings_calendar_ring_free_color_label">Ringfreie Farbe</string>
-    <string name="settings_calendar_wear_color_custom_title">Benutzerdefinierte Tragezeit-Farbe</string>
+    <string name="settings_calendar_wear_color_custom_title">Eigene Tragezeit-Farbe</string>
     <string name="settings_calendar_wear_color_dialog_title">Tragezeit-Farbe auswählen</string>
     <string name="settings_calendar_wear_color_format">Tragezeit-Farbe: %1$s</string>
     <string name="settings_calendar_wear_color_label">Tragezeit-Farbe</string>
-    <string name="settings_circle_color_custom_title">Benutzerdefinierte Home-Kreis-Farbe</string>
+    <string name="settings_circle_color_custom_title">Eigene Home-Kreis-Farbe</string>
     <string name="settings_circle_color_dialog_title">Home-Kreis-Farbe auswählen</string>
     <string name="settings_circle_color_format">Home-Kreis-Farbe</string>
     <string name="settings_circle_color_label">Home-Kreis-Farbe</string>
@@ -253,8 +253,8 @@
     <string name="home_skip_ring_free_message">Nach dem Entfernen des Rings wird für diesen Zyklus sofort der nächste Einsetztermin gesetzt. Die folgenden Zyklen laufen normal mit ringfreier Woche weiter.</string>
     <string name="home_skip_ring_free_title">Ringfreie Woche überspringen</string>
     <string name="home_special_actions_label">Sonderfälle</string>
-    <string name="home_special_actions_toggle_close">Sonderaktionen schließen</string>
-    <string name="home_special_actions_toggle_open">Sonderaktionen öffnen</string>
+    <string name="home_special_actions_toggle_close">Sonderfälle schließen</string>
+    <string name="home_special_actions_toggle_open">Sonderfälle öffnen</string>
 
     <!-- Calendar -->
     <string name="calendar_month_picker_title">Zum Monat springen</string>
@@ -272,7 +272,7 @@
     <string name="period_modal_intensity_medium">Mittel</string>
     <string name="period_modal_intensity_heavy">Stark</string>
     <string name="period_modal_pain">Schmerzen</string>
-    <string name="period_modal_illness">Unwohlsein</string>
+    <string name="period_modal_illness">Krankheit</string>
     <string name="period_modal_start_marker">Periodenbeginn</string>
     <string name="period_modal_end_marker">Periodenende</string>
     <string name="period_modal_clear">Eintrag löschen</string>
@@ -284,7 +284,7 @@
     <string name="period_modal_only_ring_free_toast">Nur in der ringfreien Woche und ±4 Tagen verfügbar.</string>
     <string name="period_legend_period">Periode</string>
     <string name="period_legend_pain">Schmerzen</string>
-    <string name="period_legend_illness">Unwohlsein</string>
+    <string name="period_legend_illness">Krankheit</string>
     <string name="period_legend_start_end">S = Start, E = Ende</string>
     <string name="period_legend_start_only">S = Beginn</string>
     <string name="period_legend_end_only">E = Ende</string>
@@ -502,7 +502,7 @@
     <string name="tour_body_calendar_legend">Diese Farben zeigen Tragezeit, ringfreie Tage, Entfernen und Einsetzen.\nDu kannst die Farben auch ändern, indem du auf die Legendensymbole tippst.</string>
     <string name="tour_body_cycles">Verfolge vergangene Zyklen und ihre Einsetz-/Entfern-Ereignisse.</string>
     <string name="tour_body_cycles_clear">Alle gespeicherten Zyklus-Einträge aus der Liste entfernen.</string>
-    <string name="tour_body_delay">Hiermit kannst du zusätzliche Tage eintragen, falls der Ring länger getragen wurde. Weitere Infos über den Info-Button.</string>
+    <string name="tour_body_delay">Hiermit kannst du zusätzliche Tage eintragen, falls der Ring länger getragen wurde. Weitere Informationen über den Info-Button.</string>
     <string name="tour_body_navigation">Wechsle hier zwischen Start, Kalender, Zyklen und Einstellungen.</string>
     <string name="tour_body_notes">Speichere Erinnerungen und persönliche Notizen für diesen Zyklus.</string>
     <string name="tour_body_notes_close">Tippe, um zum Startbildschirm zurückzukehren.</string>
@@ -565,6 +565,12 @@
     <string name="tour_title_settings_notifications">Erinnerungen</string>
     <string name="tour_title_settings_reset">App zurücksetzen</string>
     <string name="tour_title_settings_update">Updates</string>
+    <string name="tour_body_period_entry">Tippe auf einen Tag, um Perioden-Einträge hinzuzufügen oder zu bearbeiten.\nBearbeiten ist nur während der ringfreien Woche und ±4 Tage darum herum verfügbar.</string>
+    <string name="tour_body_period_modal">Lege im Perioden-Eintrag Periodentag, Blutungsstärke, Symptome (Schmerzen/Krankheit) sowie optionale Start-/Endmarkierungen fest.\nVerwende „Eintrag löschen“, um gespeicherte Daten für diesen Tag zu entfernen.</string>
+    <string name="tour_body_period_indicators">Periodentage werden direkt im Kalender mit Intensitätsschattierung, Indikatorpunkten und S/E-Markierungen angezeigt.\nDadurch bleibt die Monatsübersicht auf einen Blick gut lesbar.</string>
+    <string name="tour_title_period_entry">Periodeneintrag</string>
+    <string name="tour_title_period_modal">Periodenoptionen</string>
+    <string name="tour_title_period_indicators">Periodenindikatoren</string>
 
     <!-- Welcome -->
     <string name="welcome_features_body">- 📅 Kalenderansicht von Einsetz-, Entfern- und ringfreien Tagen\n- 🔔 Selbst anpassbare Erinnerungen\n- 📝 Notizen und Zyklus-Historie\n- 🎨 Personalisierung von Hintergrund, Farben, Sprache und Widgets\n- 💾 Backup und Wiederherstellung</string>
@@ -578,16 +584,4 @@
     <string name="welcome_start_tour">Tour starten</string>
     <string name="welcome_subtitle">MyRingReminder Ring Reminder</string>
     <string name="welcome_title">Willkommen 👋</string>
-
-
-    <!-- Added missing period-tracking strings -->
-    <string name="tour_body_period_entry">Tippe auf einen Tag, um Periodendaten hinzuzufügen oder zu bearbeiten.
-Bearbeitung ist nur in der ringfreien Woche und ±4 Tagen darum möglich.</string>
-    <string name="tour_body_period_modal">Im Periodeneintrag kannst du Periodentag, Stärke, Symptome (Schmerzen/Unwohlsein) und optionale Start/Ende-Markierungen setzen.
-Mit Eintrag löschen entfernst du die gespeicherten Daten dieses Tages.</string>
-    <string name="tour_body_period_indicators">Periodentage werden direkt im Kalender mit Intensitätsfärbung, Indikatorpunkten und S/E-Markierungen angezeigt.
-So bleibt die Monatsübersicht gut lesbar.</string>
-    <string name="tour_title_period_entry">Periodeneintrag</string>
-    <string name="tour_title_period_modal">Periodenoptionen</string>
-    <string name="tour_title_period_indicators">Periodenindikatoren</string>
 </resources>

@@ -1,7 +1,7 @@
 <resources>
     <!-- App -->
     <string name="app_info_actions_title">操作</string>
-    <string name="app_info_description">MyRingReminder 是一款用于管理和追踪避孕环周期的 Android 应用。该应用提供用于置入、取出和停环日的彩色编码日历、可自定义提醒、笔记、小组件以及备份/恢复功能。它还包含欢迎引导、周期历史和周期延长说明（“延长佩戴避孕环”）。背景图片和颜色设置等个性化选项可实现个性化调整。\n\n重要提示：本应用仅用于个人组织与避孕环周期追踪。它不是医疗产品，不能替代医疗建议，也不基于医学评估或诊断。如有使用疑问或健康相关问题，请咨询医生。\n\n所有数据仅在本设备本地存储。</string>
+    <string name="app_info_description">MyRingReminder 是一款用于管理和跟踪避孕环周期的 Android 应用程序。该应用提供带颜色标记的日历，用于显示放置日、取出日和无环日，并提供可自定义提醒、笔记、小组件以及备份/恢复功能。此外，它还包含欢迎引导、周期历史记录、周期延长说明（\"延长佩戴避孕环\"）以及无环周期间的月经记录。背景图片和颜色设置等个性化选项可实现自定义设置。\n\n重要说明：本应用仅用于个人组织和跟踪避孕环周期。它不是医疗产品，不能替代医疗建议，也不基于医学评估或诊断。如果您对使用方法或健康问题有疑问，请咨询医疗专业人员。\n\n所有数据仅存储在此设备本地。</string>
     <string name="app_info_developer">开发者：%1$s</string>
     <string name="app_info_developer_label">开发者：</string>
     <string name="app_info_developer_name">Daniel Sichler 创作的 Darexsh</string>
@@ -257,12 +257,39 @@
     <string name="home_special_actions_toggle_open">开启特殊操作</string>
 
     <!-- Calendar -->
-    <string name="calendar_month_picker_title">前往月份</string>
+    <string name="calendar_month_picker_title">跳转到月份</string>
     <string name="calendar_month_selector_desc">选择月份和年份</string>
     <string name="calendar_next_month_desc">下个月</string>
     <string name="calendar_previous_month_desc">上个月</string>
     <string name="calendar_title">日历</string>
-    <string name="calendar_today_button">回到今天</string>
+    <string name="calendar_today_button">返回当前日期</string>
+    <string name="period_modal_title_for_date">经期记录：%1$s</string>
+    <string name="period_modal_period_day">经期日期</string>
+    <string name="period_modal_intensity_title">出血强度</string>
+    <string name="period_modal_symptoms_title">症状</string>
+    <string name="period_modal_markers_title">标记</string>
+    <string name="period_modal_intensity_light">轻度</string>
+    <string name="period_modal_intensity_medium">中等</string>
+    <string name="period_modal_intensity_heavy">严重</string>
+    <string name="period_modal_pain">疼痛</string>
+    <string name="period_modal_illness">疾病</string>
+    <string name="period_modal_start_marker">经期开始</string>
+    <string name="period_modal_end_marker">经期结束</string>
+    <string name="period_modal_clear">删除记录</string>
+    <string name="period_modal_validation_intensity_required">请选择出血强度。</string>
+    <string name="period_modal_validation_start_end_conflict">一天不能同时是经期开始和结束。</string>
+    <string name="period_modal_save_failed">无法保存经期记录。</string>
+    <string name="period_modal_saved_toast">经期记录已保存。</string>
+    <string name="period_modal_deleted_toast">经期记录已删除。</string>
+    <string name="period_modal_only_ring_free_toast">仅在无环周及前后 ±4 天可用。</string>
+    <string name="period_legend_period">经期</string>
+    <string name="period_legend_pain">疼痛</string>
+    <string name="period_legend_illness">疾病</string>
+    <string name="period_legend_start_end">S = 开始, E = 结束</string>
+    <string name="period_legend_start_only">S = 开始</string>
+    <string name="period_legend_end_only">E = 结束</string>
+    <string name="period_legend_title">经期</string>
+    <string name="calendar_legend_title">日历</string>
 
     <!-- Calendar Legend -->
     <string name="legend_insertion">置入</string>
@@ -349,6 +376,8 @@
     <string name="backup_field_notes_text">备注内容</string>
     <string name="backup_field_notification_flags_format">通知标记：%1$d 条（%2$d 条激活）</string>
     <string name="backup_field_notification_hashes_format">通知设置快照：%1$d 条</string>
+    <string name="backup_field_period_tracking">经期追踪</string>
+    <string name="backup_field_period_tracking_entries_format">%1$d 天记录</string>
     <string name="backup_field_reminder_insertion">置入前提醒</string>
     <string name="backup_field_reminder_removal">取出前提醒</string>
     <string name="backup_field_skip_ring_free_entries_format">跳过停用周记录：%1$d</string>
@@ -536,6 +565,12 @@
     <string name="tour_title_settings_notifications">提醒</string>
     <string name="tour_title_settings_reset">重置应用</string>
     <string name="tour_title_settings_update">更新</string>
+    <string name="tour_body_period_entry">点击某一天可添加或编辑经期追踪。 仅可在无环周及其前后 ±4 天内编辑。</string>
+    <string name="tour_body_period_modal">在经期记录中，可设置经期日、强度、症状（疼痛/不适）以及可选的开始/结束标记。 使用“清除记录”可删除该日已保存的数据。</string>
+    <string name="tour_body_period_indicators">经期日会直接显示在日历中，包括强度底色、指示点和 S/E 标记。 这样月视图依然清晰易读。</string>
+    <string name="tour_title_period_entry">经期记录</string>
+    <string name="tour_title_period_modal">经期选项</string>
+    <string name="tour_title_period_indicators">经期指示</string>
 
     <!-- Welcome -->
     <string name="welcome_features_body">- 📅 查看置入、取出和停用期的日历视图\n- 🔔 自定义提醒设置\n- 📝 笔记和周期历史\n- 🎨 个性化背景、颜色、语言和组件\n- 💾 备份与恢复</string>
@@ -549,45 +584,4 @@
     <string name="welcome_start_tour">开始向导</string>
     <string name="welcome_subtitle">MyRingReminder 避孕环提醒</string>
     <string name="welcome_title">欢迎使用 👋</string>
-
-
-    <!-- Added missing period-tracking strings -->
-    <string name="period_modal_title_for_date">经期记录：%1$s</string>
-    <string name="period_modal_period_day">经期日</string>
-    <string name="period_modal_intensity_title">出血强度</string>
-    <string name="period_modal_symptoms_title">症状</string>
-    <string name="period_modal_markers_title">标记</string>
-    <string name="period_modal_intensity_light">轻</string>
-    <string name="period_modal_intensity_medium">中</string>
-    <string name="period_modal_intensity_heavy">重</string>
-    <string name="period_modal_pain">疼痛</string>
-    <string name="period_modal_illness">不适</string>
-    <string name="period_modal_start_marker">经期开始</string>
-    <string name="period_modal_end_marker">经期结束</string>
-    <string name="period_modal_clear">清除记录</string>
-    <string name="period_modal_validation_intensity_required">请选择出血强度。</string>
-    <string name="period_modal_validation_start_end_conflict">一天不能同时是经期开始和结束。</string>
-    <string name="period_modal_save_failed">无法保存经期记录。</string>
-    <string name="period_modal_saved_toast">经期记录已保存。</string>
-    <string name="period_modal_deleted_toast">经期记录已删除。</string>
-    <string name="period_modal_only_ring_free_toast">仅在无环周及其前后 ±4 天可用。</string>
-    <string name="period_legend_period">经期</string>
-    <string name="period_legend_pain">疼痛</string>
-    <string name="period_legend_illness">不适</string>
-    <string name="period_legend_start_end">S = 开始，E = 结束</string>
-    <string name="period_legend_start_only">S = 开始</string>
-    <string name="period_legend_end_only">E = 结束</string>
-    <string name="period_legend_title">经期</string>
-    <string name="calendar_legend_title">日历</string>
-    <string name="backup_field_period_tracking">经期追踪</string>
-    <string name="backup_field_period_tracking_entries_format">%1$d 条每日记录</string>
-    <string name="tour_body_period_entry">点击某一天可添加或编辑经期追踪。
-仅可在无环周及其前后 ±4 天内编辑。</string>
-    <string name="tour_body_period_modal">在经期记录中，可设置经期日、强度、症状（疼痛/不适）以及可选的开始/结束标记。
-使用“清除记录”可删除该日已保存的数据。</string>
-    <string name="tour_body_period_indicators">经期日会直接显示在日历中，包括强度底色、指示点和 S/E 标记。
-这样月视图依然清晰易读。</string>
-    <string name="tour_title_period_entry">经期记录</string>
-    <string name="tour_title_period_modal">经期选项</string>
-    <string name="tour_title_period_indicators">经期指示</string>
 </resources>

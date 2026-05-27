@@ -1,14 +1,14 @@
 <resources>
     <!-- App -->
     <string name="app_info_actions_title">Actions</string>
-    <string name="app_info_description">MyRingReminder is an Android app for managing and tracking contraceptive ring cycles. The app provides a color-coded calendar for insertion, removal, and ring-free days, customizable reminders, notes, widgets, and backup/restore features. It also includes a welcome tour, cycle history, and guidance for extending a cycle (“wear ring longer”). Personalization options such as background images and color settings allow individual customization.\n\nImportant note: This app is intended solely for personal organization and tracking of contraceptive ring cycles. It is not a medical product, does not replace medical advice, and is not based on medical evaluation or diagnosis. If you have questions about usage or health concerns, please seek medical advice.\n\nAll data is stored locally on this device only.</string>
+    <string name="app_info_description">MyRingReminder is an Android app for managing and tracking contraceptive ring cycles. The app provides a color-coded calendar for insertion, removal, and ring-free days, customizable reminders, notes, widgets, and backup/restore features. It also includes a welcome tour, cycle history, guidance for extending a cycle (“wear ring longer”), and entries for periods in the ring-free week. Personalization options such as background images and color settings allow individual customization.\n\nImportant note: This app is intended solely for personal organization and tracking of contraceptive ring cycles. It is not a medical product, does not replace medical advice, and is not based on medical evaluation or diagnosis. If you have questions about usage or health concerns, please seek medical advice.\n\nAll data is stored locally on this device only.</string>
     <string name="app_info_developer">Developer: %1$s</string>
     <string name="app_info_developer_label">Developer:</string>
     <string name="app_info_developer_name">Darexsh by Daniel Sichler</string>
     <string name="app_info_email">Email: %1$s</string>
     <string name="app_info_github">GitHub: %1$s</string>
     <string name="app_info_name">MyRingReminder</string>
-    <string name="app_info_open_coffee">Entwicklung unterstützen</string>
+    <string name="app_info_open_coffee">Support development</string>
     <string name="app_info_open_privacy">Privacy Policy</string>
     <string name="app_info_open_email">Write email</string>
     <string name="app_info_open_github">Open social media</string>

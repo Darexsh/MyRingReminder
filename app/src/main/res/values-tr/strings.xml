@@ -1,7 +1,7 @@
 <resources>
     <!-- App -->
     <string name="app_info_actions_title">Eylemler</string>
-    <string name="app_info_description">MyRingReminder, kontraseptif halka döngülerini yönetmek ve takip etmek için bir Android uygulamasıdır. Uygulama; takma, çıkarma ve halkasız günler için renk kodlu bir takvim, özelleştirilebilir hatırlatıcılar, notlar, widget’lar ve yedekleme/geri yükleme özellikleri sunar. Ayrıca bir hoş geldin turu, döngü geçmişi ve döngüyü uzatma rehberi (“halkayı daha uzun süre kullan”) içerir. Arka plan görselleri ve renk ayarları gibi kişiselleştirme seçenekleri, uygulamayı bireysel olarak uyarlamayı sağlar.\n\nÖnemli not: Bu uygulama yalnızca kişisel organizasyon ve kontraseptif halka döngülerinin takibi için tasarlanmıştır. Tıbbi bir ürün değildir, tıbbi danışmanlığın yerine geçmez ve tıbbi değerlendirme veya teşhise dayanmaz. Kullanım veya sağlıkla ilgili sorularınız varsa tıbbi danışmanlık alın.\n\nTüm veriler yalnızca bu cihazda yerel olarak saklanır.</string>
+    <string name="app_info_description">MyRingReminder, doğum kontrol halkası döngülerini yönetmek ve takip etmek için geliştirilmiş bir Android uygulamasıdır. Uygulama; takma, çıkarma ve halkasız günler için renk kodlu bir takvim, özelleştirilebilir hatırlatıcılar, notlar, widget\'lar ve yedekleme/geri yükleme özellikleri sunar. Ayrıca bir hoş geldiniz turu, döngü geçmişi, döngünün uzatılması için rehberlik (\"halkayı daha uzun süre kullan\") ve halkasız hafta sırasında adet kayıtları içerir. Arka plan görselleri ve renk ayarları gibi kişiselleştirme seçenekleri, uygulamayı isteğe göre özelleştirmeyi sağlar.\n\nÖnemli not: Bu uygulama yalnızca doğum kontrol halkası döngülerinin kişisel organizasyonu ve takibi amacıyla tasarlanmıştır. Tıbbi bir ürün değildir, tıbbi tavsiyenin yerine geçmez ve tıbbi değerlendirme veya teşhise dayanmaz. Kullanım hakkında sorularınız veya sağlıkla ilgili endişeleriniz varsa bir sağlık uzmanına danışın.\n\nTüm veriler yalnızca bu cihazda yerel olarak saklanır.</string>
     <string name="app_info_developer">Geliştirici: %1$s</string>
     <string name="app_info_developer_label">Geliştirici:</string>
     <string name="app_info_developer_name">Daniel Sichler tarafından Darexsh</string>
@@ -253,16 +253,43 @@
     <string name="home_skip_ring_free_message">Halka çıkarıldıktan sonra, bu döngü için bir sonraki yerleştirme hemen ayarlanır. Takip eden döngüler, halkasız hafta ile normal şekilde devam eder.</string>
     <string name="home_skip_ring_free_title">Halkasız haftayı atla</string>
     <string name="home_special_actions_label">Özel durumlar</string>
-    <string name="home_special_actions_toggle_close">Özel eylemleri kapat</string>
-    <string name="home_special_actions_toggle_open">Özel eylemleri aç</string>
+    <string name="home_special_actions_toggle_close">Özel durumlar kapat</string>
+    <string name="home_special_actions_toggle_open">Özel durumlar aç</string>
 
     <!-- Calendar -->
-    <string name="calendar_month_picker_title">Ay seçimine git</string>
-    <string name="calendar_month_selector_desc">Ay ve yıl seçin</string>
+    <string name="calendar_month_picker_title">Aya git</string>
+    <string name="calendar_month_selector_desc">Ay ve yılı seç</string>
     <string name="calendar_next_month_desc">Sonraki ay</string>
     <string name="calendar_previous_month_desc">Önceki ay</string>
     <string name="calendar_title">Takvim</string>
-    <string name="calendar_today_button">Bugüne dön</string>
+    <string name="calendar_today_button">Geçerli tarihe dön</string>
+    <string name="period_modal_title_for_date">Adet kaydı: %1$s</string>
+    <string name="period_modal_period_day">Adet günü</string>
+    <string name="period_modal_intensity_title">Kanama yoğunluğu</string>
+    <string name="period_modal_symptoms_title">Belirtiler</string>
+    <string name="period_modal_markers_title">İşaretleyiciler</string>
+    <string name="period_modal_intensity_light">Hafif</string>
+    <string name="period_modal_intensity_medium">Orta</string>
+    <string name="period_modal_intensity_heavy">Yoğun</string>
+    <string name="period_modal_pain">Ağrı</string>
+    <string name="period_modal_illness">Hastalık</string>
+    <string name="period_modal_start_marker">Adet başlangıcı</string>
+    <string name="period_modal_end_marker">Adet sonu</string>
+    <string name="period_modal_clear">Kaydı sil</string>
+    <string name="period_modal_validation_intensity_required">Lütfen bir kanama yoğunluğu seçin.</string>
+    <string name="period_modal_validation_start_end_conflict">Bir gün aynı anda hem adet başlangıcı hem de adet sonu olamaz.</string>
+    <string name="period_modal_save_failed">Adet kaydı kaydedilemedi.</string>
+    <string name="period_modal_saved_toast">Adet kaydı kaydedildi.</string>
+    <string name="period_modal_deleted_toast">Adet kaydı silindi.</string>
+    <string name="period_modal_only_ring_free_toast">Yalnızca halkasız hafta ve ±4 gün içinde kullanılabilir.</string>
+    <string name="period_legend_period">Adet</string>
+    <string name="period_legend_pain">Ağrı</string>
+    <string name="period_legend_illness">Hastalık</string>
+    <string name="period_legend_start_end">S = Başlangıç, E = Bitiş</string>
+    <string name="period_legend_start_only">S = Başlangıç</string>
+    <string name="period_legend_end_only">E = Bitiş</string>
+    <string name="period_legend_title">Adet</string>
+    <string name="calendar_legend_title">Takvim</string>
 
     <!-- Calendar Legend -->
     <string name="legend_insertion">Yerleştirme</string>
@@ -349,6 +376,8 @@
     <string name="backup_field_notes_text">Not içeriği</string>
     <string name="backup_field_notification_flags_format">Bildirim bayrakları: %1$d giriş (%2$d aktif)</string>
     <string name="backup_field_notification_hashes_format">Bildirim ayarları anlık görüntüleri: %1$d giriş</string>
+    <string name="backup_field_period_tracking">Adet takibi</string>
+    <string name="backup_field_period_tracking_entries_format">%1$d günlük giriş</string>
     <string name="backup_field_reminder_insertion">Yerleştirme öncesi hatırlatıcı</string>
     <string name="backup_field_reminder_removal">Çıkarma öncesi hatırlatıcı</string>
     <string name="backup_field_skip_ring_free_entries_format">Atlanan halkasız hafta girişleri: %1$d</string>
@@ -536,6 +565,12 @@
     <string name="tour_title_settings_notifications">Hatırlatıcılar</string>
     <string name="tour_title_settings_reset">Uygulamayı sıfırla</string>
     <string name="tour_title_settings_update">Güncellemeler</string>
+    <string name="tour_body_period_entry">Adet takibini eklemek veya düzenlemek için bir güne dokunun. Düzenleme yalnızca halkasız hafta ve çevresindeki ±4 gün içinde mümkündür.</string>
+    <string name="tour_body_period_modal">Adet kaydında Adet günü, yoğunluk, belirtiler (ağrı/halsizlik) ve isteğe bağlı başlangıç/bitiş işaretlerini ayarlayabilirsiniz. O güne ait kayıtlı verileri kaldırmak için Kaydı temizle seçeneğini kullanın.</string>
+    <string name="tour_body_period_indicators">Adet günleri takvimde yoğunluk gölgelendirmesi, gösterge noktaları ve S/E işaretleriyle doğrudan gösterilir. Böylece aylık görünüm okunabilir kalır.</string>
+    <string name="tour_title_period_entry">Adet kaydı</string>
+    <string name="tour_title_period_modal">Adet seçenekleri</string>
+    <string name="tour_title_period_indicators">Adet göstergeleri</string>
 
     <!-- Welcome -->
     <string name="welcome_features_body">- 📅 Yerleştirme, çıkarma ve halkasız günler için takvim görünümü\n- 🔔 Özelleştirilebilir hatırlatıcılar\n- 📝 Notlar ve döngü geçmişi\n- 🎨 Arka plan, renk, dil ve widget kişiselleştirme\n- 💾 Yedekleme ve geri yükleme</string>
@@ -549,45 +584,4 @@
     <string name="welcome_start_tour">Turu başlat</string>
     <string name="welcome_subtitle">MyRingReminder Halka Hatırlatıcı</string>
     <string name="welcome_title">Hoş Geldiniz 👋</string>
-
-
-    <!-- Added missing period-tracking strings -->
-    <string name="period_modal_title_for_date">Adet kaydı: %1$s</string>
-    <string name="period_modal_period_day">Adet günü</string>
-    <string name="period_modal_intensity_title">Kanama yoğunluğu</string>
-    <string name="period_modal_symptoms_title">Belirtiler</string>
-    <string name="period_modal_markers_title">İşaretler</string>
-    <string name="period_modal_intensity_light">Hafif</string>
-    <string name="period_modal_intensity_medium">Orta</string>
-    <string name="period_modal_intensity_heavy">Yoğun</string>
-    <string name="period_modal_pain">Ağrı</string>
-    <string name="period_modal_illness">Halsizlik</string>
-    <string name="period_modal_start_marker">Adet başlangıcı</string>
-    <string name="period_modal_end_marker">Adet bitişi</string>
-    <string name="period_modal_clear">Kaydı temizle</string>
-    <string name="period_modal_validation_intensity_required">Lütfen kanama yoğunluğunu seçin.</string>
-    <string name="period_modal_validation_start_end_conflict">Bir gün aynı anda hem başlangıç hem bitiş olamaz.</string>
-    <string name="period_modal_save_failed">Adet kaydı kaydedilemedi.</string>
-    <string name="period_modal_saved_toast">Adet kaydı kaydedildi.</string>
-    <string name="period_modal_deleted_toast">Adet kaydı silindi.</string>
-    <string name="period_modal_only_ring_free_toast">Yalnızca halkasız hafta ve ±4 gün içinde kullanılabilir.</string>
-    <string name="period_legend_period">Adet</string>
-    <string name="period_legend_pain">Ağrı</string>
-    <string name="period_legend_illness">Halsizlik</string>
-    <string name="period_legend_start_end">S = Başlangıç, E = Bitiş</string>
-    <string name="period_legend_start_only">S = Başlangıç</string>
-    <string name="period_legend_end_only">E = Bitiş</string>
-    <string name="period_legend_title">Adet</string>
-    <string name="calendar_legend_title">Takvim</string>
-    <string name="backup_field_period_tracking">Adet takibi</string>
-    <string name="backup_field_period_tracking_entries_format">%1$d günlük kayıt</string>
-    <string name="tour_body_period_entry">Adet takibini eklemek veya düzenlemek için bir güne dokunun.
-Düzenleme yalnızca halkasız hafta ve çevresindeki ±4 gün içinde mümkündür.</string>
-    <string name="tour_body_period_modal">Adet kaydında Adet günü, yoğunluk, belirtiler (ağrı/halsizlik) ve isteğe bağlı başlangıç/bitiş işaretlerini ayarlayabilirsiniz.
-O güne ait kayıtlı verileri kaldırmak için Kaydı temizle seçeneğini kullanın.</string>
-    <string name="tour_body_period_indicators">Adet günleri takvimde yoğunluk gölgelendirmesi, gösterge noktaları ve S/E işaretleriyle doğrudan gösterilir.
-Böylece aylık görünüm okunabilir kalır.</string>
-    <string name="tour_title_period_entry">Adet kaydı</string>
-    <string name="tour_title_period_modal">Adet seçenekleri</string>
-    <string name="tour_title_period_indicators">Adet göstergeleri</string>
 </resources>

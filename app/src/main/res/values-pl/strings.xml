@@ -1,7 +1,7 @@
 <resources>
     <!-- App -->
     <string name="app_info_actions_title">Akcje</string>
-    <string name="app_info_description">MyRingReminder to aplikacja Android do zarządzania i śledzenia cykli pierścienia antykoncepcyjnego. Aplikacja oferuje kolorowy kalendarz dni założenia, usunięcia i dni bez pierścienia, konfigurowalne przypomnienia, notatki, widżety oraz funkcje kopii zapasowej i przywracania. Zawiera także samouczek powitalny, historię cykli i instrukcję wydłużania cyklu („noś pierścień dłużej”). Opcje personalizacji, takie jak obrazy tła i ustawienia kolorów, umożliwiają indywidualne dopasowanie.\n\nWażna informacja: ta aplikacja służy wyłącznie do osobistej organizacji i śledzenia cykli pierścienia antykoncepcyjnego. Nie jest wyrobem medycznym, nie zastępuje porady lekarskiej i nie opiera się na ocenie ani diagnozie medycznej. W razie pytań dotyczących stosowania lub problemów zdrowotnych należy skonsultować się z lekarzem.\n\nWszystkie dane są przechowywane wyłącznie lokalnie na tym urządzeniu.</string>
+    <string name="app_info_description">MyRingReminder to aplikacja na Androida służąca do zarządzania i śledzenia cykli pierścienia antykoncepcyjnego. Aplikacja oferuje oznaczony kolorami kalendarz dla dni założenia, usunięcia oraz dni bez pierścienia, konfigurowalne przypomnienia, notatki, widżety oraz funkcje tworzenia i przywracania kopii zapasowych. Zawiera również samouczek powitalny, historię cykli, wskazówki dotyczące wydłużenia cyklu (\"noszenie pierścienia dłużej\") oraz wpisy dotyczące miesiączki podczas tygodnia bez pierścienia. Opcje personalizacji, takie jak obrazy tła i ustawienia kolorów, umożliwiają indywidualne dostosowanie aplikacji.\n\nWażna informacja: Ta aplikacja służy wyłącznie do osobistej organizacji i śledzenia cykli pierścienia antykoncepcyjnego. Nie jest wyrobem medycznym, nie zastępuje porady lekarskiej i nie opiera się na ocenie ani diagnozie medycznej. W przypadku pytań dotyczących użytkowania lub problemów zdrowotnych należy skonsultować się z lekarzem lub specjalistą medycznym.\n\nWszystkie dane są przechowywane wyłącznie lokalnie na tym urządzeniu.</string>
     <string name="app_info_developer">Programista: %1$s</string>
     <string name="app_info_developer_label">Programista:</string>
     <string name="app_info_developer_name">Darexsh autorstwa Daniela Sichlera</string>
@@ -253,16 +253,43 @@
     <string name="home_skip_ring_free_message">Po wyjęciu pierścienia, następne założenie zostaje wyznaczone natychmiast dla tego cyklu. Kolejne cykle będą kontynuowane normalnie z tygodniem przerwy.</string>
     <string name="home_skip_ring_free_title">Pomiń tydzień przerwy</string>
     <string name="home_special_actions_label">Przypadki szczególne</string>
-    <string name="home_special_actions_toggle_close">Zamknij akcje specjalne</string>
-    <string name="home_special_actions_toggle_open">Otwórz akcje specjalne</string>
+    <string name="home_special_actions_toggle_close">Zamknij przypadki specjalne</string>
+    <string name="home_special_actions_toggle_open">Otwórz przypadki specjalne</string>
 
     <!-- Calendar -->
-    <string name="calendar_month_picker_title">Idź do miesiąca</string>
+    <string name="calendar_month_picker_title">Przejdź do miesiąca</string>
     <string name="calendar_month_selector_desc">Wybierz miesiąc i rok</string>
     <string name="calendar_next_month_desc">Następny miesiąc</string>
     <string name="calendar_previous_month_desc">Poprzedni miesiąc</string>
     <string name="calendar_title">Kalendarz</string>
-    <string name="calendar_today_button">Wróć do dzisiejszej daty</string>
+    <string name="calendar_today_button">Powrót do bieżącej daty</string>
+    <string name="period_modal_title_for_date">Wpis okresu: %1$s</string>
+    <string name="period_modal_period_day">Dzień okresu</string>
+    <string name="period_modal_intensity_title">Intensywność krwawienia</string>
+    <string name="period_modal_symptoms_title">Objawy</string>
+    <string name="period_modal_markers_title">Znaczniki</string>
+    <string name="period_modal_intensity_light">Lekkie</string>
+    <string name="period_modal_intensity_medium">Średnie</string>
+    <string name="period_modal_intensity_heavy">Silne</string>
+    <string name="period_modal_pain">Ból</string>
+    <string name="period_modal_illness">Choroba</string>
+    <string name="period_modal_start_marker">Początek okresu</string>
+    <string name="period_modal_end_marker">Koniec okresu</string>
+    <string name="period_modal_clear">Usuń wpis</string>
+    <string name="period_modal_validation_intensity_required">Wybierz intensywność krwawienia.</string>
+    <string name="period_modal_validation_start_end_conflict">Dzień nie może być jednocześnie początkiem i końcem okresu.</string>
+    <string name="period_modal_save_failed">Nie udało się zapisać wpisu okresu.</string>
+    <string name="period_modal_saved_toast">Wpis okresu został zapisany.</string>
+    <string name="period_modal_deleted_toast">Wpis okresu został usunięty.</string>
+    <string name="period_modal_only_ring_free_toast">Dostępne tylko podczas tygodnia bez pierścienia i ±4 dni.</string>
+    <string name="period_legend_period">Okres</string>
+    <string name="period_legend_pain">Ból</string>
+    <string name="period_legend_illness">Choroba</string>
+    <string name="period_legend_start_end">S = Początek, E = Koniec</string>
+    <string name="period_legend_start_only">S = Początek</string>
+    <string name="period_legend_end_only">E = Koniec</string>
+    <string name="period_legend_title">Okres</string>
+    <string name="calendar_legend_title">Kalendarz</string>
 
     <!-- Calendar Legend -->
     <string name="legend_insertion">Założenie</string>
@@ -349,6 +376,8 @@
     <string name="backup_field_notes_text">Treść notatek</string>
     <string name="backup_field_notification_flags_format">Flagi powiadomień: %1$d wpisów (aktywne: %2$d)</string>
     <string name="backup_field_notification_hashes_format">Migawki ustawień powiadomień: %1$d wpisów</string>
+    <string name="backup_field_period_tracking">Śledzenie okresu</string>
+    <string name="backup_field_period_tracking_entries_format">%1$d wpisów dni</string>
     <string name="backup_field_reminder_insertion">Przypomnienie przed założeniem</string>
     <string name="backup_field_reminder_removal">Przypomnienie przed zdjęciem</string>
     <string name="backup_field_skip_ring_free_entries_format">Wpisy pominiętych tygodni bez pierścienia: %1$d</string>
@@ -536,6 +565,12 @@
     <string name="tour_title_settings_notifications">Przypomnienia</string>
     <string name="tour_title_settings_reset">Resetuj aplikację</string>
     <string name="tour_title_settings_update">Aktualizacje</string>
+    <string name="tour_body_period_entry">Dotknij dnia, aby dodać lub edytować śledzenie okresu. Edycja jest dostępna tylko w tygodniu bez pierścienia i ±4 dni wokół niego.</string>
+    <string name="tour_body_period_modal">W wpisie okresu możesz ustawić Dzień okresu, nasilenie, objawy (ból/złe samopoczucie) oraz opcjonalne oznaczenia start/koniec. Użyj Wyczyść wpis, aby usunąć zapisane dane dla tego dnia.</string>
+    <string name="tour_body_period_indicators">Dni okresu są wyświetlane bezpośrednio w kalendarzu z cieniowaniem intensywności, kropkami wskaźników i oznaczeniami S/E. Dzięki temu widok miesiąca pozostaje czytelny.</string>
+    <string name="tour_title_period_entry">Wpis okresu</string>
+    <string name="tour_title_period_modal">Opcje okresu</string>
+    <string name="tour_title_period_indicators">Wskaźniki okresu</string>
 
     <!-- Welcome -->
     <string name="welcome_features_body">- 📅 Widok kalendarza dni założenia, zdjęcia i przerw\n- 🔔 Przypomnienia, które możesz dostosować\n- 📝 Notatki i historia cykli\n- 🎨 Personalizacja tła, kolorów, języka i widgetów\n- 💾 Kopia zapasowa i przywracanie</string>
@@ -549,45 +584,4 @@
     <string name="welcome_start_tour">Rozpocznij przewodnik</string>
     <string name="welcome_subtitle">Przypominacz o krążku MyRingReminder</string>
     <string name="welcome_title">Witaj 👋</string>
-
-
-    <!-- Added missing period-tracking strings -->
-    <string name="period_modal_title_for_date">Wpis okresu: %1$s</string>
-    <string name="period_modal_period_day">Dzień okresu</string>
-    <string name="period_modal_intensity_title">Nasilenie krwawienia</string>
-    <string name="period_modal_symptoms_title">Objawy</string>
-    <string name="period_modal_markers_title">Oznaczenia</string>
-    <string name="period_modal_intensity_light">Lekkie</string>
-    <string name="period_modal_intensity_medium">Średnie</string>
-    <string name="period_modal_intensity_heavy">Silne</string>
-    <string name="period_modal_pain">Ból</string>
-    <string name="period_modal_illness">Złe samopoczucie</string>
-    <string name="period_modal_start_marker">Początek okresu</string>
-    <string name="period_modal_end_marker">Koniec okresu</string>
-    <string name="period_modal_clear">Wyczyść wpis</string>
-    <string name="period_modal_validation_intensity_required">Wybierz nasilenie krwawienia.</string>
-    <string name="period_modal_validation_start_end_conflict">Dzień nie może być jednocześnie początkiem i końcem okresu.</string>
-    <string name="period_modal_save_failed">Nie udało się zapisać wpisu okresu.</string>
-    <string name="period_modal_saved_toast">Wpis okresu zapisany.</string>
-    <string name="period_modal_deleted_toast">Wpis okresu usunięty.</string>
-    <string name="period_modal_only_ring_free_toast">Dostępne tylko w tygodniu bez pierścienia i ±4 dni.</string>
-    <string name="period_legend_period">Okres</string>
-    <string name="period_legend_pain">Ból</string>
-    <string name="period_legend_illness">Złe samopoczucie</string>
-    <string name="period_legend_start_end">S = Start, E = Koniec</string>
-    <string name="period_legend_start_only">S = Początek</string>
-    <string name="period_legend_end_only">E = Koniec</string>
-    <string name="period_legend_title">Okres</string>
-    <string name="calendar_legend_title">Kalendarz</string>
-    <string name="backup_field_period_tracking">Śledzenie okresu</string>
-    <string name="backup_field_period_tracking_entries_format">%1$d wpisów dziennych</string>
-    <string name="tour_body_period_entry">Dotknij dnia, aby dodać lub edytować śledzenie okresu.
-Edycja jest dostępna tylko w tygodniu bez pierścienia i ±4 dni wokół niego.</string>
-    <string name="tour_body_period_modal">W wpisie okresu możesz ustawić Dzień okresu, nasilenie, objawy (ból/złe samopoczucie) oraz opcjonalne oznaczenia start/koniec.
-Użyj Wyczyść wpis, aby usunąć zapisane dane dla tego dnia.</string>
-    <string name="tour_body_period_indicators">Dni okresu są wyświetlane bezpośrednio w kalendarzu z cieniowaniem intensywności, kropkami wskaźników i oznaczeniami S/E.
-Dzięki temu widok miesiąca pozostaje czytelny.</string>
-    <string name="tour_title_period_entry">Wpis okresu</string>
-    <string name="tour_title_period_modal">Opcje okresu</string>
-    <string name="tour_title_period_indicators">Wskaźniki okresu</string>
 </resources>
