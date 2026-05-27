@@ -1,7 +1,7 @@
 <resources>
     <!-- App -->
     <string name="app_info_actions_title">Actions</string>
-    <string name="app_info_description">MyRingReminder est une application Android destinée à la gestion et au suivi des cycles d\'anneaux contraceptifs. L\'application propose un calendrier avec code couleur pour les jours d\'insertion, de retrait et de pause sans anneau, des rappels personnalisables, des notes, des widgets ainsi que des fonctions de sauvegarde et de restauration. Elle comprend également une visite de bienvenue, un historique des cycles, des conseils pour prolonger un cycle (\"porter l\'anneau plus longtemps\") ainsi que des entrées pour les règles pendant la semaine sans anneau. Des options de personnalisation telles que les images de fond et les paramètres de couleur permettent une adaptation individuelle.\n\nRemarque importante : cette application est destinée uniquement à l\'organisation personnelle et au suivi des cycles d\'anneaux contraceptifs. Elle n\'est pas un dispositif médical, ne remplace pas un avis médical et ne repose sur aucune évaluation ou diagnostic médical. Si vous avez des questions concernant son utilisation ou des préoccupations liées à votre santé, veuillez consulter un professionnel de santé.\n\nToutes les données sont stockées uniquement localement sur cet appareil.</string>
+    <string name="app_info_description">MyRingReminder est une application Android destinée à la gestion et au suivi des cycles d\'anneaux contraceptifs. L\'application propose un calendrier avec code couleur pour les jours d\'insertion, de retrait et de pause sans anneau, des rappels personnalisables, des notes, des widgets ainsi que des fonctions de sauvegarde et de restauration. Elle comprend également une visite de bienvenue, un historique des cycles, des conseils pour prolonger un cycle (\"porter l\'anneau plus longtemps\"), le suivi des règles pendant la semaine sans anneau, ainsi qu\'une vue dédiée Détails des règles avec filtres de période et export PDF formaté. Des options de personnalisation telles que les images de fond et les paramètres de couleur permettent une adaptation individuelle.\n\nRemarque importante : cette application est destinée uniquement à l\'organisation personnelle et au suivi des cycles d\'anneaux contraceptifs. Elle n\'est pas un dispositif médical, ne remplace pas un avis médical et ne repose sur aucune évaluation ou diagnostic médical. Si vous avez des questions concernant son utilisation ou des préoccupations liées à votre santé, veuillez consulter un professionnel de santé.\n\nToutes les données sont stockées uniquement localement sur cet appareil.</string>
     <string name="app_info_developer">Développeur : %1$s</string>
     <string name="app_info_developer_label">Développeur :</string>
     <string name="app_info_developer_name">Darexsh par Daniel Sichler</string>
@@ -272,6 +272,34 @@
     <string name="calendar_previous_month_desc">Mois précédent</string>
     <string name="calendar_title">Calendrier</string>
     <string name="calendar_today_button">Retour à la date actuelle</string>
+    <string name="btn_period_details">Détails des règles</string>
+    <string name="btn_period_details_save_pdf">Enregistrer en PDF</string>
+    <string name="period_details_pdf_file_name">details_regles_%1$s.pdf</string>
+    <string name="period_details_pdf_saved">PDF enregistré avec succès.</string>
+    <string name="period_details_pdf_save_failed">Impossible d\'enregistrer le PDF.</string>
+    <string name="period_details_pdf_no_data">Aucune entrée de règles à exporter.</string>
+    <string name="period_details_pdf_summary_title">Résumé</string>
+    <string name="period_details_pdf_summary_entries">Entrées : %1$d</string>
+    <string name="period_details_pdf_summary_starts">Débuts des règles : %1$d</string>
+    <string name="period_details_pdf_summary_ends">Fins des règles : %1$d</string>
+    <string name="period_details_pdf_summary_pain_days">Jours avec douleur : %1$d</string>
+    <string name="period_details_pdf_created_at">Créé : %1$s</string>
+    <string name="period_details_pdf_page_number">Page %1$d</string>
+    <string name="period_details_pdf_legend_title">Légende</string>
+    <string name="period_details_pdf_legend_pain_badge">Badge douleur / symptôme</string>
+    <string name="period_details_pdf_legend_symptom_badge">Badge symptôme</string>
+    <string name="period_details_pdf_anomalies_title">Points notables</string>
+    <string name="period_details_pdf_anomalies_longest_streak">Série la plus longue : %1$d jours</string>
+    <string name="period_details_pdf_anomalies_symptom_days">Jours avec symptômes : %1$d</string>
+    <string name="period_details_pdf_anomalies_strong_pain_days">Jours avec douleur forte : %1$d</string>
+    <string name="period_details_pdf_notes_title">Notes</string>
+    <string name="period_details_range_label">Période</string>
+    <string name="period_details_range_3m">3 mois</string>
+    <string name="period_details_range_6m">6 mois</string>
+    <string name="period_details_range_12m">12 mois</string>
+    <string name="period_details_range_all">Tout</string>
+    <string name="period_details_range_between">%1$s - %2$s</string>
+    <string name="period_details_empty">Aucune entrée de règles dans cette période.</string>
     <string name="period_modal_title_for_date">Entrée des règles : %1$s</string>
     <string name="period_modal_period_day">Jour des règles</string>
     <string name="period_modal_intensity_title">Intensité des saignements</string>
@@ -584,13 +612,13 @@
     <string name="tour_title_settings_update">Mises à jour</string>
     <string name="tour_body_period_entry">Appuyez sur un jour pour ajouter ou modifier le suivi des règles. La modification est disponible uniquement pendant la semaine sans anneau et ±4 jours autour.</string>
     <string name="tour_body_period_modal">Dans l\'entrée de règles, tu peux définir le jour de règles, l\'intensité du saignement, le niveau de douleur (légère/modérée/forte), des symptômes supplémentaires et des marqueurs début/fin optionnels.\nUtilise Effacer l\'entrée pour supprimer les données enregistrées de ce jour.</string>
-    <string name="tour_body_period_indicators">Les jours de règles sont affichés directement dans le calendrier avec nuance d’intensité, points indicateurs et repères S/E. La vue mensuelle reste ainsi lisible.</string>
+    <string name="tour_body_period_indicators">Les jours de règles sont affichés directement dans le calendrier avec nuance d’intensité, points indicateurs et repères S/E.\nPour les mois avec des entrées de règles, vous pouvez aussi ouvrir Détails des règles et exporter un rapport PDF formaté.</string>
     <string name="tour_title_period_entry">Entrée des règles</string>
     <string name="tour_title_period_modal">Options des règles</string>
     <string name="tour_title_period_indicators">Indicateurs des règles</string>
 
     <!-- Welcome -->
-    <string name="welcome_features_body">- 📅 Vue calendrier des jours d\'insertion, de retrait et de pause\n- 🩸 Suivi des règles avec saisie d\'intensité et de symptômes\n- 🔔 Rappels personnalisables\n- 📝 Notes et historique des cycles\n- 🎨 Personnalisation du fond, des couleurs, de la langue et des widgets\n- 💾 Sauvegarde et restauration</string>
+    <string name="welcome_features_body">- 📅 Vue calendrier des jours d\'insertion, de retrait et de pause\n- 🩸 Suivi des règles avec saisie d\'intensité et de symptômes\n- 📄 Détails des règles avec vue par période et export PDF\n- 🔔 Rappels personnalisables\n- 📝 Notes et historique des cycles\n- 🎨 Personnalisation du fond, des couleurs, de la langue et des widgets\n- 💾 Sauvegarde et restauration</string>
     <string name="welcome_features_title">Ce que fait cette application</string>
     <string name="welcome_info_note">Vous pouvez ouvrir les infos de l\'application à tout moment dans les Paramètres.</string>
     <string name="welcome_intro">Garde en vue ton cycle d\'anneau contraceptif et le suivi des règles avec tes données personnelles, rappels et notes.</string>
@@ -601,4 +629,9 @@
     <string name="welcome_start_tour">Démarrer la visite</string>
     <string name="welcome_subtitle">MyRingReminder</string>
     <string name="welcome_title">Bienvenue 👋</string>
+    <string name="period_details_pdf_notification_channel_name">Exports PDF</string>
+    <string name="period_details_pdf_notification_channel_desc">Notifications pour les PDF de détails de période enregistrés.</string>
+    <string name="period_details_pdf_notification_title">PDF enregistré</string>
+    <string name="period_details_pdf_notification_text">Appuyez pour ouvrir le PDF exporté des détails de période.</string>
+    <string name="period_details_pdf_open_action">Ouvrir le PDF</string>
 </resources>

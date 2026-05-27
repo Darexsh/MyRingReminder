@@ -1,7 +1,7 @@
 <resources>
     <!-- App -->
     <string name="app_info_actions_title">Actions</string>
-    <string name="app_info_description">MyRingReminder is an Android app for managing and tracking contraceptive ring cycles. The app provides a color-coded calendar for insertion, removal, and ring-free days, customizable reminders, notes, widgets, and backup/restore features. It also includes a welcome tour, cycle history, guidance for extending a cycle (“wear ring longer”), and entries for periods in the ring-free week. Personalization options such as background images and color settings allow individual customization.\n\nImportant note: This app is intended solely for personal organization and tracking of contraceptive ring cycles. It is not a medical product, does not replace medical advice, and is not based on medical evaluation or diagnosis. If you have questions about usage or health concerns, please seek medical advice.\n\nAll data is stored locally on this device only.</string>
+    <string name="app_info_description">MyRingReminder is an Android app for managing and tracking contraceptive ring cycles. The app provides a color-coded calendar for insertion, removal, and ring-free days, customizable reminders, notes, widgets, and backup/restore features. It also includes a welcome tour, cycle history, guidance for extending a cycle ("wear ring longer"), period tracking during the ring-free week, and a dedicated Period Details view with range filters and formatted PDF export. Personalization options such as background images and color settings allow individual customization.\n\nImportant note: This app is intended solely for personal organization and tracking of contraceptive ring cycles. It is not a medical product, does not replace medical advice, and is not based on medical evaluation or diagnosis. If you have questions about usage or health concerns, please seek medical advice.\n\nAll data is stored locally on this device only.</string>
     <string name="app_info_developer">Developer: %1$s</string>
     <string name="app_info_developer_label">Developer:</string>
     <string name="app_info_developer_name">Darexsh by Daniel Sichler</string>
@@ -272,6 +272,34 @@
     <string name="calendar_previous_month_desc">Previous month</string>
     <string name="calendar_title">Calendar</string>
     <string name="calendar_today_button">Back to current date</string>
+    <string name="btn_period_details">Period details</string>
+    <string name="btn_period_details_save_pdf">Save as PDF</string>
+    <string name="period_details_pdf_file_name">period_details_%1$s.pdf</string>
+    <string name="period_details_pdf_saved">PDF saved successfully.</string>
+    <string name="period_details_pdf_save_failed">Failed to save PDF.</string>
+    <string name="period_details_pdf_no_data">No period entries available for export.</string>
+    <string name="period_details_pdf_summary_title">Summary</string>
+    <string name="period_details_pdf_summary_entries">Entries: %1$d</string>
+    <string name="period_details_pdf_summary_starts">Period starts: %1$d</string>
+    <string name="period_details_pdf_summary_ends">Period ends: %1$d</string>
+    <string name="period_details_pdf_summary_pain_days">Pain days: %1$d</string>
+    <string name="period_details_pdf_created_at">Created: %1$s</string>
+    <string name="period_details_pdf_page_number">Page %1$d</string>
+    <string name="period_details_pdf_legend_title">Legend</string>
+    <string name="period_details_pdf_legend_pain_badge">Pain / symptom badge</string>
+    <string name="period_details_pdf_legend_symptom_badge">Symptom badge</string>
+    <string name="period_details_pdf_anomalies_title">Highlights</string>
+    <string name="period_details_pdf_anomalies_longest_streak">Longest streak: %1$d days</string>
+    <string name="period_details_pdf_anomalies_symptom_days">Days with symptoms: %1$d</string>
+    <string name="period_details_pdf_anomalies_strong_pain_days">Days with strong pain: %1$d</string>
+    <string name="period_details_pdf_notes_title">Notes</string>
+    <string name="period_details_range_label">Time range</string>
+    <string name="period_details_range_3m">3 months</string>
+    <string name="period_details_range_6m">6 months</string>
+    <string name="period_details_range_12m">12 months</string>
+    <string name="period_details_range_all">All</string>
+    <string name="period_details_range_between">%1$s - %2$s</string>
+    <string name="period_details_empty">No period entries in this range.</string>
     <string name="period_modal_title_for_date">Period entry: %1$s</string>
     <string name="period_modal_period_day">Period day</string>
     <string name="period_modal_intensity_title">Bleeding intensity</string>
@@ -518,7 +546,7 @@
     <string name="tour_body_calendar">See insertion, removal, and ring-free days at a glance.</string>
     <string name="tour_body_period_entry">Tap a day to add or edit period tracking.\nEditing is available only during ring-free week and ±4 days around it.</string>
     <string name="tour_body_period_modal">In period entry, set Period day, bleeding intensity, pain level (light/medium/strong), additional symptoms, and optional start/end markers.\nUse Clear entry to remove saved data for that day.</string>
-    <string name="tour_body_period_indicators">Period days are shown directly in the calendar with intensity shading, indicator dots, and S/E markers.\nThis keeps monthly overview readable at a glance.</string>
+    <string name="tour_body_period_indicators">Period days are shown directly in the calendar with intensity shading, indicator dots, and S/E markers.\nFor months with period entries, you can also open Period Details and export a formatted PDF report.</string>
     <string name="tour_body_calendar_legend">These colors show wear time, ring-free days, removal, and insertion.\nYou can also change the colors by tapping the legend dots.</string>
     <string name="tour_body_cycles">Track previous cycles and their insertion/removal events.</string>
     <string name="tour_body_cycles_clear">Remove all saved cycle entries from the list.</string>
@@ -590,7 +618,7 @@
     <string name="tour_title_settings_update">Updates</string>
 
     <!-- Welcome -->
-    <string name="welcome_features_body">- 📅 Calendar view of insertion, removal, and ring-free days\n- 🩸 Period tracking with intensity and symptom entries\n- 🔔 Reminders you can customize yourself\n- 📝 Notes and cycle history\n- 🎨 Personalization for background, colors, language, and widgets\n- 💾 Backup and restore</string>
+    <string name="welcome_features_body">- 📅 Calendar view of insertion, removal, and ring-free days\n- 🩸 Period tracking with intensity and symptom entries\n- 📄 Period Details with range view and PDF export\n- 🔔 Reminders you can customize yourself\n- 📝 Notes and cycle history\n- 🎨 Personalization for background, colors, language, and widgets\n- 💾 Backup and restore</string>
     <string name="welcome_features_title">What this app does</string>
     <string name="welcome_info_note">You can open App info anytime in Settings.</string>
     <string name="welcome_intro">Keep your contraceptive ring cycle and period tracking in view with your personal dates, reminders, and notes.</string>
@@ -601,4 +629,9 @@
     <string name="welcome_start_tour">Start tour</string>
     <string name="welcome_subtitle">MyRingReminder</string>
     <string name="welcome_title">Welcome 👋</string>
+    <string name="period_details_pdf_notification_channel_name">PDF exports</string>
+    <string name="period_details_pdf_notification_channel_desc">Notifications for saved period detail PDFs.</string>
+    <string name="period_details_pdf_notification_title">PDF saved</string>
+    <string name="period_details_pdf_notification_text">Tap to open your exported period details PDF.</string>
+    <string name="period_details_pdf_open_action">Open PDF</string>
 </resources>

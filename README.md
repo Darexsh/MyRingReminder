@@ -42,6 +42,8 @@
 * 📅 **Cycle Tracking**: Visualize insertion, removal, ring-free, and active days with color-coded calendar highlights; tap legend dots to recolor.
 
 * 🩸 **Period Tracking (Ring-Free Window)**: Tap calendar days during ring-free week (and ±4 days) to add/edit period entries with bleeding intensity, pain level (light/medium/strong), additional symptoms (for example malaise, nausea, fatigue, dizziness, diarrhea), and optional start/end markers.
+
+* 📄 **Period Details & PDF Export**: For months with period entries, open a dedicated **Period Details** view with range filters (3/6/12 months or all), grouped timeline, and export a formatted PDF report. After saving, a heads-up notification appears and opens the saved PDF directly when tapped.
     
 * 🔔 **Reminders**: Custom reminder lead times for insertion/removal, with automatic rescheduling.
     
@@ -89,13 +91,14 @@
   <tr>
     <td align="center"><b>Home Screen</b><br><img src="Screenshots/Home.png" width="200" height="450"></td>
     <td align="center"><b>Calendar</b><br><img src="Screenshots/Calendar.png" width="200" height="450"></td>
-    <td align="center"><b>Notes</b><br><img src="Screenshots/Notes.png" width="200" height="450"></td>
+    <td align="center"><b>Period Details</b><br><img src="Screenshots/Period_Details.png" width="200" height="450"></td>
     <td align="center"><b>Cycles</b><br><img src="Screenshots/Cycles.png" width="200" height="450"></td>
   </tr>
 </table>
 
 <table>
   <tr>
+    <td align="center"><b>Notes</b><br><img src="Screenshots/Notes.png" width="200" height="450"></td>
     <td align="center"><b>Settings</b><br><img src="Screenshots/Settings.png" width="200" height="450"></td>
     <td align="center"><b>Widgets</b><br><img src="Screenshots/Widgets.png" width="200" height="450"></td>
     <td align="center"><b>About</b><br><img src="Screenshots/About.png" width="200" height="450"></td>
@@ -215,6 +218,16 @@
     * In the popup, enable/disable app lock and set auto-lock delay (e.g., immediate, 30s, 1m, 5m, 15m).
 
     * Unlock uses biometric authentication or device PIN/pattern/password.
+
+12. **Period Details & PDF**:
+
+    * In **Calendar**, open a month that contains period entries and tap **Period Details**.
+
+    * Choose the time range (3/6/12 months or all) and review entries grouped by month.
+
+    * Tap **Save as PDF** to export a formatted report.
+
+    * After saving, tap the notification to open the generated PDF directly.
         
 
 * * *
@@ -243,6 +256,8 @@
 * 🛠️ Stores user settings and notes in **SharedPreferences**.
     
 * 🔔 Notifications implemented via **BroadcastReceiver** and **NotificationManagerCompat**.
+
+* 📄 Period reports are generated locally with **PdfDocument** and exported via Android's document picker API.
     
 * 📊 State sharing between fragments is managed via **SharedViewModel** and **LiveData**.
 

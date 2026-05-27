@@ -1,7 +1,7 @@
 <resources>
     <!-- App -->
     <string name="app_info_actions_title">Действия</string>
-    <string name="app_info_description">MyRingReminder — это приложение для Android, предназначенное для управления и отслеживания циклов использования контрацептивного кольца. Приложение предоставляет календарь с цветовой маркировкой дней установки, удаления и периода без кольца, настраиваемые напоминания, заметки, виджеты, а также функции резервного копирования и восстановления. Также доступны приветственный тур, история циклов, рекомендации по продлению цикла (\"носить кольцо дольше\") и записи менструального цикла во время недели без кольца. Возможности персонализации, такие как фоновые изображения и настройки цветов, позволяют настроить приложение индивидуально.\n\nВажно: это приложение предназначено исключительно для личной организации и отслеживания циклов использования контрацептивного кольца. Оно не является медицинским продуктом, не заменяет консультацию врача и не основано на медицинской оценке или диагностике. Если у вас возникли вопросы по использованию приложения или проблемы со здоровьем, обратитесь к медицинскому специалисту.\n\nВсе данные хранятся только локально на данном устройстве.</string>
+    <string name="app_info_description">MyRingReminder — это приложение для Android, предназначенное для управления и отслеживания циклов использования контрацептивного кольца. Приложение предоставляет календарь с цветовой маркировкой дней установки, удаления и периода без кольца, настраиваемые напоминания, заметки, виджеты, а также функции резервного копирования и восстановления. Также доступны приветственный тур, история циклов, рекомендации по продлению цикла ("носить кольцо дольше"), отслеживание менструации в неделю без кольца и отдельный экран Детали менструации с фильтрами периода и форматированным экспортом PDF. Возможности персонализации, такие как фоновые изображения и настройки цветов, позволяют настроить приложение индивидуально.\n\nВажно: это приложение предназначено исключительно для личной организации и отслеживания циклов использования контрацептивного кольца. Оно не является медицинским продуктом, не заменяет консультацию врача и не основано на медицинской оценке или диагностике. Если у вас возникли вопросы по использованию приложения или проблемы со здоровьем, обратитесь к медицинскому специалисту.\n\nВсе данные хранятся только локально на данном устройстве.</string>
     <string name="app_info_developer">Разработчик: %1$s</string>
     <string name="app_info_developer_label">Разработчик:</string>
     <string name="app_info_developer_name">Darexsh (Даниэль Сихлер)</string>
@@ -272,6 +272,34 @@
     <string name="calendar_previous_month_desc">Предыдущий месяц</string>
     <string name="calendar_title">Календарь</string>
     <string name="calendar_today_button">Вернуться к текущей дате</string>
+    <string name="btn_period_details">Детали менструации</string>
+    <string name="btn_period_details_save_pdf">Сохранить как PDF</string>
+    <string name="period_details_pdf_file_name">detali_menstruacii_%1$s.pdf</string>
+    <string name="period_details_pdf_saved">PDF успешно сохранен.</string>
+    <string name="period_details_pdf_save_failed">Не удалось сохранить PDF.</string>
+    <string name="period_details_pdf_no_data">Нет записей для экспорта.</string>
+    <string name="period_details_pdf_summary_title">Сводка</string>
+    <string name="period_details_pdf_summary_entries">Записей: %1$d</string>
+    <string name="period_details_pdf_summary_starts">Начал менструации: %1$d</string>
+    <string name="period_details_pdf_summary_ends">Окончаний менструации: %1$d</string>
+    <string name="period_details_pdf_summary_pain_days">Дней с болью: %1$d</string>
+    <string name="period_details_pdf_created_at">Создано: %1$s</string>
+    <string name="period_details_pdf_page_number">Страница %1$d</string>
+    <string name="period_details_pdf_legend_title">Легенда</string>
+    <string name="period_details_pdf_legend_pain_badge">Метка боли / симптома</string>
+    <string name="period_details_pdf_legend_symptom_badge">Метка симптома</string>
+    <string name="period_details_pdf_anomalies_title">Особенности</string>
+    <string name="period_details_pdf_anomalies_longest_streak">Самая длинная серия: %1$d дней</string>
+    <string name="period_details_pdf_anomalies_symptom_days">Дней с симптомами: %1$d</string>
+    <string name="period_details_pdf_anomalies_strong_pain_days">Дней с сильной болью: %1$d</string>
+    <string name="period_details_pdf_notes_title">Заметки</string>
+    <string name="period_details_range_label">Период</string>
+    <string name="period_details_range_3m">3 месяца</string>
+    <string name="period_details_range_6m">6 месяцев</string>
+    <string name="period_details_range_12m">12 месяцев</string>
+    <string name="period_details_range_all">Все</string>
+    <string name="period_details_range_between">%1$s - %2$s</string>
+    <string name="period_details_empty">Нет записей о менструации за этот период.</string>
     <string name="period_modal_title_for_date">Запись менструации: %1$s</string>
     <string name="period_modal_period_day">День менструации</string>
     <string name="period_modal_intensity_title">Интенсивность кровотечения</string>
@@ -584,13 +612,13 @@
     <string name="tour_title_settings_update">Обновления</string>
     <string name="tour_body_period_entry">Нажмите на день, чтобы добавить или изменить данные менструации. Редактирование доступно только в неделю без кольца и ±4 дня вокруг неё.</string>
     <string name="tour_body_period_modal">В записи менструации можно указать день менструации, интенсивность кровотечения, уровень боли (слабая/средняя/сильная), дополнительные симптомы и необязательные маркеры начала/конца.\nИспользуйте "Очистить запись", чтобы удалить сохраненные данные за этот день.</string>
-    <string name="tour_body_period_indicators">Дни менструации отображаются прямо в календаре с оттенком интенсивности, точками-индикаторами и метками S/E. Так месячный обзор остаётся читаемым.</string>
+    <string name="tour_body_period_indicators">Дни менструации отображаются прямо в календаре с оттенком интенсивности, точками-индикаторами и метками S/E.\nВ месяцах с записями менструации можно также открыть Детали менструации и экспортировать форматированный PDF-отчёт.</string>
     <string name="tour_title_period_entry">Запись менструации</string>
     <string name="tour_title_period_modal">Параметры менструации</string>
     <string name="tour_title_period_indicators">Индикаторы менструации</string>
 
     <!-- Welcome -->
-    <string name="welcome_features_body">- 📅 Календарный вид дней установки, снятия и перерыва\n- 🩸 Отслеживание менструации с записями интенсивности и симптомов\n- 🔔 Настраиваемые напоминания\n- 📝 Заметки и история циклов\n- 🎨 Персонализация фона, цветов, языка и виджетов\n- 💾 Резервное копирование и восстановление</string>
+    <string name="welcome_features_body">- 📅 Календарный вид дней установки, снятия и перерыва\n- 🩸 Отслеживание менструации с записями интенсивности и симптомов\n- 📄 Детали менструации с выбором диапазона и экспортом PDF\n- 🔔 Настраиваемые напоминания\n- 📝 Заметки и история циклов\n- 🎨 Персонализация фона, цветов, языка и виджетов\n- 💾 Резервное копирование и восстановление</string>
     <string name="welcome_features_title">Функции приложения</string>
     <string name="welcome_info_note">Вы можете открыть инфо о приложении в любое время в Настройках.</string>
     <string name="welcome_intro">Держите под контролем цикл контрацептивного кольца и отслеживание менструации с вашими личными данными, напоминаниями и заметками.</string>
@@ -601,4 +629,9 @@
     <string name="welcome_start_tour">Начать тур</string>
     <string name="welcome_subtitle">MyRingReminder</string>
     <string name="welcome_title">Добро пожаловать 👋</string>
+    <string name="period_details_pdf_notification_channel_name">Экспорт PDF</string>
+    <string name="period_details_pdf_notification_channel_desc">Уведомления о сохраненных PDF с деталями менструации.</string>
+    <string name="period_details_pdf_notification_title">PDF сохранен</string>
+    <string name="period_details_pdf_notification_text">Нажмите, чтобы открыть экспортированный PDF с деталями менструации.</string>
+    <string name="period_details_pdf_open_action">Открыть PDF</string>
 </resources>

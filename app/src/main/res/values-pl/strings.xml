@@ -1,7 +1,7 @@
 <resources>
     <!-- App -->
     <string name="app_info_actions_title">Akcje</string>
-    <string name="app_info_description">MyRingReminder to aplikacja na Androida służąca do zarządzania i śledzenia cykli pierścienia antykoncepcyjnego. Aplikacja oferuje oznaczony kolorami kalendarz dla dni założenia, usunięcia oraz dni bez pierścienia, konfigurowalne przypomnienia, notatki, widżety oraz funkcje tworzenia i przywracania kopii zapasowych. Zawiera również samouczek powitalny, historię cykli, wskazówki dotyczące wydłużenia cyklu (\"noszenie pierścienia dłużej\") oraz wpisy dotyczące miesiączki podczas tygodnia bez pierścienia. Opcje personalizacji, takie jak obrazy tła i ustawienia kolorów, umożliwiają indywidualne dostosowanie aplikacji.\n\nWażna informacja: Ta aplikacja służy wyłącznie do osobistej organizacji i śledzenia cykli pierścienia antykoncepcyjnego. Nie jest wyrobem medycznym, nie zastępuje porady lekarskiej i nie opiera się na ocenie ani diagnozie medycznej. W przypadku pytań dotyczących użytkowania lub problemów zdrowotnych należy skonsultować się z lekarzem lub specjalistą medycznym.\n\nWszystkie dane są przechowywane wyłącznie lokalnie na tym urządzeniu.</string>
+    <string name="app_info_description">MyRingReminder to aplikacja na Androida służąca do zarządzania i śledzenia cykli pierścienia antykoncepcyjnego. Aplikacja oferuje oznaczony kolorami kalendarz dla dni założenia, usunięcia oraz dni bez pierścienia, konfigurowalne przypomnienia, notatki, widżety oraz funkcje tworzenia i przywracania kopii zapasowych. Zawiera również samouczek powitalny, historię cykli, wskazówki dotyczące wydłużenia cyklu ("noszenie pierścienia dłużej"), śledzenie okresu w tygodniu bez pierścienia oraz dedykowany widok Szczegóły okresu z filtrami zakresu i sformatowanym eksportem PDF. Opcje personalizacji, takie jak obrazy tła i ustawienia kolorów, umożliwiają indywidualne dostosowanie aplikacji.\n\nWażna informacja: Ta aplikacja służy wyłącznie do osobistej organizacji i śledzenia cykli pierścienia antykoncepcyjnego. Nie jest wyrobem medycznym, nie zastępuje porady lekarskiej i nie opiera się na ocenie ani diagnozie medycznej. W przypadku pytań dotyczących użytkowania lub problemów zdrowotnych należy skonsultować się z lekarzem lub specjalistą medycznym.\n\nWszystkie dane są przechowywane wyłącznie lokalnie na tym urządzeniu.</string>
     <string name="app_info_developer">Programista: %1$s</string>
     <string name="app_info_developer_label">Programista:</string>
     <string name="app_info_developer_name">Darexsh autorstwa Daniela Sichlera</string>
@@ -272,6 +272,34 @@
     <string name="calendar_previous_month_desc">Poprzedni miesiąc</string>
     <string name="calendar_title">Kalendarz</string>
     <string name="calendar_today_button">Powrót do bieżącej daty</string>
+    <string name="btn_period_details">Szczegóły okresu</string>
+    <string name="btn_period_details_save_pdf">Zapisz jako PDF</string>
+    <string name="period_details_pdf_file_name">szczegoly_okresu_%1$s.pdf</string>
+    <string name="period_details_pdf_saved">PDF zapisano pomyślnie.</string>
+    <string name="period_details_pdf_save_failed">Nie udało się zapisać PDF.</string>
+    <string name="period_details_pdf_no_data">Brak wpisów okresu do eksportu.</string>
+    <string name="period_details_pdf_summary_title">Podsumowanie</string>
+    <string name="period_details_pdf_summary_entries">Wpisy: %1$d</string>
+    <string name="period_details_pdf_summary_starts">Początki okresu: %1$d</string>
+    <string name="period_details_pdf_summary_ends">Końce okresu: %1$d</string>
+    <string name="period_details_pdf_summary_pain_days">Dni z bólem: %1$d</string>
+    <string name="period_details_pdf_created_at">Utworzono: %1$s</string>
+    <string name="period_details_pdf_page_number">Strona %1$d</string>
+    <string name="period_details_pdf_legend_title">Legenda</string>
+    <string name="period_details_pdf_legend_pain_badge">Znacznik bólu / objawu</string>
+    <string name="period_details_pdf_legend_symptom_badge">Znacznik objawu</string>
+    <string name="period_details_pdf_anomalies_title">Wyróżnienia</string>
+    <string name="period_details_pdf_anomalies_longest_streak">Najdłuższa seria: %1$d dni</string>
+    <string name="period_details_pdf_anomalies_symptom_days">Dni z objawami: %1$d</string>
+    <string name="period_details_pdf_anomalies_strong_pain_days">Dni z silnym bólem: %1$d</string>
+    <string name="period_details_pdf_notes_title">Notatki</string>
+    <string name="period_details_range_label">Zakres czasu</string>
+    <string name="period_details_range_3m">3 miesiące</string>
+    <string name="period_details_range_6m">6 miesięcy</string>
+    <string name="period_details_range_12m">12 miesięcy</string>
+    <string name="period_details_range_all">Wszystko</string>
+    <string name="period_details_range_between">%1$s - %2$s</string>
+    <string name="period_details_empty">Brak wpisów okresu w tym zakresie.</string>
     <string name="period_modal_title_for_date">Wpis okresu: %1$s</string>
     <string name="period_modal_period_day">Dzień okresu</string>
     <string name="period_modal_intensity_title">Intensywność krwawienia</string>
@@ -584,13 +612,13 @@
     <string name="tour_title_settings_update">Aktualizacje</string>
     <string name="tour_body_period_entry">Dotknij dnia, aby dodać lub edytować śledzenie okresu. Edycja jest dostępna tylko w tygodniu bez pierścienia i ±4 dni wokół niego.</string>
     <string name="tour_body_period_modal">W wpisie okresu możesz ustawić dzień okresu, intensywność krwawienia, poziom bólu (lekki/umiarkowany/silny), dodatkowe objawy oraz opcjonalne znaczniki początku/końca.\nUżyj "Usuń wpis", aby usunąć zapisane dane dla tego dnia.</string>
-    <string name="tour_body_period_indicators">Dni okresu są wyświetlane bezpośrednio w kalendarzu z cieniowaniem intensywności, kropkami wskaźników i oznaczeniami S/E. Dzięki temu widok miesiąca pozostaje czytelny.</string>
+    <string name="tour_body_period_indicators">Dni okresu są wyświetlane bezpośrednio w kalendarzu z cieniowaniem intensywności, kropkami wskaźników i oznaczeniami S/E.\nW miesiącach z wpisami okresu możesz też otworzyć Szczegóły okresu i wyeksportować sformatowany raport PDF.</string>
     <string name="tour_title_period_entry">Wpis okresu</string>
     <string name="tour_title_period_modal">Opcje okresu</string>
     <string name="tour_title_period_indicators">Wskaźniki okresu</string>
 
     <!-- Welcome -->
-    <string name="welcome_features_body">- 📅 Widok kalendarza dni założenia, zdjęcia i przerwy\n- 🩸 Śledzenie okresu z wpisami intensywności i objawów\n- 🔔 Konfigurowalne przypomnienia\n- 📝 Notatki i historia cykli\n- 🎨 Personalizacja tła, kolorów, języka i widżetów\n- 💾 Kopia zapasowa i przywracanie</string>
+    <string name="welcome_features_body">- 📅 Widok kalendarza dni założenia, zdjęcia i przerwy\n- 🩸 Śledzenie okresu z wpisami intensywności i objawów\n- 📄 Szczegóły okresu z widokiem zakresu i eksportem PDF\n- 🔔 Konfigurowalne przypomnienia\n- 📝 Notatki i historia cykli\n- 🎨 Personalizacja tła, kolorów, języka i widżetów\n- 💾 Kopia zapasowa i przywracanie</string>
     <string name="welcome_features_title">Co potrafi ta aplikacja</string>
     <string name="welcome_info_note">Informacje o aplikacji możesz otworzyć w dowolnym momencie w Ustawieniach.</string>
     <string name="welcome_intro">Miej pod kontrolą cykl pierścienia antykoncepcyjnego i śledzenie okresu dzięki swoim danym, przypomnieniom i notatkom.</string>
@@ -601,4 +629,9 @@
     <string name="welcome_start_tour">Rozpocznij przewodnik</string>
     <string name="welcome_subtitle">MyRingReminder</string>
     <string name="welcome_title">Witaj 👋</string>
+    <string name="period_details_pdf_notification_channel_name">Eksporty PDF</string>
+    <string name="period_details_pdf_notification_channel_desc">Powiadomienia o zapisanych plikach PDF ze szczegółami okresu.</string>
+    <string name="period_details_pdf_notification_title">PDF zapisano</string>
+    <string name="period_details_pdf_notification_text">Dotknij, aby otworzyć wyeksportowany PDF ze szczegółami okresu.</string>
+    <string name="period_details_pdf_open_action">Otwórz PDF</string>
 </resources>

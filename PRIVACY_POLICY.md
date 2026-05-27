@@ -25,6 +25,9 @@ MyRingReminder does not upload your personal cycle data or notes to the develope
 
 If you use backup/restore, backup data is exported/imported as a local file selected by you via the Android file picker.
 
+If you use the period details PDF export, the PDF is generated locally on your device and saved only to the location you choose in the Android file picker.  
+When you open that PDF from the app notification, Android may pass the file to a PDF viewer app selected by you. In that case, that viewer app processes the file under its own privacy policy.
+
 ## 5. Permissions used
 MyRingReminder may request permissions required for app features, such as:
 - notifications/exact alarms (cycle reminders)

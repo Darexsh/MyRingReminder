@@ -61,6 +61,7 @@ public class CalendarFragment extends Fragment {
     private View legendInsertionOriginalView;
     private TextView monthSelectorView;
     private com.google.android.material.button.MaterialButton todayButton;
+    private com.google.android.material.button.MaterialButton periodDetailsButton;
     private static final int CALENDAR_ALPHA = 127;
     private static final int LEGEND_ALPHA = 255;
     private int[] colorValues;
@@ -98,6 +99,7 @@ public class CalendarFragment extends Fragment {
         ImageButton prevMonthButton = view.findViewById(R.id.btn_calendar_prev);
         ImageButton nextMonthButton = view.findViewById(R.id.btn_calendar_next);
         todayButton = view.findViewById(R.id.btn_calendar_today);
+        periodDetailsButton = view.findViewById(R.id.btn_period_details);
         calendarView.setTopbarVisible(false);
         calendarView.setDynamicHeightEnabled(true);
         calendarView.setSelectionMode(MaterialCalendarView.SELECTION_MODE_SINGLE);
@@ -106,6 +108,7 @@ public class CalendarFragment extends Fragment {
         calendarView.setOnMonthChangedListener((widget, date) -> {
             updateMonthSelectorText();
             updateTodayButtonVisibility();
+            updatePeriodDetailsButtonVisibility();
             updateLegendModeForCurrentMonth();
         });
         calendarView.setOnDateChangedListener((widget, date, selected) -> {
@@ -143,6 +146,9 @@ public class CalendarFragment extends Fragment {
         }
         if (todayButton != null) {
             todayButton.setOnClickListener(v -> jumpToToday());
+        }
+        if (periodDetailsButton != null) {
+            periodDetailsButton.setOnClickListener(v -> openPeriodDetailsForCurrentMonth());
         }
 
         if (legendWearView != null) {
@@ -245,7 +251,7 @@ public class CalendarFragment extends Fragment {
             requestCalendarUpdate();
             updateLegendColors();
         });
-        viewModel.getButtonColor().observe(getViewLifecycleOwner(), value -> applyTodayButtonStyle());
+        viewModel.getButtonColor().observe(getViewLifecycleOwner(), value -> applyCalendarButtonsStyle());
     }
 
     private void requestCalendarUpdate() {
@@ -274,6 +280,7 @@ public class CalendarFragment extends Fragment {
         updateLegendColors();
         updateMonthSelectorText();
         updateTodayButtonVisibility();
+        updatePeriodDetailsButtonVisibility();
         updateLegendModeForCurrentMonth();
     }
 
@@ -449,19 +456,25 @@ public class CalendarFragment extends Fragment {
         applyLegendColor(legendRingFreeOriginalView, getCalendarRingFreeColor());
         applyLegendColor(legendRemovalOriginalView, getCalendarRemovalColor());
         applyLegendColor(legendInsertionOriginalView, getCalendarInsertionColor());
-        applyTodayButtonStyle();
+        applyCalendarButtonsStyle();
     }
 
-    private void applyTodayButtonStyle() {
-        if (todayButton == null || viewModel == null) {
+    private void applyCalendarButtonsStyle() {
+        if (viewModel == null) {
             return;
         }
         Integer color = viewModel.getButtonColor().getValue();
         if (color == null) {
             return;
         }
-        ButtonColorHelper.applyPrimaryColor(todayButton, color);
-        todayButton.setTextColor(Color.WHITE);
+        if (todayButton != null) {
+            ButtonColorHelper.applyPrimaryColor(todayButton, color);
+            todayButton.setTextColor(Color.WHITE);
+        }
+        if (periodDetailsButton != null) {
+            ButtonColorHelper.applyPrimaryColor(periodDetailsButton, color);
+            periodDetailsButton.setTextColor(Color.WHITE);
+        }
     }
 
     private void showLegendColorDialog(int titleResId, int customTitleResId, int selectedColor, ColorConsumer onSelect) {
@@ -942,6 +955,7 @@ public class CalendarFragment extends Fragment {
         calendarView.setCurrentDate(todayDay);
         updateMonthSelectorText();
         updateTodayButtonVisibility();
+        updatePeriodDetailsButtonVisibility();
     }
 
     private void updateTodayButtonVisibility() {
@@ -954,6 +968,35 @@ public class CalendarFragment extends Fragment {
                 && currentDay.getYear() == now.get(Calendar.YEAR)
                 && currentDay.getMonth() == now.get(Calendar.MONTH) + 1;
         todayButton.setVisibility(sameMonth ? View.GONE : View.VISIBLE);
+    }
+
+    private void updatePeriodDetailsButtonVisibility() {
+        if (periodDetailsButton == null || calendarView == null || viewModel == null) {
+            return;
+        }
+        CalendarDay currentDay = calendarView.getCurrentDate();
+        if (currentDay == null) {
+            periodDetailsButton.setVisibility(View.GONE);
+            return;
+        }
+        boolean hasPeriodData = hasPeriodEntryInMonth(currentDay.getYear(), currentDay.getMonth());
+        periodDetailsButton.setVisibility(hasPeriodData ? View.VISIBLE : View.GONE);
+    }
+
+    private void openPeriodDetailsForCurrentMonth() {
+        if (calendarView == null) {
+            return;
+        }
+        CalendarDay currentDay = calendarView.getCurrentDate();
+        if (currentDay == null) {
+            return;
+        }
+        requireActivity()
+                .getSupportFragmentManager()
+                .beginTransaction()
+                .replace(R.id.fragment_container, PeriodDetailsFragment.newInstance(currentDay.getYear(), currentDay.getMonth()))
+                .addToBackStack(null)
+                .commit();
     }
 
     private void updateLegendModeForCurrentMonth() {

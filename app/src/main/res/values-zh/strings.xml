@@ -1,7 +1,7 @@
 <resources>
     <!-- App -->
     <string name="app_info_actions_title">操作</string>
-    <string name="app_info_description">MyRingReminder 是一款用于管理和跟踪避孕环周期的 Android 应用程序。该应用提供带颜色标记的日历，用于显示放置日、取出日和无环日，并提供可自定义提醒、笔记、小组件以及备份/恢复功能。此外，它还包含欢迎引导、周期历史记录、周期延长说明（\"延长佩戴避孕环\"）以及无环周期间的月经记录。背景图片和颜色设置等个性化选项可实现自定义设置。\n\n重要说明：本应用仅用于个人组织和跟踪避孕环周期。它不是医疗产品，不能替代医疗建议，也不基于医学评估或诊断。如果您对使用方法或健康问题有疑问，请咨询医疗专业人员。\n\n所有数据仅存储在此设备本地。</string>
+    <string name="app_info_description">MyRingReminder 是一款用于管理和跟踪避孕环周期的 Android 应用程序。该应用提供带颜色标记的日历，用于显示放置日、取出日和无环日，并提供可自定义提醒、笔记、小组件以及备份/恢复功能。此外，它还包含欢迎引导、周期历史记录、周期延长说明（"延长佩戴避孕环"）、无环周期间的经期追踪，以及带范围筛选和格式化 PDF 导出的经期详情页面。背景图片和颜色设置等个性化选项可实现自定义设置。\n\n重要说明：本应用仅用于个人组织和跟踪避孕环周期。它不是医疗产品，不能替代医疗建议，也不基于医学评估或诊断。如果您对使用方法或健康问题有疑问，请咨询医疗专业人员。\n\n所有数据仅存储在此设备本地。</string>
     <string name="app_info_developer">开发者：%1$s</string>
     <string name="app_info_developer_label">开发者：</string>
     <string name="app_info_developer_name">Daniel Sichler 创作的 Darexsh</string>
@@ -272,6 +272,34 @@
     <string name="calendar_previous_month_desc">上个月</string>
     <string name="calendar_title">日历</string>
     <string name="calendar_today_button">返回当前日期</string>
+    <string name="btn_period_details">经期详情</string>
+    <string name="btn_period_details_save_pdf">保存为 PDF</string>
+    <string name="period_details_pdf_file_name">jingqi_xiangqing_%1$s.pdf</string>
+    <string name="period_details_pdf_saved">PDF 保存成功。</string>
+    <string name="period_details_pdf_save_failed">PDF 保存失败。</string>
+    <string name="period_details_pdf_no_data">没有可导出的经期记录。</string>
+    <string name="period_details_pdf_summary_title">摘要</string>
+    <string name="period_details_pdf_summary_entries">记录数：%1$d</string>
+    <string name="period_details_pdf_summary_starts">经期开始：%1$d</string>
+    <string name="period_details_pdf_summary_ends">经期结束：%1$d</string>
+    <string name="period_details_pdf_summary_pain_days">疼痛天数：%1$d</string>
+    <string name="period_details_pdf_created_at">创建时间：%1$s</string>
+    <string name="period_details_pdf_page_number">第 %1$d 页</string>
+    <string name="period_details_pdf_legend_title">图例</string>
+    <string name="period_details_pdf_legend_pain_badge">疼痛 / 症状标记</string>
+    <string name="period_details_pdf_legend_symptom_badge">症状标记</string>
+    <string name="period_details_pdf_anomalies_title">重点</string>
+    <string name="period_details_pdf_anomalies_longest_streak">最长连续：%1$d 天</string>
+    <string name="period_details_pdf_anomalies_symptom_days">有症状的天数：%1$d</string>
+    <string name="period_details_pdf_anomalies_strong_pain_days">强烈疼痛天数：%1$d</string>
+    <string name="period_details_pdf_notes_title">备注</string>
+    <string name="period_details_range_label">时间范围</string>
+    <string name="period_details_range_3m">3个月</string>
+    <string name="period_details_range_6m">6个月</string>
+    <string name="period_details_range_12m">12个月</string>
+    <string name="period_details_range_all">全部</string>
+    <string name="period_details_range_between">%1$s - %2$s</string>
+    <string name="period_details_empty">该范围内没有经期记录。</string>
     <string name="period_modal_title_for_date">经期记录：%1$s</string>
     <string name="period_modal_period_day">经期日期</string>
     <string name="period_modal_intensity_title">出血强度</string>
@@ -584,13 +612,13 @@
     <string name="tour_title_settings_update">更新</string>
     <string name="tour_body_period_entry">点击某一天可添加或编辑经期追踪。 仅可在无环周及其前后 ±4 天内编辑。</string>
     <string name="tour_body_period_modal">在经期记录中，你可以设置经期日、出血强度、疼痛等级（轻度/中度/重度）、附加症状以及可选的开始/结束标记。\n使用“清除记录”可删除该日期已保存的数据。</string>
-    <string name="tour_body_period_indicators">经期日会直接显示在日历中，包括强度底色、指示点和 S/E 标记。 这样月视图依然清晰易读。</string>
+    <string name="tour_body_period_indicators">经期日会直接显示在日历中，包括强度底色、指示点和 S/E 标记。\n对于有经期记录的月份，你还可以打开经期详情并导出格式化 PDF 报告。</string>
     <string name="tour_title_period_entry">经期记录</string>
     <string name="tour_title_period_modal">经期选项</string>
     <string name="tour_title_period_indicators">经期指示</string>
 
     <!-- Welcome -->
-    <string name="welcome_features_body">- 📅 插入、取出和无环日的日历视图\n- 🩸 带有强度和症状记录的经期追踪\n- 🔔 可自定义提醒\n- 📝 笔记和周期历史\n- 🎨 背景、颜色、语言和小组件个性化\n- 💾 备份与恢复</string>
+    <string name="welcome_features_body">- 📅 插入、取出和无环日的日历视图\n- 🩸 带有强度和症状记录的经期追踪\n- 📄 带范围视图和 PDF 导出的经期详情\n- 🔔 可自定义提醒\n- 📝 笔记和周期历史\n- 🎨 背景、颜色、语言和小组件个性化\n- 💾 备份与恢复</string>
     <string name="welcome_features_title">应用功能</string>
     <string name="welcome_info_note">您可以随时在“设置”中打开应用信息。</string>
     <string name="welcome_intro">通过你的个人日期、提醒和笔记，持续掌握避孕环周期和经期追踪。</string>
@@ -601,4 +629,9 @@
     <string name="welcome_start_tour">开始向导</string>
     <string name="welcome_subtitle">MyRingReminder</string>
     <string name="welcome_title">欢迎使用 👋</string>
+    <string name="period_details_pdf_notification_channel_name">PDF 导出</string>
+    <string name="period_details_pdf_notification_channel_desc">已保存经期详情 PDF 的通知。</string>
+    <string name="period_details_pdf_notification_title">PDF 已保存</string>
+    <string name="period_details_pdf_notification_text">点击以打开导出的经期详情 PDF。</string>
+    <string name="period_details_pdf_open_action">打开 PDF</string>
 </resources>

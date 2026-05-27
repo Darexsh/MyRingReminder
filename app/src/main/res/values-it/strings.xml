@@ -1,7 +1,7 @@
 <resources>
     <!-- App -->
     <string name="app_info_actions_title">Azioni</string>
-    <string name="app_info_description">MyRingReminder è un\'app Android per la gestione e il monitoraggio dei cicli dell\'anello contraccettivo. L\'app offre un calendario con codifica a colori per i giorni di inserimento, rimozione e pausa senza anello, promemoria personalizzabili, note, widget e funzioni di backup/ripristino. Include inoltre un tour di benvenuto, uno storico dei cicli, indicazioni per prolungare un ciclo (\"indossare l\'anello più a lungo\") e registrazioni del ciclo mestruale durante la settimana senza anello. Le opzioni di personalizzazione, come immagini di sfondo e impostazioni dei colori, consentono una configurazione personalizzata.\n\nNota importante: questa app è destinata esclusivamente all\'organizzazione personale e al monitoraggio dei cicli dell\'anello contraccettivo. Non è un dispositivo medico, non sostituisce il parere medico e non si basa su valutazioni o diagnosi mediche. In caso di domande sull\'utilizzo o di problemi di salute, consultare un professionista sanitario.\n\nTutti i dati vengono memorizzati esclusivamente in locale su questo dispositivo.</string>
+    <string name="app_info_description">MyRingReminder è un\'app Android per la gestione e il monitoraggio dei cicli dell\'anello contraccettivo. L\'app offre un calendario con codifica a colori per i giorni di inserimento, rimozione e pausa senza anello, promemoria personalizzabili, note, widget e funzioni di backup/ripristino. Include inoltre un tour di benvenuto, uno storico dei cicli, indicazioni per prolungare un ciclo (\"indossare l\'anello più a lungo\"), il monitoraggio mestruale durante la settimana senza anello e una vista dedicata Dettagli ciclo con filtri periodo ed esportazione PDF formattata. Le opzioni di personalizzazione, come immagini di sfondo e impostazioni dei colori, consentono una configurazione personalizzata.\n\nNota importante: questa app è destinata esclusivamente all\'organizzazione personale e al monitoraggio dei cicli dell\'anello contraccettivo. Non è un dispositivo medico, non sostituisce il parere medico e non si basa su valutazioni o diagnosi mediche. In caso di domande sull\'utilizzo o di problemi di salute, consultare un professionista sanitario.\n\nTutti i dati vengono memorizzati esclusivamente in locale su questo dispositivo.</string>
     <string name="app_info_developer">Sviluppatore: %1$s</string>
     <string name="app_info_developer_label">Sviluppatore:</string>
     <string name="app_info_developer_name">Darexsh di Daniel Sichler</string>
@@ -272,6 +272,34 @@
     <string name="calendar_previous_month_desc">Mese precedente</string>
     <string name="calendar_title">Calendario</string>
     <string name="calendar_today_button">Torna alla data attuale</string>
+    <string name="btn_period_details">Dettagli del ciclo</string>
+    <string name="btn_period_details_save_pdf">Salva come PDF</string>
+    <string name="period_details_pdf_file_name">dettagli_ciclo_%1$s.pdf</string>
+    <string name="period_details_pdf_saved">PDF salvato con successo.</string>
+    <string name="period_details_pdf_save_failed">Impossibile salvare il PDF.</string>
+    <string name="period_details_pdf_no_data">Nessuna registrazione del ciclo da esportare.</string>
+    <string name="period_details_pdf_summary_title">Riepilogo</string>
+    <string name="period_details_pdf_summary_entries">Registrazioni: %1$d</string>
+    <string name="period_details_pdf_summary_starts">Inizi ciclo: %1$d</string>
+    <string name="period_details_pdf_summary_ends">Fine ciclo: %1$d</string>
+    <string name="period_details_pdf_summary_pain_days">Giorni con dolore: %1$d</string>
+    <string name="period_details_pdf_created_at">Creato: %1$s</string>
+    <string name="period_details_pdf_page_number">Pagina %1$d</string>
+    <string name="period_details_pdf_legend_title">Legenda</string>
+    <string name="period_details_pdf_legend_pain_badge">Badge dolore / sintomo</string>
+    <string name="period_details_pdf_legend_symptom_badge">Badge sintomo</string>
+    <string name="period_details_pdf_anomalies_title">Punti salienti</string>
+    <string name="period_details_pdf_anomalies_longest_streak">Serie più lunga: %1$d giorni</string>
+    <string name="period_details_pdf_anomalies_symptom_days">Giorni con sintomi: %1$d</string>
+    <string name="period_details_pdf_anomalies_strong_pain_days">Giorni con dolore forte: %1$d</string>
+    <string name="period_details_pdf_notes_title">Note</string>
+    <string name="period_details_range_label">Intervallo</string>
+    <string name="period_details_range_3m">3 mesi</string>
+    <string name="period_details_range_6m">6 mesi</string>
+    <string name="period_details_range_12m">12 mesi</string>
+    <string name="period_details_range_all">Tutto</string>
+    <string name="period_details_range_between">%1$s - %2$s</string>
+    <string name="period_details_empty">Nessun inserimento del ciclo in questo intervallo.</string>
     <string name="period_modal_title_for_date">Registrazione ciclo: %1$s</string>
     <string name="period_modal_period_day">Giorno del ciclo</string>
     <string name="period_modal_intensity_title">Intensità del sanguinamento</string>
@@ -584,13 +612,13 @@
     <string name="tour_title_settings_update">Aggiornamenti</string>
     <string name="tour_body_period_entry">Tocca un giorno per aggiungere o modificare il monitoraggio del ciclo. La modifica è disponibile solo durante la settimana senza anello e ±4 giorni intorno.</string>
     <string name="tour_body_period_modal">Nella voce del ciclo puoi impostare giorno delle mestruazioni, intensità del sanguinamento, livello di dolore (lieve/medio/forte), sintomi aggiuntivi e marcatori opzionali di inizio/fine.\nUsa \"Elimina voce\" per rimuovere i dati salvati di quel giorno.</string>
-    <string name="tour_body_period_indicators">I giorni di ciclo sono mostrati direttamente nel calendario con sfumatura di intensità, punti indicatore e marker S/E. Così la panoramica mensile resta leggibile.</string>
+    <string name="tour_body_period_indicators">I giorni di ciclo sono mostrati direttamente nel calendario con sfumatura di intensità, punti indicatore e marker S/E.\nPer i mesi con registrazioni mestruali puoi anche aprire Dettagli ciclo ed esportare un report PDF formattato.</string>
     <string name="tour_title_period_entry">Voce ciclo</string>
     <string name="tour_title_period_modal">Opzioni ciclo</string>
     <string name="tour_title_period_indicators">Indicatori ciclo</string>
 
     <!-- Welcome -->
-    <string name="welcome_features_body">- 📅 Vista calendario dei giorni di inserimento, rimozione e pausa\n- 🩸 Monitoraggio del ciclo mestruale con registri di intensità e sintomi\n- 🔔 Promemoria personalizzabili\n- 📝 Note e cronologia dei cicli\n- 🎨 Personalizzazione di sfondo, colori, lingua e widget\n- 💾 Backup e ripristino</string>
+    <string name="welcome_features_body">- 📅 Vista calendario dei giorni di inserimento, rimozione e pausa\n- 🩸 Monitoraggio del ciclo mestruale con registri di intensità e sintomi\n- 📄 Dettagli ciclo con vista per periodo ed esportazione PDF\n- 🔔 Promemoria personalizzabili\n- 📝 Note e cronologia dei cicli\n- 🎨 Personalizzazione di sfondo, colori, lingua e widget\n- 💾 Backup e ripristino</string>
     <string name="welcome_features_title">Cosa fa questa app</string>
     <string name="welcome_info_note">Puoi aprire le info dell\'app in qualsiasi momento nelle Impostazioni.</string>
     <string name="welcome_intro">Tieni sotto controllo il ciclo dell\'anello contraccettivo e il monitoraggio del ciclo mestruale con i tuoi dati personali, promemoria e note.</string>
@@ -601,4 +629,9 @@
     <string name="welcome_start_tour">Inizia tour</string>
     <string name="welcome_subtitle">MyRingReminder</string>
     <string name="welcome_title">Benvenuto 👋</string>
+    <string name="period_details_pdf_notification_channel_name">Esportazioni PDF</string>
+    <string name="period_details_pdf_notification_channel_desc">Notifiche per i PDF dei dettagli ciclo salvati.</string>
+    <string name="period_details_pdf_notification_title">PDF salvato</string>
+    <string name="period_details_pdf_notification_text">Tocca per aprire il PDF esportato dei dettagli ciclo.</string>
+    <string name="period_details_pdf_open_action">Apri PDF</string>
 </resources>

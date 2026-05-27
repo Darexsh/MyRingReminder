@@ -91,6 +91,24 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent" />
 
+    <com.google.android.material.button.MaterialButton
+        android:id="@+id/btn_period_details"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:layout_marginBottom="8dp"
+        android:text="@string/btn_period_details"
+        android:textAllCaps="false"
+        android:textSize="13sp"
+        app:cornerRadius="10dp"
+        app:backgroundTint="#6200EE"
+        android:textColor="#FFFFFF"
+        app:layout_constraintTop_toBottomOf="@id/btn_calendar_today"
+        app:layout_constraintBottom_toTopOf="@id/legend_tables_row"
+        app:layout_constraintVertical_bias="0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent" />
+
     <LinearLayout
         android:id="@+id/legend_tables_row"
         android:layout_width="match_parent"

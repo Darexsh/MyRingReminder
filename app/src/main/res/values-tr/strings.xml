@@ -1,7 +1,7 @@
 <resources>
     <!-- App -->
     <string name="app_info_actions_title">Eylemler</string>
-    <string name="app_info_description">MyRingReminder, doğum kontrol halkası döngülerini yönetmek ve takip etmek için geliştirilmiş bir Android uygulamasıdır. Uygulama; takma, çıkarma ve halkasız günler için renk kodlu bir takvim, özelleştirilebilir hatırlatıcılar, notlar, widget\'lar ve yedekleme/geri yükleme özellikleri sunar. Ayrıca bir hoş geldiniz turu, döngü geçmişi, döngünün uzatılması için rehberlik (\"halkayı daha uzun süre kullan\") ve halkasız hafta sırasında adet kayıtları içerir. Arka plan görselleri ve renk ayarları gibi kişiselleştirme seçenekleri, uygulamayı isteğe göre özelleştirmeyi sağlar.\n\nÖnemli not: Bu uygulama yalnızca doğum kontrol halkası döngülerinin kişisel organizasyonu ve takibi amacıyla tasarlanmıştır. Tıbbi bir ürün değildir, tıbbi tavsiyenin yerine geçmez ve tıbbi değerlendirme veya teşhise dayanmaz. Kullanım hakkında sorularınız veya sağlıkla ilgili endişeleriniz varsa bir sağlık uzmanına danışın.\n\nTüm veriler yalnızca bu cihazda yerel olarak saklanır.</string>
+    <string name="app_info_description">MyRingReminder, doğum kontrol halkası döngülerini yönetmek ve takip etmek için geliştirilmiş bir Android uygulamasıdır. Uygulama; takma, çıkarma ve halkasız günler için renk kodlu bir takvim, özelleştirilebilir hatırlatıcılar, notlar, widget\'lar ve yedekleme/geri yükleme özellikleri sunar. Ayrıca bir hoş geldiniz turu, döngü geçmişi, döngünün uzatılması için rehberlik (\"halkayı daha uzun süre kullan\"), halkasız hafta sırasında adet takibi ve aralık filtreleri ile biçimlendirilmiş PDF dışa aktarma sunan özel bir Adet Detayları görünümü içerir. Arka plan görselleri ve renk ayarları gibi kişiselleştirme seçenekleri, uygulamayı isteğe göre özelleştirmeyi sağlar.\n\nÖnemli not: Bu uygulama yalnızca doğum kontrol halkası döngülerinin kişisel organizasyonu ve takibi amacıyla tasarlanmıştır. Tıbbi bir ürün değildir, tıbbi tavsiyenin yerine geçmez ve tıbbi değerlendirme veya teşhise dayanmaz. Kullanım hakkında sorularınız veya sağlıkla ilgili endişeleriniz varsa bir sağlık uzmanına danışın.\n\nTüm veriler yalnızca bu cihazda yerel olarak saklanır.</string>
     <string name="app_info_developer">Geliştirici: %1$s</string>
     <string name="app_info_developer_label">Geliştirici:</string>
     <string name="app_info_developer_name">Daniel Sichler tarafından Darexsh</string>
@@ -272,6 +272,34 @@
     <string name="calendar_previous_month_desc">Önceki ay</string>
     <string name="calendar_title">Takvim</string>
     <string name="calendar_today_button">Geçerli tarihe dön</string>
+    <string name="btn_period_details">Adet detayları</string>
+    <string name="btn_period_details_save_pdf">PDF olarak kaydet</string>
+    <string name="period_details_pdf_file_name">adet_detaylari_%1$s.pdf</string>
+    <string name="period_details_pdf_saved">PDF başarıyla kaydedildi.</string>
+    <string name="period_details_pdf_save_failed">PDF kaydedilemedi.</string>
+    <string name="period_details_pdf_no_data">Dışa aktarılacak adet kaydı yok.</string>
+    <string name="period_details_pdf_summary_title">Özet</string>
+    <string name="period_details_pdf_summary_entries">Kayıtlar: %1$d</string>
+    <string name="period_details_pdf_summary_starts">Adet başlangıçları: %1$d</string>
+    <string name="period_details_pdf_summary_ends">Adet bitişleri: %1$d</string>
+    <string name="period_details_pdf_summary_pain_days">Ağrılı günler: %1$d</string>
+    <string name="period_details_pdf_created_at">Oluşturulma: %1$s</string>
+    <string name="period_details_pdf_page_number">Sayfa %1$d</string>
+    <string name="period_details_pdf_legend_title">Gösterge</string>
+    <string name="period_details_pdf_legend_pain_badge">Ağrı / belirti rozeti</string>
+    <string name="period_details_pdf_legend_symptom_badge">Belirti rozeti</string>
+    <string name="period_details_pdf_anomalies_title">Öne çıkanlar</string>
+    <string name="period_details_pdf_anomalies_longest_streak">En uzun seri: %1$d gün</string>
+    <string name="period_details_pdf_anomalies_symptom_days">Belirti olan günler: %1$d</string>
+    <string name="period_details_pdf_anomalies_strong_pain_days">Şiddetli ağrılı günler: %1$d</string>
+    <string name="period_details_pdf_notes_title">Notlar</string>
+    <string name="period_details_range_label">Zaman aralığı</string>
+    <string name="period_details_range_3m">3 ay</string>
+    <string name="period_details_range_6m">6 ay</string>
+    <string name="period_details_range_12m">12 ay</string>
+    <string name="period_details_range_all">Tümü</string>
+    <string name="period_details_range_between">%1$s - %2$s</string>
+    <string name="period_details_empty">Bu aralıkta adet kaydı yok.</string>
     <string name="period_modal_title_for_date">Adet kaydı: %1$s</string>
     <string name="period_modal_period_day">Adet günü</string>
     <string name="period_modal_intensity_title">Kanama yoğunluğu</string>
@@ -584,13 +612,13 @@
     <string name="tour_title_settings_update">Güncellemeler</string>
     <string name="tour_body_period_entry">Adet takibini eklemek veya düzenlemek için bir güne dokunun. Düzenleme yalnızca halkasız hafta ve çevresindeki ±4 gün içinde mümkündür.</string>
     <string name="tour_body_period_modal">Adet kaydında adet günü, kanama yoğunluğu, ağrı seviyesi (hafif/orta/şiddetli), ek belirtiler ve isteğe bağlı başlangıç/bitiş işaretleyicilerini ayarlayabilirsin.\nO güne ait kayıtlı verileri silmek için \"Kaydı temizle\" seçeneğini kullan.</string>
-    <string name="tour_body_period_indicators">Adet günleri takvimde yoğunluk gölgelendirmesi, gösterge noktaları ve S/E işaretleriyle doğrudan gösterilir. Böylece aylık görünüm okunabilir kalır.</string>
+    <string name="tour_body_period_indicators">Adet günleri takvimde yoğunluk gölgelendirmesi, gösterge noktaları ve S/E işaretleriyle doğrudan gösterilir.\nAdet kaydı olan aylarda ayrıca Adet Detayları ekranını açıp biçimlendirilmiş bir PDF raporu dışa aktarabilirsin.</string>
     <string name="tour_title_period_entry">Adet kaydı</string>
     <string name="tour_title_period_modal">Adet seçenekleri</string>
     <string name="tour_title_period_indicators">Adet göstergeleri</string>
 
     <!-- Welcome -->
-    <string name="welcome_features_body">- 📅 Takma, çıkarma ve halkasız günlerin takvim görünümü\n- 🩸 Yoğunluk ve belirti girişleriyle adet takibi\n- 🔔 Özelleştirilebilir hatırlatıcılar\n- 📝 Notlar ve döngü geçmişi\n- 🎨 Arka plan, renkler, dil ve widget\'lar için kişiselleştirme\n- 💾 Yedekleme ve geri yükleme</string>
+    <string name="welcome_features_body">- 📅 Takma, çıkarma ve halkasız günlerin takvim görünümü\n- 🩸 Yoğunluk ve belirti girişleriyle adet takibi\n- 📄 Aralık görünümü ve PDF dışa aktarma ile Adet Detayları\n- 🔔 Özelleştirilebilir hatırlatıcılar\n- 📝 Notlar ve döngü geçmişi\n- 🎨 Arka plan, renkler, dil ve widget\'lar için kişiselleştirme\n- 💾 Yedekleme ve geri yükleme</string>
     <string name="welcome_features_title">Bu uygulama ne yapar?</string>
     <string name="welcome_info_note">Uygulama bilgilerini Ayarlar\'dan istediğiniz zaman açabilirsiniz.</string>
     <string name="welcome_intro">Kişisel tarihlerin, hatırlatıcıların ve notlarınla doğum kontrol halkası döngünü ve adet takibini kontrol altında tut.</string>
@@ -601,4 +629,9 @@
     <string name="welcome_start_tour">Turu başlat</string>
     <string name="welcome_subtitle">MyRingReminder</string>
     <string name="welcome_title">Hoş Geldiniz 👋</string>
+    <string name="period_details_pdf_notification_channel_name">PDF dışa aktarımları</string>
+    <string name="period_details_pdf_notification_channel_desc">Kaydedilen dönem detayı PDF\'leri için bildirimler.</string>
+    <string name="period_details_pdf_notification_title">PDF kaydedildi</string>
+    <string name="period_details_pdf_notification_text">Dışa aktarılan dönem detayları PDF\'sini açmak için dokun.</string>
+    <string name="period_details_pdf_open_action">PDF\'yi aç</string>
 </resources>
