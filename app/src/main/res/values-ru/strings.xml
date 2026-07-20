@@ -351,6 +351,14 @@
 
     <!-- Cycles -->
     <string name="cycles_clear_history">Очистить историю</string>
+    <string name="cycles_empty">История циклов пока пуста.</string>
+    <string name="cycles_rebuild_history">Восстановить историю</string>
+    <string name="cycles_rebuild_history_confirm">Восстановить</string>
+    <string name="cycles_rebuild_history_message">Заново создать историю циклов на основе сохранённой даты вставки и настроек цикла.</string>
+    <string name="cycles_rebuild_history_title">Восстановить историю циклов?</string>
+    <string name="cycles_sort_label">Сортировка</string>
+    <string name="cycles_sort_newest">Сначала новые</string>
+    <string name="cycles_sort_oldest">Сначала старые</string>
     <string name="cycles_status_inserted">Кольцо вставлено</string>
     <string name="cycles_status_removed">Кольцо извлечено</string>
     <string name="cycles_title">История циклов</string>

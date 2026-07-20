@@ -351,6 +351,14 @@
 
     <!-- Cycles -->
     <string name="cycles_clear_history">清除历史记录</string>
+    <string name="cycles_empty">暂无周期历史记录。</string>
+    <string name="cycles_rebuild_history">重建历史记录</string>
+    <string name="cycles_rebuild_history_confirm">重建</string>
+    <string name="cycles_rebuild_history_message">根据已保存的置入日期和周期设置重新创建周期历史记录。</string>
+    <string name="cycles_rebuild_history_title">重建周期历史记录？</string>
+    <string name="cycles_sort_label">排序</string>
+    <string name="cycles_sort_newest">最新优先</string>
+    <string name="cycles_sort_oldest">最早优先</string>
     <string name="cycles_status_inserted">已置入圆环</string>
     <string name="cycles_status_removed">已取出圆环</string>
     <string name="cycles_title">周期历史</string>

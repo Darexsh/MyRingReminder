@@ -351,6 +351,14 @@
 
     <!-- Cycles -->
     <string name="cycles_clear_history">Cancella cronologia</string>
+    <string name="cycles_empty">Nessuna cronologia cicli disponibile al momento.</string>
+    <string name="cycles_rebuild_history">Ricostruisci cronologia</string>
+    <string name="cycles_rebuild_history_confirm">Ricostruisci</string>
+    <string name="cycles_rebuild_history_message">Ricrea la cronologia dei cicli dalla data di inserimento salvata e dalle impostazioni del ciclo.</string>
+    <string name="cycles_rebuild_history_title">Ricostruire la cronologia dei cicli?</string>
+    <string name="cycles_sort_label">Ordina</string>
+    <string name="cycles_sort_newest">Più recenti prima</string>
+    <string name="cycles_sort_oldest">Più vecchi prima</string>
     <string name="cycles_status_inserted">Anello inserito</string>
     <string name="cycles_status_removed">Anello rimosso</string>
     <string name="cycles_title">Cronologia cicli</string>

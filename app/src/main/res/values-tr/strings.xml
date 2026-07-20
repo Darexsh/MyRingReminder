@@ -351,6 +351,14 @@
 
     <!-- Cycles -->
     <string name="cycles_clear_history">Geçmişi temizle</string>
+    <string name="cycles_empty">Henüz döngü geçmişi yok.</string>
+    <string name="cycles_rebuild_history">Geçmişi yeniden oluştur</string>
+    <string name="cycles_rebuild_history_confirm">Yeniden oluştur</string>
+    <string name="cycles_rebuild_history_message">Kaydedilmiş yerleştirme tarihinden ve döngü ayarlarından döngü geçmişini yeniden oluştur.</string>
+    <string name="cycles_rebuild_history_title">Döngü geçmişi yeniden oluşturulsun mu?</string>
+    <string name="cycles_sort_label">Sıralama</string>
+    <string name="cycles_sort_newest">Önce en yeni</string>
+    <string name="cycles_sort_oldest">Önce en eski</string>
     <string name="cycles_status_inserted">Halka yerleştirildi</string>
     <string name="cycles_status_removed">Halka çıkarıldı</string>
     <string name="cycles_title">Döngü geçmişi</string>

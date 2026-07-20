@@ -29,6 +29,7 @@ public class SettingsRepository {
     private static final String KEY_BACKGROUND_BLUR_DASHBOARD_PERCENT = "background_blur_dashboard_percent";
     private static final String KEY_BACKGROUND_BLUR_OTHERS_PERCENT = "background_blur_others_percent";
     private static final String KEY_CYCLE_HISTORY = "cycle_history";
+    private static final String KEY_CYCLE_HISTORY_CLEARED = "cycle_history_cleared";
     private static final String KEY_CALENDAR_PAST_MONTHS = "calendar_past_months";
     private static final String KEY_CALENDAR_FUTURE_YEARS = "calendar_future_years";
     private static final String KEY_CALENDAR_PAST_AMOUNT = "calendar_past_amount";
@@ -218,6 +219,19 @@ public class SettingsRepository {
         Gson gson = new Gson();
         String json = gson.toJson(cycleHistory);
         sharedPreferences.edit().putString(KEY_CYCLE_HISTORY, json).apply();
+    }
+
+    public void clearCycleHistory() {
+        saveCycleHistory(new ArrayList<>());
+        sharedPreferences.edit().putBoolean(KEY_CYCLE_HISTORY_CLEARED, true).apply();
+    }
+
+    public boolean isCycleHistoryCleared() {
+        return sharedPreferences.getBoolean(KEY_CYCLE_HISTORY_CLEARED, false);
+    }
+
+    public void setCycleHistoryCleared(boolean cleared) {
+        sharedPreferences.edit().putBoolean(KEY_CYCLE_HISTORY_CLEARED, cleared).apply();
     }
 
     public void pruneCycleHistoryFrom(long cycleStartMillis) {

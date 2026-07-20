@@ -351,6 +351,14 @@
 
     <!-- Cycles -->
     <string name="cycles_clear_history">Effacer l\'historique</string>
+    <string name="cycles_empty">Aucun historique de cycle pour le moment.</string>
+    <string name="cycles_rebuild_history">Reconstruire l\'historique</string>
+    <string name="cycles_rebuild_history_confirm">Reconstruire</string>
+    <string name="cycles_rebuild_history_message">Recréer l\'historique des cycles à partir de la date d\'insertion enregistrée et des paramètres du cycle.</string>
+    <string name="cycles_rebuild_history_title">Reconstruire l\'historique des cycles ?</string>
+    <string name="cycles_sort_label">Tri</string>
+    <string name="cycles_sort_newest">Plus récents d\'abord</string>
+    <string name="cycles_sort_oldest">Plus anciens d\'abord</string>
     <string name="cycles_status_inserted">Anneau inséré</string>
     <string name="cycles_status_removed">Anneau retiré</string>
     <string name="cycles_title">Historique des cycles</string>

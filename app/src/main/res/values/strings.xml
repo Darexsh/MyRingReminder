@@ -351,6 +351,14 @@
 
     <!-- Cycles -->
     <string name="cycles_clear_history">Clear history</string>
+    <string name="cycles_empty">No cycle history available yet.</string>
+    <string name="cycles_rebuild_history">Create history</string>
+    <string name="cycles_rebuild_history_confirm">Rebuild</string>
+    <string name="cycles_rebuild_history_message">Recreate cycle history from the saved insertion date and cycle settings.</string>
+    <string name="cycles_rebuild_history_title">Rebuild cycle history?</string>
+    <string name="cycles_sort_label">Sort</string>
+    <string name="cycles_sort_newest">Newest first</string>
+    <string name="cycles_sort_oldest">Oldest first</string>
     <string name="cycles_status_inserted">Ring inserted</string>
     <string name="cycles_status_removed">Ring removed</string>
     <string name="cycles_title">Cycle history</string>

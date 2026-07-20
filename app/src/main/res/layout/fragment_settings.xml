@@ -623,7 +623,7 @@
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
         android:orientation="vertical"
-        android:background="#1F1F1F"
+        android:background="@drawable/rounded_background"
         android:paddingTop="12dp"
         android:paddingStart="12dp"
         android:paddingEnd="12dp"

@@ -351,6 +351,14 @@
 
     <!-- Cycles -->
     <string name="cycles_clear_history">Historie löschen</string>
+    <string name="cycles_empty">Noch keine Zyklus-Historie vorhanden.</string>
+    <string name="cycles_rebuild_history">Historie erstellen</string>
+    <string name="cycles_rebuild_history_confirm">Neu aufbauen</string>
+    <string name="cycles_rebuild_history_message">Zyklus-Historie aus dem gespeicherten Einsetzdatum und den Zyklus-Einstellungen erneut erstellen.</string>
+    <string name="cycles_rebuild_history_title">Zyklus-Historie neu aufbauen?</string>
+    <string name="cycles_sort_label">Sortierung</string>
+    <string name="cycles_sort_newest">Neueste zuerst</string>
+    <string name="cycles_sort_oldest">Älteste zuerst</string>
     <string name="cycles_status_inserted">Ring eingesetzt</string>
     <string name="cycles_status_removed">Ring entfernt</string>
     <string name="cycles_title">Zyklus-Historie</string>

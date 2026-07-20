@@ -351,6 +351,14 @@
 
     <!-- Cycles -->
     <string name="cycles_clear_history">Borrar historial</string>
+    <string name="cycles_empty">Aún no hay historial de ciclos.</string>
+    <string name="cycles_rebuild_history">Reconstruir historial</string>
+    <string name="cycles_rebuild_history_confirm">Reconstruir</string>
+    <string name="cycles_rebuild_history_message">Recrear el historial de ciclos a partir de la fecha de inserción guardada y la configuración del ciclo.</string>
+    <string name="cycles_rebuild_history_title">¿Reconstruir historial de ciclos?</string>
+    <string name="cycles_sort_label">Ordenar</string>
+    <string name="cycles_sort_newest">Más recientes primero</string>
+    <string name="cycles_sort_oldest">Más antiguos primero</string>
     <string name="cycles_status_inserted">Anillo insertado</string>
     <string name="cycles_status_removed">Anillo retirado</string>
     <string name="cycles_title">Historial de ciclos</string>

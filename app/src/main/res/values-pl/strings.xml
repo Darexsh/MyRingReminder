@@ -351,6 +351,14 @@
 
     <!-- Cycles -->
     <string name="cycles_clear_history">Wyczyść historię</string>
+    <string name="cycles_empty">Brak historii cykli.</string>
+    <string name="cycles_rebuild_history">Odbuduj historię</string>
+    <string name="cycles_rebuild_history_confirm">Odbuduj</string>
+    <string name="cycles_rebuild_history_message">Odtwórz historię cykli na podstawie zapisanej daty założenia i ustawień cyklu.</string>
+    <string name="cycles_rebuild_history_title">Odbudować historię cykli?</string>
+    <string name="cycles_sort_label">Sortowanie</string>
+    <string name="cycles_sort_newest">Najnowsze najpierw</string>
+    <string name="cycles_sort_oldest">Najstarsze najpierw</string>
     <string name="cycles_status_inserted">Pierścień założony</string>
     <string name="cycles_status_removed">Pierścień zdjęty</string>
     <string name="cycles_title">Historia cykli</string>

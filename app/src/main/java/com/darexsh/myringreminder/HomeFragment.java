@@ -297,6 +297,7 @@ public class HomeFragment extends Fragment {
 
             // Retrieve cycle history from preferences
             List<Cycle> cycleHistory = viewModel.getRepository().getCycleHistory();
+            boolean cycleHistoryCleared = viewModel.getRepository().isCycleHistoryCleared();
             Calendar tempStartDate = (Calendar) startDate.clone();
             Calendar tempRemovalDate = (Calendar) removalDate.clone();
             Calendar tempReinsertionDate = (Calendar) reinsertionDate.clone();
@@ -308,7 +309,9 @@ public class HomeFragment extends Fragment {
             int count = 0;
 
             // Calculate cycles until today if last reinsertion date is in the past
-            while (tempReinsertionDate.getTimeInMillis() <= systemNow.getTimeInMillis() && count < maxCycles) {
+            while (!cycleHistoryCleared
+                    && tempReinsertionDate.getTimeInMillis() <= systemNow.getTimeInMillis()
+                    && count < maxCycles) {
                 if (tempReinsertionDate.getTimeInMillis() > lastSavedReinsertionMillis) {
                     saveCycleToHistory(viewModel, tempStartDate.getTimeInMillis(), tempRemovalDate.getTimeInMillis(), CycleType.INSERTION);
                     saveCycleToHistory(viewModel, tempRemovalDate.getTimeInMillis(), tempReinsertionDate.getTimeInMillis(), CycleType.REMOVAL);
@@ -341,11 +344,11 @@ public class HomeFragment extends Fragment {
             }
 
             // Add phases as soon as each phase ends, even if the app wasn't opened at the exact time.
-            if (systemNow.equals(removalDate) || systemNow.after(removalDate)) {
+            if (!cycleHistoryCleared && (systemNow.equals(removalDate) || systemNow.after(removalDate))) {
                 saveCycleToHistory(viewModel, startDate.getTimeInMillis(),
                         removalDate.getTimeInMillis(), CycleType.INSERTION);
             }
-            if (systemNow.equals(reinsertionDate) || systemNow.after(reinsertionDate)) {
+            if (!cycleHistoryCleared && (systemNow.equals(reinsertionDate) || systemNow.after(reinsertionDate))) {
                 saveCycleToHistory(viewModel, removalDate.getTimeInMillis(),
                         reinsertionDate.getTimeInMillis(), CycleType.REMOVAL);
             }
