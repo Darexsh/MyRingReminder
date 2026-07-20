@@ -299,7 +299,14 @@
     <string name="period_details_range_12m">12 miesięcy</string>
     <string name="period_details_range_all">Wszystko</string>
     <string name="period_details_range_between">%1$s - %2$s</string>
+    <string name="period_details_filter_label">Szukaj / filtruj</string>
+    <string name="period_details_search_hint">Szukaj według daty, objawu, bólu lub znacznika</string>
+    <string name="period_details_filter_symptoms">Objawy</string>
+    <string name="period_details_filter_pain">Ból</string>
+    <string name="period_details_filter_start">Początek</string>
+    <string name="period_details_filter_end">Koniec</string>
     <string name="period_details_empty">Brak wpisów okresu w tym zakresie.</string>
+    <string name="period_details_empty_filtered">Brak wpisów pasujących do bieżącego wyszukiwania lub filtra.</string>
     <string name="period_modal_title_for_date">Wpis okresu: %1$s</string>
     <string name="period_modal_period_day">Dzień okresu</string>
     <string name="period_modal_intensity_title">Intensywność krwawienia</string>

@@ -44,6 +44,8 @@
 * 🩸 **Period Tracking (Ring-Free Window)**: Tap calendar days during ring-free week (and ±4 days) to add/edit period entries with bleeding intensity, pain level (light/medium/strong), additional symptoms (for example malaise, nausea, fatigue, dizziness, diarrhea), and optional start/end markers.
 
 * 📄 **Period Details & PDF Export**: For months with period entries, open a dedicated **Period Details** view with range filters (3/6/12 months or all), grouped timeline, and export a formatted PDF report. After saving, a heads-up notification appears and opens the saved PDF directly when tapped.
+
+* 🔎 **Search / Filter in Period Details**: Narrow period entries live by search text and quick filters such as symptoms, pain, start, and end markers.
     
 * 🔔 **Reminders**: Custom reminder lead times for insertion/removal, with automatic rescheduling.
     
@@ -81,6 +83,26 @@
 
 * 🛠️ **Debug View**: Long‑press settings title for detailed diagnostic information.
     
+
+* * *
+
+📝 Planned Ideas
+----------------
+
+* ↕️ **Better Sorting / Grouping in History**: Improve browsing in cycle history and period details with clearer grouping or sorting options.
+
+* 🧩 **Additional Widget Variants**: Add more view-only widget layouts such as a minimal widget, a discreet text-focused widget, or a larger status-first widget.
+
+* 🙈 **Privacy Mode**: Offer more discreet wording for widgets and notifications for users who prefer less explicit text on screen.
+
+* 📄 **PDF Export Refinement**: Polish the period details export layout with improved spacing, alignment, and visual hierarchy while keeping the current structured design.
+
+* 🧾 **Cycle History Summary Header**: Add a compact summary at the top of the history screen, for example total tracked cycles or latest insertion/removal information.
+
+* 🏠 **Small Home Screen Refinements**: Improve clarity on the home screen with minor display refinements while keeping it automatic and view-only.
+
+* 📅 **Keep Calendar Lean**: Avoid adding more permanent controls directly to the calendar view to prevent visual clutter.
+
 
 * * *
 

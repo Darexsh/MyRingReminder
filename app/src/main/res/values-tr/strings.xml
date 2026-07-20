@@ -299,7 +299,14 @@
     <string name="period_details_range_12m">12 ay</string>
     <string name="period_details_range_all">Tümü</string>
     <string name="period_details_range_between">%1$s - %2$s</string>
+    <string name="period_details_filter_label">Ara / filtrele</string>
+    <string name="period_details_search_hint">Tarih, belirti, ağrı veya işaretleyiciye göre ara</string>
+    <string name="period_details_filter_symptoms">Belirtiler</string>
+    <string name="period_details_filter_pain">Ağrı</string>
+    <string name="period_details_filter_start">Başlangıç</string>
+    <string name="period_details_filter_end">Bitiş</string>
     <string name="period_details_empty">Bu aralıkta adet kaydı yok.</string>
+    <string name="period_details_empty_filtered">Geçerli arama veya filtreyle eşleşen adet kaydı yok.</string>
     <string name="period_modal_title_for_date">Adet kaydı: %1$s</string>
     <string name="period_modal_period_day">Adet günü</string>
     <string name="period_modal_intensity_title">Kanama yoğunluğu</string>

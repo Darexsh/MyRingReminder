@@ -23,7 +23,8 @@
 
             <RelativeLayout
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content">
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="16dp">
 
                 <TextView
                     android:id="@+id/tv_period_details_title"
@@ -45,6 +46,84 @@
             </RelativeLayout>
 
             <TextView
+                android:id="@+id/tv_period_details_filter_label"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/period_details_filter_label"
+                android:textSize="14sp"
+                android:textStyle="bold" />
+
+            <EditText
+                android:id="@+id/et_period_details_search"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="4dp"
+                android:layout_marginBottom="8dp"
+                android:background="@drawable/bg_period_details_search"
+                android:ellipsize="end"
+                android:gravity="center_vertical"
+                android:hint="@string/period_details_search_hint"
+                android:imeOptions="actionDone"
+                android:inputType="text"
+                android:maxLines="1"
+                android:minHeight="44dp"
+                android:paddingStart="14dp"
+                android:paddingTop="8dp"
+                android:paddingEnd="14dp"
+                android:paddingBottom="8dp"
+                android:scrollHorizontally="true"
+                android:singleLine="true"
+                android:textSize="14sp" />
+
+            <com.google.android.material.chip.ChipGroup
+                android:id="@+id/chip_group_period_filters"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="16dp"
+                app:singleLine="false">
+
+                <com.google.android.material.chip.Chip
+                    android:id="@+id/chip_period_filter_symptoms"
+                    style="@style/Widget.MaterialComponents.Chip.Choice"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:checkable="true"
+                    android:text="@string/period_details_filter_symptoms" />
+
+                <com.google.android.material.chip.Chip
+                    android:id="@+id/chip_period_filter_pain"
+                    style="@style/Widget.MaterialComponents.Chip.Choice"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:checkable="true"
+                    android:text="@string/period_details_filter_pain" />
+
+                <com.google.android.material.chip.Chip
+                    android:id="@+id/chip_period_filter_start"
+                    style="@style/Widget.MaterialComponents.Chip.Choice"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:checkable="true"
+                    android:text="@string/period_details_filter_start" />
+
+                <com.google.android.material.chip.Chip
+                    android:id="@+id/chip_period_filter_end"
+                    style="@style/Widget.MaterialComponents.Chip.Choice"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:checkable="true"
+                    android:text="@string/period_details_filter_end" />
+            </com.google.android.material.chip.ChipGroup>
+
+            <TextView
+                android:id="@+id/tv_period_details_range_label"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/period_details_range_label"
+                android:textSize="14sp"
+                android:textStyle="bold" />
+
+            <TextView
                 android:id="@+id/tv_period_details_month"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -52,20 +131,11 @@
                 android:layout_marginBottom="8dp"
                 android:textSize="14sp" />
 
-            <TextView
-                android:id="@+id/tv_period_details_range_label"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="@string/period_details_range_label"
-                android:textSize="13sp"
-                android:textStyle="bold" />
-
             <com.google.android.material.chip.ChipGroup
                 android:id="@+id/chip_group_period_range"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="6dp"
-                android:layout_marginBottom="12dp"
+                android:layout_marginBottom="16dp"
                 app:singleSelection="true"
                 app:selectionRequired="true">
 
@@ -112,6 +182,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="vertical" />
+
         </LinearLayout>
     </ScrollView>
 

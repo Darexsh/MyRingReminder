@@ -299,7 +299,14 @@
     <string name="period_details_range_12m">12 meses</string>
     <string name="period_details_range_all">Tudo</string>
     <string name="period_details_range_between">%1$s - %2$s</string>
+    <string name="period_details_filter_label">Buscar / filtrar</string>
+    <string name="period_details_search_hint">Buscar por data, sintoma, dor ou marcador</string>
+    <string name="period_details_filter_symptoms">Sintomas</string>
+    <string name="period_details_filter_pain">Dor</string>
+    <string name="period_details_filter_start">Início</string>
+    <string name="period_details_filter_end">Fim</string>
     <string name="period_details_empty">Sem registros de período neste intervalo.</string>
+    <string name="period_details_empty_filtered">Nenhum registro corresponde à busca ou ao filtro atual.</string>
     <string name="period_modal_title_for_date">Registro menstrual: %1$s</string>
     <string name="period_modal_period_day">Dia da menstruação</string>
     <string name="period_modal_intensity_title">Intensidade do sangramento</string>

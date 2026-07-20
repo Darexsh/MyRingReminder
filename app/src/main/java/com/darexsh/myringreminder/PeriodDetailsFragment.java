@@ -3,6 +3,7 @@ package com.darexsh.myringreminder;
 import android.content.ContentResolver;
 import android.content.ClipData;
 import android.content.Intent;
+import android.content.Context;
 import android.app.NotificationChannel;
 import android.app.NotificationManager;
 import android.app.PendingIntent;
@@ -14,11 +15,17 @@ import android.graphics.pdf.PdfDocument;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.view.LayoutInflater;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.inputmethod.InputMethodManager;
+import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.LinearLayout;
+import android.widget.ScrollView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -34,6 +41,7 @@ import androidx.lifecycle.ViewModelProvider;
 import androidx.core.content.ContextCompat;
 import com.google.android.material.button.MaterialButton;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
+import com.google.android.material.chip.Chip;
 import com.google.android.material.chip.ChipGroup;
 
 import java.io.IOException;
@@ -56,6 +64,11 @@ public class PeriodDetailsFragment extends Fragment {
     private int anchorYear;
     private int anchorMonthOneBased;
     private int selectedRangeMonths = 3; // -1 = all
+    private String searchQuery = "";
+    private boolean filterSymptomsOnly = false;
+    private boolean filterPainOnly = false;
+    private boolean filterStartOnly = false;
+    private boolean filterEndOnly = false;
     private final List<DisplayEntry> visibleEntries = new ArrayList<>();
     private String visibleRangeLabel = "";
     private ActivityResultLauncher<String> createPdfLauncher;
@@ -107,10 +120,19 @@ public class PeriodDetailsFragment extends Fragment {
         TextView title = view.findViewById(R.id.tv_period_details_title);
         TextView month = view.findViewById(R.id.tv_period_details_month);
         TextView emptyView = view.findViewById(R.id.tv_period_details_empty);
+        TextView rangeLabel = view.findViewById(R.id.tv_period_details_range_label);
+        TextView filterLabel = view.findViewById(R.id.tv_period_details_filter_label);
         ImageButton closeButton = view.findViewById(R.id.btn_close_period_details);
         MaterialButton savePdfButton = view.findViewById(R.id.btn_period_details_save_pdf);
         LinearLayout listContainer = view.findViewById(R.id.layout_period_details_list);
+        ScrollView scrollView = view.findViewById(R.id.scroll_period_details);
         ChipGroup rangeGroup = view.findViewById(R.id.chip_group_period_range);
+        ChipGroup filterGroup = view.findViewById(R.id.chip_group_period_filters);
+        EditText searchField = view.findViewById(R.id.et_period_details_search);
+        Chip symptomsChip = view.findViewById(R.id.chip_period_filter_symptoms);
+        Chip painChip = view.findViewById(R.id.chip_period_filter_pain);
+        Chip startChip = view.findViewById(R.id.chip_period_filter_start);
+        Chip endChip = view.findViewById(R.id.chip_period_filter_end);
 
         if (title != null) {
             title.setText(R.string.btn_period_details);
@@ -137,8 +159,100 @@ public class PeriodDetailsFragment extends Fragment {
                 populateList(listContainer, emptyView, month);
             });
         }
-        applyAccentColor(title, closeButton, savePdfButton);
+        if (filterGroup != null) {
+            filterGroup.setOnCheckedStateChangeListener((group, checkedIds) -> {
+                filterSymptomsOnly = symptomsChip != null && symptomsChip.isChecked();
+                filterPainOnly = painChip != null && painChip.isChecked();
+                filterStartOnly = startChip != null && startChip.isChecked();
+                filterEndOnly = endChip != null && endChip.isChecked();
+                populateList(listContainer, emptyView, month);
+            });
+        }
+        if (searchField != null) {
+            searchField.addTextChangedListener(new TextWatcher() {
+                @Override
+                public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+                }
+
+                @Override
+                public void onTextChanged(CharSequence s, int start, int before, int count) {
+                }
+
+                @Override
+                public void afterTextChanged(Editable s) {
+                    searchQuery = s != null ? s.toString().trim() : "";
+                    populateList(listContainer, emptyView, month);
+                }
+            });
+            setupOutsideTapDismiss(view, scrollView, listContainer, rangeGroup, filterGroup,
+                    title, month, rangeLabel, filterLabel, emptyView, closeButton, savePdfButton, searchField);
+        }
+        applyAccentColor(title, rangeLabel, filterLabel, closeButton, savePdfButton, searchField);
         return view;
+    }
+
+    private void setupOutsideTapDismiss(@NonNull View root,
+                                        @Nullable ScrollView scrollView,
+                                        @Nullable LinearLayout listContainer,
+                                        @Nullable ChipGroup rangeGroup,
+                                        @Nullable ChipGroup filterGroup,
+                                        @Nullable TextView title,
+                                        @Nullable TextView month,
+                                        @Nullable TextView rangeLabel,
+                                        @Nullable TextView filterLabel,
+                                        @Nullable TextView emptyView,
+                                        @Nullable ImageButton closeButton,
+                                        @Nullable MaterialButton savePdfButton,
+                                        @NonNull EditText searchField) {
+        View.OnTouchListener listener = (v, event) -> {
+            if (event.getAction() == MotionEvent.ACTION_DOWN) {
+                dismissSearchInput(searchField);
+            }
+            return false;
+        };
+        root.setOnTouchListener(listener);
+        if (scrollView != null) {
+            scrollView.setOnTouchListener(listener);
+        }
+        if (listContainer != null) {
+            listContainer.setOnTouchListener(listener);
+        }
+        if (rangeGroup != null) {
+            rangeGroup.setOnTouchListener(listener);
+        }
+        if (filterGroup != null) {
+            filterGroup.setOnTouchListener(listener);
+        }
+        if (title != null) {
+            title.setOnTouchListener(listener);
+        }
+        if (month != null) {
+            month.setOnTouchListener(listener);
+        }
+        if (rangeLabel != null) {
+            rangeLabel.setOnTouchListener(listener);
+        }
+        if (filterLabel != null) {
+            filterLabel.setOnTouchListener(listener);
+        }
+        if (emptyView != null) {
+            emptyView.setOnTouchListener(listener);
+        }
+        if (closeButton != null) {
+            closeButton.setOnTouchListener(listener);
+        }
+        if (savePdfButton != null) {
+            savePdfButton.setOnTouchListener(listener);
+        }
+    }
+
+    private void dismissSearchInput(@NonNull EditText searchField) {
+        searchField.clearFocus();
+        Context context = requireContext();
+        InputMethodManager imm = (InputMethodManager) context.getSystemService(Context.INPUT_METHOD_SERVICE);
+        if (imm != null) {
+            imm.hideSoftInputFromWindow(searchField.getWindowToken(), 0);
+        }
     }
 
     private void closeToCalendar() {
@@ -200,7 +314,7 @@ public class PeriodDetailsFragment extends Fragment {
         }
 
         Map<String, PeriodDayEntry> allEntries = viewModel.getRepository().getAllPeriodDayEntries();
-        List<Map.Entry<String, PeriodDayEntry>> monthEntries = new ArrayList<>();
+        List<Map.Entry<String, PeriodDayEntry>> rangeEntries = new ArrayList<>();
         for (Map.Entry<String, PeriodDayEntry> item : allEntries.entrySet()) {
             PeriodDayEntry entry = item.getValue();
             if (entry == null || !entry.isPeriodDay()) {
@@ -212,6 +326,18 @@ public class PeriodDetailsFragment extends Fragment {
             }
             long dayMillis = day.getTimeInMillis();
             if (dayMillis >= rangeStart.getTimeInMillis() && dayMillis <= rangeEnd.getTimeInMillis()) {
+                rangeEntries.add(item);
+            }
+        }
+
+        List<Map.Entry<String, PeriodDayEntry>> monthEntries = new ArrayList<>();
+        for (Map.Entry<String, PeriodDayEntry> item : rangeEntries) {
+            PeriodDayEntry entry = item.getValue();
+            Calendar day = parseDateKey(item.getKey());
+            if (entry == null || day == null) {
+                continue;
+            }
+            if (matchesActiveFilters(day, entry)) {
                 monthEntries.add(item);
             }
         }
@@ -235,6 +361,9 @@ public class PeriodDetailsFragment extends Fragment {
         });
         if (monthEntries.isEmpty()) {
             if (emptyView != null) {
+                emptyView.setText(rangeEntries.isEmpty()
+                        ? R.string.period_details_empty
+                        : R.string.period_details_empty_filtered);
                 emptyView.setVisibility(View.VISIBLE);
             }
             return;
@@ -271,6 +400,53 @@ public class PeriodDetailsFragment extends Fragment {
             container.addView(card);
             visibleEntries.add(new DisplayEntry((Calendar) day.clone(), entry, currentMonthHeader));
         }
+    }
+
+    private boolean matchesActiveFilters(@NonNull Calendar day, @NonNull PeriodDayEntry entry) {
+        if (filterSymptomsOnly && !(entry.hasAnyAdditionalSymptoms() || entry.hasIllness())) {
+            return false;
+        }
+        if (filterPainOnly && (entry.getPainSeverity() == null || entry.getPainSeverity() == PainSeverity.NONE)) {
+            return false;
+        }
+        if (filterStartOnly && !entry.isStart()) {
+            return false;
+        }
+        if (filterEndOnly && !entry.isEnd()) {
+            return false;
+        }
+        if (searchQuery.isEmpty()) {
+            return true;
+        }
+        String normalizedQuery = normalizeForSearch(searchQuery);
+        String searchableText = buildSearchableText(day, entry);
+        return searchableText.contains(normalizedQuery);
+    }
+
+    @NonNull
+    private String buildSearchableText(@NonNull Calendar day, @NonNull PeriodDayEntry entry) {
+        SimpleDateFormat dateFormat = new SimpleDateFormat("dd.MM.yyyy", Locale.getDefault());
+        SimpleDateFormat monthHeaderFormat = new SimpleDateFormat("MMMM yyyy", Locale.getDefault());
+        String text = dateFormat.format(day.getTime())
+                + " "
+                + monthHeaderFormat.format(day.getTime())
+                + " "
+                + intensityLabel(entry.getIntensity())
+                + " "
+                + painLabel(entry.getPainSeverity())
+                + " "
+                + symptomsLabel(entry)
+                + " "
+                + markersLabel(entry);
+        return normalizeForSearch(text);
+    }
+
+    @NonNull
+    private String normalizeForSearch(@Nullable String value) {
+        if (value == null) {
+            return "";
+        }
+        return value.toLowerCase(Locale.getDefault()).trim();
     }
 
     private String buildRangeLabel(@NonNull Calendar start, @NonNull Calendar end) {
@@ -901,8 +1077,11 @@ public class PeriodDetailsFragment extends Fragment {
     }
 
     private void applyAccentColor(@Nullable TextView title,
+                                  @Nullable TextView rangeLabel,
+                                  @Nullable TextView filterLabel,
                                   @Nullable ImageButton closeButton,
-                                  @Nullable MaterialButton savePdfButton) {
+                                  @Nullable MaterialButton savePdfButton,
+                                  @Nullable EditText searchField) {
         if (viewModel == null) {
             return;
         }
@@ -912,6 +1091,12 @@ public class PeriodDetailsFragment extends Fragment {
         } else if (title != null) {
             title.setTextColor(Color.WHITE);
         }
+        if (rangeLabel != null && color != null) {
+            rangeLabel.setTextColor(color);
+        }
+        if (filterLabel != null && color != null) {
+            filterLabel.setTextColor(color);
+        }
         if (closeButton != null && color != null) {
             closeButton.setImageTintList(null);
             closeButton.setColorFilter(color, PorterDuff.Mode.SRC_IN);
@@ -920,6 +1105,10 @@ public class PeriodDetailsFragment extends Fragment {
         if (savePdfButton != null && color != null) {
             ButtonColorHelper.applyPrimaryColor(savePdfButton, color);
             savePdfButton.setTextColor(Color.WHITE);
+        }
+        if (searchField != null) {
+            searchField.setTextColor(Color.WHITE);
+            searchField.setHintTextColor(0xFFBDBDBD);
         }
     }
 }

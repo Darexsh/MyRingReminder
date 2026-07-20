@@ -299,7 +299,14 @@
     <string name="period_details_range_12m">12 mesi</string>
     <string name="period_details_range_all">Tutto</string>
     <string name="period_details_range_between">%1$s - %2$s</string>
+    <string name="period_details_filter_label">Cerca / filtra</string>
+    <string name="period_details_search_hint">Cerca per data, sintomo, dolore o indicatore</string>
+    <string name="period_details_filter_symptoms">Sintomi</string>
+    <string name="period_details_filter_pain">Dolore</string>
+    <string name="period_details_filter_start">Inizio</string>
+    <string name="period_details_filter_end">Fine</string>
     <string name="period_details_empty">Nessun inserimento del ciclo in questo intervallo.</string>
+    <string name="period_details_empty_filtered">Nessuna voce corrisponde alla ricerca o al filtro attuale.</string>
     <string name="period_modal_title_for_date">Registrazione ciclo: %1$s</string>
     <string name="period_modal_period_day">Giorno del ciclo</string>
     <string name="period_modal_intensity_title">Intensità del sanguinamento</string>

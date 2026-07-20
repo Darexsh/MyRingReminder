@@ -299,7 +299,14 @@
     <string name="period_details_range_12m">12 месяцев</string>
     <string name="period_details_range_all">Все</string>
     <string name="period_details_range_between">%1$s - %2$s</string>
+    <string name="period_details_filter_label">Поиск / фильтр</string>
+    <string name="period_details_search_hint">Поиск по дате, симптому, боли или метке</string>
+    <string name="period_details_filter_symptoms">Симптомы</string>
+    <string name="period_details_filter_pain">Боль</string>
+    <string name="period_details_filter_start">Начало</string>
+    <string name="period_details_filter_end">Конец</string>
     <string name="period_details_empty">Нет записей о менструации за этот период.</string>
+    <string name="period_details_empty_filtered">Нет записей, соответствующих текущему поиску или фильтру.</string>
     <string name="period_modal_title_for_date">Запись менструации: %1$s</string>
     <string name="period_modal_period_day">День менструации</string>
     <string name="period_modal_intensity_title">Интенсивность кровотечения</string>

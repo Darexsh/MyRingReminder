@@ -84,6 +84,7 @@ import java.io.OutputStream;
 import java.nio.charset.StandardCharsets;
 import java.util.Objects;
 import java.util.concurrent.Executor;
+import android.util.Log;
 
 import com.google.gson.Gson;
 import com.google.gson.JsonArray;
@@ -94,6 +95,7 @@ import com.google.gson.JsonParser;
 // SettingsFragment allows users to configure app settings such as cycle start date, time, length, and background image
 public class SettingsFragment extends Fragment {
     public static final String ARG_OPEN_UPDATE_BACKUP_DIALOG = "open_update_backup_dialog";
+    private static final String TAG = "SettingsNotification";
 
     private MaterialButton btnSetTime;
     private MaterialButton btnSetStartDate;
@@ -3149,11 +3151,19 @@ public class SettingsFragment extends Fragment {
 
         NotificationManager manager = requireContext().getSystemService(NotificationManager.class);
         if (manager != null) {
-            NotificationChannel channel = manager.getNotificationChannel("reminder_channel");
+            NotificationChannel channel = manager.getNotificationChannel(Constants.REMINDER_CHANNEL_ID);
             if (channel != null && channel.getImportance() == NotificationManager.IMPORTANCE_NONE) {
                 showToast(R.string.notification_test_blocked_system);
                 return;
             }
+            Log.d(
+                    TAG,
+                    "Test notification channel="
+                            + Constants.REMINDER_CHANNEL_ID
+                            + ", found=" + (channel != null)
+                            + ", importance=" + (channel != null ? channel.getImportance() : -1)
+                            + ", shouldVibrate=" + (channel != null && channel.shouldVibrate())
+            );
         }
 
         Intent intent = new Intent(requireContext(), NotificationReceiver.class);
