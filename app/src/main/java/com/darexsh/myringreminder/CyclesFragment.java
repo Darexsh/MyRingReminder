@@ -28,6 +28,7 @@ public class CyclesFragment extends Fragment {
     private SharedViewModel viewModel;
     private LinearLayout cycleContainer;
     private TextView emptyView;
+    private TextView summaryCountView;
     private boolean sortNewestFirst = true;
 
     public CyclesFragment() {
@@ -44,6 +45,7 @@ public class CyclesFragment extends Fragment {
         // Initialize UI components
         cycleContainer = view.findViewById(R.id.cycle_container);
         emptyView = view.findViewById(R.id.tv_cycles_empty);
+        summaryCountView = view.findViewById(R.id.tv_cycles_summary_count);
         TextView titleView = view.findViewById(R.id.tv_history_title);
         TextView sortLabel = view.findViewById(R.id.tv_cycles_sort_label);
         MaterialButton rebuildHistoryButton = view.findViewById(R.id.btn_rebuild_history);
@@ -189,6 +191,8 @@ public class CyclesFragment extends Fragment {
             viewModel.getRepository().saveCycleHistory(validCycles);
         }
 
+        updateSummary(validCycles);
+
         // Sort cycles by date in descending order (newest first)
         validCycles.sort((c1, c2) -> sortNewestFirst
                 ? Long.compare(c2.getDateMillis(), c1.getDateMillis())
@@ -301,6 +305,15 @@ public class CyclesFragment extends Fragment {
             header.setTextColor(color);
         }
         return header;
+    }
+
+    private void updateSummary(@NonNull List<Cycle> cycles) {
+        if (summaryCountView == null) {
+            return;
+        }
+
+        int trackedCycles = cycles.size() / 2;
+        summaryCountView.setText(getString(R.string.cycles_summary_count, trackedCycles));
     }
 
     private int dpToPx(int dp) {

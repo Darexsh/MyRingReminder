@@ -97,6 +97,7 @@
     <string name="settings_background_blur_dashboard_title">Tableau de bord</string>
     <string name="settings_background_blur_format">Flou d\'arrière-plan :\nTableau de bord %1$d%%, Autres %2$d%%</string>
     <string name="settings_background_blur_label">Flou d\'arrière-plan</string>
+    <string name="settings_background_blur_value">%1$d%% / %2$d%%</string>
     <string name="settings_background_blur_others">Autres écrans : %1$d%%</string>
     <string name="settings_background_blur_others_title">Autres écrans</string>
     <string name="settings_background_blur_title">Flou d\'arrière-plan</string>
@@ -122,6 +123,10 @@
     <string name="settings_calendar_insertion_color_dialog_title">Choisir la couleur d\'insertion</string>
     <string name="settings_calendar_insertion_color_format">Couleur d\'insertion : %1$s</string>
     <string name="settings_calendar_insertion_color_label">Couleur d\'insertion</string>
+    <string name="settings_label_calendar_range">Plage du calendrier</string>
+    <string name="settings_label_cycle_length">Durée du cycle</string>
+    <string name="settings_label_start_date">Date d\'insertion</string>
+    <string name="settings_label_time">Heure d\'insertion</string>
     <string name="settings_calendar_range_back">Précédent</string>
     <string name="settings_calendar_range_button">Plage du calendrier :\n%1$d %2$s avant, %3$d %4$s après</string>
     <string name="settings_calendar_range_forward">Suivant</string>
@@ -148,6 +153,7 @@
     <string name="settings_circle_style_format">Style du cercle : %1$s</string>
     <string name="settings_circle_style_label">Style du cercle d\'accueil</string>
     <string name="settings_cycle_length_button">Durée du cycle : %1$d jours</string>
+    <string name="settings_cycle_length_value">%1$d jours</string>
     <string name="settings_cycle_length_message">Choisissez la durée du cycle en jours :</string>
     <string name="settings_cycle_length_title">Régler la durée du cycle</string>
     <string name="settings_date_button_format">Date d\'insertion : %1$02d.%2$02d.%3$d</string>
@@ -198,6 +204,7 @@
     <string name="notification_test_sent">Notification de test envoyée.</string>
     <string name="notification_test_title">MyRingReminder test</string>
     <string name="notification_times_button_label">Rappels :\n%1$d h avant retrait, %2$d h avant insertion</string>
+    <string name="notification_times_value_label">%1$d h / %2$d h</string>
     <string name="notification_times_button_unknown">Rappels :\ninconnus</string>
     <string name="notifications_channel_description">Notifications pour les cycles de l\'anneau</string>
     <string name="notifications_channel_name">Rappels</string>
@@ -359,6 +366,8 @@
     <string name="cycles_sort_label">Tri</string>
     <string name="cycles_sort_newest">Plus récents d\'abord</string>
     <string name="cycles_sort_oldest">Plus anciens d\'abord</string>
+    <string name="cycles_summary_count">%1$d cycles enregistrés</string>
+    <string name="cycles_summary_count_placeholder">0 cycles enregistrés</string>
     <string name="cycles_status_inserted">Anneau inséré</string>
     <string name="cycles_status_removed">Anneau retiré</string>
     <string name="cycles_title">Historique des cycles</string>
@@ -381,6 +390,7 @@
 
     <!-- Widgets -->
     <string name="widget_large_name">Widget anneau (grand)</string>
+    <string name="widget_compact_name">Widget anneau (compact)</string>
     <string name="widget_small_name">Widget anneau (petit)</string>
     <string name="widget_title">Prochaines dates :</string>
 
@@ -637,8 +647,6 @@
     <string name="welcome_features_title">Ce que fait cette application</string>
     <string name="welcome_info_note">Vous pouvez ouvrir les infos de l\'application à tout moment dans les Paramètres.</string>
     <string name="welcome_intro">Garde en vue ton cycle d\'anneau contraceptif et le suivi des règles avec tes données personnelles, rappels et notes.</string>
-    <string name="welcome_permissions_body">- 🖼️ Accès médias : choisir une image de fond\n- 🔔 Notifications : rappels de cycle\n- ⏰ Alarmes exactes : planification précise</string>
-    <string name="welcome_permissions_title">Autorisations utilisées</string>
     <string name="welcome_privacy_note">Vos données sont stockées uniquement sur cet appareil. Pensez à créer une sauvegarde une fois vos réglages terminés 😊</string>
     <string name="welcome_skip_tour">Pas maintenant</string>
     <string name="welcome_start_tour">Démarrer la visite</string>

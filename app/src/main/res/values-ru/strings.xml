@@ -97,6 +97,7 @@
     <string name="settings_background_blur_dashboard_title">Главный экран</string>
     <string name="settings_background_blur_format">Размытие фона:\nГлавный %1$d%%, Остальные %2$d%%</string>
     <string name="settings_background_blur_label">Размытие фона</string>
+    <string name="settings_background_blur_value">%1$d%% / %2$d%%</string>
     <string name="settings_background_blur_others">Другие экраны: %1$d%%</string>
     <string name="settings_background_blur_others_title">Другие экраны</string>
     <string name="settings_background_blur_title">Размытие фона</string>
@@ -122,6 +123,10 @@
     <string name="settings_calendar_insertion_color_dialog_title">Выберите цвет вставки</string>
     <string name="settings_calendar_insertion_color_format">Цвет вставки: %1$s</string>
     <string name="settings_calendar_insertion_color_label">Цвет вставки</string>
+    <string name="settings_label_calendar_range">Диапазон календаря</string>
+    <string name="settings_label_cycle_length">Длина цикла</string>
+    <string name="settings_label_start_date">Дата вставки</string>
+    <string name="settings_label_time">Время вставки</string>
     <string name="settings_calendar_range_back">Назад</string>
     <string name="settings_calendar_range_button">Диапазон календаря:\n%1$d %2$s назад, %3$d %4$s вперед</string>
     <string name="settings_calendar_range_forward">Вперед</string>
@@ -148,6 +153,7 @@
     <string name="settings_circle_style_format">Стиль круга: %1$s</string>
     <string name="settings_circle_style_label">Стиль круга на главном</string>
     <string name="settings_cycle_length_button">Длина цикла: %1$d дн.</string>
+    <string name="settings_cycle_length_value">%1$d дн.</string>
     <string name="settings_cycle_length_message">Выберите длину цикла в днях:</string>
     <string name="settings_cycle_length_title">Установить длину цикла</string>
     <string name="settings_date_button_format">Дата вставки: %1$02d.%2$02d.%3$d</string>
@@ -198,6 +204,7 @@
     <string name="notification_test_sent">Тестовое уведомление отправлено.</string>
     <string name="notification_test_title">MyRingReminder тест</string>
     <string name="notification_times_button_label">Напоминания:\nза %1$d ч до извлечения, за %2$d ч до вставки</string>
+    <string name="notification_times_value_label">%1$d ч / %2$d ч</string>
     <string name="notification_times_button_unknown">Напоминания:\nнеизвестно</string>
     <string name="notifications_channel_description">Уведомления о циклах кольца</string>
     <string name="notifications_channel_name">Напоминания</string>
@@ -359,6 +366,8 @@
     <string name="cycles_sort_label">Сортировка</string>
     <string name="cycles_sort_newest">Сначала новые</string>
     <string name="cycles_sort_oldest">Сначала старые</string>
+    <string name="cycles_summary_count">Отслежено циклов: %1$d</string>
+    <string name="cycles_summary_count_placeholder">Отслежено циклов: 0</string>
     <string name="cycles_status_inserted">Кольцо вставлено</string>
     <string name="cycles_status_removed">Кольцо извлечено</string>
     <string name="cycles_title">История циклов</string>
@@ -381,6 +390,7 @@
 
     <!-- Widgets -->
     <string name="widget_large_name">Виджет кольца (большой)</string>
+    <string name="widget_compact_name">Виджет кольца (компактный)</string>
     <string name="widget_small_name">Виджет кольца (маленький)</string>
     <string name="widget_title">Следующие даты:</string>
 
@@ -637,8 +647,6 @@
     <string name="welcome_features_title">Функции приложения</string>
     <string name="welcome_info_note">Вы можете открыть инфо о приложении в любое время в Настройках.</string>
     <string name="welcome_intro">Держите под контролем цикл контрацептивного кольца и отслеживание менструации с вашими личными данными, напоминаниями и заметками.</string>
-    <string name="welcome_permissions_body">- 🖼️ Доступ к медиафайлам: выбор фонового изображения\n- 🔔 Уведомления: напоминания о цикле\n- ⏰ Точные будильники: точное планирование</string>
-    <string name="welcome_permissions_title">Используемые разрешения</string>
     <string name="welcome_privacy_note">Ваши данные хранятся только на этом устройстве. Обязательно создайте резервную копию после настройки 😊</string>
     <string name="welcome_skip_tour">Не сейчас</string>
     <string name="welcome_start_tour">Начать тур</string>

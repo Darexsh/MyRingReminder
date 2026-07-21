@@ -97,6 +97,7 @@
     <string name="settings_background_blur_dashboard_title">Dashboard</string>
     <string name="settings_background_blur_format">Hintergrund-Unschärfe:\nDashboard %1$d%%, Andere %2$d%%</string>
     <string name="settings_background_blur_label">Hintergrund-Unschärfe</string>
+    <string name="settings_background_blur_value">%1$d%% / %2$d%%</string>
     <string name="settings_background_blur_others">Andere Bildschirme: %1$d%%</string>
     <string name="settings_background_blur_others_title">Andere Bildschirme</string>
     <string name="settings_background_blur_title">Hintergrund-Unschärfe</string>
@@ -122,6 +123,10 @@
     <string name="settings_calendar_insertion_color_dialog_title">Einsetz-Farbe auswählen</string>
     <string name="settings_calendar_insertion_color_format">Einsetz-Farbe: %1$s</string>
     <string name="settings_calendar_insertion_color_label">Einsetz-Farbe</string>
+    <string name="settings_label_calendar_range">Kalender-Reichweite</string>
+    <string name="settings_label_cycle_length">Zykluslänge</string>
+    <string name="settings_label_start_date">Einsetzdatum</string>
+    <string name="settings_label_time">Einsetzzeit</string>
     <string name="settings_calendar_range_back">Zurück</string>
     <string name="settings_calendar_range_button">Kalender-Reichweite:\n%1$d %2$s zurück, %3$d %4$s voraus</string>
     <string name="settings_calendar_range_forward">Voraus</string>
@@ -148,6 +153,7 @@
     <string name="settings_circle_style_format">Home-Kreis-Stil: %1$s</string>
     <string name="settings_circle_style_label">Home-Kreis-Stil</string>
     <string name="settings_cycle_length_button">Zykluslänge: %1$d Tage</string>
+    <string name="settings_cycle_length_value">%1$d Tage</string>
     <string name="settings_cycle_length_message">Zykluslänge in Tagen wählen:</string>
     <string name="settings_cycle_length_title">Zykluslänge festlegen</string>
     <string name="settings_date_button_format">Einsetzdatum: %1$02d.%2$02d.%3$d</string>
@@ -197,6 +203,7 @@
     <string name="notification_test_sent">Test-Benachrichtigung gesendet.</string>
     <string name="notification_test_title">MyRingReminder Test</string>
     <string name="notification_times_button_label">Erinnerungen:\n%1$d h vor Entfernen, %2$d h vor Einsetzen</string>
+    <string name="notification_times_value_label">%1$d h / %2$d h</string>
     <string name="notification_times_button_unknown">Erinnerungen:\nunbekannt</string>
     <string name="percent_value">%1$d%%</string>
     <string name="notifications_channel_description">Benachrichtigungen für Verhütungsring-Zyklen</string>
@@ -359,6 +366,8 @@
     <string name="cycles_sort_label">Sortierung</string>
     <string name="cycles_sort_newest">Neueste zuerst</string>
     <string name="cycles_sort_oldest">Älteste zuerst</string>
+    <string name="cycles_summary_count">%1$d Zyklen erfasst</string>
+    <string name="cycles_summary_count_placeholder">0 Zyklen erfasst</string>
     <string name="cycles_status_inserted">Ring eingesetzt</string>
     <string name="cycles_status_removed">Ring entfernt</string>
     <string name="cycles_title">Zyklus-Historie</string>
@@ -381,6 +390,7 @@
 
     <!-- Widgets -->
     <string name="widget_large_name">Ring-Widget (groß)</string>
+    <string name="widget_compact_name">Ring-Widget (kompakt)</string>
     <string name="widget_small_name">Ring-Widget (klein)</string>
     <string name="widget_title">Nächste Ring-Termine:</string>
 
@@ -637,8 +647,6 @@
     <string name="welcome_features_title">Was diese App kann</string>
     <string name="welcome_info_note">Du kannst die App-Info jederzeit in den Einstellungen öffnen.</string>
     <string name="welcome_intro">Behalte deinen Verhütungsring-Zyklus und dein Perioden-Tracking mit deinen persönlichen Daten, Erinnerungen und Notizen im Blick.</string>
-    <string name="welcome_permissions_body">- 🖼️ Medienzugriff: Hintergrundbild auswählen\n- 🔔 Benachrichtigungen: Zyklus-Erinnerungen\n- ⏰ Exakte Alarme: präzise Terminierung</string>
-    <string name="welcome_permissions_title">Verwendete Berechtigungen</string>
     <string name="welcome_privacy_note">Deine Daten werden nur auf diesem Gerät gespeichert. Erstelle nach dem Einrichten aller Daten und Einstellungen unbedingt ein Backup 😊</string>
     <string name="welcome_skip_tour">Nicht jetzt</string>
     <string name="welcome_start_tour">Tour starten</string>

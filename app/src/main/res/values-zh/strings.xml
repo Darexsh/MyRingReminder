@@ -97,6 +97,7 @@
     <string name="settings_background_blur_dashboard_title">主页</string>
     <string name="settings_background_blur_format">背景模糊：\n主页 %1$d%%，其他 %2$d%%</string>
     <string name="settings_background_blur_label">背景模糊</string>
+    <string name="settings_background_blur_value">%1$d%% / %2$d%%</string>
     <string name="settings_background_blur_others">其他界面：%1$d%%</string>
     <string name="settings_background_blur_others_title">其他界面</string>
     <string name="settings_background_blur_title">背景模糊</string>
@@ -122,6 +123,10 @@
     <string name="settings_calendar_insertion_color_dialog_title">选择置入颜色</string>
     <string name="settings_calendar_insertion_color_format">置入颜色：%1$s</string>
     <string name="settings_calendar_insertion_color_label">置入颜色</string>
+    <string name="settings_label_calendar_range">日历范围</string>
+    <string name="settings_label_cycle_length">周期长度</string>
+    <string name="settings_label_start_date">置入日期</string>
+    <string name="settings_label_time">置入时间</string>
     <string name="settings_calendar_range_back">回顾</string>
     <string name="settings_calendar_range_button">日历范围：\n向后 %1$d %2$s，向前 %3$d %4$s</string>
     <string name="settings_calendar_range_forward">向前</string>
@@ -148,6 +153,7 @@
     <string name="settings_circle_style_format">圆环样式：%1$s</string>
     <string name="settings_circle_style_label">主页圆环样式</string>
     <string name="settings_cycle_length_button">设置周期：%1$d 天</string>
+    <string name="settings_cycle_length_value">%1$d 天</string>
     <string name="settings_cycle_length_message">选择周期天数：</string>
     <string name="settings_cycle_length_title">设置周期长度</string>
     <string name="settings_date_button_format">设置置入日期：%1$02d.%2$02d.%3$d</string>
@@ -198,6 +204,7 @@
     <string name="notification_test_sent">测试通知已发送。</string>
     <string name="notification_test_title">MyRingReminder 测试</string>
     <string name="notification_times_button_label">提醒：\n取出前 %1$d 小时，置入前 %2$d 小时</string>
+    <string name="notification_times_value_label">%1$d 小时 / %2$d 小时</string>
     <string name="notification_times_button_unknown">提醒：\n未知</string>
     <string name="notifications_channel_description">圆环佩戴周期的通知</string>
     <string name="notifications_channel_name">提醒</string>
@@ -359,6 +366,8 @@
     <string name="cycles_sort_label">排序</string>
     <string name="cycles_sort_newest">最新优先</string>
     <string name="cycles_sort_oldest">最早优先</string>
+    <string name="cycles_summary_count">已记录 %1$d 个周期</string>
+    <string name="cycles_summary_count_placeholder">已记录 0 个周期</string>
     <string name="cycles_status_inserted">已置入圆环</string>
     <string name="cycles_status_removed">已取出圆环</string>
     <string name="cycles_title">周期历史</string>
@@ -381,6 +390,7 @@
 
     <!-- Widgets -->
     <string name="widget_large_name">圆环小部件（大）</string>
+    <string name="widget_compact_name">圆环小部件（紧凑）</string>
     <string name="widget_small_name">圆环小部件（小）</string>
     <string name="widget_title">后续日期：</string>
 
@@ -637,8 +647,6 @@
     <string name="welcome_features_title">应用功能</string>
     <string name="welcome_info_note">您可以随时在“设置”中打开应用信息。</string>
     <string name="welcome_intro">通过你的个人日期、提醒和笔记，持续掌握避孕环周期和经期追踪。</string>
-    <string name="welcome_permissions_body">- 🖼️ 媒体访问：选择背景图片\n- 🔔 通知：周期提醒\n- ⏰ 精确闹钟：确保提醒准时</string>
-    <string name="welcome_permissions_title">所需权限</string>
     <string name="welcome_privacy_note">您的数据仅保存在此设备上。请在设置完成后记得创建备份 😊</string>
     <string name="welcome_skip_tour">以后再说</string>
     <string name="welcome_start_tour">开始向导</string>

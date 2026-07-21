@@ -97,6 +97,7 @@
     <string name="settings_background_blur_dashboard_title">Dashboard</string>
     <string name="settings_background_blur_format">Sfocatura sfondo:\nDashboard %1$d%%, Altri %2$d%%</string>
     <string name="settings_background_blur_label">Sfocatura sfondo</string>
+    <string name="settings_background_blur_value">%1$d%% / %2$d%%</string>
     <string name="settings_background_blur_others">Altre schermate: %1$d%%</string>
     <string name="settings_background_blur_others_title">Altre schermate</string>
     <string name="settings_background_blur_title">Sfocatura sfondo</string>
@@ -122,6 +123,10 @@
     <string name="settings_calendar_insertion_color_dialog_title">Scegli colore inserimento</string>
     <string name="settings_calendar_insertion_color_format">Colore inserimento: %1$s</string>
     <string name="settings_calendar_insertion_color_label">Colore inserimento</string>
+    <string name="settings_label_calendar_range">Intervallo calendario</string>
+    <string name="settings_label_cycle_length">Durata ciclo</string>
+    <string name="settings_label_start_date">Data inserimento</string>
+    <string name="settings_label_time">Ora inserimento</string>
     <string name="settings_calendar_range_back">Indietro</string>
     <string name="settings_calendar_range_button">Intervallo calendario:\n%1$d %2$s indietro, %3$d %4$s avanti</string>
     <string name="settings_calendar_range_forward">Avanti</string>
@@ -148,6 +153,7 @@
     <string name="settings_circle_style_format">Stile cerchio home: %1$s</string>
     <string name="settings_circle_style_label">Stile cerchio home</string>
     <string name="settings_cycle_length_button">Durata ciclo: %1$d giorni</string>
+    <string name="settings_cycle_length_value">%1$d giorni</string>
     <string name="settings_cycle_length_message">Scegli la durata del ciclo in giorni:</string>
     <string name="settings_cycle_length_title">Imposta durata ciclo</string>
     <string name="settings_date_button_format">Data inserimento: %1$02d.%2$02d.%3$d</string>
@@ -198,6 +204,7 @@
     <string name="notification_test_sent">Notifica di prova inviata.</string>
     <string name="notification_test_title">MyRingReminder test</string>
     <string name="notification_times_button_label">Promemoria:\n%1$d h prima della rimozione, %2$d h prima dell\'inserimento</string>
+    <string name="notification_times_value_label">%1$d h / %2$d h</string>
     <string name="notification_times_button_unknown">Promemoria:\nsconosciuto</string>
     <string name="notifications_channel_description">Notifiche per i cicli dell\'anello</string>
     <string name="notifications_channel_name">Promemoria</string>
@@ -359,6 +366,8 @@
     <string name="cycles_sort_label">Ordina</string>
     <string name="cycles_sort_newest">Più recenti prima</string>
     <string name="cycles_sort_oldest">Più vecchi prima</string>
+    <string name="cycles_summary_count">%1$d cicli registrati</string>
+    <string name="cycles_summary_count_placeholder">0 cicli registrati</string>
     <string name="cycles_status_inserted">Anello inserito</string>
     <string name="cycles_status_removed">Anello rimosso</string>
     <string name="cycles_title">Cronologia cicli</string>
@@ -381,6 +390,7 @@
 
     <!-- Widgets -->
     <string name="widget_large_name">Widget anello (grande)</string>
+    <string name="widget_compact_name">Widget anello (compatto)</string>
     <string name="widget_small_name">Widget anello (piccolo)</string>
     <string name="widget_title">Prossime date:</string>
 
@@ -637,8 +647,6 @@
     <string name="welcome_features_title">Cosa fa questa app</string>
     <string name="welcome_info_note">Puoi aprire le info dell\'app in qualsiasi momento nelle Impostazioni.</string>
     <string name="welcome_intro">Tieni sotto controllo il ciclo dell\'anello contraccettivo e il monitoraggio del ciclo mestruale con i tuoi dati personali, promemoria e note.</string>
-    <string name="welcome_permissions_body">- 🖼️ Accesso media: scegli un\'immagine di sfondo\n- 🔔 Notifiche: promemoria del ciclo\n- ⏰ Allarmi precisi: pianificazione accurata</string>
-    <string name="welcome_permissions_title">Permessi utilizzati</string>
     <string name="welcome_privacy_note">I tuoi dati sono memorizzati solo su questo dispositivo. Assicurati di creare un backup una volta impostati tutti i dati 😊</string>
     <string name="welcome_skip_tour">Non ora</string>
     <string name="welcome_start_tour">Inizia tour</string>

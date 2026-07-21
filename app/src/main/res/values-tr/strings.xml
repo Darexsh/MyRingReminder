@@ -97,6 +97,7 @@
     <string name="settings_background_blur_dashboard_title">Kontrol Paneli</string>
     <string name="settings_background_blur_format">Arka plan bulanıklığı:\nPanel %1$d%%, Diğerleri %2$d%%</string>
     <string name="settings_background_blur_label">Arka plan bulanıklığı</string>
+    <string name="settings_background_blur_value">%1$d%% / %2$d%%</string>
     <string name="settings_background_blur_others">Diğer ekranlar: %1$d%%</string>
     <string name="settings_background_blur_others_title">Diğer ekranlar</string>
     <string name="settings_background_blur_title">Arka plan bulanıklığı</string>
@@ -122,6 +123,10 @@
     <string name="settings_calendar_insertion_color_dialog_title">Yerleştirme rengini seçin</string>
     <string name="settings_calendar_insertion_color_format">Yerleştirme rengi: %1$s</string>
     <string name="settings_calendar_insertion_color_label">Yerleştirme rengi</string>
+    <string name="settings_label_calendar_range">Takvim aralığı</string>
+    <string name="settings_label_cycle_length">Döngü süresi</string>
+    <string name="settings_label_start_date">Yerleştirme tarihi</string>
+    <string name="settings_label_time">Yerleştirme saati</string>
     <string name="settings_calendar_range_back">Geri</string>
     <string name="settings_calendar_range_button">Takvim aralığı:\n%1$d %2$s geri, %3$d %4$s ileri</string>
     <string name="settings_calendar_range_forward">İleri</string>
@@ -148,6 +153,7 @@
     <string name="settings_circle_style_format">Ana halka stili: %1$s</string>
     <string name="settings_circle_style_label">Ana halka stili</string>
     <string name="settings_cycle_length_button">Döngü süresi: %1$d gün</string>
+    <string name="settings_cycle_length_value">%1$d gün</string>
     <string name="settings_cycle_length_message">Döngü süresini gün olarak seçin:</string>
     <string name="settings_cycle_length_title">Döngü süresini ayarla</string>
     <string name="settings_date_button_format">Yerleştirme tarihi: %1$02d.%2$02d.%3$d</string>
@@ -198,6 +204,7 @@
     <string name="notification_test_sent">Test bildirimi gönderildi.</string>
     <string name="notification_test_title">MyRingReminder testi</string>
     <string name="notification_times_button_label">Hatırlatıcılar:\nçıkarmadan %1$d sa önce, yerleştirmeden %2$d sa önce</string>
+    <string name="notification_times_value_label">%1$d sa / %2$d sa</string>
     <string name="notification_times_button_unknown">Hatırlatıcılar:\nbilinmiyor</string>
     <string name="notifications_channel_description">Halka döngüleri için bildirimler</string>
     <string name="notifications_channel_name">Hatırlatıcılar</string>
@@ -359,6 +366,8 @@
     <string name="cycles_sort_label">Sıralama</string>
     <string name="cycles_sort_newest">Önce en yeni</string>
     <string name="cycles_sort_oldest">Önce en eski</string>
+    <string name="cycles_summary_count">%1$d döngü kaydedildi</string>
+    <string name="cycles_summary_count_placeholder">0 döngü kaydedildi</string>
     <string name="cycles_status_inserted">Halka yerleştirildi</string>
     <string name="cycles_status_removed">Halka çıkarıldı</string>
     <string name="cycles_title">Döngü geçmişi</string>
@@ -381,6 +390,7 @@
 
     <!-- Widgets -->
     <string name="widget_large_name">Halka aracı (büyük)</string>
+    <string name="widget_compact_name">Halka aracı (kompakt)</string>
     <string name="widget_small_name">Halka aracı (küçük)</string>
     <string name="widget_title">Sıradaki tarihler:</string>
 
@@ -637,8 +647,6 @@
     <string name="welcome_features_title">Bu uygulama ne yapar?</string>
     <string name="welcome_info_note">Uygulama bilgilerini Ayarlar\'dan istediğiniz zaman açabilirsiniz.</string>
     <string name="welcome_intro">Kişisel tarihlerin, hatırlatıcıların ve notlarınla doğum kontrol halkası döngünü ve adet takibini kontrol altında tut.</string>
-    <string name="welcome_permissions_body">- 🖼️ Medya erişimi: arka plan resmi seçin\n- 🔔 Bildirimler: döngü hatırlatıcıları\n- ⏰ Hassas alarmlar: kesin zamanlama</string>
-    <string name="welcome_permissions_title">Kullanılan izinler</string>
     <string name="welcome_privacy_note">Verileriniz yalnızca bu cihazda saklanır. Tüm ayarlar bittiğinde yedek oluşturmayı unutmayın 😊</string>
     <string name="welcome_skip_tour">Şimdi değil</string>
     <string name="welcome_start_tour">Turu başlat</string>

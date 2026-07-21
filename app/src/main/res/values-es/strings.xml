@@ -97,6 +97,7 @@
     <string name="settings_background_blur_dashboard_title">Panel de control</string>
     <string name="settings_background_blur_format">Desenfoque de fondo:\nPanel de control %1$d%%, Otras %2$d%%</string>
     <string name="settings_background_blur_label">Desenfoque de fondo</string>
+    <string name="settings_background_blur_value">%1$d%% / %2$d%%</string>
     <string name="settings_background_blur_others">Otras pantallas: %1$d%%</string>
     <string name="settings_background_blur_others_title">Otras pantallas</string>
     <string name="settings_background_blur_title">Desenfoque de fondo</string>
@@ -122,6 +123,10 @@
     <string name="settings_calendar_insertion_color_dialog_title">Elegir color de inserción</string>
     <string name="settings_calendar_insertion_color_format">Color de inserción: %1$s</string>
     <string name="settings_calendar_insertion_color_label">Color de inserción</string>
+    <string name="settings_label_calendar_range">Intervalo del calendario</string>
+    <string name="settings_label_cycle_length">Duración del ciclo</string>
+    <string name="settings_label_start_date">Fecha de inserción</string>
+    <string name="settings_label_time">Hora de inserción</string>
     <string name="settings_calendar_range_back">Atrás</string>
     <string name="settings_calendar_range_button">Rango del calendario:\n%1$d %2$s atrás, %3$d %4$s adelante</string>
     <string name="settings_calendar_range_forward">Adelante</string>
@@ -148,6 +153,7 @@
     <string name="settings_circle_style_format">Estilo del círculo de inicio: %1$s</string>
     <string name="settings_circle_style_label">Estilo del círculo de inicio</string>
     <string name="settings_cycle_length_button">Establecer duración del ciclo: %1$d días</string>
+    <string name="settings_cycle_length_value">%1$d días</string>
     <string name="settings_cycle_length_message">Elige la duración del ciclo en días:</string>
     <string name="settings_cycle_length_title">Establecer duración del ciclo</string>
     <string name="settings_date_button_format">Establecer fecha de inserción: %1$02d.%2$02d.%3$d</string>
@@ -198,6 +204,7 @@
     <string name="notification_test_sent">Notificación de prueba enviada.</string>
     <string name="notification_test_title">Prueba de MyRingReminder</string>
     <string name="notification_times_button_label">Recordatorios:\n%1$d horas antes de la extracción, %2$d horas antes de la inserción</string>
+    <string name="notification_times_value_label">%1$d h / %2$d h</string>
     <string name="notification_times_button_unknown">Recordatorios:\ndesconocido</string>
     <string name="notifications_channel_description">Notificaciones para ciclos de anillos</string>
     <string name="notifications_channel_name">Recordatorios</string>
@@ -359,6 +366,8 @@
     <string name="cycles_sort_label">Ordenar</string>
     <string name="cycles_sort_newest">Más recientes primero</string>
     <string name="cycles_sort_oldest">Más antiguos primero</string>
+    <string name="cycles_summary_count">%1$d ciclos registrados</string>
+    <string name="cycles_summary_count_placeholder">0 ciclos registrados</string>
     <string name="cycles_status_inserted">Anillo insertado</string>
     <string name="cycles_status_removed">Anillo retirado</string>
     <string name="cycles_title">Historial de ciclos</string>
@@ -381,6 +390,7 @@
 
     <!-- Widgets -->
     <string name="widget_large_name">Widget de llamadas (grande)</string>
+    <string name="widget_compact_name">Widget de llamadas (compacto)</string>
     <string name="widget_small_name">Widget de llamadas (pequeño)</string>
     <string name="widget_title">Próximas fechas de llamadas:</string>
 
@@ -637,8 +647,6 @@
     <string name="welcome_features_title">Qué hace esta aplicación</string>
     <string name="welcome_info_note">Puedes abrir la información de la aplicación en cualquier momento en Ajustes.</string>
     <string name="welcome_intro">Mantén bajo control tu ciclo del anillo anticonceptivo y el seguimiento del período con tus datos personales, recordatorios y notas.</string>
-    <string name="welcome_permissions_body">- 🖼️ Acceso a los archivos multimedia: elige una imagen de fondo\n- 🔔 Notificaciones: recordatorios del ciclo\n- ⏰ Alarmas exactas: programación precisa</string>
-    <string name="welcome_permissions_title">Permisos utilizados</string>
     <string name="welcome_privacy_note">Tus datos se almacenan únicamente en este dispositivo. Asegúrate de crear una copia de seguridad una vez que hayas configurado todos los datos y ajustes 😊</string>
     <string name="welcome_skip_tour">Ahora no</string>
     <string name="welcome_start_tour">Iniciar recorrido</string>

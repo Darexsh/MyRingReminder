@@ -49,7 +49,7 @@ It combines cycle timing, reminders, period tracking during the ring-free window
 
 * **Cycle Tracking**: Visualize insertion, removal, ring-free, and active days with color-coded calendar highlights, plus quick legend recoloring.
 * **Reminders**: Set custom lead times for insertion and removal reminders, with automatic rescheduling and vibrating notifications.
-* **Cycle History**: Review recorded cycles with month grouping, newest/oldest sorting, clear/recreate controls, and rebuild support that respects saved special cases.
+* **Cycle History**: Review recorded cycles with month grouping, newest/oldest sorting, a tracked-cycle subtitle, clear/recreate controls, and rebuild support that respects saved special cases.
 * **Notes**: Keep private notebook-style notes with autosave, character counter, and quick delete.
 
 ### Period Tracking
@@ -67,8 +67,8 @@ It combines cycle timing, reminders, period tracking during the ring-free window
 ### Convenience & Personalization
 
 * **Backup / Restore**: Export and import local app data including settings, notes, cycle history, period tracking, and saved special cases, with validation and a readable restore preview.
-* **Home Screen Widgets**: Use a small or large resizable widget, both color-synced with app settings for quick at-a-glance status.
-* **Customization**: Adjust cycle settings, reminder times, language, background image, calendar range, and accent colors for buttons, widgets, home ring, and calendar elements.
+* **Home Screen Widgets**: Choose between a small `2x1` widget, a compact `3x1` status widget, and a larger detailed widget for quick at-a-glance status, all color-synced with app settings.
+* **Customization**: Adjust cycle settings, reminder times, language, background image, calendar range, and accent colors through a grouped settings layout with modern list-style cards, including matching notification and background tools, plus widget, home ring, and calendar personalization.
 * **Enhanced Calendar Navigation**: Move through months with arrows, jump directly by tapping the month header, and browse without a fixed scrolling limit.
 * **Language Mode**: Choose between multiple app languages or **System Default**, with English fallback if the device language is unsupported.
 * **App Lock**: Optional biometric or device-credential protection with configurable auto-lock delay.
@@ -87,12 +87,8 @@ It combines cycle timing, reminders, period tracking during the ring-free window
 
 ## 📝 Planned Ideas
 
-* **Additional Widget Variants**: Add more view-only widget layouts such as a minimal widget, a discreet text-focused widget, or a larger status-first widget.
-* **Privacy Mode**: Offer more discreet wording for widgets and notifications for users who prefer less explicit text on screen.
 * **PDF Export Refinement**: Polish the period details export layout with improved spacing, alignment, and visual hierarchy while keeping the current structured design.
-* **Cycle History Summary Header**: Add a compact summary at the top of the history screen, for example total tracked cycles or latest insertion/removal information.
 * **Small Home Screen Refinements**: Improve clarity on the home screen with minor display refinements while keeping it automatic and view-only.
-* **Keep Calendar Lean**: Avoid adding more permanent controls directly to the calendar view to prevent visual clutter.
 
 * * *
 
@@ -146,7 +142,7 @@ An overview of the current visual experience across the app:
 
 ### 1. Set up the basics
 
-* Open **Settings** and choose the insertion date, insertion time, cycle length, and reminder lead times.
+* Open **Settings** and use the grouped cards to choose the insertion date, insertion time, cycle length, and reminder lead times.
 * Optionally adjust language, background image, colors, calendar range, and other personalization options.
 * If needed, restart the welcome tour from **Settings → Advanced**.
 
@@ -169,8 +165,8 @@ An overview of the current visual experience across the app:
 
 ### 4. Add widgets for at-a-glance status
 
-* Add the small or large widget to your home screen for quick status.
-* Widgets are resizable from the launcher.
+* Add the small `2x1`, compact `3x1`, or larger detailed widget to your home screen for quick status.
+* The larger widget remains resizable from the launcher.
 
 ### 5. Track period entries when relevant
 

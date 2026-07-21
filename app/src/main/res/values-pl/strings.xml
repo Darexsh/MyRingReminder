@@ -97,6 +97,7 @@
     <string name="settings_background_blur_dashboard_title">Panel główny</string>
     <string name="settings_background_blur_format">Rozmycie tła:\nPanel %1$d%%, Inne %2$d%%</string>
     <string name="settings_background_blur_label">Rozmycie tła</string>
+    <string name="settings_background_blur_value">%1$d%% / %2$d%%</string>
     <string name="settings_background_blur_others">Inne ekrany: %1$d%%</string>
     <string name="settings_background_blur_others_title">Inne ekrany</string>
     <string name="settings_background_blur_title">Rozmycie tła</string>
@@ -122,6 +123,10 @@
     <string name="settings_calendar_insertion_color_dialog_title">Wybierz kolor założenia</string>
     <string name="settings_calendar_insertion_color_format">Kolor założenia: %1$s</string>
     <string name="settings_calendar_insertion_color_label">Kolor założenia</string>
+    <string name="settings_label_calendar_range">Zakres kalendarza</string>
+    <string name="settings_label_cycle_length">Długość cyklu</string>
+    <string name="settings_label_start_date">Data założenia</string>
+    <string name="settings_label_time">Godzina założenia</string>
     <string name="settings_calendar_range_back">Wstecz</string>
     <string name="settings_calendar_range_button">Zakres kalendarza:\n%1$d %2$s wstecz, %3$d %4$s w przód</string>
     <string name="settings_calendar_range_forward">W przód</string>
@@ -148,6 +153,7 @@
     <string name="settings_circle_style_format">Styl okręgu: %1$s</string>
     <string name="settings_circle_style_label">Styl okręgu home</string>
     <string name="settings_cycle_length_button">Długość cyklu: %1$d dni</string>
+    <string name="settings_cycle_length_value">%1$d dni</string>
     <string name="settings_cycle_length_message">Wybierz długość cyklu w dniach:</string>
     <string name="settings_cycle_length_title">Ustaw długość cyklu</string>
     <string name="settings_date_button_format">Data założenia: %1$02d.%2$02d.%3$d</string>
@@ -198,6 +204,7 @@
     <string name="notification_test_sent">Wysłano powiadomienie testowe.</string>
     <string name="notification_test_title">MyRingReminder test</string>
     <string name="notification_times_button_label">Przypomnienia:\n%1$d godz. przed zdjęciem, %2$d godz. przed założeniem</string>
+    <string name="notification_times_value_label">%1$d godz. / %2$d godz.</string>
     <string name="notification_times_button_unknown">Przypomnienia:\nnieznane</string>
     <string name="notifications_channel_description">Powiadomienia dotyczące cykli pierścienia</string>
     <string name="notifications_channel_name">Przypomnienia</string>
@@ -359,6 +366,8 @@
     <string name="cycles_sort_label">Sortowanie</string>
     <string name="cycles_sort_newest">Najnowsze najpierw</string>
     <string name="cycles_sort_oldest">Najstarsze najpierw</string>
+    <string name="cycles_summary_count">%1$d zapisanych cykli</string>
+    <string name="cycles_summary_count_placeholder">0 zapisanych cykli</string>
     <string name="cycles_status_inserted">Pierścień założony</string>
     <string name="cycles_status_removed">Pierścień zdjęty</string>
     <string name="cycles_title">Historia cykli</string>
@@ -381,6 +390,7 @@
 
     <!-- Widgets -->
     <string name="widget_large_name">Widget pierścienia (duży)</string>
+    <string name="widget_compact_name">Widget pierścienia (kompaktowy)</string>
     <string name="widget_small_name">Widget pierścienia (mały)</string>
     <string name="widget_title">Następne daty:</string>
 
@@ -637,8 +647,6 @@
     <string name="welcome_features_title">Co potrafi ta aplikacja</string>
     <string name="welcome_info_note">Informacje o aplikacji możesz otworzyć w dowolnym momencie w Ustawieniach.</string>
     <string name="welcome_intro">Miej pod kontrolą cykl pierścienia antykoncepcyjnego i śledzenie okresu dzięki swoim danym, przypomnieniom i notatkom.</string>
-    <string name="welcome_permissions_body">- 🖼️ Dostęp do multimediów: wybór obrazu tła\n- 🔔 Powiadomienia: przypomnienia o cyklu\n- ⏰ Dokładne alarmy: precyzyjne planowanie</string>
-    <string name="welcome_permissions_title">Używane uprawnienia</string>
     <string name="welcome_privacy_note">Twoje dane są przechowywane tylko na tym urządzeniu. Pamiętaj o utworzeniu kopii zapasowej po skonfigurowaniu danych 😊</string>
     <string name="welcome_skip_tour">Nie teraz</string>
     <string name="welcome_start_tour">Rozpocznij przewodnik</string>
