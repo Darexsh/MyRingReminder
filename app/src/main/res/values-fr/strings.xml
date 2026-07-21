@@ -572,6 +572,7 @@
     <string name="tour_body_calendar_legend">Ces couleurs indiquent le temps de port, les jours de pause, le retrait et l\'insertion.\nVous pouvez aussi changer les couleurs en appuyant sur les points de la légende.</string>
     <string name="tour_body_cycles">Suivez vos cycles précédents et leurs événements d\'insertion/retrait.</string>
     <string name="tour_body_cycles_clear">Supprimez toutes les entrées de cycle enregistrées de la liste.</string>
+    <string name="tour_body_cycles_rebuild">Recrée l\'historique des cycles à partir de la date d\'insertion enregistrée, des réglages du cycle et des cas spéciaux enregistrés après l\'avoir effacé.</string>
     <string name="tour_body_delay">Utilisez ceci pour enregistrer des jours supplémentaires si l\'anneau a été porté plus longtemps. Plus d\'infos via le bouton info.</string>
     <string name="tour_body_navigation">Basculez entre Accueil, Calendrier, Cycles et Paramètres ici.</string>
     <string name="tour_body_notes">Enregistrez des rappels et des notes personnelles pour ce cycle.</string>
@@ -595,7 +596,7 @@
     <string name="tour_body_settings_cycle">Réglez la date, l\'heure d\'insertion et la durée du cycle.</string>
     <string name="tour_body_settings_info">Affiche la version, les infos développeur et les liens de contact.</string>
     <string name="tour_body_settings_language">Basculez entre les différentes langues.</string>
-    <string name="tour_body_settings_notifications">Réglez quand vous souhaitez être rappelé pour l\'insertion et le retrait.\nSi les rappels ne sont pas fiables, désactivez l\'optimisation de la batterie.</string>
+    <string name="tour_body_settings_notifications">Ouvre les réglages détaillés des rappels. Vous pouvez y définir les heures de rappel, envoyer une notification de test, autoriser les notifications, autoriser les alarmes exactes et désactiver l\'optimisation de la batterie si les rappels arrivent en retard.</string>
     <string name="tour_body_settings_reset">Supprimez toutes les données et réinitialisez l\'application.</string>
     <string name="tour_body_settings_update">Vérifiez les nouvelles versions et installez-les.</string>
     <string name="tour_complete_done">Terminé</string>
@@ -609,6 +610,7 @@
     <string name="tour_title_calendar_legend">Légende du calendrier</string>
     <string name="tour_title_cycles">Historique des cycles</string>
     <string name="tour_title_cycles_clear">Effacer l\'historique</string>
+    <string name="tour_title_cycles_rebuild">Créer l\'historique</string>
     <string name="tour_title_delay">Retarder le cycle</string>
     <string name="tour_title_navigation">Navigation</string>
     <string name="tour_title_notes">Notes rapides</string>
@@ -636,6 +638,11 @@
     <string name="tour_title_settings_reset">Réinitialiser l\'app</string>
     <string name="tour_title_settings_update">Mises à jour</string>
     <string name="tour_body_period_entry">Appuyez sur un jour pour ajouter ou modifier le suivi des règles. La modification est disponible uniquement pendant la semaine sans anneau et ±4 jours autour.</string>
+    <string name="tour_body_period_intensity">L\'intensité du saignement est obligatoire pour enregistrer une entrée de règles. Choisissez légère, moyenne ou forte pour indiquer l\'intensité de ce jour.</string>
+    <string name="tour_body_period_pain">Le niveau de douleur est facultatif. Utilisez léger, modéré ou fort si la douleur doit être enregistrée pour ce jour.</string>
+    <string name="tour_body_period_symptoms">Ajoutez les symptômes correspondants à ce jour. Plusieurs symptômes peuvent être sélectionnés en même temps.</string>
+    <string name="tour_body_period_markers">Utilisez le marqueur de début pour le premier jour des règles et le marqueur de fin pour le dernier jour. Un seul des deux marqueurs peut être actif le même jour.</string>
+    <string name="tour_body_period_actions">Utilisez Effacer l\'entrée pour supprimer les données enregistrées de ce jour. Annuler ferme la fenêtre sans modification et OK enregistre l\'entrée actuelle.</string>
     <string name="tour_body_period_modal">Dans l\'entrée de règles, tu peux définir le jour de règles, l\'intensité du saignement, le niveau de douleur (légère/modérée/forte), des symptômes supplémentaires et des marqueurs début/fin optionnels.\nUtilise Effacer l\'entrée pour supprimer les données enregistrées de ce jour.</string>
     <string name="tour_body_period_indicators">Les jours de règles sont affichés directement dans le calendrier avec nuance d’intensité, points indicateurs et repères S/E.\nPour les mois avec des entrées de règles, vous pouvez aussi ouvrir Détails des règles et exporter un rapport PDF formaté.</string>
     <string name="tour_title_period_entry">Entrée des règles</string>

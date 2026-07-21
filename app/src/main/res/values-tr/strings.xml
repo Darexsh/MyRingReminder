@@ -572,6 +572,7 @@
     <string name="tour_body_calendar_legend">Bu renkler kullanım süresini, halkasız günleri, çıkarma ve yerleştirmeyi gösterir.\nLejant noktalarına dokunarak renkleri değiştirebilirsiniz.</string>
     <string name="tour_body_cycles">Önceki döngüleri ve yerleştirme/çıkarma olaylarını takip edin.</string>
     <string name="tour_body_cycles_clear">Tüm kayıtlı döngü girişlerini listeden kaldırın.</string>
+    <string name="tour_body_cycles_rebuild">Temizledikten sonra kaydedilen yerleştirme tarihi, döngü ayarları ve kayıtlı özel durumlara göre döngü geçmişini yeniden oluşturur.</string>
     <string name="tour_body_delay">Halka daha uzun süre kullanıldıysa ekstra günleri kaydetmek için bunu kullanın. Bilgi butonuyla daha fazla bilgi alabilirsiniz.</string>
     <string name="tour_body_navigation">Ana Ekran, Takvim, Döngüler ve Ayarlar arasında buradan geçiş yapın.</string>
     <string name="tour_body_notes">Bu döngü için hatırlatıcılar ve kişisel notlar kaydedin.</string>
@@ -595,7 +596,7 @@
     <string name="tour_body_settings_cycle">Yerleştirme tarihi, saati ve döngü uzunluğunu ayarlayın.</string>
     <string name="tour_body_settings_info">Sürüm, geliştirici bilgisi ve iletişim linklerini gösterir.</string>
     <string name="tour_body_settings_language">Diller arasında geçiş yapın.</string>
-    <string name="tour_body_settings_notifications">Yerleştirme ve çıkarma günlerinde ne zaman hatırlatılmak istediğinizi ayarlayın.\nHatırlatıcılar çalışmazsa pil optimizasyonunu devre dışı bırakın.</string>
+    <string name="tour_body_settings_notifications">Ayrıntılı hatırlatıcı ayarlarını açar. Burada hatırlatma saatlerini ayarlayabilir, test bildirimi gönderebilir, bildirim izni verebilir, kesin alarmlara izin verebilir ve hatırlatmalar gecikirse pil optimizasyonunu kapatabilirsiniz.</string>
     <string name="tour_body_settings_reset">Tüm verileri silin ve uygulamayı sıfırlayın.</string>
     <string name="tour_body_settings_update">Yeni uygulama sürümlerini kontrol edin ve yükleyin.</string>
     <string name="tour_complete_done">Tamam</string>
@@ -609,6 +610,7 @@
     <string name="tour_title_calendar_legend">Takvim lejantı</string>
     <string name="tour_title_cycles">Döngü geçmişi</string>
     <string name="tour_title_cycles_clear">Geçmişi temizle</string>
+    <string name="tour_title_cycles_rebuild">Geçmiş oluştur</string>
     <string name="tour_title_delay">Döngüyü ertele</string>
     <string name="tour_title_navigation">Gezinme</string>
     <string name="tour_title_notes">Hızlı notlar</string>
@@ -636,6 +638,11 @@
     <string name="tour_title_settings_reset">Uygulamayı sıfırla</string>
     <string name="tour_title_settings_update">Güncellemeler</string>
     <string name="tour_body_period_entry">Adet takibini eklemek veya düzenlemek için bir güne dokunun. Düzenleme yalnızca halkasız hafta ve çevresindeki ±4 gün içinde mümkündür.</string>
+    <string name="tour_body_period_intensity">Kanama yoğunluğu, adet kaydını kaydetmek için zorunludur. O gün ne kadar yoğun olduğunu göstermek için hafif, orta veya şiddetli seçin.</string>
+    <string name="tour_body_period_pain">Ağrı seviyesi isteğe bağlıdır. O gün için ağrı takip edilecekse hafif, orta veya şiddetli kullanın.</string>
+    <string name="tour_body_period_symptoms">O güne uyan belirtileri ekleyin. Aynı anda birden fazla belirti seçebilirsiniz.</string>
+    <string name="tour_body_period_markers">Adetin ilk günü için başlangıç işaretleyicisini, son günü için bitiş işaretleyicisini kullanın. Aynı günde bu iki işaretleyiciden yalnızca biri etkin olabilir.</string>
+    <string name="tour_body_period_actions">O güne ait kayıtlı verileri silmek için "Kaydı temizle" seçeneğini kullanın. İptal pencereyi değişiklik yapmadan kapatır ve OK mevcut kaydı kaydeder.</string>
     <string name="tour_body_period_modal">Adet kaydında adet günü, kanama yoğunluğu, ağrı seviyesi (hafif/orta/şiddetli), ek belirtiler ve isteğe bağlı başlangıç/bitiş işaretleyicilerini ayarlayabilirsin.\nO güne ait kayıtlı verileri silmek için \"Kaydı temizle\" seçeneğini kullan.</string>
     <string name="tour_body_period_indicators">Adet günleri takvimde yoğunluk gölgelendirmesi, gösterge noktaları ve S/E işaretleriyle doğrudan gösterilir.\nAdet kaydı olan aylarda ayrıca Adet Detayları ekranını açıp biçimlendirilmiş bir PDF raporu dışa aktarabilirsin.</string>
     <string name="tour_title_period_entry">Adet kaydı</string>

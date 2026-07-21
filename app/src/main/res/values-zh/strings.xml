@@ -572,6 +572,7 @@
     <string name="tour_body_calendar_legend">这些颜色显示佩戴时间、停用期、取出和置入日期。\n您也可以通过点击图例圆点来更改颜色。</string>
     <string name="tour_body_cycles">追踪之前的周期及其置入/取出事件。</string>
     <string name="tour_body_cycles_clear">从列表中删除所有保存的周期条目。</string>
+    <string name="tour_body_cycles_rebuild">在清空后，根据已保存的置入日期、周期设置和特殊情况重新创建周期历史。</string>
     <string name="tour_body_delay">如果佩戴时间延长，使用此功能记录额外天数。更多信息可通过“信息”按钮查看。</string>
     <string name="tour_body_navigation">在此切换首页、日历、周期和设置。</string>
     <string name="tour_body_notes">保存本周期的提醒和个人笔记。</string>
@@ -595,7 +596,7 @@
     <string name="tour_body_settings_cycle">设置置入日期、时间和周期长度。</string>
     <string name="tour_body_settings_info">显示版本、开发者信息和联系方式链接。</string>
     <string name="tour_body_settings_language">在不同语言之间切换。</string>
-    <string name="tour_body_settings_notifications">设置置入和取出日的提醒时间。\n如果提醒不准确，请禁用电池优化。</string>
+    <string name="tour_body_settings_notifications">打开详细的提醒设置。在这里你可以设置提醒时间、发送测试通知、允许通知权限、允许精确闹钟，并在提醒延迟时关闭电池优化。</string>
     <string name="tour_body_settings_reset">删除所有保存的数据并重置应用。</string>
     <string name="tour_body_settings_update">检查新版本应用并安装。</string>
     <string name="tour_complete_done">完成</string>
@@ -609,6 +610,7 @@
     <string name="tour_title_calendar_legend">日历图例</string>
     <string name="tour_title_cycles">周期历史</string>
     <string name="tour_title_cycles_clear">清除历史记录</string>
+    <string name="tour_title_cycles_rebuild">创建历史记录</string>
     <string name="tour_title_delay">延迟周期</string>
     <string name="tour_title_navigation">导航切换</string>
     <string name="tour_title_notes">快捷笔记</string>
@@ -636,7 +638,12 @@
     <string name="tour_title_settings_reset">重置应用</string>
     <string name="tour_title_settings_update">更新</string>
     <string name="tour_body_period_entry">点击某一天可添加或编辑经期追踪。 仅可在无环周及其前后 ±4 天内编辑。</string>
-    <string name="tour_body_period_modal">在经期记录中，你可以设置经期日、出血强度、疼痛等级（轻度/中度/重度）、附加症状以及可选的开始/结束标记。\n使用“清除记录”可删除该日期已保存的数据。</string>
+    <string name="tour_body_period_intensity">出血强度是保存经期记录时的必填项。请选择轻度、中度或重度，用来表示当天经期的强弱。</string>
+    <string name="tour_body_period_pain">疼痛等级是可选项。如果当天需要记录疼痛，可选择轻度、中度或重度。</string>
+    <string name="tour_body_period_symptoms">添加符合当天情况的症状。你可以同时选择多个症状。</string>
+    <string name="tour_body_period_markers">开始标记用于经期第一天，结束标记用于经期最后一天。同一天只能启用这两个标记中的一个。</string>
+    <string name="tour_body_period_actions">使用清除记录可删除当天已保存的数据。取消会在不保存更改的情况下关闭窗口，OK 会保存当前经期记录。</string>
+    <string name="tour_body_period_modal">在经期记录中，你可以设置经期日、出血强度、疼痛等级（轻度/中度/重度）、附加症状以及可选的开始/结束标记。\n使用清除记录可删除该日期已保存的数据。</string>
     <string name="tour_body_period_indicators">经期日会直接显示在日历中，包括强度底色、指示点和 S/E 标记。\n对于有经期记录的月份，你还可以打开经期详情并导出格式化 PDF 报告。</string>
     <string name="tour_title_period_entry">经期记录</string>
     <string name="tour_title_period_modal">经期选项</string>

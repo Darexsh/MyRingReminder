@@ -176,7 +176,7 @@ An overview of the current visual experience across the app:
 ### 6. Review cycle history
 
 * Check the **Cycles** tab for recorded past cycles, grouped by month and sortable by newest or oldest first.
-* Use **Historie löschen** to clear the list or **Historie erstellen** to rebuild it from saved cycle data.
+* Use **Clear history** to clear the list or **Create history** to rebuild it from saved cycle data.
 
 ### 7. Keep notes private
 
@@ -189,14 +189,14 @@ An overview of the current visual experience across the app:
 
 ### 9. Handle special cases
 
-* Tap **Sonderfälle / Special cases** on the Home screen to open quick actions.
+* Tap **Special cases** on the Home screen to open quick actions.
 * Use **Wear ring longer** to extend only the current cycle.
 * Use **Skip ring-free week** to set immediate reinsertion for the current cycle.
-* Tap the **info** icon next to **Wear ring longer** for additional guidance.
+* Tap the **info** icon next to **Wear ring longer** or **Skip ring-free week** for additional guidance.
 
 ### 10. Keep the app up to date
 
-* Use the update entry in **Settings** or the update card on the Home screen to check for newer app versions.
+* Use the update entry in **Settings → Advanced** or the update card on the Home screen to check for newer app versions.
 * If an update is available, the app can download the APK and prompt installation directly.
 
 ### 11. Enable optional security

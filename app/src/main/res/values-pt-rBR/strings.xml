@@ -572,6 +572,7 @@
     <string name="tour_body_calendar_legend">Estas cores mostram tempo de uso, dias de intervalo, remoção e inserção.\nVocê pode mudar as cores tocando nos pontos da legenda.</string>
     <string name="tour_body_cycles">Acompanhe ciclos anteriores e seus eventos de inserção/remoção.</string>
     <string name="tour_body_cycles_clear">Remova todas as entradas de ciclos salvas da lista.</string>
+    <string name="tour_body_cycles_rebuild">Recria o histórico de ciclos a partir da data de inserção salva, das configurações do ciclo e dos casos especiais salvos depois que ele foi apagado.</string>
     <string name="tour_body_delay">Use para registrar dias extras se o anel foi usado por mais tempo. Mais infos no botão de informações.</string>
     <string name="tour_body_navigation">Alterne entre Início, Calendário, Ciclos e Configurações aqui.</string>
     <string name="tour_body_notes">Salve lembretes e notas pessoais para este ciclo.</string>
@@ -595,7 +596,7 @@
     <string name="tour_body_settings_cycle">Defina data, hora de inserção e duração do ciclo.</string>
     <string name="tour_body_settings_info">Mostra versão, info do desenvolvedor e links de contato.</string>
     <string name="tour_body_settings_language">Alterne entre diferentes idiomas.</string>
-    <string name="tour_body_settings_notifications">Defina quando quer ser lembrado da inserção e remoção.\nSe falhar, desative a otimização de bateria.</string>
+    <string name="tour_body_settings_notifications">Abre as configurações detalhadas de lembretes. Lá você pode definir os horários, enviar uma notificação de teste, permitir notificações, permitir alarmes exatos e desativar a otimização da bateria se os lembretes atrasarem.</string>
     <string name="tour_body_settings_reset">Exclua todos os dados salvos e reinicie o app.</string>
     <string name="tour_body_settings_update">Verifique novas versões do app e instale-as.</string>
     <string name="tour_complete_done">Pronto</string>
@@ -609,6 +610,7 @@
     <string name="tour_title_calendar_legend">Legenda do calendário</string>
     <string name="tour_title_cycles">Histórico de ciclos</string>
     <string name="tour_title_cycles_clear">Limpar histórico</string>
+    <string name="tour_title_cycles_rebuild">Criar histórico</string>
     <string name="tour_title_delay">Atrasar ciclo</string>
     <string name="tour_title_navigation">Navegação</string>
     <string name="tour_title_notes">Notas rápidas</string>
@@ -636,6 +638,11 @@
     <string name="tour_title_settings_reset">Resetar app</string>
     <string name="tour_title_settings_update">Atualizações</string>
     <string name="tour_body_period_entry">Toque em um dia para adicionar ou editar o acompanhamento menstrual. A edição está disponível apenas durante a semana sem anel e ±4 dias ao redor.</string>
+    <string name="tour_body_period_intensity">A intensidade do sangramento é obrigatória para salvar um registro do período. Escolha leve, média ou forte para indicar quão intenso foi nesse dia.</string>
+    <string name="tour_body_period_pain">O nível de dor é opcional. Use leve, moderada ou forte se quiser registrar dor nesse dia.</string>
+    <string name="tour_body_period_symptoms">Adicione os sintomas que combinarem com esse dia. Você pode selecionar vários sintomas ao mesmo tempo.</string>
+    <string name="tour_body_period_markers">Use o marcador de início para o primeiro dia do período e o marcador de fim para o último dia. Apenas um dos dois marcadores pode ficar ativo no mesmo dia.</string>
+    <string name="tour_body_period_actions">Use "Excluir registro" para remover os dados salvos desse dia. Cancelar fecha a janela sem mudanças e OK salva o registro atual do período.</string>
     <string name="tour_body_period_modal">No registro do período, você pode definir dia do período, intensidade do sangramento, nível de dor (leve/moderada/forte), sintomas adicionais e marcadores opcionais de início/fim.\nUse "Excluir registro" para remover os dados salvos desse dia.</string>
     <string name="tour_body_period_indicators">Os dias menstruais são exibidos diretamente no calendário com tonalidade de intensidade, pontos indicadores e marcadores S/E.\nPara meses com registros menstruais, você também pode abrir Detalhes do período e exportar um relatório PDF formatado.</string>
     <string name="tour_title_period_entry">Registro menstrual</string>

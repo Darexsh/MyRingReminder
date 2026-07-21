@@ -572,6 +572,7 @@
     <string name="tour_body_calendar_legend">Estos colores indican el tiempo de uso, los días de descanso, la retirada y la colocación.\nTambién puedes cambiar los colores tocando los puntos de la leyenda.</string>
     <string name="tour_body_cycles">Realiza un seguimiento de los ciclos anteriores y de sus eventos de colocación/retirada.</string>
     <string name="tour_body_cycles_clear">Elimina todas las entradas de ciclos guardadas de la lista.</string>
+    <string name="tour_body_cycles_rebuild">Vuelve a crear el historial de ciclos a partir de la fecha de inserción guardada, la configuración del ciclo y los casos especiales guardados después de haberlo borrado.</string>
     <string name="tour_body_delay">Utiliza esta opción para registrar días adicionales si el anillo se ha llevado puesto durante más tiempo. Hay más información disponible a través del botón de información.</string>
     <string name="tour_body_navigation">Cambia aquí entre Inicio, Calendario, Ciclos y Ajustes.</string>
     <string name="tour_body_notes">Guarda recordatorios y notas personales para este ciclo.</string>
@@ -595,7 +596,7 @@
     <string name="tour_body_settings_cycle">Establece la fecha, la hora y la duración del ciclo de inserción.</string>
     <string name="tour_body_settings_info">Muestra la versión, la información del desarrollador y los enlaces de contacto.</string>
     <string name="tour_body_settings_language">Cambiar entre diferentes idiomas.</string>
-    <string name="tour_body_settings_notifications">Configura cuándo deseas recibir recordatorios en los días de inserción y extracción.\nSi los recordatorios no son fiables, desactiva la optimización de la batería y habilita las alarmas exactas en estos ajustes.</string>
+    <string name="tour_body_settings_notifications">Abre los ajustes detallados de recordatorios. Allí puedes configurar los horarios, enviar una notificación de prueba, permitir el permiso de notificaciones, habilitar alarmas exactas y desactivar la optimización de la batería si los recordatorios se retrasan.</string>
     <string name="tour_body_settings_reset">Elimina todos los datos guardados y restablece la aplicación.</string>
     <string name="tour_body_settings_update">Busca nuevas versiones de la aplicación e instálalas.</string>
     <string name="tour_complete_done">Hecho</string>
@@ -609,6 +610,7 @@
     <string name="tour_title_calendar_legend">Leyenda del calendario</string>
     <string name="tour_title_cycles">Historial de ciclos</string>
     <string name="tour_title_cycles_clear">Borrar historial</string>
+    <string name="tour_title_cycles_rebuild">Crear historial</string>
     <string name="tour_title_delay">Retrasar el ciclo</string>
     <string name="tour_title_navigation">Navegar</string>
     <string name="tour_title_notes">Notas rápidas</string>
@@ -636,6 +638,11 @@
     <string name="tour_title_settings_reset">Restablecer aplicación</string>
     <string name="tour_title_settings_update">Actualizaciones</string>
     <string name="tour_body_period_entry">Toca un día para añadir o editar registros del período.\nLa edición solo está disponible durante la semana sin anillo y ±4 días alrededor.</string>
+    <string name="tour_body_period_intensity">La intensidad del sangrado es obligatoria para guardar una entrada del período. Elige leve, media o fuerte para indicar cuánto sangrado hubo ese día.</string>
+    <string name="tour_body_period_pain">El nivel de dolor es opcional. Usa leve, moderado o fuerte si quieres registrar dolor para ese día.</string>
+    <string name="tour_body_period_symptoms">Añade los síntomas que correspondan a ese día. Puedes seleccionar varios síntomas al mismo tiempo.</string>
+    <string name="tour_body_period_markers">Usa el marcador de inicio para el primer día del período y el marcador de fin para el último día. Solo uno de los dos marcadores puede estar activo el mismo día.</string>
+    <string name="tour_body_period_actions">Usa "Eliminar registro" para borrar los datos guardados de ese día. Cancelar cierra la ventana sin cambios y OK guarda la entrada actual del período.</string>
     <string name="tour_body_period_modal">En el registro del período puedes definir día del período, intensidad del sangrado, nivel de dolor (leve/moderado/fuerte), síntomas adicionales y marcadores opcionales de inicio/fin.\nUsa "Eliminar registro" para borrar los datos guardados de ese día.</string>
     <string name="tour_body_period_indicators">Los días del período se muestran directamente en el calendario con sombreado de intensidad, puntos indicadores y marcadores S/E.\nEn meses con registros del período también puedes abrir Detalles del período y exportar un informe PDF formateado.</string>
     <string name="tour_title_period_entry">Registro del período</string>

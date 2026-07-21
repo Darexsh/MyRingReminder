@@ -572,6 +572,7 @@
     <string name="tour_body_calendar_legend">Questi colori mostrano il tempo di utilizzo, i giorni di pausa, rimozione e inserimento.\nPuoi cambiare i colori toccando i punti della legenda.</string>
     <string name="tour_body_cycles">Monitora i cicli precedenti e i relativi eventi di inserimento/rimozione.</string>
     <string name="tour_body_cycles_clear">Rimuovi tutte le voci dei cicli salvati dall\'elenco.</string>
+    <string name="tour_body_cycles_rebuild">Ricrea la cronologia dei cicli dalla data di inserimento salvata, dalle impostazioni del ciclo e dai casi speciali salvati dopo averla cancellata.</string>
     <string name="tour_body_delay">Usa questa opzione per registrare giorni extra se l\'anello è stato indossato più a lungo. Maggiori info tramite il pulsante info.</string>
     <string name="tour_body_navigation">Passa da Home, Calendario, Cicli e Impostazioni qui.</string>
     <string name="tour_body_notes">Salva promemoria e note personali per questo ciclo.</string>
@@ -595,7 +596,7 @@
     <string name="tour_body_settings_cycle">Imposta data, ora di inserimento e durata del ciclo.</string>
     <string name="tour_body_settings_info">Mostra versione, info sviluppatore e link di contatto.</string>
     <string name="tour_body_settings_language">Passa tra le diverse lingue.</string>
-    <string name="tour_body_settings_notifications">Imposta quando ricevere i promemoria di inserimento e rimozione.\nSe non sono affidabili, disabilita l\'ottimizzazione batteria.</string>
+    <string name="tour_body_settings_notifications">Apre le impostazioni dettagliate dei promemoria. Qui puoi impostare gli orari, inviare una notifica di test, consentire le notifiche, consentire gli allarmi esatti e disattivare l\'ottimizzazione della batteria se i promemoria arrivano in ritardo.</string>
     <string name="tour_body_settings_reset">Elimina tutti i dati e ripristina l\'app.</string>
     <string name="tour_body_settings_update">Controlla nuove versioni dell\'app e installale.</string>
     <string name="tour_complete_done">Fatto</string>
@@ -609,6 +610,7 @@
     <string name="tour_title_calendar_legend">Legenda calendario</string>
     <string name="tour_title_cycles">Cronologia cicli</string>
     <string name="tour_title_cycles_clear">Cancella cronologia</string>
+    <string name="tour_title_cycles_rebuild">Crea cronologia</string>
     <string name="tour_title_delay">Ritarda ciclo</string>
     <string name="tour_title_navigation">Navigazione</string>
     <string name="tour_title_notes">Note rapide</string>
@@ -636,6 +638,11 @@
     <string name="tour_title_settings_reset">Ripristina app</string>
     <string name="tour_title_settings_update">Aggiornamenti</string>
     <string name="tour_body_period_entry">Tocca un giorno per aggiungere o modificare il monitoraggio del ciclo. La modifica è disponibile solo durante la settimana senza anello e ±4 giorni intorno.</string>
+    <string name="tour_body_period_intensity">L\'intensità del sanguinamento è obbligatoria per salvare una voce del periodo. Scegli lieve, media o forte per indicare quanto era intensa in quel giorno.</string>
+    <string name="tour_body_period_pain">Il livello di dolore è facoltativo. Usa lieve, medio o forte se vuoi registrare il dolore per quel giorno.</string>
+    <string name="tour_body_period_symptoms">Aggiungi i sintomi adatti a quel giorno. È possibile selezionare più sintomi contemporaneamente.</string>
+    <string name="tour_body_period_markers">Usa il marcatore di inizio per il primo giorno del periodo e quello di fine per l\'ultimo giorno. Solo uno dei due marcatori può essere attivo nello stesso giorno.</string>
+    <string name="tour_body_period_actions">Usa "Elimina voce" per rimuovere i dati salvati di quel giorno. Annulla chiude la finestra senza modifiche e OK salva la voce attuale del periodo.</string>
     <string name="tour_body_period_modal">Nella voce del ciclo puoi impostare giorno delle mestruazioni, intensità del sanguinamento, livello di dolore (lieve/medio/forte), sintomi aggiuntivi e marcatori opzionali di inizio/fine.\nUsa \"Elimina voce\" per rimuovere i dati salvati di quel giorno.</string>
     <string name="tour_body_period_indicators">I giorni di ciclo sono mostrati direttamente nel calendario con sfumatura di intensità, punti indicatore e marker S/E.\nPer i mesi con registrazioni mestruali puoi anche aprire Dettagli ciclo ed esportare un report PDF formattato.</string>
     <string name="tour_title_period_entry">Voce ciclo</string>

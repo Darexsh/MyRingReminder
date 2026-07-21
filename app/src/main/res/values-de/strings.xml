@@ -572,6 +572,7 @@
     <string name="tour_body_calendar_legend">Diese Farben zeigen Tragezeit, ringfreie Tage, Entfernen und Einsetzen.\nDu kannst die Farben auch ändern, indem du auf die Legendensymbole tippst.</string>
     <string name="tour_body_cycles">Verfolge vergangene Zyklen und ihre Einsetz-/Entfern-Ereignisse.</string>
     <string name="tour_body_cycles_clear">Alle gespeicherten Zyklus-Einträge aus der Liste entfernen.</string>
+    <string name="tour_body_cycles_rebuild">Erstellt die Zyklus-Historie nach dem Löschen erneut aus dem gespeicherten Einsetzdatum, den Zyklus-Einstellungen und gespeicherten Sonderfällen.</string>
     <string name="tour_body_delay">Hiermit kannst du zusätzliche Tage eintragen, falls der Ring länger getragen wurde. Weitere Informationen über den Info-Button.</string>
     <string name="tour_body_navigation">Wechsle hier zwischen Start, Kalender, Zyklen und Einstellungen.</string>
     <string name="tour_body_notes">Speichere Erinnerungen und persönliche Notizen für diesen Zyklus.</string>
@@ -595,7 +596,7 @@
     <string name="tour_body_settings_cycle">Einsetzdatum, -zeit und Zykluslänge festlegen.</string>
     <string name="tour_body_settings_info">Zeigt Version, Entwickler-Info und Kontaktlinks.</string>
     <string name="tour_body_settings_language">Zwischen verschiedenen Sprachen wechseln.</string>
-    <string name="tour_body_settings_notifications">Lege fest, wann du an Einsetz- und Entferntagen erinnert werden möchtest.\nFalls Erinnerungen unzuverlässig sind, deaktiviere die Akku-Optimierung und erlaube exakte Alarme.</string>
+    <string name="tour_body_settings_notifications">Öffnet die detaillierten Erinnerungs-Einstellungen. Dort kannst du Erinnerungszeiten festlegen, eine Test-Benachrichtigung senden, die Benachrichtigungsberechtigung erlauben, exakte Alarme aktivieren und die Akku-Optimierung deaktivieren, falls Erinnerungen verzögert werden.</string>
     <string name="tour_body_settings_reset">Alle gespeicherten Daten löschen und die App zurücksetzen.</string>
     <string name="tour_body_settings_update">Suche nach neuen App-Versionen und installiere sie.</string>
     <string name="tour_complete_done">Fertig</string>
@@ -609,6 +610,7 @@
     <string name="tour_title_calendar_legend">Kalender-Legende</string>
     <string name="tour_title_cycles">Zyklus-Historie</string>
     <string name="tour_title_cycles_clear">Historie löschen</string>
+    <string name="tour_title_cycles_rebuild">Historie erstellen</string>
     <string name="tour_title_delay">Zyklus verlängern</string>
     <string name="tour_title_navigation">Navigation</string>
     <string name="tour_title_notes">Schnellnotizen</string>
@@ -636,6 +638,11 @@
     <string name="tour_title_settings_reset">App zurücksetzen</string>
     <string name="tour_title_settings_update">Updates</string>
     <string name="tour_body_period_entry">Tippe auf einen Tag, um Perioden-Einträge hinzuzufügen oder zu bearbeiten.\nBearbeiten ist nur während der ringfreien Woche und ±4 Tage darum herum verfügbar.</string>
+    <string name="tour_body_period_intensity">Die Blutungsstärke ist für einen gespeicherten Periodeneintrag erforderlich. Wähle leicht, mittel oder stark, um festzulegen, wie intensiv die Periode an diesem Tag war.</string>
+    <string name="tour_body_period_pain">Die Schmerzstärke ist optional. Nutze leicht, mittel oder stark, wenn Schmerzen für diesen Tag mitgespeichert werden sollen.</string>
+    <string name="tour_body_period_symptoms">Füge passende Symptome für diesen Tag hinzu. Es können mehrere Symptome gleichzeitig ausgewählt werden.</string>
+    <string name="tour_body_period_markers">Nutze Periodenbeginn für den ersten Tag einer Periode und Periodenende für den letzten Tag. Pro Tag kann nur einer der beiden Marker aktiv sein.</string>
+    <string name="tour_body_period_actions">Mit "Eintrag löschen" entfernst du gespeicherte Daten für diesen Tag. Abbrechen schließt das Fenster ohne Änderungen, und OK speichert den aktuellen Periodeneintrag.</string>
     <string name="tour_body_period_modal">Im Periodeneintrag kannst du Periodentag, Blutungsstärke, Schmerzstärke (leicht/mittel/stark), zusätzliche Symptome sowie optionale Start-/Endmarker festlegen.\nNutze "Eintrag löschen", um gespeicherte Daten für diesen Tag zu entfernen.</string>
     <string name="tour_body_period_indicators">Periodentage werden direkt im Kalender mit Intensitätsschattierung, Indikatorpunkten und S/E-Markierungen angezeigt.\nFür Monate mit Perioden-Einträgen kannst du zusätzlich Perioden-Details öffnen und einen formatierten PDF-Bericht exportieren.</string>
     <string name="tour_title_period_entry">Periodeneintrag</string>

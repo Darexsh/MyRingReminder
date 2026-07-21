@@ -572,6 +572,7 @@
     <string name="tour_body_calendar_legend">Te kolory pokazują czas noszenia, dni przerwy, zdjęcie i założenie.\nMożesz zmienić kolory, dotykając kropek w legendzie.</string>
     <string name="tour_body_cycles">Śledź poprzednie cykle i ich zdarzenia założenia/zdjęcia.</string>
     <string name="tour_body_cycles_clear">Usuń wszystkie zapisane wpisy cykli z listy.</string>
+    <string name="tour_body_cycles_rebuild">Odtwórz historię cykli na podstawie zapisanej daty założenia, ustawień cyklu i zapisanych przypadków specjalnych po jej wyczyszczeniu.</string>
     <string name="tour_body_delay">Użyj tego, aby zapisać dodatkowe dni, jeśli pierścień był noszony dłużej. Więcej informacji pod przyciskiem info.</string>
     <string name="tour_body_navigation">Przełączaj się tutaj między ekranem głównym, kalendarzem, cyklami i ustawieniami.</string>
     <string name="tour_body_notes">Zapisuj przypomnienia i osobiste notatki dla tego cyklu.</string>
@@ -595,7 +596,7 @@
     <string name="tour_body_settings_cycle">Ustaw datę, godzinę założenia i długość cyklu.</string>
     <string name="tour_body_settings_info">Pokazuje wersję, informacje o deweloperze i linki kontaktowe.</string>
     <string name="tour_body_settings_language">Przełączaj między różnymi językami.</string>
-    <string name="tour_body_settings_notifications">Ustaw przypomnienia o założeniu i zdjęciu.\nJeśli powiadomienia nie działają, wyłącz optymalizację baterii.</string>
+    <string name="tour_body_settings_notifications">Otwiera szczegółowe ustawienia przypomnień. Tutaj możesz ustawić czasy przypomnień, wysłać powiadomienie testowe, zezwolić na powiadomienia, zezwolić na dokładne alarmy i wyłączyć optymalizację baterii, jeśli przypomnienia się opóźniają.</string>
     <string name="tour_body_settings_reset">Usuń wszystkie dane i zresetuj aplikację.</string>
     <string name="tour_body_settings_update">Sprawdzaj i instaluj nowe wersje aplikacji.</string>
     <string name="tour_complete_done">Gotowe</string>
@@ -609,6 +610,7 @@
     <string name="tour_title_calendar_legend">Legenda kalendarza</string>
     <string name="tour_title_cycles">Historia cykli</string>
     <string name="tour_title_cycles_clear">Wyczyść historię</string>
+    <string name="tour_title_cycles_rebuild">Utwórz historię</string>
     <string name="tour_title_delay">Opóźnij cykl</string>
     <string name="tour_title_navigation">Nawigacja</string>
     <string name="tour_title_notes">Szybkie notatki</string>
@@ -636,6 +638,11 @@
     <string name="tour_title_settings_reset">Resetuj aplikację</string>
     <string name="tour_title_settings_update">Aktualizacje</string>
     <string name="tour_body_period_entry">Dotknij dnia, aby dodać lub edytować śledzenie okresu. Edycja jest dostępna tylko w tygodniu bez pierścienia i ±4 dni wokół niego.</string>
+    <string name="tour_body_period_intensity">Intensywność krwawienia jest wymagana do zapisania wpisu okresu. Wybierz lekką, średnią lub silną, aby określić, jak intensywny był okres tego dnia.</string>
+    <string name="tour_body_period_pain">Poziom bólu jest opcjonalny. Użyj lekki, umiarkowany lub silny, jeśli chcesz zapisać ból dla tego dnia.</string>
+    <string name="tour_body_period_symptoms">Dodaj objawy pasujące do tego dnia. Możesz wybrać kilka objawów jednocześnie.</string>
+    <string name="tour_body_period_markers">Użyj znacznika początku dla pierwszego dnia okresu i znacznika końca dla ostatniego dnia. Tylko jeden z tych dwóch znaczników może być aktywny tego samego dnia.</string>
+    <string name="tour_body_period_actions">Użyj "Usuń wpis", aby usunąć zapisane dane dla tego dnia. Anuluj zamyka okno bez zmian, a OK zapisuje bieżący wpis okresu.</string>
     <string name="tour_body_period_modal">W wpisie okresu możesz ustawić dzień okresu, intensywność krwawienia, poziom bólu (lekki/umiarkowany/silny), dodatkowe objawy oraz opcjonalne znaczniki początku/końca.\nUżyj "Usuń wpis", aby usunąć zapisane dane dla tego dnia.</string>
     <string name="tour_body_period_indicators">Dni okresu są wyświetlane bezpośrednio w kalendarzu z cieniowaniem intensywności, kropkami wskaźników i oznaczeniami S/E.\nW miesiącach z wpisami okresu możesz też otworzyć Szczegóły okresu i wyeksportować sformatowany raport PDF.</string>
     <string name="tour_title_period_entry">Wpis okresu</string>

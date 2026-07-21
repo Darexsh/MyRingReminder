@@ -570,11 +570,17 @@
     <!-- Tour -->
     <string name="tour_body_calendar">See insertion, removal, and ring-free days at a glance.</string>
     <string name="tour_body_period_entry">Tap a day to add or edit period tracking.\nEditing is available only during ring-free week and ±4 days around it.</string>
+    <string name="tour_body_period_intensity">Bleeding intensity is required for a saved period entry. Choose light, medium, or heavy to show how strong the period was on that day.</string>
+    <string name="tour_body_period_pain">Pain level is optional. Use light, medium, or strong if pain should be tracked for that day.</string>
+    <string name="tour_body_period_symptoms">Add any matching symptoms for that day. You can select multiple symptoms at the same time.</string>
+    <string name="tour_body_period_markers">Use Start marker for the first day of a period and End marker for the last day. Only one of the two markers can be active on the same day.</string>
+    <string name="tour_body_period_actions">Use Clear entry to remove saved data for that day. Cancel closes the window without changes, and OK saves the current period entry.</string>
     <string name="tour_body_period_modal">In period entry, set Period day, bleeding intensity, pain level (light/medium/strong), additional symptoms, and optional start/end markers.\nUse Clear entry to remove saved data for that day.</string>
     <string name="tour_body_period_indicators">Period days are shown directly in the calendar with intensity shading, indicator dots, and S/E markers.\nFor months with period entries, you can also open Period Details and export a formatted PDF report.</string>
     <string name="tour_body_calendar_legend">These colors show wear time, ring-free days, removal, and insertion.\nYou can also change the colors by tapping the legend dots.</string>
     <string name="tour_body_cycles">Track previous cycles and their insertion/removal events.</string>
     <string name="tour_body_cycles_clear">Remove all saved cycle entries from the list.</string>
+    <string name="tour_body_cycles_rebuild">Recreate the cycle history from your saved insertion date, cycle settings, and stored special cases after you cleared it.</string>
     <string name="tour_body_delay">Use this to record extra days if the ring was worn longer. More information is available via the info button.</string>
     <string name="tour_body_navigation">Switch between Home, Calendar, Cycles, and Settings here.</string>
     <string name="tour_body_notes">Save reminders and personal notes for this cycle.</string>
@@ -598,7 +604,7 @@
     <string name="tour_body_settings_cycle">Set insertion date, time, and cycle length.</string>
     <string name="tour_body_settings_info">Shows version, developer info, and contact links.</string>
     <string name="tour_body_settings_language">Switch between different languages.</string>
-    <string name="tour_body_settings_notifications">Set when you want to be reminded on insertion and removal days.\nIf reminders are unreliable, disable battery optimization and allow exact alarms in these settings.</string>
+    <string name="tour_body_settings_notifications">Open the detailed reminder settings. Inside, you can set reminder times, send a test notification, allow notification permission, allow exact alarms, and disable battery optimization if reminders are delayed.</string>
     <string name="tour_body_settings_reset">Delete all saved data and reset the app.</string>
     <string name="tour_body_settings_update">Check for new app versions and install them.</string>
     <string name="tour_complete_done">Done</string>
@@ -615,6 +621,7 @@
     <string name="tour_title_calendar_legend">Calendar legend</string>
     <string name="tour_title_cycles">Cycle history</string>
     <string name="tour_title_cycles_clear">Clear history</string>
+    <string name="tour_title_cycles_rebuild">Create history</string>
     <string name="tour_title_delay">Delay your cycle</string>
     <string name="tour_title_navigation">Navigate</string>
     <string name="tour_title_notes">Quick notes</string>

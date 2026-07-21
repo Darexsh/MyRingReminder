@@ -1266,8 +1266,29 @@ public class CalendarFragment extends Fragment {
         dialog.show();
     }
 
-    public boolean ensurePeriodDialogVisibleForTour() {
+    public boolean isPeriodDialogTourTarget(int targetViewId) {
+        return targetViewId == R.id.period_modal_root
+                || targetViewId == R.id.switch_period_day
+                || targetViewId == R.id.tv_period_intensity_title
+                || targetViewId == R.id.chip_group_intensity
+                || targetViewId == R.id.tv_period_pain_title
+                || targetViewId == R.id.chip_group_pain
+                || targetViewId == R.id.tv_period_symptoms_title
+                || targetViewId == R.id.chip_group_symptoms
+                || targetViewId == R.id.tv_period_markers_title
+                || targetViewId == R.id.chip_group_markers
+                || targetViewId == R.id.period_modal_actions
+                || targetViewId == R.id.btn_period_delete
+                || targetViewId == R.id.btn_period_cancel
+                || targetViewId == R.id.btn_period_save;
+    }
+
+    public boolean ensurePeriodDialogVisibleForTour(int targetViewId) {
         if (!isAdded()) {
+            return false;
+        }
+        if (!isPeriodDialogTourTarget(targetViewId)) {
+            dismissPeriodDialogForTour();
             return false;
         }
         if (activePeriodEntryDialog != null && activePeriodEntryDialog.isShowing()) {
@@ -1287,6 +1308,22 @@ public class CalendarFragment extends Fragment {
         return true;
     }
 
+    public boolean syncPeriodDialogForTour(int targetViewId) {
+        boolean dialogTarget = isPeriodDialogTourTarget(targetViewId);
+        boolean isShowing = activePeriodEntryDialog != null && activePeriodEntryDialog.isShowing();
+        if (dialogTarget) {
+            if (isShowing) {
+                return false;
+            }
+            return ensurePeriodDialogVisibleForTour(targetViewId);
+        }
+        if (isShowing) {
+            dismissPeriodDialogForTour();
+            return true;
+        }
+        return false;
+    }
+
     public void dismissPeriodDialogForTour() {
         if (activePeriodEntryDialog != null && activePeriodEntryDialog.isShowing()) {
             activePeriodEntryDialog.dismiss();
@@ -1295,10 +1332,17 @@ public class CalendarFragment extends Fragment {
 
     @Nullable
     public ViewGroup getPeriodDialogTourHost() {
-        if (activePeriodEntryDialogView instanceof ViewGroup) {
-            return (ViewGroup) activePeriodEntryDialogView;
+        if (activePeriodEntryDialog == null
+                || !activePeriodEntryDialog.isShowing()
+                || activePeriodEntryDialog.getWindow() == null) {
+            return null;
         }
-        return null;
+        View contentRoot = activePeriodEntryDialog.getWindow().findViewById(android.R.id.content);
+        if (contentRoot instanceof ViewGroup) {
+            return (ViewGroup) contentRoot;
+        }
+        View decor = activePeriodEntryDialog.getWindow().getDecorView();
+        return decor instanceof ViewGroup ? (ViewGroup) decor : null;
     }
 
     @Nullable

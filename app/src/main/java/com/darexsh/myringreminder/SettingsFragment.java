@@ -139,6 +139,7 @@ public class SettingsFragment extends Fragment {
     private ProgressBar downloadProgressBar;
     private TextView downloadProgressText;
     private AlertDialog notificationToolsDialog;
+    private View notificationToolsDialogView;
     private AlertDialog backgroundToolsDialog;
     private View backgroundToolsDialogView;
     private final List<ValueAnimator> notificationWarningAnimators = new ArrayList<>();
@@ -1353,6 +1354,48 @@ public class SettingsFragment extends Fragment {
                 || targetViewId == R.id.btn_background_tools_blur;
     }
 
+    private boolean isNotificationToolsDialogTarget(int targetViewId) {
+        return targetViewId == R.id.btn_notification_times
+                || targetViewId == R.id.btn_notification_test
+                || targetViewId == R.id.btn_notification_permission
+                || targetViewId == R.id.btn_notification_exact
+                || targetViewId == R.id.btn_notification_battery_opt;
+    }
+
+    public boolean ensureNotificationToolsDialogVisibleForTour(int targetViewId) {
+        if (!isNotificationToolsDialogTarget(targetViewId)) {
+            if (notificationToolsDialog != null && notificationToolsDialog.isShowing()) {
+                notificationToolsDialog.dismiss();
+            }
+            return false;
+        }
+        if (notificationToolsDialog != null && notificationToolsDialog.isShowing()) {
+            return true;
+        }
+        showNotificationToolsDialog();
+        return notificationToolsDialog != null && notificationToolsDialog.isShowing();
+    }
+
+    public boolean isNotificationToolsDialogTourTarget(int targetViewId) {
+        return isNotificationToolsDialogTarget(targetViewId);
+    }
+
+    @Nullable
+    public ViewGroup getNotificationToolsDialogTourHost(int targetViewId) {
+        if (!isNotificationToolsDialogTarget(targetViewId)
+                || notificationToolsDialog == null
+                || !notificationToolsDialog.isShowing()
+                || notificationToolsDialog.getWindow() == null) {
+            return null;
+        }
+        View contentRoot = notificationToolsDialog.getWindow().findViewById(android.R.id.content);
+        if (contentRoot instanceof ViewGroup) {
+            return (ViewGroup) contentRoot;
+        }
+        View decor = notificationToolsDialog.getWindow().getDecorView();
+        return decor instanceof ViewGroup ? (ViewGroup) decor : null;
+    }
+
     public boolean ensureBackgroundToolsDialogVisibleForTour(int targetViewId) {
         if (!isBackgroundToolsDialogTarget(targetViewId)) {
             if (backgroundToolsDialog != null && backgroundToolsDialog.isShowing()) {
@@ -1389,6 +1432,12 @@ public class SettingsFragment extends Fragment {
 
     @Nullable
     public View findTourTargetView(int targetViewId) {
+        if (notificationToolsDialogView != null) {
+            View inNotificationDialog = notificationToolsDialogView.findViewById(targetViewId);
+            if (inNotificationDialog != null) {
+                return inNotificationDialog;
+            }
+        }
         if (backgroundToolsDialogView != null) {
             View inDialog = backgroundToolsDialogView.findViewById(targetViewId);
             if (inDialog != null) {
@@ -3098,10 +3147,12 @@ public class SettingsFragment extends Fragment {
                 .setNegativeButton(R.string.dialog_cancel, null)
                 .show();
         notificationToolsDialog = dialog;
+        notificationToolsDialogView = content;
         applyDialogButtonColors(dialog);
         dialog.setOnDismissListener(d -> {
             stopNotificationWarningAnimations();
             notificationToolsDialog = null;
+            notificationToolsDialogView = null;
         });
 
         btnTimes.setOnClickListener(v -> {
