@@ -55,8 +55,8 @@ It combines cycle timing, reminders, period tracking during the ring-free window
 ### Period Tracking
 
 * **Period Tracking (Ring-Free Window)**: Add or edit period entries during the ring-free week and ±4 days, including bleeding intensity, pain level, symptoms, and optional start/end markers.
-* **Period Details & PDF Export**: Open a dedicated details view for months with entries, switch between 3/6/12-month or all-time ranges, and export a formatted PDF report.
-* **Search / Filter in Period Details**: Narrow entries live by text and quick filters such as symptoms, pain, and start/end markers.
+* **Period Details & PDF Export**: Open a dedicated details view for months with entries, switch between 3/6/12-month or full-history ranges, and export a polished PDF report with summary cards, highlights, a 3-column daily overview, and an extended notes area.
+* **Search / Filter in Period Details**: Narrow entries live by text and quick filters such as symptoms, pain, and start/end markers across the currently selected range, including full-history view.
 
 ### Real-Life Flexibility
 
@@ -87,7 +87,6 @@ It combines cycle timing, reminders, period tracking during the ring-free window
 
 ## 📝 Planned Ideas
 
-* **PDF Export Refinement**: Polish the period details export layout with improved spacing, alignment, and visual hierarchy while keeping the current structured design.
 * **Small Home Screen Refinements**: Improve clarity on the home screen with minor display refinements while keeping it automatic and view-only.
 
 * * *
@@ -157,7 +156,7 @@ An overview of the current visual experience across the app:
 * Use the left/right arrows to move between months.
 * Tap the month label to choose a specific month and year.
 * During ring-free week and ±4 days, tap a day to open **Period Entry** and save period details.
-* If the selected month contains period entries, open **Period Details** to review grouped history, use range filters/search, or export a PDF report.
+* If the selected month contains period entries, open **Period Details** to review grouped history, switch between 3/6/12-month or full-history ranges, use search and quick filters, or export a structured PDF report.
 
 ### 3. Let reminders handle the timing
 
@@ -171,7 +170,7 @@ An overview of the current visual experience across the app:
 ### 5. Track period entries when relevant
 
 * During the ring-free window, save period details directly on calendar days.
-* Use **Period Details** for grouped review, search/filter, and PDF export.
+* Use **Period Details** for grouped review, full-history lookup, search/filter, and PDF export.
 
 ### 6. Review cycle history
 
@@ -225,7 +224,7 @@ An overview of the current visual experience across the app:
 * Local app state such as settings, notes, cycle history, period tracking, and special-case flags is stored in **SharedPreferences**.
 * In-app update checks use the public **GitHub Releases API**, and downloaded APK installation is handed off to Android's package installer.
 * Notifications are implemented with **BroadcastReceiver** and **NotificationManagerCompat**.
-* Period reports are generated locally with **PdfDocument** and exported through Android's document picker API.
+* Period reports are generated locally with **PdfDocument** and exported through Android's document picker API, including grouped summary cards, multi-column day cards, and a larger notes section.
 * Shared state between fragments is managed with **SharedViewModel** and **LiveData**.
 * Home-screen widgets are implemented via **AppWidgetProvider**.
 * Core user data remains stored locally on the device.

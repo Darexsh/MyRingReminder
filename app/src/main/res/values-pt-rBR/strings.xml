@@ -282,6 +282,7 @@
     <string name="btn_period_details">Detalhes do período</string>
     <string name="btn_period_details_save_pdf">Salvar como PDF</string>
     <string name="period_details_pdf_file_name">detalhes_periodo_%1$s.pdf</string>
+    <string name="period_details_pdf_export_title">Exportacao do ciclo</string>
     <string name="period_details_pdf_saved">PDF salvo com sucesso.</string>
     <string name="period_details_pdf_save_failed">Falha ao salvar o PDF.</string>
     <string name="period_details_pdf_no_data">Não há registros de período para exportar.</string>

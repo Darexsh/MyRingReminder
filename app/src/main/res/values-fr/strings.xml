@@ -282,6 +282,7 @@
     <string name="btn_period_details">Détails des règles</string>
     <string name="btn_period_details_save_pdf">Enregistrer en PDF</string>
     <string name="period_details_pdf_file_name">details_regles_%1$s.pdf</string>
+    <string name="period_details_pdf_export_title">Export du cycle</string>
     <string name="period_details_pdf_saved">PDF enregistré avec succès.</string>
     <string name="period_details_pdf_save_failed">Impossible d\'enregistrer le PDF.</string>
     <string name="period_details_pdf_no_data">Aucune entrée de règles à exporter.</string>

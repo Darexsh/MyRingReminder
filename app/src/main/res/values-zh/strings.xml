@@ -282,6 +282,7 @@
     <string name="btn_period_details">经期详情</string>
     <string name="btn_period_details_save_pdf">保存为 PDF</string>
     <string name="period_details_pdf_file_name">jingqi_xiangqing_%1$s.pdf</string>
+    <string name="period_details_pdf_export_title">周期导出</string>
     <string name="period_details_pdf_saved">PDF 保存成功。</string>
     <string name="period_details_pdf_save_failed">PDF 保存失败。</string>
     <string name="period_details_pdf_no_data">没有可导出的经期记录。</string>
