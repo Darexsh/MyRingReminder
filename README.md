@@ -68,7 +68,7 @@ It combines cycle timing, reminders, period tracking during the ring-free window
 
 * **Backup / Restore**: Export and import local app data including settings, notes, cycle history, period tracking, and saved special cases, with validation and a readable restore preview.
 * **Home Screen Widgets**: Choose between a small `2x1` widget, a compact `3x1` status widget, and a larger detailed widget for quick at-a-glance status, all color-synced with app settings.
-* **Refined Home Status View**: See a clearer main status ring with subtle phase labeling, improved event hierarchy, cleaner spacing, and a conditional inner rain effect during active period days.
+* **Refined Home Status View**: See a clearer main status ring with subtle phase labeling, improved event hierarchy, cleaner spacing, and conditional inner particle effects that adapt to the current cycle phase.
 * **Customization**: Adjust cycle settings, reminder times, language, background image, calendar range, and accent colors through a grouped settings layout with modern list-style cards, including matching notification and background tools, plus widget, home ring, and calendar personalization.
 * **Enhanced Calendar Navigation**: Move through months with arrows, jump directly by tapping the month header, and browse without a fixed scrolling limit.
 * **Language Mode**: Choose between multiple app languages or **System Default**, with English fallback if the device language is unsupported.
@@ -211,12 +211,12 @@ An overview of the current visual experience across the app:
 
 ## 🔑 Permissions
 
-* **Storage / Media Access**: Required to select a custom background image and to create/restore backups or export PDFs through Android's file picker.
-* **Notifications**: Required to receive cycle reminders.
+* **Storage / Media Access**: Used to select a custom background image.
+* **Notifications**: Used for cycle reminders and required on newer Android versions where notification permission must be granted explicitly.
 * **Exact Alarms**: Used to schedule precise reminder notifications.
 * **Biometric / Device Credential**: Used for optional app lock authentication.
 * **Internet**: Used to check GitHub release information for in-app update checks.
-* **Install Packages**: Used to hand off a downloaded update APK to Android's package installer.
+* **Install Packages**: Used to hand off a downloaded update APK to Android's package installer when using the in-app update flow.
 
 * * *
 
