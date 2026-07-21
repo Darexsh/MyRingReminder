@@ -97,21 +97,7 @@ public class SettingsFragment extends Fragment {
     public static final String ARG_OPEN_UPDATE_BACKUP_DIALOG = "open_update_backup_dialog";
     private static final String TAG = "SettingsNotification";
 
-    private View btnSetTime;
-    private View btnSetStartDate;
-    private View btnSetCycleLength;
     private View btnBackgroundTools;
-    private View btnSetCalendarRange;
-    private View btnBackupManage;
-    private View btnUpdateApp;
-    private View btnNotificationGroup;
-    private View btnSetLanguage;
-    private View btnSetButtonColor;
-    private View btnSetCircleColor;
-    private View btnSetCircleStyle;
-    private View btnSetNavigationAnimation;
-    private View btnAppLock;
-    private View btnWelcomeTour;
     private View debugSection;
     private TextView tvDebugTimeStatus;
     private SwitchMaterial switchDebugTime;
@@ -255,26 +241,26 @@ public class SettingsFragment extends Fragment {
 
         TextView settingsTitle = view.findViewById(R.id.tv_settings_title);
         btnSettingsInfo = view.findViewById(R.id.btn_settings_info);
-        btnSetTime = view.findViewById(R.id.btn_set_time);
-        btnSetStartDate = view.findViewById(R.id.btn_set_start_date);
-        btnSetCycleLength = view.findViewById(R.id.btn_set_cycle_length);
+        View btnSetTime = view.findViewById(R.id.btn_set_time);
+        View btnSetStartDate = view.findViewById(R.id.btn_set_start_date);
+        View btnSetCycleLength = view.findViewById(R.id.btn_set_cycle_length);
         btnBackgroundTools = view.findViewById(R.id.btn_background_tools);
-        btnSetCalendarRange = view.findViewById(R.id.btn_set_calendar_range);
+        View btnSetCalendarRange = view.findViewById(R.id.btn_set_calendar_range);
         View btnResetApp = view.findViewById(R.id.btn_reset_app);
         TextView tvResetApp = view.findViewById(R.id.tv_reset_app);
-        btnBackupManage = view.findViewById(R.id.btn_backup_manage);
-        btnUpdateApp = view.findViewById(R.id.btn_update_app);
-        btnAppLock = view.findViewById(R.id.btn_app_lock);
-        btnWelcomeTour = view.findViewById(R.id.btn_welcome_tour);
+        View btnBackupManage = view.findViewById(R.id.btn_backup_manage);
+        View btnUpdateApp = view.findViewById(R.id.btn_update_app);
+        View btnAppLock = view.findViewById(R.id.btn_app_lock);
+        View btnWelcomeTour = view.findViewById(R.id.btn_welcome_tour);
         advancedContent = view.findViewById(R.id.advanced_content);
         View advancedHeader = view.findViewById(R.id.advanced_header);
         btnAdvancedToggle = view.findViewById(R.id.btn_advanced_toggle);
-        btnNotificationGroup = view.findViewById(R.id.btn_notification_group);
-        btnSetLanguage = view.findViewById(R.id.btn_set_language);
-        btnSetButtonColor = view.findViewById(R.id.btn_set_button_color);
-        btnSetCircleColor = view.findViewById(R.id.btn_set_circle_color);
-        btnSetCircleStyle = view.findViewById(R.id.btn_set_circle_style);
-        btnSetNavigationAnimation = view.findViewById(R.id.btn_set_navigation_animation);
+        View btnNotificationGroup = view.findViewById(R.id.btn_notification_group);
+        View btnSetLanguage = view.findViewById(R.id.btn_set_language);
+        View btnSetButtonColor = view.findViewById(R.id.btn_set_button_color);
+        View btnSetCircleColor = view.findViewById(R.id.btn_set_circle_color);
+        View btnSetCircleStyle = view.findViewById(R.id.btn_set_circle_style);
+        View btnSetNavigationAnimation = view.findViewById(R.id.btn_set_navigation_animation);
         tvSetStartDateValue = view.findViewById(R.id.tv_set_start_date_value);
         tvSetTimeValue = view.findViewById(R.id.tv_set_time_value);
         tvSetCycleLengthValue = view.findViewById(R.id.tv_set_cycle_length_value);
@@ -392,7 +378,7 @@ public class SettingsFragment extends Fragment {
 
         viewModel.getButtonColor().observe(getViewLifecycleOwner(), color -> {
             if (color != null) {
-                applyPrimaryButtonColor(color);
+                applyPrimaryButtonColor();
                 applySettingsAccentColor(color);
                 updateButtonColorButtonText();
                 btnSettingsInfo.setTextColor(Color.WHITE);
@@ -420,11 +406,11 @@ public class SettingsFragment extends Fragment {
                 updateNavigationAnimationButtonText(style);
             }
         });
-        viewModel.getBackgroundAllScreensEnabled().observe(getViewLifecycleOwner(), enabled -> updateBackgroundAllScreensButtonText(Boolean.TRUE.equals(enabled)));
-        viewModel.getBackgroundImageUri().observe(getViewLifecycleOwner(), uri -> updateBackgroundAllScreensButtonText(Boolean.TRUE.equals(viewModel.getBackgroundAllScreensEnabled().getValue())));
+        viewModel.getBackgroundAllScreensEnabled().observe(getViewLifecycleOwner(), enabled -> updateBackgroundAllScreensButtonText());
+        viewModel.getBackgroundImageUri().observe(getViewLifecycleOwner(), uri -> updateBackgroundAllScreensButtonText());
         viewModel.getBackgroundDimPercent().observe(getViewLifecycleOwner(), percent -> {
             if (percent != null) {
-                updateBackgroundDimButtonText(percent);
+                updateBackgroundDimButtonText();
             }
         });
         Runnable updateBlurButton = this::updateBackgroundBlurButtonText;
@@ -980,8 +966,8 @@ public class SettingsFragment extends Fragment {
         applyDialogButtonColors(dialog);
     }
 
-    private void applyPrimaryButtonColor(int color) {
-        updateBackgroundBlurAvailability(color);
+    private void applyPrimaryButtonColor() {
+        updateBackgroundBlurAvailability();
     }
 
     private void registerSettingsAccentTextViews(TextView... views) {
@@ -1085,14 +1071,14 @@ public class SettingsFragment extends Fragment {
                 : SettingsRepository.DEFAULT_BUTTON_COLOR));
     }
 
-    private void updateBackgroundAllScreensButtonText(boolean enabled) {
+    private void updateBackgroundAllScreensButtonText() {
         if (tvBackgroundToolsValue == null) {
             return;
         }
         tvBackgroundToolsValue.setText("");
     }
 
-    private void updateBackgroundDimButtonText(int dimPercent) {
+    private void updateBackgroundDimButtonText() {
         // Handled in background tools dialog button labels.
     }
 
@@ -1155,8 +1141,7 @@ public class SettingsFragment extends Fragment {
     }
 
     private void updateBackgroundBlurButtonText() {
-        Integer color = viewModel != null ? viewModel.getButtonColor().getValue() : null;
-        updateBackgroundBlurAvailability(color);
+        updateBackgroundBlurAvailability();
     }
 
     private void applyDialogRowAccent(@NonNull View root, int... textViewIds) {
@@ -1307,7 +1292,7 @@ public class SettingsFragment extends Fragment {
         int dashboardValue = dashboard != null ? Math.max(0, Math.min(100, dashboard)) : 0;
         int othersValue = others != null ? Math.max(0, Math.min(100, others)) : 50;
         blurValue.setText(getString(R.string.settings_background_blur_value, dashboardValue, othersValue));
-        if (!isBackgroundBlurSupported()) {
+        if (isBackgroundBlurUnavailable()) {
             btnBlur.setAlpha(0.75f);
         }
 
@@ -1339,7 +1324,7 @@ public class SettingsFragment extends Fragment {
         });
         btnBlur.setOnClickListener(v -> {
             dialog.dismiss();
-            if (!isBackgroundBlurSupported()) {
+            if (isBackgroundBlurUnavailable()) {
                 Toast.makeText(requireContext(), R.string.settings_background_blur_unavailable_toast, Toast.LENGTH_SHORT).show();
                 return;
             }
@@ -1362,18 +1347,17 @@ public class SettingsFragment extends Fragment {
                 || targetViewId == R.id.btn_notification_battery_opt;
     }
 
-    public boolean ensureNotificationToolsDialogVisibleForTour(int targetViewId) {
+    public void ensureNotificationToolsDialogVisibleForTour(int targetViewId) {
         if (!isNotificationToolsDialogTarget(targetViewId)) {
             if (notificationToolsDialog != null && notificationToolsDialog.isShowing()) {
                 notificationToolsDialog.dismiss();
             }
-            return false;
+            return;
         }
         if (notificationToolsDialog != null && notificationToolsDialog.isShowing()) {
-            return true;
+            return;
         }
         showNotificationToolsDialog();
-        return notificationToolsDialog != null && notificationToolsDialog.isShowing();
     }
 
     public boolean isNotificationToolsDialogTourTarget(int targetViewId) {
@@ -1396,18 +1380,17 @@ public class SettingsFragment extends Fragment {
         return decor instanceof ViewGroup ? (ViewGroup) decor : null;
     }
 
-    public boolean ensureBackgroundToolsDialogVisibleForTour(int targetViewId) {
+    public void ensureBackgroundToolsDialogVisibleForTour(int targetViewId) {
         if (!isBackgroundToolsDialogTarget(targetViewId)) {
             if (backgroundToolsDialog != null && backgroundToolsDialog.isShowing()) {
                 backgroundToolsDialog.dismiss();
             }
-            return false;
+            return;
         }
         if (backgroundToolsDialog != null && backgroundToolsDialog.isShowing()) {
-            return true;
+            return;
         }
         showBackgroundToolsDialog();
-        return backgroundToolsDialog != null && backgroundToolsDialog.isShowing();
     }
 
     public boolean isBackgroundToolsDialogTourTarget(int targetViewId) {
@@ -1457,11 +1440,11 @@ public class SettingsFragment extends Fragment {
         button.setStrokeWidth(0);
     }
 
-    private boolean isBackgroundBlurSupported() {
-        return Build.VERSION.SDK_INT >= Build.VERSION_CODES.S;
+    private boolean isBackgroundBlurUnavailable() {
+        return Build.VERSION.SDK_INT < Build.VERSION_CODES.S;
     }
 
-    private void updateBackgroundBlurAvailability(@Nullable Integer accentColor) {
+    private void updateBackgroundBlurAvailability() {
         if (btnBackgroundTools == null) {
             return;
         }
@@ -1848,13 +1831,6 @@ public class SettingsFragment extends Fragment {
             return getString(R.string.settings_unit_year);
         }
         return getString(R.string.settings_unit_month);
-    }
-
-    private String unitShortLabel(String unit) {
-        if ("years".equals(unit)) {
-            return getString(R.string.settings_unit_year_short);
-        }
-        return getString(R.string.settings_unit_month_short);
     }
 
     private void checkForUpdates() {

@@ -598,11 +598,6 @@ public class PeriodDetailsFragment extends Fragment {
         normalPaint.setColor(Color.BLACK);
         normalPaint.setTextSize(10.5f);
 
-        Paint labelPaint = new Paint(Paint.ANTI_ALIAS_FLAG);
-        labelPaint.setColor(0xFF2F2F2F);
-        labelPaint.setTypeface(Typeface.create(Typeface.DEFAULT, Typeface.BOLD));
-        labelPaint.setTextSize(9.5f);
-
         Paint subtlePaint = new Paint(Paint.ANTI_ALIAS_FLAG);
         subtlePaint.setColor(0xFF4E4E4E);
         subtlePaint.setTextSize(9.5f);
@@ -610,10 +605,6 @@ public class PeriodDetailsFragment extends Fragment {
         Paint linePaint = new Paint(Paint.ANTI_ALIAS_FLAG);
         linePaint.setColor(0xFFD6D6D6);
         linePaint.setStrokeWidth(1f);
-
-        Paint dividerPaint = new Paint(Paint.ANTI_ALIAS_FLAG);
-        dividerPaint.setColor(0xFFE6E6E6);
-        dividerPaint.setStrokeWidth(1f);
 
         Paint badgePaint = new Paint(Paint.ANTI_ALIAS_FLAG);
         Paint cardBgPaint = new Paint(Paint.ANTI_ALIAS_FLAG);
@@ -623,7 +614,7 @@ public class PeriodDetailsFragment extends Fragment {
         cardBorderPaint.setStyle(Paint.Style.STROKE);
         cardBorderPaint.setStrokeWidth(1f);
         Paint softAccentPaint = new Paint(Paint.ANTI_ALIAS_FLAG);
-        softAccentPaint.setColor(applyAlpha(accentColor, 28));
+        softAccentPaint.setColor(Color.argb(28, Color.red(accentColor), Color.green(accentColor), Color.blue(accentColor)));
 
         PdfState state = startPdfPage(document, pageWidth, pageHeight, 1, margin);
         state.y = drawPdfHeader(state.canvas, margin, state.y, contentWidth,
@@ -747,7 +738,7 @@ public class PeriodDetailsFragment extends Fragment {
                 float rowMaxHeight = 0f;
                 for (int i = rowStart; i < rowEnd; i++) {
                     float entryHeight = estimateEntryCardHeight(monthEntries.get(i), dayFormat, normalPaint, subtlePaint,
-                            labelPaint, entryCardWidth, entryCardPadding);
+                            entryCardWidth, entryCardPadding);
                     rowHeights[i - rowStart] = entryHeight;
                     if (entryHeight > rowMaxHeight) {
                         rowMaxHeight = entryHeight;
@@ -758,8 +749,8 @@ public class PeriodDetailsFragment extends Fragment {
                 for (int i = rowStart; i < rowEnd; i++) {
                     float cardX = margin + ((i - rowStart) * (entryCardWidth + entryCardGap));
                     drawEntryCard(state.canvas, monthEntries.get(i), dayFormat, cardX, state.y, entryCardWidth, rowHeights[i - rowStart],
-                            entryCardPadding, entryCardCorner, cardBgPaint, cardBorderPaint, dividerPaint,
-                            normalPaint, labelPaint, subtlePaint, badgePaint, accentColor);
+                            entryCardPadding, entryCardCorner, cardBgPaint, cardBorderPaint,
+                            normalPaint, subtlePaint, badgePaint);
                 }
                 state.y += rowMaxHeight + entryCardGap;
             }
@@ -817,17 +808,16 @@ public class PeriodDetailsFragment extends Fragment {
             icon.draw(canvas);
         }
 
-        float textStartX = margin;
         float maxTextWidth = contentWidth - iconSize - 16f;
         y = drawWrappedText(canvas, getString(R.string.period_details_pdf_export_title),
-                textStartX, y + titlePaint.getTextSize(), maxTextWidth, titlePaint);
+                margin, y + titlePaint.getTextSize(), maxTextWidth, titlePaint);
         y = drawWrappedText(canvas, getString(R.string.app_info_name),
-                textStartX, y + 2f, maxTextWidth, subtitlePaint);
+                margin, y + 2f, maxTextWidth, subtitlePaint);
         y = drawWrappedText(canvas, getString(R.string.period_details_range_label) + ": " + visibleRangeLabel,
-                textStartX, y + 3f, maxTextWidth, subtlePaint);
+                margin, y + 3f, maxTextWidth, subtlePaint);
         String created = new SimpleDateFormat("dd.MM.yyyy HH:mm", Locale.getDefault()).format(new Date());
         y = drawWrappedText(canvas, getString(R.string.period_details_pdf_created_at, created),
-                textStartX, y + 3f, maxTextWidth, subtlePaint);
+                margin, y + 3f, maxTextWidth, subtlePaint);
         y += 4f;
         canvas.drawLine(margin, y, margin + contentWidth, y, linePaint);
         return y;
@@ -887,7 +877,6 @@ public class PeriodDetailsFragment extends Fragment {
                                           @NonNull SimpleDateFormat dayFormat,
                                           @NonNull Paint normalPaint,
                                           @NonNull Paint subtlePaint,
-                                          @NonNull Paint labelPaint,
                                           float cardWidth,
                                           float cardPadding) {
         float innerWidth = cardWidth - (cardPadding * 2f);
@@ -918,12 +907,9 @@ public class PeriodDetailsFragment extends Fragment {
                                float cardCorner,
                                @NonNull Paint bgPaint,
                                @NonNull Paint borderPaint,
-                               @NonNull Paint dividerPaint,
                                @NonNull Paint normalPaint,
-                               @NonNull Paint labelPaint,
                                @NonNull Paint subtlePaint,
-                               @NonNull Paint badgePaint,
-                               int accentColor) {
+                               @NonNull Paint badgePaint) {
         android.graphics.RectF rect = new android.graphics.RectF(x, y, x + cardWidth, y + cardHeight);
         canvas.drawRoundRect(rect, cardCorner, cardCorner, bgPaint);
         canvas.drawRoundRect(rect, cardCorner, cardCorner, borderPaint);
@@ -956,21 +942,21 @@ public class PeriodDetailsFragment extends Fragment {
                 subtlePaint, badgePaint);
     }
 
-    private float drawInfoCard(@NonNull android.graphics.Canvas canvas,
-                               float x,
-                               float y,
-                               float width,
-                               float height,
-                               @NonNull String title,
-                               @NonNull String[] lines,
-                               @NonNull Paint titlePaint,
-                               @NonNull Paint bodyPaint,
-                               float padding,
-                               float corner,
-                               @NonNull Paint bgPaint,
-                               @NonNull Paint borderPaint,
-                               @Nullable int[] badgeColors,
-                               @Nullable Paint badgePaint) {
+    private void drawInfoCard(@NonNull android.graphics.Canvas canvas,
+                              float x,
+                              float y,
+                              float width,
+                              float height,
+                              @NonNull String title,
+                              @NonNull String[] lines,
+                              @NonNull Paint titlePaint,
+                              @NonNull Paint bodyPaint,
+                              float padding,
+                              float corner,
+                              @NonNull Paint bgPaint,
+                              @NonNull Paint borderPaint,
+                              @Nullable int[] badgeColors,
+                              @Nullable Paint badgePaint) {
         android.graphics.RectF rect = new android.graphics.RectF(x, y, x + width, y + height);
         canvas.drawRoundRect(rect, corner, corner, bgPaint);
         canvas.drawRoundRect(rect, corner, corner, borderPaint);
@@ -991,7 +977,6 @@ public class PeriodDetailsFragment extends Fragment {
                 cursorY = drawBulletText(canvas, lines[i], innerX, cursorY, textWidth, bodyPaint, null);
             }
         }
-        return y + height;
     }
 
     private float estimateBulletRowHeight(@NonNull String text,
@@ -1038,15 +1023,6 @@ public class PeriodDetailsFragment extends Fragment {
             canvas.drawCircle(badgeX, y - 3f, 2.2f, bulletPaint);
         }
         return drawWrappedText(canvas, text, textX, y, textWidth, textPaint) + 1f;
-    }
-
-    private int applyAlpha(int color, int alpha) {
-        return Color.argb(
-                Math.max(0, Math.min(255, alpha)),
-                Color.red(color),
-                Color.green(color),
-                Color.blue(color)
-        );
     }
 
     private int intensityBadgeColor(@Nullable BleedingIntensity intensity) {

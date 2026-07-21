@@ -547,14 +547,10 @@ public class SettingsRepository {
     }
 
     public PeriodDayEntry getPeriodDayEntry(String dateKey) {
-        if (!isValidPeriodDateKey(dateKey)) {
+        if (isInvalidPeriodDateKey(dateKey)) {
             return null;
         }
         return getAllPeriodDayEntries().get(dateKey);
-    }
-
-    public PeriodDayEntry getPeriodDayEntry(Calendar day) {
-        return getPeriodDayEntry(buildPeriodDateKey(day));
     }
 
     public boolean savePeriodDayEntry(PeriodDayEntry entry) {
@@ -562,7 +558,7 @@ public class SettingsRepository {
             return false;
         }
         String dateKey = entry.getDateKey();
-        if (!isValidPeriodDateKey(dateKey)) {
+        if (isInvalidPeriodDateKey(dateKey)) {
             return false;
         }
         PeriodDayEntry sanitized = sanitizePeriodDayEntry(dateKey, entry);
@@ -605,17 +601,13 @@ public class SettingsRepository {
     }
 
     public void deletePeriodDayEntry(String dateKey) {
-        if (!isValidPeriodDateKey(dateKey)) {
+        if (isInvalidPeriodDateKey(dateKey)) {
             return;
         }
         Map<String, PeriodDayEntry> all = getAllPeriodDayEntries();
         if (all.remove(dateKey) != null) {
             persistPeriodDayEntries(all);
         }
-    }
-
-    public void deletePeriodDayEntry(Calendar day) {
-        deletePeriodDayEntry(buildPeriodDateKey(day));
     }
 
     public String buildPeriodDateKey(Calendar day) {
@@ -626,12 +618,12 @@ public class SettingsRepository {
         return String.format(Locale.US, "%04d-%02d-%02d", year, month, dayOfMonth);
     }
 
-    private boolean isValidPeriodDateKey(String dateKey) {
-        return dateKey != null && PERIOD_DAY_KEY_PATTERN.matcher(dateKey).matches();
+    private boolean isInvalidPeriodDateKey(String dateKey) {
+        return dateKey == null || !PERIOD_DAY_KEY_PATTERN.matcher(dateKey).matches();
     }
 
     private PeriodDayEntry sanitizePeriodDayEntry(String dateKey, PeriodDayEntry raw) {
-        if (!isValidPeriodDateKey(dateKey) || raw == null) {
+        if (isInvalidPeriodDateKey(dateKey) || raw == null) {
             return null;
         }
         boolean periodDay = raw.isPeriodDay();

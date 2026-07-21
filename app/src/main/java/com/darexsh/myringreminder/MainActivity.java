@@ -842,39 +842,30 @@ public class MainActivity extends AppCompatActivity {
                 ? (SettingsFragment) currentFragment
                 : null;
         if (calendarFragment != null) {
-            boolean periodDialogChanged = calendarFragment.syncPeriodDialogForTour(step.targetViewId);
-            if (periodDialogChanged) {
-                getWindow().getDecorView().postDelayed(() ->
-                        showGuidedTourStep(index, attempt + 1), 150);
-                return;
-            }
+            calendarFragment.ensurePeriodDialogVisibleForTour(step.targetViewId);
         }
         if (settingsFragment != null) {
             settingsFragment.ensureNotificationToolsDialogVisibleForTour(step.targetViewId);
             settingsFragment.ensureBackgroundToolsDialogVisibleForTour(step.targetViewId);
         }
         ViewGroup host = findViewById(android.R.id.content);
-        boolean useDialogHost = false;
         if (calendarFragment != null && calendarFragment.isPeriodDialogTourTarget(step.targetViewId)) {
             ViewGroup dialogHost = calendarFragment.getPeriodDialogTourHost();
             if (dialogHost != null) {
                 host = dialogHost;
-                useDialogHost = true;
             }
         } else if (settingsFragment != null && settingsFragment.isNotificationToolsDialogTourTarget(step.targetViewId)) {
             ViewGroup dialogHost = settingsFragment.getNotificationToolsDialogTourHost(step.targetViewId);
             if (dialogHost != null) {
                 host = dialogHost;
-                useDialogHost = true;
             }
         } else if (settingsFragment != null && settingsFragment.isBackgroundToolsDialogTourTarget(step.targetViewId)) {
             ViewGroup dialogHost = settingsFragment.getBackgroundToolsDialogTourHost(step.targetViewId);
             if (dialogHost != null) {
                 host = dialogHost;
-                useDialogHost = true;
             }
         }
-        reattachTourOverlay(host, useDialogHost);
+        reattachTourOverlay(host);
         View fragmentView = currentFragment != null ? currentFragment.getView() : null;
         View target;
         if (step.inActivityView) {
@@ -925,7 +916,7 @@ public class MainActivity extends AppCompatActivity {
         tourOverlay.setStep(step.titleRes, step.bodyRes, index == tourSteps.size() - 1, target);
     }
 
-    private void reattachTourOverlay(ViewGroup host, boolean dialogHost) {
+    private void reattachTourOverlay(ViewGroup host) {
         if (tourOverlay == null || host == null) {
             return;
         }
@@ -1107,17 +1098,9 @@ public class MainActivity extends AppCompatActivity {
                 R.string.tour_title_calendar, R.string.tour_body_calendar, 0, false));
         steps.add(new TourStep(R.id.nav_calendar, R.id.switch_period_day,
                 R.string.tour_title_period_entry, R.string.tour_body_period_entry, 0, false));
-        steps.add(new TourStep(R.id.nav_calendar, R.id.chip_group_intensity,
-                R.string.period_modal_intensity_title, R.string.tour_body_period_intensity, 0, false));
-        steps.add(new TourStep(R.id.nav_calendar, R.id.chip_group_pain,
-                R.string.period_modal_pain_title, R.string.tour_body_period_pain, 0, false));
-        steps.add(new TourStep(R.id.nav_calendar, R.id.chip_group_symptoms,
-                R.string.period_modal_symptoms_title, R.string.tour_body_period_symptoms, 0, false));
-        steps.add(new TourStep(R.id.nav_calendar, R.id.chip_group_markers,
-                R.string.period_modal_markers_title, R.string.tour_body_period_markers, 0, false));
-        steps.add(new TourStep(R.id.nav_calendar, R.id.period_modal_actions,
-                R.string.tour_title_period_modal, R.string.tour_body_period_actions, 0, false));
-        steps.add(new TourStep(R.id.nav_calendar, R.id.calendarView,
+        steps.add(new TourStep(R.id.nav_calendar, R.id.period_modal_root,
+                R.string.tour_title_period_modal, R.string.tour_body_period_modal, 0, false));
+        steps.add(new TourStep(R.id.nav_calendar, R.id.legend_period_column,
                 R.string.tour_title_period_indicators, R.string.tour_body_period_indicators, 0, false));
         steps.add(new TourStep(R.id.nav_calendar, R.id.legend_tables_row,
                 R.string.tour_title_calendar_legend, R.string.tour_body_calendar_legend, 0, false));

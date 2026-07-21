@@ -1067,7 +1067,7 @@
                     android:background="@null"
                     android:contentDescription="@string/settings_advanced_toggle_desc"
                     android:src="@drawable/ic_triangle_down"
-                    android:tint="#FFFFFF" />
+                    app:tint="#FFFFFF" />
             </LinearLayout>
         </com.google.android.material.card.MaterialCardView>
 

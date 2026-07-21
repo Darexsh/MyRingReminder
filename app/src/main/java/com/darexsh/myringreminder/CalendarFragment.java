@@ -35,7 +35,6 @@ import java.text.DateFormatSymbols;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
-import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
 import java.util.Locale;
@@ -352,7 +351,7 @@ public class CalendarFragment extends Fragment {
         }
         applyPeriodTrackingDecorators();
         currentRingFreeWindows = buildRingFreeWindows(snapshot.ringFreeDays);
-        currentPeriodEntryAllowedDays = buildAllowedPeriodEntryDays(currentRingFreeWindows, PERIOD_ENTRY_TOLERANCE_DAYS);
+        currentPeriodEntryAllowedDays = buildAllowedPeriodEntryDays(currentRingFreeWindows);
     }
 
     private void applyPeriodTrackingDecorators() {
@@ -1385,7 +1384,7 @@ public class CalendarFragment extends Fragment {
             return false;
         }
         Map<String, PeriodDayEntry> allEntries = repository.getAllPeriodDayEntries();
-        for (CalendarDay ringFreeDay : daysForWindowWithTolerance(window, PERIOD_ENTRY_TOLERANCE_DAYS)) {
+        for (CalendarDay ringFreeDay : daysForWindowWithTolerance(window)) {
             Calendar day = Calendar.getInstance();
             day.set(ringFreeDay.getYear(), ringFreeDay.getMonth() - 1, ringFreeDay.getDay(), 0, 0, 0);
             day.set(Calendar.MILLISECOND, 0);
@@ -1430,7 +1429,7 @@ public class CalendarFragment extends Fragment {
             return false;
         }
         Map<String, PeriodDayEntry> allEntries = repository.getAllPeriodDayEntries();
-        for (CalendarDay ringFreeDay : daysForWindowWithTolerance(window, PERIOD_ENTRY_TOLERANCE_DAYS)) {
+        for (CalendarDay ringFreeDay : daysForWindowWithTolerance(window)) {
             Calendar day = Calendar.getInstance();
             day.set(ringFreeDay.getYear(), ringFreeDay.getMonth() - 1, ringFreeDay.getDay(), 0, 0, 0);
             day.set(Calendar.MILLISECOND, 0);
@@ -1451,39 +1450,37 @@ public class CalendarFragment extends Fragment {
             return new ArrayList<>();
         }
         List<CalendarDay> sorted = new ArrayList<>(ringFreeDays);
-        Collections.sort(sorted, Comparator.comparingLong(this::toDayMillis));
+        sorted.sort(Comparator.comparingLong(this::toDayMillis));
         List<RingFreeWindow> windows = new ArrayList<>();
         CalendarDay runStart = sorted.get(0);
         CalendarDay runEnd = sorted.get(0);
         for (int i = 1; i < sorted.size(); i++) {
             CalendarDay current = sorted.get(i);
             long diffDays = (toDayMillis(current) - toDayMillis(runEnd)) / (24L * 60L * 60L * 1000L);
-            if (diffDays == 1L) {
-                runEnd = current;
-            } else {
+            if (diffDays != 1L) {
                 windows.add(new RingFreeWindow(runStart, runEnd));
                 runStart = current;
-                runEnd = current;
             }
+            runEnd = current;
         }
         windows.add(new RingFreeWindow(runStart, runEnd));
         return windows;
     }
 
-    private Set<CalendarDay> buildAllowedPeriodEntryDays(List<RingFreeWindow> windows, int toleranceDays) {
+    private Set<CalendarDay> buildAllowedPeriodEntryDays(List<RingFreeWindow> windows) {
         Set<CalendarDay> allowed = new HashSet<>();
         for (RingFreeWindow window : windows) {
-            allowed.addAll(daysForWindowWithTolerance(window, toleranceDays));
+            allowed.addAll(daysForWindowWithTolerance(window));
         }
         return allowed;
     }
 
-    private Set<CalendarDay> daysForWindowWithTolerance(RingFreeWindow window, int toleranceDays) {
+    private Set<CalendarDay> daysForWindowWithTolerance(RingFreeWindow window) {
         Set<CalendarDay> days = new HashSet<>();
         Calendar start = fromCalendarDay(window.start);
         Calendar end = fromCalendarDay(window.end);
-        start.add(Calendar.DAY_OF_MONTH, -toleranceDays);
-        end.add(Calendar.DAY_OF_MONTH, toleranceDays);
+        start.add(Calendar.DAY_OF_MONTH, -CalendarFragment.PERIOD_ENTRY_TOLERANCE_DAYS);
+        end.add(Calendar.DAY_OF_MONTH, CalendarFragment.PERIOD_ENTRY_TOLERANCE_DAYS);
         while (!start.after(end)) {
             days.add(toCalendarDay(start));
             start.add(Calendar.DAY_OF_MONTH, 1);
