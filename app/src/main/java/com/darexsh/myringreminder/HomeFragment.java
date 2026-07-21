@@ -98,6 +98,7 @@ public class HomeFragment extends Fragment {
         final HomeCircleView circularProgress = view.findViewById(R.id.circularProgress); // Home circle for cycle status
         final TextView tvRemovalDate = view.findViewById(R.id.tv_removal_date); // TextView to display the removal date
         final TextView tvSecondaryDate = view.findViewById(R.id.tv_secondary_date);
+        final TextView tvCyclePhaseLabel = view.findViewById(R.id.tv_cycle_phase_label);
         final TextView tvDaysNumber = view.findViewById(R.id.tv_days_number);   // TextView to display the number of days left
         final TextView tvDaysLabel = view.findViewById(R.id.tv_days_left_label);    // TextView to display the label for days left
         final ImageView backgroundImageView = view.findViewById(R.id.background_image); // ImageView for the background image
@@ -181,9 +182,6 @@ public class HomeFragment extends Fragment {
                 backgroundImageView.setVisibility(View.GONE);
                 backgroundDimOverlay.setVisibility(View.GONE);
                 backgroundDimOverlay.setAlpha(0f);
-                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.S) {
-                    backgroundImageView.setRenderEffect(null);
-                }
                 return;
             }
             backgroundImageView.setVisibility(View.VISIBLE);
@@ -355,6 +353,7 @@ public class HomeFragment extends Fragment {
 
             int remainingDays;
             String labelText;
+            String phaseLabelText;
             String primaryTextDate;
             String secondaryTextDate;
             int progressMax;
@@ -365,6 +364,7 @@ public class HomeFragment extends Fragment {
                 remainingDays = daysBetweenDays(displayNow, removalDate);
 
                 labelText = getString(R.string.home_days_left);
+                phaseLabelText = getString(R.string.home_phase_active_cycle);
                 progressMax = cycleLength;
                 progressValue = progressMax - remainingDays;
 
@@ -382,6 +382,7 @@ public class HomeFragment extends Fragment {
                 remainingDays = daysBetweenDays(displayNow, reinsertionDate);
 
                 labelText = getString(R.string.home_days_until_insertion);
+                phaseLabelText = getString(R.string.home_phase_ring_free_phase);
                 progressMax = Math.max(1, ringFreeDays);
                 progressValue = progressMax - remainingDays;
 
@@ -398,6 +399,7 @@ public class HomeFragment extends Fragment {
             } else {
                 remainingDays = cycleLength;
                 labelText = getString(R.string.home_days_left);
+                phaseLabelText = getString(R.string.home_phase_active_cycle);
                 progressMax = cycleLength;
                 progressValue = 0;
 
@@ -415,6 +417,9 @@ public class HomeFragment extends Fragment {
 
             circularProgress.setMax(progressMax);
             circularProgress.setProgress(progressValue);
+            if (tvCyclePhaseLabel != null) {
+                tvCyclePhaseLabel.setText(phaseLabelText);
+            }
             tvDaysNumber.setText(String.valueOf(remainingDays));
             tvDaysLabel.setText(labelText);
             @SuppressLint("DefaultLocale") String timeText = String.format("%02d:%02d", startDate.get(Calendar.HOUR_OF_DAY), startDate.get(Calendar.MINUTE));

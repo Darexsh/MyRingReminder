@@ -240,6 +240,8 @@
     <string name="home_days">17</string>
     <string name="home_days_left">Days left</string>
     <string name="home_days_until_insertion">Days until insertion</string>
+    <string name="home_phase_active_cycle">Active cycle</string>
+    <string name="home_phase_ring_free_phase">Ring-free phase</string>
     <string name="home_delay_confirm">Update</string>
     <string name="home_delay_info_desc">Info about wearing the ring longer</string>
     <string name="home_delay_info_message"><![CDATA[

@@ -240,6 +240,8 @@
     <string name="home_days">17</string>
     <string name="home_days_left">Dias restantes</string>
     <string name="home_days_until_insertion">Dias até a inserção</string>
+    <string name="home_phase_active_cycle">Ciclo ativo</string>
+    <string name="home_phase_ring_free_phase">Fase sem anel</string>
     <string name="home_delay_confirm">Atualizar</string>
     <string name="home_delay_info_desc">Informações sobre o uso prolongado do anel</string>
     <string name="home_delay_info_message"><![CDATA[

@@ -240,6 +240,8 @@
     <string name="home_days">17</string>
     <string name="home_days_left">剩余天数</string>
     <string name="home_days_until_insertion">距离置入天数</string>
+    <string name="home_phase_active_cycle">当前周期</string>
+    <string name="home_phase_ring_free_phase">无环阶段</string>
     <string name="home_delay_confirm">更新</string>
     <string name="home_delay_info_desc">关于延长佩戴圆环的信息</string>
     <string name="home_delay_info_message"><![CDATA[

@@ -240,6 +240,8 @@
     <string name="home_days">17</string>
     <string name="home_days_left">Tage übrig</string>
     <string name="home_days_until_insertion">Tage bis zum Einsetzen</string>
+    <string name="home_phase_active_cycle">Aktiver Zyklus</string>
+    <string name="home_phase_ring_free_phase">Ringfreie Phase</string>
     <string name="home_delay_confirm">Aktualisieren</string>
     <string name="home_delay_info_desc">Info zum längeren Tragen des Rings</string>
     <string name="home_delay_info_message"><![CDATA[

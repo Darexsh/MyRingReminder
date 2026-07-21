@@ -34,14 +34,14 @@
             android:layout_height="280dp"
             android:clipChildren="false"
             android:clipToPadding="false"
-            android:layout_marginBottom="16dp">
+            android:layout_marginBottom="8dp">
 
             <com.darexsh.myringreminder.HomeCircleView
                 android:id="@+id/circularProgress"
                 android:layout_width="400dp"
                 android:layout_height="400dp"
-                android:padding="60dp"
-                android:layout_gravity="center" />
+                android:layout_gravity="center"
+                android:padding="60dp" />
 
             <LinearLayout
                 android:layout_width="wrap_content"
@@ -51,21 +51,50 @@
                 android:orientation="vertical">
 
                 <TextView
+                    android:id="@+id/tv_cycle_phase_label"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="4dp"
+                    android:alpha="0.9"
+                    android:fontFamily="sans-serif-medium"
+                    android:gravity="center"
+                    android:letterSpacing="0.08"
+                    android:shadowColor="#8A000000"
+                    android:shadowDx="0"
+                    android:shadowDy="1.5"
+                    android:shadowRadius="6"
+                    android:text="@string/home_phase_active_cycle"
+                    android:textAllCaps="true"
+                    android:textColor="#F4FFFFFF"
+                    android:textSize="11sp" />
+
+                <TextView
                     android:id="@+id/tv_days_number"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:gravity="center"
+                    android:shadowColor="#99000000"
+                    android:shadowDx="0"
+                    android:shadowDy="2"
+                    android:shadowRadius="10"
                     android:text="@string/home_days"
-                    android:textSize="48sp"
+                    android:textColor="#FFFFFFFF"
+                    android:textSize="54sp"
                     android:textStyle="bold" />
 
                 <TextView
                     android:id="@+id/tv_days_left_label"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:layout_marginTop="2dp"
                     android:gravity="center"
+                    android:shadowColor="#8A000000"
+                    android:shadowDx="0"
+                    android:shadowDy="1"
+                    android:shadowRadius="5"
                     android:text="@string/home_days_left"
-                    android:textSize="18sp" />
+                    android:textColor="#D9FFFFFF"
+                    android:textSize="16sp" />
             </LinearLayout>
 
         </FrameLayout>
@@ -74,29 +103,41 @@
             android:id="@+id/tv_removal_date"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:autoSizeMaxTextSize="16sp"
+            android:autoSizeMaxTextSize="18sp"
             android:autoSizeMinTextSize="12sp"
             android:autoSizeStepGranularity="1sp"
             android:autoSizeTextType="uniform"
             android:ellipsize="end"
+            android:fontFamily="sans-serif-medium"
             android:gravity="center"
             android:maxLines="1"
-            android:text="@string/home_removal_on_placeholder" />
+            android:shadowColor="#99000000"
+            android:shadowDx="0"
+            android:shadowDy="1.5"
+            android:shadowRadius="7"
+            android:text="@string/home_removal_on_placeholder"
+            android:textColor="#FFFFFFFF"
+            android:textStyle="bold" />
 
         <TextView
             android:id="@+id/tv_secondary_date"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="6dp"
-            android:autoSizeMaxTextSize="14sp"
+            android:alpha="0.84"
+            android:autoSizeMaxTextSize="13sp"
             android:autoSizeMinTextSize="11sp"
             android:autoSizeStepGranularity="1sp"
             android:autoSizeTextType="uniform"
             android:ellipsize="end"
             android:gravity="center"
             android:maxLines="1"
-            android:text="@string/home_insertion_on_placeholder" />
-
+            android:shadowColor="#8A000000"
+            android:shadowDx="0"
+            android:shadowDy="1"
+            android:shadowRadius="5"
+            android:text="@string/home_insertion_on_placeholder"
+            android:textColor="#E6FFFFFF" />
     </LinearLayout>
 
     <LinearLayout
@@ -191,7 +232,7 @@
         android:layout_width="wrap_content"
         android:layout_height="42dp"
         android:layout_gravity="bottom|center_horizontal"
-        android:layout_marginBottom="24dp"
+        android:layout_marginBottom="34dp"
         android:contentDescription="@string/home_special_actions_toggle_open"
         android:text="@string/home_special_actions_label"
         android:textAllCaps="false"

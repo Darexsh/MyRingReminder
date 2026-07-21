@@ -68,6 +68,7 @@ It combines cycle timing, reminders, period tracking during the ring-free window
 
 * **Backup / Restore**: Export and import local app data including settings, notes, cycle history, period tracking, and saved special cases, with validation and a readable restore preview.
 * **Home Screen Widgets**: Choose between a small `2x1` widget, a compact `3x1` status widget, and a larger detailed widget for quick at-a-glance status, all color-synced with app settings.
+* **Refined Home Status View**: See a clearer main status ring with subtle phase labeling, improved event hierarchy, and cleaner spacing for faster at-a-glance reading.
 * **Customization**: Adjust cycle settings, reminder times, language, background image, calendar range, and accent colors through a grouped settings layout with modern list-style cards, including matching notification and background tools, plus widget, home ring, and calendar personalization.
 * **Enhanced Calendar Navigation**: Move through months with arrows, jump directly by tapping the month header, and browse without a fixed scrolling limit.
 * **Language Mode**: Choose between multiple app languages or **System Default**, with English fallback if the device language is unsupported.
@@ -82,12 +83,6 @@ It combines cycle timing, reminders, period tracking during the ring-free window
 * **Local-first storage**: Core data stays on the device.
 * **No dedicated backend**: The app does not require a private server for cycle tracking.
 * **User-controlled export**: Backups and PDF exports are created only when explicitly requested.
-
-* * *
-
-## 📝 Planned Ideas
-
-* **Small Home Screen Refinements**: Improve clarity on the home screen with minor display refinements while keeping it automatic and view-only.
 
 * * *
 

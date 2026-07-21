@@ -240,6 +240,8 @@
     <string name="home_days">17</string>
     <string name="home_days_left">Дней осталось</string>
     <string name="home_days_until_insertion">Дней до вставки</string>
+    <string name="home_phase_active_cycle">Активный цикл</string>
+    <string name="home_phase_ring_free_phase">Фаза без кольца</string>
     <string name="home_delay_confirm">Обновить</string>
     <string name="home_delay_info_desc">Информация о ношении кольца дольше положенного срока</string>
     <string name="home_delay_info_message"><![CDATA[

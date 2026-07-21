@@ -240,6 +240,8 @@
     <string name="home_days">17</string>
     <string name="home_days_left">Pozostałe dni</string>
     <string name="home_days_until_insertion">Dni do założenia</string>
+    <string name="home_phase_active_cycle">Aktywny cykl</string>
+    <string name="home_phase_ring_free_phase">Faza bez krążka</string>
     <string name="home_delay_confirm">Aktualizuj</string>
     <string name="home_delay_info_desc">Informacje o dłuższym noszeniu pierścienia</string>
     <string name="home_delay_info_message"><![CDATA[
