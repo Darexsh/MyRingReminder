@@ -94,7 +94,7 @@ An overview of the current visual experience across the app:
   <tr>
     <td align="center"><b>Home Screen</b><br><img src="Screenshots/Home.png" width="200" height="450"></td>
     <td align="center"><b>Calendar</b><br><img src="Screenshots/Calendar.png" width="200" height="450"></td>
-    <td align="center"><b>Period Details</b><br><img src="Screenshots/Period_Details.png" width="200" height="450"></td>
+    <td align="center"><b>Period Details</b><br><img src="Screenshots/Period-Details.png" width="200" height="450"></td>
     <td align="center"><b>Cycles</b><br><img src="Screenshots/Cycles.png" width="200" height="450"></td>
   </tr>
 </table>
@@ -102,11 +102,19 @@ An overview of the current visual experience across the app:
 <table>
   <tr>
     <td align="center"><b>Notes</b><br><img src="Screenshots/Notes.png" width="200" height="450"></td>
+    <td align="center"><b>Special Cases</b><br><img src="Screenshots/Special_Cases.png" width="200" height="450"></td>
     <td align="center"><b>Settings</b><br><img src="Screenshots/Settings.png" width="200" height="450"></td>
     <td align="center"><b>Widgets</b><br><img src="Screenshots/Widgets.png" width="200" height="450"></td>
+  </tr>
+</table>
+
+<table>
+  <tr>
+    <td align="center"><b>PDF Export</b><br><img src="Screenshots/PDF.png" width="200" height="450"></td>
     <td align="center"><b>About</b><br><img src="Screenshots/About.png" width="200" height="450"></td>
   </tr>
 </table>
+
 
 * * *
 
