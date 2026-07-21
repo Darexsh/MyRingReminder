@@ -7,7 +7,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.widget.RemoteViews;
 
-public class CycleWidgetSmallProvider extends AppWidgetProvider {
+public class CycleWidgetCompactProvider extends AppWidgetProvider {
 
     @Override
     public void onUpdate(Context context, AppWidgetManager appWidgetManager, int[] appWidgetIds) {
@@ -35,20 +35,26 @@ public class CycleWidgetSmallProvider extends AppWidgetProvider {
     }
 
     public static void updateAppWidget(Context context, AppWidgetManager appWidgetManager, int appWidgetId) {
-        RemoteViews views = new RemoteViews(context.getPackageName(), R.layout.widget_ring_small);
+        RemoteViews views = new RemoteViews(context.getPackageName(), R.layout.widget_ring_compact);
         CycleWidgetUtils.State state = CycleWidgetUtils.calculateState(context);
         SettingsRepository repository = new SettingsRepository(context);
         views.setInt(R.id.widget_bg_image, "setColorFilter", repository.getButtonColor());
 
-        views.setTextViewText(R.id.tv_widget_days_number, String.valueOf(state.daysLeft));
-        views.setTextViewText(R.id.tv_widget_days_label, state.label);
+        views.setTextViewText(R.id.tv_widget_compact_app_name, context.getString(R.string.app_name));
+        views.setTextViewText(R.id.tv_widget_compact_status_label, state.label);
+        views.setTextViewText(R.id.tv_widget_compact_days_number, String.valueOf(state.daysLeft));
+        views.setTextViewText(R.id.tv_widget_compact_removal, state.removalText);
+        views.setTextViewText(R.id.tv_widget_compact_insertion, state.insertionText);
+
         PendingIntent launchIntent = buildLaunchIntent(context, appWidgetId);
         views.setOnClickPendingIntent(R.id.widget_root, launchIntent);
         views.setOnClickPendingIntent(R.id.widget_bg_image, launchIntent);
-        views.setOnClickPendingIntent(R.id.tv_widget_days_number, launchIntent);
-        views.setOnClickPendingIntent(R.id.tv_widget_days_label, launchIntent);
-        views.setOnClickPendingIntent(R.id.img_widget_logo, launchIntent);
-        views.setOnClickPendingIntent(R.id.tv_widget_app_name, launchIntent);
+        views.setOnClickPendingIntent(R.id.img_widget_compact_logo, launchIntent);
+        views.setOnClickPendingIntent(R.id.tv_widget_compact_app_name, launchIntent);
+        views.setOnClickPendingIntent(R.id.tv_widget_compact_status_label, launchIntent);
+        views.setOnClickPendingIntent(R.id.tv_widget_compact_days_number, launchIntent);
+        views.setOnClickPendingIntent(R.id.tv_widget_compact_removal, launchIntent);
+        views.setOnClickPendingIntent(R.id.tv_widget_compact_insertion, launchIntent);
 
         appWidgetManager.updateAppWidget(appWidgetId, views);
     }

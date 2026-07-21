@@ -65,6 +65,7 @@ public class MainActivity extends AppCompatActivity {
     private static final String KEY_APP_LOCK_LAST_BACKGROUND_AT = "app_lock_last_background_at";
     private static final long BACK_PRESS_WINDOW_MS = 2000;
     private static final String TAG = "MainActivity";
+    private static final String NOTIFICATION_TAG = "ReminderChannel";
     private FragmentManager fragmentManager;
     private ImageButton btnNotes;
     private ImageView globalBackgroundImage;
@@ -834,30 +835,49 @@ public class MainActivity extends AppCompatActivity {
         }
 
         Fragment currentFragment = fragmentManager.findFragmentById(R.id.fragment_container);
+        CalendarFragment calendarFragment = currentFragment instanceof CalendarFragment
+                ? (CalendarFragment) currentFragment
+                : null;
         SettingsFragment settingsFragment = currentFragment instanceof SettingsFragment
                 ? (SettingsFragment) currentFragment
                 : null;
+        if (calendarFragment != null) {
+            calendarFragment.ensurePeriodDialogVisibleForTour(step.targetViewId);
+        }
         if (settingsFragment != null) {
+            settingsFragment.ensureNotificationToolsDialogVisibleForTour(step.targetViewId);
             settingsFragment.ensureBackgroundToolsDialogVisibleForTour(step.targetViewId);
         }
         ViewGroup host = findViewById(android.R.id.content);
-        boolean useDialogHost = false;
-        if (settingsFragment != null && settingsFragment.isBackgroundToolsDialogTourTarget(step.targetViewId)) {
+        if (calendarFragment != null && calendarFragment.isPeriodDialogTourTarget(step.targetViewId)) {
+            ViewGroup dialogHost = calendarFragment.getPeriodDialogTourHost();
+            if (dialogHost != null) {
+                host = dialogHost;
+            }
+        } else if (settingsFragment != null && settingsFragment.isNotificationToolsDialogTourTarget(step.targetViewId)) {
+            ViewGroup dialogHost = settingsFragment.getNotificationToolsDialogTourHost(step.targetViewId);
+            if (dialogHost != null) {
+                host = dialogHost;
+            }
+        } else if (settingsFragment != null && settingsFragment.isBackgroundToolsDialogTourTarget(step.targetViewId)) {
             ViewGroup dialogHost = settingsFragment.getBackgroundToolsDialogTourHost(step.targetViewId);
             if (dialogHost != null) {
                 host = dialogHost;
-                useDialogHost = true;
             }
         }
-        reattachTourOverlay(host, useDialogHost);
+        reattachTourOverlay(host);
         View fragmentView = currentFragment != null ? currentFragment.getView() : null;
         View target;
         if (step.inActivityView) {
             target = findViewById(step.targetViewId);
         } else {
-            target = settingsFragment != null
-                    ? settingsFragment.findTourTargetView(step.targetViewId)
-                    : (fragmentView != null ? fragmentView.findViewById(step.targetViewId) : null);
+            if (calendarFragment != null) {
+                target = calendarFragment.findTourTargetView(step.targetViewId);
+            } else if (settingsFragment != null) {
+                target = settingsFragment.findTourTargetView(step.targetViewId);
+            } else {
+                target = fragmentView != null ? fragmentView.findViewById(step.targetViewId) : null;
+            }
             if ((target == null || target.getVisibility() != View.VISIBLE)
                     && step.targetViewId == R.id.legend_tables_row
                     && fragmentView != null) {
@@ -896,7 +916,7 @@ public class MainActivity extends AppCompatActivity {
         tourOverlay.setStep(step.titleRes, step.bodyRes, index == tourSteps.size() - 1, target);
     }
 
-    private void reattachTourOverlay(ViewGroup host, boolean dialogHost) {
+    private void reattachTourOverlay(ViewGroup host) {
         if (tourOverlay == null || host == null) {
             return;
         }
@@ -1076,17 +1096,19 @@ public class MainActivity extends AppCompatActivity {
 
         steps.add(new TourStep(R.id.nav_calendar, R.id.calendarView,
                 R.string.tour_title_calendar, R.string.tour_body_calendar, 0, false));
-        steps.add(new TourStep(R.id.nav_calendar, R.id.calendarView,
+        steps.add(new TourStep(R.id.nav_calendar, R.id.switch_period_day,
                 R.string.tour_title_period_entry, R.string.tour_body_period_entry, 0, false));
-        steps.add(new TourStep(R.id.nav_calendar, R.id.calendarView,
+        steps.add(new TourStep(R.id.nav_calendar, R.id.period_modal_root,
                 R.string.tour_title_period_modal, R.string.tour_body_period_modal, 0, false));
-        steps.add(new TourStep(R.id.nav_calendar, R.id.calendarView,
+        steps.add(new TourStep(R.id.nav_calendar, R.id.legend_period_column,
                 R.string.tour_title_period_indicators, R.string.tour_body_period_indicators, 0, false));
         steps.add(new TourStep(R.id.nav_calendar, R.id.legend_tables_row,
                 R.string.tour_title_calendar_legend, R.string.tour_body_calendar_legend, 0, false));
 
         steps.add(new TourStep(R.id.nav_cycles, R.id.tv_history_title,
                 R.string.tour_title_cycles, R.string.tour_body_cycles, 0, false));
+        steps.add(new TourStep(R.id.nav_cycles, R.id.btn_rebuild_history,
+                R.string.tour_title_cycles_rebuild, R.string.tour_body_cycles_rebuild, 0, false));
         steps.add(new TourStep(R.id.nav_cycles, R.id.btn_clear_history,
                 R.string.tour_title_cycles_clear, R.string.tour_body_cycles_clear, 0, false));
 
@@ -1101,6 +1123,21 @@ public class MainActivity extends AppCompatActivity {
         steps.add(new TourStep(R.id.nav_settings, R.id.btn_notification_group,
                 R.string.tour_title_settings_notifications, R.string.tour_body_settings_notifications,
                 R.id.settings_scroll, false));
+        steps.add(new TourStep(R.id.nav_settings, R.id.btn_notification_times,
+                R.string.btn_set_notification_times, R.string.notification_hint_set_times,
+                0, false));
+        steps.add(new TourStep(R.id.nav_settings, R.id.btn_notification_test,
+                R.string.btn_notification_test, R.string.notification_test_hint_short,
+                0, false));
+        steps.add(new TourStep(R.id.nav_settings, R.id.btn_notification_permission,
+                R.string.btn_notification_permission, R.string.notification_hint_permission,
+                0, false));
+        steps.add(new TourStep(R.id.nav_settings, R.id.btn_notification_exact,
+                R.string.exact_alarm_title, R.string.notification_hint_exact_alarm,
+                0, false));
+        steps.add(new TourStep(R.id.nav_settings, R.id.btn_notification_battery_opt,
+                R.string.btn_notification_battery, R.string.notification_hint_battery,
+                0, false));
         steps.add(new TourStep(R.id.nav_settings, R.id.btn_background_tools,
                 R.string.settings_background_tools_label, R.string.tour_body_settings_background,
                 R.id.settings_scroll, false));
@@ -1194,13 +1231,33 @@ public class MainActivity extends AppCompatActivity {
     // Create a notification channel for Android O and above
     private void createNotificationChannel() {
         NotificationChannel channel = new NotificationChannel(
-                "reminder_channel",
+                Constants.REMINDER_CHANNEL_ID,
                 getString(R.string.notifications_channel_name),
                 NotificationManager.IMPORTANCE_HIGH
         );
         channel.setDescription(getString(R.string.notifications_channel_description));
+        channel.enableVibration(true);
+        channel.setVibrationPattern(Constants.REMINDER_VIBRATION_PATTERN);
         NotificationManager manager = getSystemService(NotificationManager.class);
+        if (manager == null) {
+            Log.w(NOTIFICATION_TAG, "NotificationManager unavailable, reminder channel not created");
+            return;
+        }
         manager.createNotificationChannel(channel);
+
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+            NotificationChannel created = manager.getNotificationChannel(Constants.REMINDER_CHANNEL_ID);
+            if (created != null) {
+                long[] pattern = created.getVibrationPattern();
+                Log.d(
+                        NOTIFICATION_TAG,
+                        "Channel ready id=" + created.getId()
+                                + ", importance=" + created.getImportance()
+                                + ", shouldVibrate=" + created.shouldVibrate()
+                                + ", patternLength=" + (pattern != null ? pattern.length : 0)
+                );
+            }
+        }
     }
 
     // Request notification permission for Android 13 and above

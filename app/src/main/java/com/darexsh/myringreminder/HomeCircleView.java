@@ -1,15 +1,19 @@
 package com.darexsh.myringreminder;
 
 import android.annotation.SuppressLint;
+import android.animation.ValueAnimator;
 import android.content.Context;
 import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Matrix;
+import android.graphics.Path;
 import android.graphics.Paint;
 import android.graphics.RectF;
 import android.graphics.SweepGradient;
+import android.os.SystemClock;
 import android.util.AttributeSet;
 import android.view.View;
+import android.view.animation.DecelerateInterpolator;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -31,6 +35,12 @@ public class HomeCircleView extends View {
     private final Paint trackPaint = new Paint(Paint.ANTI_ALIAS_FLAG);
     private final Paint progressPaint = new Paint(Paint.ANTI_ALIAS_FLAG);
     private final Paint markerPaint = new Paint(Paint.ANTI_ALIAS_FLAG);
+    private final Paint edgeGlowPaint = new Paint(Paint.ANTI_ALIAS_FLAG);
+    private final Paint edgeCorePaint = new Paint(Paint.ANTI_ALIAS_FLAG);
+    private final Paint edgeParticlePaint = new Paint(Paint.ANTI_ALIAS_FLAG);
+    private final Paint periodDropPaint = new Paint(Paint.ANTI_ALIAS_FLAG);
+    private final Paint calmParticlePaint = new Paint(Paint.ANTI_ALIAS_FLAG);
+    private final Path innerRainClipPath = new Path();
     private final RectF arcRect = new RectF();
     private final Matrix gradientMatrix = new Matrix();
 
@@ -40,6 +50,12 @@ public class HomeCircleView extends View {
     private int max = 1;
     private int progress = 0;
     private float pulsePhase = 0f;
+    private float animatedProgressFraction = 0f;
+    private boolean hasAnimatedProgress = false;
+    private boolean periodActive = false;
+    private long innerParticleStartTimeMs = 0L;
+    @Nullable
+    private ValueAnimator progressAnimator;
 
     public HomeCircleView(Context context) {
         super(context);
@@ -60,6 +76,11 @@ public class HomeCircleView extends View {
         trackPaint.setStyle(Paint.Style.STROKE);
         progressPaint.setStyle(Paint.Style.STROKE);
         markerPaint.setStyle(Paint.Style.FILL);
+        edgeGlowPaint.setStyle(Paint.Style.FILL);
+        edgeCorePaint.setStyle(Paint.Style.FILL);
+        edgeParticlePaint.setStyle(Paint.Style.FILL);
+        periodDropPaint.setStyle(Paint.Style.FILL);
+        calmParticlePaint.setStyle(Paint.Style.FILL);
         setLayerType(LAYER_TYPE_SOFTWARE, null);
     }
 
@@ -75,16 +96,34 @@ public class HomeCircleView extends View {
 
     public void setMax(int max) {
         this.max = Math.max(1, max);
+        if (!hasAnimatedProgress) {
+            animatedProgressFraction = clampProgressFraction(progress);
+        }
         invalidate();
     }
 
     public void setProgress(int progress) {
         this.progress = Math.max(0, progress);
-        invalidate();
+        float targetFraction = clampProgressFraction(this.progress);
+        if (!hasAnimatedProgress) {
+            animateProgress(0f, targetFraction);
+            hasAnimatedProgress = true;
+            return;
+        }
+        animateProgress(animatedProgressFraction, targetFraction);
     }
 
     public void setPulsePhase(float phase) {
         this.pulsePhase = phase;
+        invalidate();
+    }
+
+    public void setPeriodActive(boolean periodActive) {
+        if (this.periodActive == periodActive) {
+            return;
+        }
+        this.periodActive = periodActive;
+        innerParticleStartTimeMs = SystemClock.uptimeMillis();
         invalidate();
     }
 
@@ -118,11 +157,16 @@ public class HomeCircleView extends View {
         float bottom = top + size - thickness;
         arcRect.set(left, top, right, bottom);
 
-        float progressFraction = Math.max(0f, Math.min(1f, (float) progress / (float) max));
+        float progressFraction = hasAnimatedProgress
+                ? animatedProgressFraction
+                : clampProgressFraction(progress);
         if (style == STYLE_SEGMENTED) {
             trackPaint.setStrokeWidth(thickness);
             progressPaint.setStrokeWidth(thickness);
             drawSegmented(canvas, thickness, progressFraction);
+            if (progressFraction > 0f) {
+                drawLeadingEdgeHighlight(canvas, thickness, progressFraction);
+            }
             return;
         }
 
@@ -192,7 +236,11 @@ public class HomeCircleView extends View {
         }
         if (sweep > 0f) {
             canvas.drawArc(arcRect, -90f, sweep, false, progressPaint);
+            drawLeadingEdgeHighlight(canvas, thickness, progressFraction);
         }
+
+        drawInnerParticleEffect(canvas, thickness);
+        postInvalidateOnAnimation();
 
         if (style == STYLE_MARKER) {
             float angle = (float) Math.toRadians(-90 + sweep);
@@ -209,6 +257,15 @@ public class HomeCircleView extends View {
             canvas.drawCircle(x, y, outer, ring);
             canvas.drawCircle(x, y, inner, markerPaint);
         }
+    }
+
+    @Override
+    protected void onDetachedFromWindow() {
+        if (progressAnimator != null) {
+            progressAnimator.cancel();
+            progressAnimator = null;
+        }
+        super.onDetachedFromWindow();
     }
 
     private void drawSegmented(Canvas canvas, float thickness, float fraction) {
@@ -230,6 +287,149 @@ public class HomeCircleView extends View {
             float segStart = start + i * (sweep + gap);
             canvas.drawArc(arcRect, segStart, sweep, false, progressPaint);
         }
+    }
+
+    private void drawLeadingEdgeHighlight(@NonNull Canvas canvas, float thickness, float progressFraction) {
+        float sweep = 360f * progressFraction;
+        float angle = (float) Math.toRadians(-90f + sweep);
+        float radius = arcRect.width() / 2f;
+        float cx = arcRect.centerX();
+        float cy = arcRect.centerY();
+        float x = cx + (float) Math.cos(angle) * radius;
+        float y = cy + (float) Math.sin(angle) * radius;
+
+        float glowRadius = thickness * 0.82f;
+        float coreRadius = thickness * 0.36f;
+        float particleRadius = thickness * 0.13f;
+        float tangentX = (float) -Math.sin(angle);
+        float tangentY = (float) Math.cos(angle);
+
+        edgeGlowPaint.setColor(withAlpha(indicatorColor, 150));
+        edgeGlowPaint.setShadowLayer(thickness * 0.75f, 0f, 0f, withAlpha(indicatorColor, 210));
+        canvas.drawCircle(x, y, glowRadius, edgeGlowPaint);
+
+        edgeCorePaint.setShadowLayer(0f, 0f, 0f, Color.TRANSPARENT);
+        edgeCorePaint.setColor(Color.WHITE);
+        canvas.drawCircle(x, y, coreRadius, edgeCorePaint);
+
+        edgeParticlePaint.setShadowLayer(0f, 0f, 0f, Color.TRANSPARENT);
+        edgeParticlePaint.setColor(withAlpha(indicatorColor, 210));
+        canvas.drawCircle(x - tangentX * (thickness * 0.58f), y - tangentY * (thickness * 0.58f),
+                particleRadius * 1.45f, edgeParticlePaint);
+        canvas.drawCircle(x - tangentX * (thickness * 1.02f), y - tangentY * (thickness * 1.02f),
+                particleRadius, edgeParticlePaint);
+    }
+
+    private void drawInnerParticleEffect(@NonNull Canvas canvas, float thickness) {
+        if (periodActive) {
+            drawPeriodRain(canvas, thickness);
+        } else {
+            drawCalmFloat(canvas, thickness);
+        }
+    }
+
+    private void drawPeriodRain(@NonNull Canvas canvas, float thickness) {
+        float innerRadius = (arcRect.width() / 2f) - (thickness * 0.95f);
+        if (innerRadius <= 0f) {
+            return;
+        }
+        float centerX = arcRect.centerX();
+        float centerY = arcRect.centerY();
+        float clipRadius = innerRadius * 0.9f;
+        long elapsed = Math.max(0L, SystemClock.uptimeMillis() - innerParticleStartTimeMs);
+        int saveCount = canvas.save();
+        innerRainClipPath.reset();
+        innerRainClipPath.addCircle(centerX, centerY, clipRadius, Path.Direction.CW);
+        canvas.clipPath(innerRainClipPath);
+
+        final int particleCount = 11;
+        for (int i = 0; i < particleCount; i++) {
+            float laneSeed = (i + 0.5f) / particleCount;
+            float speed = 0.18f + (pseudoRandomUnit(i * 53 + 7) * 0.16f);
+            float offset = pseudoRandomUnit(i * 71 + 19);
+            float drift = (pseudoRandomUnit(i * 29 + 5) - 0.5f) * clipRadius * 0.16f;
+            float progress = (offset + ((elapsed / 1000f) * speed)) % 1f;
+            float x = centerX - clipRadius + (laneSeed * clipRadius * 2f) + drift;
+            float y = centerY - clipRadius + (progress * clipRadius * 2f);
+            float dropHeight = dpToPx(7.5f) + (pseudoRandomUnit(i * 17 + 3) * dpToPx(4.5f));
+            float dropWidth = dropHeight * 0.68f;
+            int alpha = 108 + Math.round(pseudoRandomUnit(i * 97 + 13) * 82f);
+            periodDropPaint.setColor(withAlpha(0xFF7A1026, alpha));
+            canvas.drawOval(x - dropWidth / 2f, y - dropHeight / 2f, x + dropWidth / 2f, y + dropHeight / 2f, periodDropPaint);
+            periodDropPaint.setColor(withAlpha(0xFFB3203E, Math.min(255, alpha + 26)));
+            canvas.drawCircle(x, y - (dropHeight * 0.2f), dropWidth * 0.28f, periodDropPaint);
+        }
+        canvas.restoreToCount(saveCount);
+    }
+
+    private void drawCalmFloat(@NonNull Canvas canvas, float thickness) {
+        float innerRadius = (arcRect.width() / 2f) - (thickness * 0.95f);
+        if (innerRadius <= 0f) {
+            return;
+        }
+        float centerX = arcRect.centerX();
+        float centerY = arcRect.centerY();
+        float clipRadius = innerRadius * 0.9f;
+        long elapsed = Math.max(0L, SystemClock.uptimeMillis() - innerParticleStartTimeMs);
+        int saveCount = canvas.save();
+        innerRainClipPath.reset();
+        innerRainClipPath.addCircle(centerX, centerY, clipRadius, Path.Direction.CW);
+        canvas.clipPath(innerRainClipPath);
+
+        final int particleCount = 10;
+        for (int i = 0; i < particleCount; i++) {
+            float laneSeed = (i + 0.5f) / particleCount;
+            float speed = 0.08f + (pseudoRandomUnit(i * 41 + 9) * 0.08f);
+            float offset = pseudoRandomUnit(i * 67 + 15);
+            float sway = (pseudoRandomUnit(i * 23 + 4) - 0.5f) * clipRadius * 0.2f;
+            float progress = (offset + ((elapsed / 1000f) * speed)) % 1f;
+            float x = centerX - clipRadius + (laneSeed * clipRadius * 2f)
+                    + (float) Math.sin((elapsed / 700f) + i) * sway;
+            float y = centerY + clipRadius - (progress * clipRadius * 2f);
+            float particleRadius = dpToPx(2.4f) + (pseudoRandomUnit(i * 31 + 6) * dpToPx(1.8f));
+            int glowAlpha = 44 + Math.round(pseudoRandomUnit(i * 79 + 12) * 42f);
+            int coreAlpha = 72 + Math.round(pseudoRandomUnit(i * 91 + 3) * 56f);
+
+            calmParticlePaint.setColor(withAlpha(indicatorColor, glowAlpha));
+            calmParticlePaint.setShadowLayer(dpToPx(6f), 0f, 0f, withAlpha(indicatorColor, 90));
+            canvas.drawCircle(x, y, particleRadius * 1.6f, calmParticlePaint);
+
+            calmParticlePaint.setShadowLayer(0f, 0f, 0f, Color.TRANSPARENT);
+            calmParticlePaint.setColor(withAlpha(0xFFFFFFFF, coreAlpha));
+            canvas.drawCircle(x, y, particleRadius, calmParticlePaint);
+        }
+
+        canvas.restoreToCount(saveCount);
+    }
+
+    private void animateProgress(float startFraction, float targetFraction) {
+        float clampedStart = Math.max(0f, Math.min(1f, startFraction));
+        float clampedTarget = Math.max(0f, Math.min(1f, targetFraction));
+        if (progressAnimator != null) {
+            progressAnimator.cancel();
+        }
+        if (Math.abs(clampedStart - clampedTarget) < 0.0001f) {
+            animatedProgressFraction = clampedTarget;
+            invalidate();
+            return;
+        }
+        progressAnimator = ValueAnimator.ofFloat(clampedStart, clampedTarget);
+        progressAnimator.setDuration(1000L);
+        progressAnimator.setInterpolator(new DecelerateInterpolator());
+        progressAnimator.addUpdateListener(animation -> {
+            animatedProgressFraction = (float) animation.getAnimatedValue();
+            invalidate();
+        });
+        progressAnimator.start();
+    }
+
+    private float clampProgressFraction(int value) {
+        return Math.max(0f, Math.min(1f, (float) value / (float) max));
+    }
+
+    private float pseudoRandomUnit(int seed) {
+        double value = Math.sin(seed * 12.9898 + 78.233) * 43758.5453;
+        return (float) (value - Math.floor(value));
     }
 
     private float dpToPx(float dp) {

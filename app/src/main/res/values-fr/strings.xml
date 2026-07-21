@@ -97,6 +97,7 @@
     <string name="settings_background_blur_dashboard_title">Tableau de bord</string>
     <string name="settings_background_blur_format">Flou d\'arrière-plan :\nTableau de bord %1$d%%, Autres %2$d%%</string>
     <string name="settings_background_blur_label">Flou d\'arrière-plan</string>
+    <string name="settings_background_blur_value">%1$d%% / %2$d%%</string>
     <string name="settings_background_blur_others">Autres écrans : %1$d%%</string>
     <string name="settings_background_blur_others_title">Autres écrans</string>
     <string name="settings_background_blur_title">Flou d\'arrière-plan</string>
@@ -122,6 +123,10 @@
     <string name="settings_calendar_insertion_color_dialog_title">Choisir la couleur d\'insertion</string>
     <string name="settings_calendar_insertion_color_format">Couleur d\'insertion : %1$s</string>
     <string name="settings_calendar_insertion_color_label">Couleur d\'insertion</string>
+    <string name="settings_label_calendar_range">Plage du calendrier</string>
+    <string name="settings_label_cycle_length">Durée du cycle</string>
+    <string name="settings_label_start_date">Date d\'insertion</string>
+    <string name="settings_label_time">Heure d\'insertion</string>
     <string name="settings_calendar_range_back">Précédent</string>
     <string name="settings_calendar_range_button">Plage du calendrier :\n%1$d %2$s avant, %3$d %4$s après</string>
     <string name="settings_calendar_range_forward">Suivant</string>
@@ -148,6 +153,7 @@
     <string name="settings_circle_style_format">Style du cercle : %1$s</string>
     <string name="settings_circle_style_label">Style du cercle d\'accueil</string>
     <string name="settings_cycle_length_button">Durée du cycle : %1$d jours</string>
+    <string name="settings_cycle_length_value">%1$d jours</string>
     <string name="settings_cycle_length_message">Choisissez la durée du cycle en jours :</string>
     <string name="settings_cycle_length_title">Régler la durée du cycle</string>
     <string name="settings_date_button_format">Date d\'insertion : %1$02d.%2$02d.%3$d</string>
@@ -198,6 +204,7 @@
     <string name="notification_test_sent">Notification de test envoyée.</string>
     <string name="notification_test_title">MyRingReminder test</string>
     <string name="notification_times_button_label">Rappels :\n%1$d h avant retrait, %2$d h avant insertion</string>
+    <string name="notification_times_value_label">%1$d h / %2$d h</string>
     <string name="notification_times_button_unknown">Rappels :\ninconnus</string>
     <string name="notifications_channel_description">Notifications pour les cycles de l\'anneau</string>
     <string name="notifications_channel_name">Rappels</string>
@@ -233,6 +240,8 @@
     <string name="home_days">17</string>
     <string name="home_days_left">Jours restants</string>
     <string name="home_days_until_insertion">Jours avant l\'insertion</string>
+    <string name="home_phase_active_cycle">Cycle actif</string>
+    <string name="home_phase_ring_free_phase">Phase sans anneau</string>
     <string name="home_delay_confirm">Mettre à jour</string>
     <string name="home_delay_info_desc">Infos sur le port prolongé de l\'anneau</string>
     <string name="home_delay_info_message"><![CDATA[
@@ -275,6 +284,7 @@
     <string name="btn_period_details">Détails des règles</string>
     <string name="btn_period_details_save_pdf">Enregistrer en PDF</string>
     <string name="period_details_pdf_file_name">details_regles_%1$s.pdf</string>
+    <string name="period_details_pdf_export_title">Export du cycle</string>
     <string name="period_details_pdf_saved">PDF enregistré avec succès.</string>
     <string name="period_details_pdf_save_failed">Impossible d\'enregistrer le PDF.</string>
     <string name="period_details_pdf_no_data">Aucune entrée de règles à exporter.</string>
@@ -299,7 +309,14 @@
     <string name="period_details_range_12m">12 mois</string>
     <string name="period_details_range_all">Tout</string>
     <string name="period_details_range_between">%1$s - %2$s</string>
+    <string name="period_details_filter_label">Recherche / filtre</string>
+    <string name="period_details_search_hint">Rechercher par date, symptôme, douleur ou marqueur</string>
+    <string name="period_details_filter_symptoms">Symptômes</string>
+    <string name="period_details_filter_pain">Douleur</string>
+    <string name="period_details_filter_start">Début</string>
+    <string name="period_details_filter_end">Fin</string>
     <string name="period_details_empty">Aucune entrée de règles dans cette période.</string>
+    <string name="period_details_empty_filtered">Aucune entrée de règles ne correspond à la recherche ou au filtre actuel.</string>
     <string name="period_modal_title_for_date">Entrée des règles : %1$s</string>
     <string name="period_modal_period_day">Jour des règles</string>
     <string name="period_modal_intensity_title">Intensité des saignements</string>
@@ -344,6 +361,16 @@
 
     <!-- Cycles -->
     <string name="cycles_clear_history">Effacer l\'historique</string>
+    <string name="cycles_empty">Aucun historique de cycle pour le moment.</string>
+    <string name="cycles_rebuild_history">Reconstruire l\'historique</string>
+    <string name="cycles_rebuild_history_confirm">Reconstruire</string>
+    <string name="cycles_rebuild_history_message">Recréer l\'historique des cycles à partir de la date d\'insertion enregistrée et des paramètres du cycle.</string>
+    <string name="cycles_rebuild_history_title">Reconstruire l\'historique des cycles ?</string>
+    <string name="cycles_sort_label">Tri</string>
+    <string name="cycles_sort_newest">Plus récents d\'abord</string>
+    <string name="cycles_sort_oldest">Plus anciens d\'abord</string>
+    <string name="cycles_summary_count">%1$d cycles enregistrés</string>
+    <string name="cycles_summary_count_placeholder">0 cycles enregistrés</string>
     <string name="cycles_status_inserted">Anneau inséré</string>
     <string name="cycles_status_removed">Anneau retiré</string>
     <string name="cycles_title">Historique des cycles</string>
@@ -366,6 +393,7 @@
 
     <!-- Widgets -->
     <string name="widget_large_name">Widget anneau (grand)</string>
+    <string name="widget_compact_name">Widget anneau (compact)</string>
     <string name="widget_small_name">Widget anneau (petit)</string>
     <string name="widget_title">Prochaines dates :</string>
 
@@ -547,6 +575,7 @@
     <string name="tour_body_calendar_legend">Ces couleurs indiquent le temps de port, les jours de pause, le retrait et l\'insertion.\nVous pouvez aussi changer les couleurs en appuyant sur les points de la légende.</string>
     <string name="tour_body_cycles">Suivez vos cycles précédents et leurs événements d\'insertion/retrait.</string>
     <string name="tour_body_cycles_clear">Supprimez toutes les entrées de cycle enregistrées de la liste.</string>
+    <string name="tour_body_cycles_rebuild">Recrée l\'historique des cycles à partir de la date d\'insertion enregistrée, des réglages du cycle et des cas spéciaux enregistrés après l\'avoir effacé.</string>
     <string name="tour_body_delay">Utilisez ceci pour enregistrer des jours supplémentaires si l\'anneau a été porté plus longtemps. Plus d\'infos via le bouton info.</string>
     <string name="tour_body_navigation">Basculez entre Accueil, Calendrier, Cycles et Paramètres ici.</string>
     <string name="tour_body_notes">Enregistrez des rappels et des notes personnelles pour ce cycle.</string>
@@ -570,7 +599,7 @@
     <string name="tour_body_settings_cycle">Réglez la date, l\'heure d\'insertion et la durée du cycle.</string>
     <string name="tour_body_settings_info">Affiche la version, les infos développeur et les liens de contact.</string>
     <string name="tour_body_settings_language">Basculez entre les différentes langues.</string>
-    <string name="tour_body_settings_notifications">Réglez quand vous souhaitez être rappelé pour l\'insertion et le retrait.\nSi les rappels ne sont pas fiables, désactivez l\'optimisation de la batterie.</string>
+    <string name="tour_body_settings_notifications">Ouvre les réglages détaillés des rappels. Vous pouvez y définir les heures de rappel, envoyer une notification de test, autoriser les notifications, autoriser les alarmes exactes et désactiver l\'optimisation de la batterie si les rappels arrivent en retard.</string>
     <string name="tour_body_settings_reset">Supprimez toutes les données et réinitialisez l\'application.</string>
     <string name="tour_body_settings_update">Vérifiez les nouvelles versions et installez-les.</string>
     <string name="tour_complete_done">Terminé</string>
@@ -584,6 +613,7 @@
     <string name="tour_title_calendar_legend">Légende du calendrier</string>
     <string name="tour_title_cycles">Historique des cycles</string>
     <string name="tour_title_cycles_clear">Effacer l\'historique</string>
+    <string name="tour_title_cycles_rebuild">Créer l\'historique</string>
     <string name="tour_title_delay">Retarder le cycle</string>
     <string name="tour_title_navigation">Navigation</string>
     <string name="tour_title_notes">Notes rapides</string>
@@ -611,6 +641,11 @@
     <string name="tour_title_settings_reset">Réinitialiser l\'app</string>
     <string name="tour_title_settings_update">Mises à jour</string>
     <string name="tour_body_period_entry">Appuyez sur un jour pour ajouter ou modifier le suivi des règles. La modification est disponible uniquement pendant la semaine sans anneau et ±4 jours autour.</string>
+    <string name="tour_body_period_intensity">L\'intensité du saignement est obligatoire pour enregistrer une entrée de règles. Choisissez légère, moyenne ou forte pour indiquer l\'intensité de ce jour.</string>
+    <string name="tour_body_period_pain">Le niveau de douleur est facultatif. Utilisez léger, modéré ou fort si la douleur doit être enregistrée pour ce jour.</string>
+    <string name="tour_body_period_symptoms">Ajoutez les symptômes correspondants à ce jour. Plusieurs symptômes peuvent être sélectionnés en même temps.</string>
+    <string name="tour_body_period_markers">Utilisez le marqueur de début pour le premier jour des règles et le marqueur de fin pour le dernier jour. Un seul des deux marqueurs peut être actif le même jour.</string>
+    <string name="tour_body_period_actions">Utilisez Effacer l\'entrée pour supprimer les données enregistrées de ce jour. Annuler ferme la fenêtre sans modification et OK enregistre l\'entrée actuelle.</string>
     <string name="tour_body_period_modal">Dans l\'entrée de règles, tu peux définir le jour de règles, l\'intensité du saignement, le niveau de douleur (légère/modérée/forte), des symptômes supplémentaires et des marqueurs début/fin optionnels.\nUtilise Effacer l\'entrée pour supprimer les données enregistrées de ce jour.</string>
     <string name="tour_body_period_indicators">Les jours de règles sont affichés directement dans le calendrier avec nuance d’intensité, points indicateurs et repères S/E.\nPour les mois avec des entrées de règles, vous pouvez aussi ouvrir Détails des règles et exporter un rapport PDF formaté.</string>
     <string name="tour_title_period_entry">Entrée des règles</string>
@@ -622,8 +657,6 @@
     <string name="welcome_features_title">Ce que fait cette application</string>
     <string name="welcome_info_note">Vous pouvez ouvrir les infos de l\'application à tout moment dans les Paramètres.</string>
     <string name="welcome_intro">Garde en vue ton cycle d\'anneau contraceptif et le suivi des règles avec tes données personnelles, rappels et notes.</string>
-    <string name="welcome_permissions_body">- 🖼️ Accès médias : choisir une image de fond\n- 🔔 Notifications : rappels de cycle\n- ⏰ Alarmes exactes : planification précise</string>
-    <string name="welcome_permissions_title">Autorisations utilisées</string>
     <string name="welcome_privacy_note">Vos données sont stockées uniquement sur cet appareil. Pensez à créer une sauvegarde une fois vos réglages terminés 😊</string>
     <string name="welcome_skip_tour">Pas maintenant</string>
     <string name="welcome_start_tour">Démarrer la visite</string>

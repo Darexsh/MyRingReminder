@@ -98,6 +98,7 @@ public class HomeFragment extends Fragment {
         final HomeCircleView circularProgress = view.findViewById(R.id.circularProgress); // Home circle for cycle status
         final TextView tvRemovalDate = view.findViewById(R.id.tv_removal_date); // TextView to display the removal date
         final TextView tvSecondaryDate = view.findViewById(R.id.tv_secondary_date);
+        final TextView tvCyclePhaseLabel = view.findViewById(R.id.tv_cycle_phase_label);
         final TextView tvDaysNumber = view.findViewById(R.id.tv_days_number);   // TextView to display the number of days left
         final TextView tvDaysLabel = view.findViewById(R.id.tv_days_left_label);    // TextView to display the label for days left
         final ImageView backgroundImageView = view.findViewById(R.id.background_image); // ImageView for the background image
@@ -181,9 +182,6 @@ public class HomeFragment extends Fragment {
                 backgroundImageView.setVisibility(View.GONE);
                 backgroundDimOverlay.setVisibility(View.GONE);
                 backgroundDimOverlay.setAlpha(0f);
-                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.S) {
-                    backgroundImageView.setRenderEffect(null);
-                }
                 return;
             }
             backgroundImageView.setVisibility(View.VISIBLE);
@@ -297,6 +295,7 @@ public class HomeFragment extends Fragment {
 
             // Retrieve cycle history from preferences
             List<Cycle> cycleHistory = viewModel.getRepository().getCycleHistory();
+            boolean cycleHistoryCleared = viewModel.getRepository().isCycleHistoryCleared();
             Calendar tempStartDate = (Calendar) startDate.clone();
             Calendar tempRemovalDate = (Calendar) removalDate.clone();
             Calendar tempReinsertionDate = (Calendar) reinsertionDate.clone();
@@ -308,7 +307,9 @@ public class HomeFragment extends Fragment {
             int count = 0;
 
             // Calculate cycles until today if last reinsertion date is in the past
-            while (tempReinsertionDate.getTimeInMillis() <= systemNow.getTimeInMillis() && count < maxCycles) {
+            while (!cycleHistoryCleared
+                    && tempReinsertionDate.getTimeInMillis() <= systemNow.getTimeInMillis()
+                    && count < maxCycles) {
                 if (tempReinsertionDate.getTimeInMillis() > lastSavedReinsertionMillis) {
                     saveCycleToHistory(viewModel, tempStartDate.getTimeInMillis(), tempRemovalDate.getTimeInMillis(), CycleType.INSERTION);
                     saveCycleToHistory(viewModel, tempRemovalDate.getTimeInMillis(), tempReinsertionDate.getTimeInMillis(), CycleType.REMOVAL);
@@ -341,29 +342,33 @@ public class HomeFragment extends Fragment {
             }
 
             // Add phases as soon as each phase ends, even if the app wasn't opened at the exact time.
-            if (systemNow.equals(removalDate) || systemNow.after(removalDate)) {
+            if (!cycleHistoryCleared && (systemNow.equals(removalDate) || systemNow.after(removalDate))) {
                 saveCycleToHistory(viewModel, startDate.getTimeInMillis(),
                         removalDate.getTimeInMillis(), CycleType.INSERTION);
             }
-            if (systemNow.equals(reinsertionDate) || systemNow.after(reinsertionDate)) {
+            if (!cycleHistoryCleared && (systemNow.equals(reinsertionDate) || systemNow.after(reinsertionDate))) {
                 saveCycleToHistory(viewModel, removalDate.getTimeInMillis(),
                         reinsertionDate.getTimeInMillis(), CycleType.REMOVAL);
             }
 
             int remainingDays;
             String labelText;
+            String phaseLabelText;
             String primaryTextDate;
             String secondaryTextDate;
             int progressMax;
             int progressValue;
+            boolean showPeriodRain;
 
             // Calculate remaining days and progress based on day changes (midnight), except at removal/insertion time
             if (displayNow.before(removalDate)) {
                 remainingDays = daysBetweenDays(displayNow, removalDate);
 
                 labelText = getString(R.string.home_days_left);
+                phaseLabelText = getString(R.string.home_phase_active_cycle);
                 progressMax = cycleLength;
                 progressValue = progressMax - remainingDays;
+                showPeriodRain = false;
 
                 @SuppressLint("DefaultLocale") String removalDateText = String.format("%02d.%02d.%d",
                         removalDate.get(Calendar.DAY_OF_MONTH),
@@ -379,8 +384,10 @@ public class HomeFragment extends Fragment {
                 remainingDays = daysBetweenDays(displayNow, reinsertionDate);
 
                 labelText = getString(R.string.home_days_until_insertion);
+                phaseLabelText = getString(R.string.home_phase_ring_free_phase);
                 progressMax = Math.max(1, ringFreeDays);
                 progressValue = progressMax - remainingDays;
+                showPeriodRain = true;
 
                 @SuppressLint("DefaultLocale") String reinsertionDateText = String.format("%02d.%02d.%d",
                         reinsertionDate.get(Calendar.DAY_OF_MONTH),
@@ -395,8 +402,10 @@ public class HomeFragment extends Fragment {
             } else {
                 remainingDays = cycleLength;
                 labelText = getString(R.string.home_days_left);
+                phaseLabelText = getString(R.string.home_phase_active_cycle);
                 progressMax = cycleLength;
                 progressValue = 0;
+                showPeriodRain = false;
 
                 @SuppressLint("DefaultLocale") String removalDateText = String.format("%02d.%02d.%d",
                         removalDate.get(Calendar.DAY_OF_MONTH),
@@ -412,6 +421,10 @@ public class HomeFragment extends Fragment {
 
             circularProgress.setMax(progressMax);
             circularProgress.setProgress(progressValue);
+            circularProgress.setPeriodActive(showPeriodRain);
+            if (tvCyclePhaseLabel != null) {
+                tvCyclePhaseLabel.setText(phaseLabelText);
+            }
             tvDaysNumber.setText(String.valueOf(remainingDays));
             tvDaysLabel.setText(labelText);
             @SuppressLint("DefaultLocale") String timeText = String.format("%02d:%02d", startDate.get(Calendar.HOUR_OF_DAY), startDate.get(Calendar.MINUTE));

@@ -97,6 +97,7 @@
     <string name="settings_background_blur_dashboard_title">Painel de controle</string>
     <string name="settings_background_blur_format">Desfoque de fundo:\nPainel %1$d%%, Outros %2$d%%</string>
     <string name="settings_background_blur_label">Desfoque de fundo</string>
+    <string name="settings_background_blur_value">%1$d%% / %2$d%%</string>
     <string name="settings_background_blur_others">Outras telas: %1$d%%</string>
     <string name="settings_background_blur_others_title">Outras telas</string>
     <string name="settings_background_blur_title">Desfoque de fundo</string>
@@ -122,6 +123,10 @@
     <string name="settings_calendar_insertion_color_dialog_title">Escolher cor de inserção</string>
     <string name="settings_calendar_insertion_color_format">Cor de inserção: %1$s</string>
     <string name="settings_calendar_insertion_color_label">Cor de inserção</string>
+    <string name="settings_label_calendar_range">Intervalo do calendário</string>
+    <string name="settings_label_cycle_length">Duração do ciclo</string>
+    <string name="settings_label_start_date">Data de inserção</string>
+    <string name="settings_label_time">Hora de inserção</string>
     <string name="settings_calendar_range_back">Atrás</string>
     <string name="settings_calendar_range_button">Intervalo do calendário:\n%1$d %2$s atrás, %3$d %4$s à frente</string>
     <string name="settings_calendar_range_forward">À frente</string>
@@ -148,6 +153,7 @@
     <string name="settings_circle_style_format">Estilo do círculo: %1$s</string>
     <string name="settings_circle_style_label">Estilo do círculo home</string>
     <string name="settings_cycle_length_button">Duração do ciclo: %1$d dias</string>
+    <string name="settings_cycle_length_value">%1$d dias</string>
     <string name="settings_cycle_length_message">Escolha a duração do ciclo em dias:</string>
     <string name="settings_cycle_length_title">Definir duração do ciclo</string>
     <string name="settings_date_button_format">Data de inserção: %1$02d.%2$02d.%3$d</string>
@@ -198,6 +204,7 @@
     <string name="notification_test_sent">Notificação de teste enviada.</string>
     <string name="notification_test_title">MyRingReminder test</string>
     <string name="notification_times_button_label">Lembretes:\n%1$d h antes da remoção, %2$d h antes da inserção</string>
+    <string name="notification_times_value_label">%1$d h / %2$d h</string>
     <string name="notification_times_button_unknown">Lembretes:\ndesconhecido</string>
     <string name="notifications_channel_description">Notificações para ciclos do anel</string>
     <string name="notifications_channel_name">Lembretes</string>
@@ -233,6 +240,8 @@
     <string name="home_days">17</string>
     <string name="home_days_left">Dias restantes</string>
     <string name="home_days_until_insertion">Dias até a inserção</string>
+    <string name="home_phase_active_cycle">Ciclo ativo</string>
+    <string name="home_phase_ring_free_phase">Fase sem anel</string>
     <string name="home_delay_confirm">Atualizar</string>
     <string name="home_delay_info_desc">Informações sobre o uso prolongado do anel</string>
     <string name="home_delay_info_message"><![CDATA[
@@ -275,6 +284,7 @@
     <string name="btn_period_details">Detalhes do período</string>
     <string name="btn_period_details_save_pdf">Salvar como PDF</string>
     <string name="period_details_pdf_file_name">detalhes_periodo_%1$s.pdf</string>
+    <string name="period_details_pdf_export_title">Exportacao do ciclo</string>
     <string name="period_details_pdf_saved">PDF salvo com sucesso.</string>
     <string name="period_details_pdf_save_failed">Falha ao salvar o PDF.</string>
     <string name="period_details_pdf_no_data">Não há registros de período para exportar.</string>
@@ -299,7 +309,14 @@
     <string name="period_details_range_12m">12 meses</string>
     <string name="period_details_range_all">Tudo</string>
     <string name="period_details_range_between">%1$s - %2$s</string>
+    <string name="period_details_filter_label">Buscar / filtrar</string>
+    <string name="period_details_search_hint">Buscar por data, sintoma, dor ou marcador</string>
+    <string name="period_details_filter_symptoms">Sintomas</string>
+    <string name="period_details_filter_pain">Dor</string>
+    <string name="period_details_filter_start">Início</string>
+    <string name="period_details_filter_end">Fim</string>
     <string name="period_details_empty">Sem registros de período neste intervalo.</string>
+    <string name="period_details_empty_filtered">Nenhum registro corresponde à busca ou ao filtro atual.</string>
     <string name="period_modal_title_for_date">Registro menstrual: %1$s</string>
     <string name="period_modal_period_day">Dia da menstruação</string>
     <string name="period_modal_intensity_title">Intensidade do sangramento</string>
@@ -344,6 +361,16 @@
 
     <!-- Cycles -->
     <string name="cycles_clear_history">Limpar histórico</string>
+    <string name="cycles_empty">Ainda não há histórico de ciclos.</string>
+    <string name="cycles_rebuild_history">Reconstruir histórico</string>
+    <string name="cycles_rebuild_history_confirm">Reconstruir</string>
+    <string name="cycles_rebuild_history_message">Recrie o histórico de ciclos a partir da data de inserção salva e das configurações do ciclo.</string>
+    <string name="cycles_rebuild_history_title">Reconstruir histórico de ciclos?</string>
+    <string name="cycles_sort_label">Ordenar</string>
+    <string name="cycles_sort_newest">Mais recentes primeiro</string>
+    <string name="cycles_sort_oldest">Mais antigos primeiro</string>
+    <string name="cycles_summary_count">%1$d ciclos registrados</string>
+    <string name="cycles_summary_count_placeholder">0 ciclos registrados</string>
     <string name="cycles_status_inserted">Anel inserido</string>
     <string name="cycles_status_removed">Anel removido</string>
     <string name="cycles_title">Histórico de ciclos</string>
@@ -366,6 +393,7 @@
 
     <!-- Widgets -->
     <string name="widget_large_name">Widget do anel (grande)</string>
+    <string name="widget_compact_name">Widget do anel (compacto)</string>
     <string name="widget_small_name">Widget do anel (pequeno)</string>
     <string name="widget_title">Próximas datas:</string>
 
@@ -547,6 +575,7 @@
     <string name="tour_body_calendar_legend">Estas cores mostram tempo de uso, dias de intervalo, remoção e inserção.\nVocê pode mudar as cores tocando nos pontos da legenda.</string>
     <string name="tour_body_cycles">Acompanhe ciclos anteriores e seus eventos de inserção/remoção.</string>
     <string name="tour_body_cycles_clear">Remova todas as entradas de ciclos salvas da lista.</string>
+    <string name="tour_body_cycles_rebuild">Recria o histórico de ciclos a partir da data de inserção salva, das configurações do ciclo e dos casos especiais salvos depois que ele foi apagado.</string>
     <string name="tour_body_delay">Use para registrar dias extras se o anel foi usado por mais tempo. Mais infos no botão de informações.</string>
     <string name="tour_body_navigation">Alterne entre Início, Calendário, Ciclos e Configurações aqui.</string>
     <string name="tour_body_notes">Salve lembretes e notas pessoais para este ciclo.</string>
@@ -570,7 +599,7 @@
     <string name="tour_body_settings_cycle">Defina data, hora de inserção e duração do ciclo.</string>
     <string name="tour_body_settings_info">Mostra versão, info do desenvolvedor e links de contato.</string>
     <string name="tour_body_settings_language">Alterne entre diferentes idiomas.</string>
-    <string name="tour_body_settings_notifications">Defina quando quer ser lembrado da inserção e remoção.\nSe falhar, desative a otimização de bateria.</string>
+    <string name="tour_body_settings_notifications">Abre as configurações detalhadas de lembretes. Lá você pode definir os horários, enviar uma notificação de teste, permitir notificações, permitir alarmes exatos e desativar a otimização da bateria se os lembretes atrasarem.</string>
     <string name="tour_body_settings_reset">Exclua todos os dados salvos e reinicie o app.</string>
     <string name="tour_body_settings_update">Verifique novas versões do app e instale-as.</string>
     <string name="tour_complete_done">Pronto</string>
@@ -584,6 +613,7 @@
     <string name="tour_title_calendar_legend">Legenda do calendário</string>
     <string name="tour_title_cycles">Histórico de ciclos</string>
     <string name="tour_title_cycles_clear">Limpar histórico</string>
+    <string name="tour_title_cycles_rebuild">Criar histórico</string>
     <string name="tour_title_delay">Atrasar ciclo</string>
     <string name="tour_title_navigation">Navegação</string>
     <string name="tour_title_notes">Notas rápidas</string>
@@ -611,6 +641,11 @@
     <string name="tour_title_settings_reset">Resetar app</string>
     <string name="tour_title_settings_update">Atualizações</string>
     <string name="tour_body_period_entry">Toque em um dia para adicionar ou editar o acompanhamento menstrual. A edição está disponível apenas durante a semana sem anel e ±4 dias ao redor.</string>
+    <string name="tour_body_period_intensity">A intensidade do sangramento é obrigatória para salvar um registro do período. Escolha leve, média ou forte para indicar quão intenso foi nesse dia.</string>
+    <string name="tour_body_period_pain">O nível de dor é opcional. Use leve, moderada ou forte se quiser registrar dor nesse dia.</string>
+    <string name="tour_body_period_symptoms">Adicione os sintomas que combinarem com esse dia. Você pode selecionar vários sintomas ao mesmo tempo.</string>
+    <string name="tour_body_period_markers">Use o marcador de início para o primeiro dia do período e o marcador de fim para o último dia. Apenas um dos dois marcadores pode ficar ativo no mesmo dia.</string>
+    <string name="tour_body_period_actions">Use "Excluir registro" para remover os dados salvos desse dia. Cancelar fecha a janela sem mudanças e OK salva o registro atual do período.</string>
     <string name="tour_body_period_modal">No registro do período, você pode definir dia do período, intensidade do sangramento, nível de dor (leve/moderada/forte), sintomas adicionais e marcadores opcionais de início/fim.\nUse "Excluir registro" para remover os dados salvos desse dia.</string>
     <string name="tour_body_period_indicators">Os dias menstruais são exibidos diretamente no calendário com tonalidade de intensidade, pontos indicadores e marcadores S/E.\nPara meses com registros menstruais, você também pode abrir Detalhes do período e exportar um relatório PDF formatado.</string>
     <string name="tour_title_period_entry">Registro menstrual</string>
@@ -622,8 +657,6 @@
     <string name="welcome_features_title">O que este app faz</string>
     <string name="welcome_info_note">Você pode abrir as informações do app a qualquer momento nas Configurações.</string>
     <string name="welcome_intro">Mantenha seu ciclo do anel contraceptivo e o acompanhamento do período em vista com seus dados pessoais, lembretes e anotações.</string>
-    <string name="welcome_permissions_body">- 🖼️ Acesso a mídia: escolha uma imagem de fundo\n- 🔔 Notificações: lembretes de ciclo\n- ⏰ Alarmes exatos: agendamento preciso</string>
-    <string name="welcome_permissions_title">Permissões utilizadas</string>
     <string name="welcome_privacy_note">Seus dados são salvos apenas neste dispositivo. Certifique-se de criar um backup após configurar tudo 😊</string>
     <string name="welcome_skip_tour">Agora não</string>
     <string name="welcome_start_tour">Iniciar tour</string>

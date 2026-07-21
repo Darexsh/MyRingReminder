@@ -2,24 +2,22 @@
 
 <div align="center">
 
-📱 MyRingReminder
-============================
+<img src="https://capsule-render.vercel.app/api?type=waving&height=220&text=MyRingReminder&fontAlign=50&fontAlignY=50&color=0:1f4037,50:2e7d32,100:7cb342&fontColor=ffffff" width="100%" /><br>
+<a href="https://git.io/typing-svg"><img src="https://readme-typing-svg.demolab.com/?lines=Gentle+cycle+tracking+for+everyday+clarity;Thoughtful+reminders+that+stay+out+of+the+way;Private+period+tracking+during+the+ring-free+days;A+calm+place+for+notes%2C+history%2C+and+overview;Made+to+feel+clear%2C+personal%2C+and+reliable&center=true&width=760&color=2E7D32&pause=1000" alt="Typing SVG" /></a>
 
-**An Android app for tracking and managing contraceptive ring cycles**  
-📅⏰📝🎨📊
+![Projekt-Status](https://img.shields.io/badge/Status-Aktiv-brightgreen)
+![License](https://img.shields.io/badge/License-NonCommercial-blue)
+![Version](https://img.shields.io/badge/Version-1.3.6-orange)
 
-![Projekt-Status](https://img.shields.io/badge/Status-Aktiv-brightgreen) ![License](https://img.shields.io/badge/License-NonCommercial-blue) ![Version](https://img.shields.io/badge/Version-1.3.4-orange)
-
-[![Telegram Bot](https://img.shields.io/badge/Telegram-Bot-2AABEE?logo=telegram&logoColor=white)](https://t.me/darexsh_bot) [![Buy Me a Coffee](https://img.shields.io/badge/Buy%20Me%20a%20Coffee-yellow?logo=buy-me-a-coffee)](https://buymeacoffee.com/darexsh)  
-<sub>Get release updates on Telegram.<br>If you want to support more apps, you can leave a small donation for a coffee.</sub>
+[![Telegram Bot](https://img.shields.io/badge/Telegram-Bot-2AABEE?logo=telegram&logoColor=white)](https://t.me/darexsh_bot)
+[![Buy Me a Coffee](https://img.shields.io/badge/Buy%20Me%20a%20Coffee-yellow?logo=buy-me-a-coffee)](https://buymeacoffee.com/darexsh)
+<br><sub>Get release updates on Telegram.<br>If you want to support more apps, you can leave a small donation for a coffee.</sub>
 
 </div>
 
-
 * * *
 
-✨ Authors
----------
+## ✨ Authors
 
 | Name | GitHub | Role | Contact | Contributions |
 | --- | --- | --- | --- | --- |
@@ -27,71 +25,76 @@
 
 * * *
 
-🚀 About the Project
-==============
+## 🚀 Overview
 
-**MyRingReminder** is an Android app for managing and tracking contraceptive ring cycles. The app provides a color-coded calendar for insertion, removal, and ring-free days, customizable reminders, notes, widgets, and backup/restore features. It also includes a welcome tour, cycle history, and guidance for extending a cycle ("Wear ring longer"). Personalization options such as background images and color settings allow individual customization.
+**MyRingReminder** is a local-first Android app for people who want a clear, reliable, and discreet way to stay on top of contraceptive ring routines.
+
+It combines cycle timing, reminders, period tracking during the ring-free window, history, notes, widgets, backup/restore, and thoughtful customization in one focused experience. The app is designed around quick visibility and low-friction use, so it stays informative without demanding constant interaction.
+
+### Why MyRingReminder feels different
+
+* Clear visual timing for insertion, removal, ring-free, and active days
+* Reminder flow with vibration support and automatic rescheduling
+* Period tracking integrated into the calendar only where it is actually useful
+* Private local storage with backup/restore and no dedicated backend
+* Flexible handling for real-life exceptions like longer wear or skipped ring-free weeks
 
 **Important note:** This app is intended solely for personal organization and cycle tracking. It is not a medical product, does not replace medical advice, and is not based on medical evaluation or diagnosis. If you have usage questions or health concerns, seek professional medical advice.
 
 * * *
 
-✨ Features
-----------
+## ✨ Feature Highlights
 
-* 📅 **Cycle Tracking**: Visualize insertion, removal, ring-free, and active days with color-coded calendar highlights; tap legend dots to recolor.
+### Core Experience
 
-* 🩸 **Period Tracking (Ring-Free Window)**: Tap calendar days during ring-free week (and ±4 days) to add/edit period entries with bleeding intensity, pain level (light/medium/strong), additional symptoms (for example malaise, nausea, fatigue, dizziness, diarrhea), and optional start/end markers.
+* **Cycle Tracking**: Visualize insertion, removal, ring-free, and active days with color-coded calendar highlights, plus quick legend recoloring.
+* **Reminders**: Set custom lead times for insertion and removal reminders, with automatic rescheduling and vibrating notifications.
+* **Cycle History**: Review recorded cycles with month grouping, newest/oldest sorting, a tracked-cycle subtitle, clear/recreate controls, and rebuild support that respects saved special cases.
+* **Notes**: Keep private notebook-style notes with autosave, character counter, and quick delete.
 
-* 📄 **Period Details & PDF Export**: For months with period entries, open a dedicated **Period Details** view with range filters (3/6/12 months or all), grouped timeline, and export a formatted PDF report. After saving, a heads-up notification appears and opens the saved PDF directly when tapped.
-    
-* 🔔 **Reminders**: Custom reminder lead times for insertion/removal, with automatic rescheduling.
-    
-* 📝 **Notes**: Notebook-style notes with autosave, character counter, and quick delete.
-    
-* 🎨 **Customization**: Set cycle length, insertion date/time, calendar range, language, and background image. Customize button color, home ring color, and widget colors.
+### Period Tracking
 
-* 🎞️ **App Animations**: Choose a global navigation animation style in Settings (for tab switches and screen openings), including options such as slide, fade, zoom, rotate, pop, or none.
+* **Period Tracking (Ring-Free Window)**: Add or edit period entries during the ring-free week and ±4 days, including bleeding intensity, pain level, symptoms, and optional start/end markers.
+* **Period Details & PDF Export**: Open a dedicated details view for months with entries, switch between 3/6/12-month or full-history ranges, and export a polished PDF report with summary cards, highlights, a 3-column daily overview, and an extended notes area.
+* **Search / Filter in Period Details**: Narrow entries live by text and quick filters such as symptoms, pain, and start/end markers across the currently selected range, including full-history view.
 
-* ⚙️ **Animated Advanced Settings**: The **Settings → Advanced** section opens and closes with a subtle transition for smoother interaction.
+### Real-Life Flexibility
 
-* 🗓️ **Enhanced Calendar Navigation**: Navigate months with left/right arrows, tap the month header to jump directly to a selected month and year, and scroll through months without a fixed limit.
+* **Wear Ring Longer**: Extend the current cycle by extra days, with built-in information guidance.
+* **Skip Ring-Free Week**: Skip the current ring-free week for immediate reinsertion, then continue with normal cycle behavior afterward.
+* **Special Cases Menu (Home)**: Access “Wear ring longer” and “Skip ring-free week” quickly from a compact, auto-hiding Home action menu.
 
-* 🌐 **Language Mode**: Select German, English, or **System Default**. System Default follows the device language and falls back to English if unsupported.
+### Convenience & Personalization
 
-* 🔐 **App Lock**: Optional biometric/PIN app protection (default off) with a dedicated App Lock dialog to enable/disable protection and set auto-lock delay.
+* **Backup / Restore**: Export and import local app data including settings, notes, cycle history, period tracking, and saved special cases, with validation and a readable restore preview.
+* **Home Screen Widgets**: Choose between a small `2x1` widget, a compact `3x1` status widget, and a larger detailed widget for quick at-a-glance status, all color-synced with app settings.
+* **Refined Home Status View**: See a clearer main status ring with subtle phase labeling, improved event hierarchy, cleaner spacing, and conditional inner particle effects that adapt to the current cycle phase.
+* **Customization**: Adjust cycle settings, reminder times, language, background image, calendar range, and accent colors through a grouped settings layout with modern list-style cards, including matching notification and background tools, plus widget, home ring, and calendar personalization.
+* **Enhanced Calendar Navigation**: Move through months with arrows, jump directly by tapping the month header, and browse without a fixed scrolling limit.
+* **Language Mode**: Choose between multiple app languages or **System Default**, with English fallback if the device language is unsupported.
+* **App Lock**: Optional biometric or device-credential protection with configurable auto-lock delay.
+* **App Updates**: Check for new releases inside the app, review version details, download the APK, and start installation directly from the update flow.
+* **Welcome Tour**: A restartable first-run guided tour introduces the key screens and controls.
+* **App Animations**: Choose a preferred global transition style for tab changes and screen openings.
+* **Debug View**: Long-press the settings title to open detailed diagnostic information.
 
-* 🌙 **Dark Mode (Default)**: App runs in dark mode by default, independent of system theme.
+### Privacy-First by Design
 
-* 🔒 **Portrait Only**: Interface stays in vertical orientation for a consistent experience.
-    
-* 🧭 **Welcome Tour**: First-run guided tour across all screens, with a restart option in Settings → Advanced.
-
-* 📊 **Cycle History**: Review past and upcoming cycles to track patterns and durations.
-
-* ⏩ **Wear Ring Longer**: Extend the current cycle by extra days (per cycle), with built‑in info guidance.
-
-* ⏭️ **Skip Ring-Free Week**: Skip the ring-free week for the current cycle (immediate reinsertion), then continue with normal cycle behavior afterward.
-
-* 🧰 **Special Cases Menu (Home)**: Open quick actions for “Wear ring longer” and “Skip ring-free week” from a compact Home menu with auto-hide.
-
-* 🧩 **Home Screen Widgets**: Small widget shows days left; large widget shows days left plus next dates, both color‑synced with app settings and resizable.
-
-* 💾 **Backup / Restore**: One‑tap export and import of all settings and notes, with import validation and a user-friendly expandable review before confirming restore.
-
-* 🛠️ **Debug View**: Long‑press settings title for detailed diagnostic information.
-    
+* **Local-first storage**: Core data stays on the device.
+* **No dedicated backend**: The app does not require a private server for cycle tracking.
+* **User-controlled export**: Backups and PDF exports are created only when explicitly requested.
 
 * * *
 
-📸 Screenshots
---------------
+## 📸 Screenshots
+
+An overview of the current visual experience across the app:
 
 <table>
   <tr>
     <td align="center"><b>Home Screen</b><br><img src="Screenshots/Home.png" width="200" height="450"></td>
     <td align="center"><b>Calendar</b><br><img src="Screenshots/Calendar.png" width="200" height="450"></td>
-    <td align="center"><b>Period Details</b><br><img src="Screenshots/Period_Details.png" width="200" height="450"></td>
+    <td align="center"><b>Period Details</b><br><img src="Screenshots/Period-Details.png" width="200" height="450"></td>
     <td align="center"><b>Cycles</b><br><img src="Screenshots/Cycles.png" width="200" height="450"></td>
   </tr>
 </table>
@@ -99,184 +102,145 @@
 <table>
   <tr>
     <td align="center"><b>Notes</b><br><img src="Screenshots/Notes.png" width="200" height="450"></td>
+    <td align="center"><b>Special Cases</b><br><img src="Screenshots/Special_Cases.png" width="200" height="450"></td>
     <td align="center"><b>Settings</b><br><img src="Screenshots/Settings.png" width="200" height="450"></td>
     <td align="center"><b>Widgets</b><br><img src="Screenshots/Widgets.png" width="200" height="450"></td>
+  </tr>
+</table>
+
+<table>
+  <tr>
+    <td align="center"><b>PDF Export</b><br><img src="Screenshots/PDF.png" width="200" height="450"></td>
     <td align="center"><b>About</b><br><img src="Screenshots/About.png" width="200" height="450"></td>
   </tr>
 </table>
 
-* * *
-
-📥 Installation
----------------
-
-1. **Build from source**:
-    
-    * Clone or download the repository from GitHub:
-        
-        ```bash
-        git clone https://github.com/Darexsh/MyRingReminder.git
-        ```
-        
-    * Open the project in **Android Studio**.
-        
-    * Sync Gradle and build the project.
-        
-    * Run the app on an Android device or emulator (Android 8+ recommended).
-        
-2. **Install via the provided APK**:
-    
-    * Download the APK from the repository (`myringreminder_app.apk`).
-        
-    * 🔒 Enable installation from unknown sources if prompted (required on Android 8+).
-        
-    * 📂 Open the APK on your device and follow the installation steps.
-    
 
 * * *
 
-📝 Usage
---------
+## 📥 Installation
 
-1. **Setup Cycle**:
-    
-    * Go to **Settings**.
-        
-    * Select the insertion date, cycle length, and reminder lead times.
-        
-    * Optionally choose a background image.
+### Build from source
 
-    * Switch the app language (German/English/System Default).
+1. Clone or download the repository:
 
-    * (Optional) Restart the welcome tour in **Settings → Advanced**.
-        
-2. **View Calendar**:
-    
-    * Open the **Calendar** tab to see color-coded days:
-        
-        * 🟦 Cyan: Ring insertion
-            
-        * 🟨 Yellow: Ring removal
-            
-        * 🔴 Red: Ring-free days
-            
-        * 🟩 Green: Active cycle days
+   ```bash
+   git clone https://github.com/Darexsh/MyRingReminder.git
+   ```
 
-    * Tap legend dots to change the colors.
+2. Open the project in **Android Studio**.
+3. Sync Gradle and build the project.
+4. Run the app on an Android device or emulator.
 
-    * Use the left/right arrows to move between months.
+### Install via APK
 
-    * Tap the month label to choose a specific month and year.
-
-    * During ring-free week and ±4 days, tap a day to open **Period Entry** and save period details (intensity, pain level, symptoms, start/end markers).
-            
-3. **Get Notifications**:
-    
-    * Receive reminders for insertion and removal at your selected times.
-        
-4. **Use Widgets**:
-    
-    * Add the small or large widget to your home screen for quick status.
-    * Widgets are resizable from the launcher.
-        
-5. **Take Notes**:
-    
-    * Use the **Notes** tab to store private notes, automatically saved locally.
-        
-6. **Track History**:
-    
-    * Check the **Cycles** tab for past and upcoming cycles.
-
-7. **Backup / Restore**:
-
-    * Use **Settings → Advanced** to export or import all settings and notes.
-
-    * Before restore, review validated import content in an expandable, readable preview and confirm with **Yes/No**.
-
-8. **Wear Ring Longer Info**:
-
-    * Tap the **info** icon next to “Wear ring longer” for guidance.
-
-9. **Special Cases Menu (Home)**:
-
-    * Tap **Sonderfälle / Special cases** on the Home screen to open quick actions.
-
-    * Use **Wear ring longer** to extend only the current cycle.
-
-    * Use **Skip ring-free week** to set immediate reinsertion for the current cycle.
-
-    * Both actions include dedicated **info** dialogs.
-
-10. **Animation Style**:
-
-    * Open **Settings** and choose your preferred global app transition animation.
-
-11. **App Lock**:
-
-    * Open **Settings → Advanced → App lock**.
-
-    * In the popup, enable/disable app lock and set auto-lock delay (e.g., immediate, 30s, 1m, 5m, 15m).
-
-    * Unlock uses biometric authentication or device PIN/pattern/password.
-
-12. **Period Details & PDF**:
-
-    * In **Calendar**, open a month that contains period entries and tap **Period Details**.
-
-    * Choose the time range (3/6/12 months or all) and review entries grouped by month.
-
-    * Tap **Save as PDF** to export a formatted report.
-
-    * After saving, tap the notification to open the generated PDF directly.
-        
+1. Download the provided APK from the repository (`myringreminder_app.apk`).
+2. Allow installation from unknown sources if Android prompts you.
+3. Open the APK on your device and follow the installation steps.
 
 * * *
 
-🔑 Permissions
---------------
+## 📝 Using the App
 
-* 💾 **Storage / Media Access**: Required to select a custom background image.
-    
-* 🔔 **Notifications**: Required to receive cycle reminders.
+### 1. Set up the basics
 
-* ⏰ **Exact Alarms**: Used to schedule precise reminder notifications.
+* Open **Settings** and use the grouped cards to choose the insertion date, insertion time, cycle length, and reminder lead times.
+* Optionally adjust language, background image, colors, calendar range, and other personalization options.
+* If needed, restart the welcome tour from **Settings → Advanced**.
 
-* 🔐 **Biometric / Device Credential**: Used for optional app lock authentication.
-    
+### 2. Use the calendar as your main view
+
+* Open the **Calendar** tab to see color-coded cycle days:
+  * 🟦 Cyan: Ring insertion
+  * 🟨 Yellow: Ring removal
+  * 🔴 Red: Ring-free days
+  * 🟩 Green: Active cycle days
+* Tap legend dots to change the colors.
+* Use the left/right arrows to move between months.
+* Tap the month label to choose a specific month and year.
+* During ring-free week and ±4 days, tap a day to open **Period Entry** and save period details.
+* If the selected month contains period entries, open **Period Details** to review grouped history, switch between 3/6/12-month or full-history ranges, use search and quick filters, or export a structured PDF report.
+
+### 3. Let reminders handle the timing
+
+* Receive vibrating notifications for insertion and removal based on your selected reminder times.
+
+### 4. Add widgets for at-a-glance status
+
+* Add the small `2x1`, compact `3x1`, or larger detailed widget to your home screen for quick status.
+* The larger widget remains resizable from the launcher.
+
+### 5. Track period entries when relevant
+
+* During the ring-free window, save period details directly on calendar days.
+* Use **Period Details** for grouped review, full-history lookup, search/filter, and PDF export.
+
+### 6. Review cycle history
+
+* Check the **Cycles** tab for recorded past cycles, grouped by month and sortable by newest or oldest first.
+* Use **Clear history** to clear the list or **Create history** to rebuild it from saved cycle data.
+
+### 7. Keep notes private
+
+* Use the **Notes** tab to store private notes, automatically saved locally.
+
+### 8. Back up or restore your data
+
+* Use **Settings → Advanced** to export or import local app data such as settings, notes, cycle history, period tracking, and saved special cases.
+* Before restore, review validated import content in an expandable, readable preview and confirm with **Yes/No**.
+
+### 9. Handle special cases
+
+* Tap **Special cases** on the Home screen to open quick actions.
+* Use **Wear ring longer** to extend only the current cycle.
+* Use **Skip ring-free week** to set immediate reinsertion for the current cycle.
+* Tap the **info** icon next to **Wear ring longer** or **Skip ring-free week** for additional guidance.
+
+### 10. Keep the app up to date
+
+* Use the update entry in **Settings → Advanced** or the update card on the Home screen to check for newer app versions.
+* If an update is available, the app can download the APK and prompt installation directly.
+
+### 11. Enable optional security
+
+* Open **Settings → Advanced → App lock**.
+* In the popup, enable or disable app lock and set the auto-lock delay.
+* Unlock uses biometric authentication or device PIN/pattern/password.
 
 * * *
 
-⚙️ Technical Details
---------------------
+## 🔑 Permissions
 
-* 📦 Built with **Java** and **Android MVVM** architecture.
-    
-* 🗓️ Calendar rendering and cycle logic are computed locally (no backend).
-    
-* 🛠️ Stores user settings and notes in **SharedPreferences**.
-    
-* 🔔 Notifications implemented via **BroadcastReceiver** and **NotificationManagerCompat**.
-
-* 📄 Period reports are generated locally with **PdfDocument** and exported via Android's document picker API.
-    
-* 📊 State sharing between fragments is managed via **SharedViewModel** and **LiveData**.
-
-* 🧩 Home‑screen widgets implemented via **AppWidgetProvider**.
-
-* 🔐 All user data is stored locally on the device only.
+* **Storage / Media Access**: Used to select a custom background image.
+* **Notifications**: Used for cycle reminders and required on newer Android versions where notification permission must be granted explicitly.
+* **Exact Alarms**: Used to schedule precise reminder notifications.
+* **Biometric / Device Credential**: Used for optional app lock authentication.
+* **Internet**: Used to check GitHub release information for in-app update checks.
+* **Install Packages**: Used to hand off a downloaded update APK to Android's package installer when using the in-app update flow.
 
 * * *
 
-🔒 Privacy
-----------
+## ⚙️ Technical Details
+
+* Built with **Java** using an **Android MVVM** architecture.
+* Calendar rendering and cycle logic are computed locally.
+* Local app state such as settings, notes, cycle history, period tracking, and special-case flags is stored in **SharedPreferences**.
+* In-app update checks use the public **GitHub Releases API**, and downloaded APK installation is handed off to Android's package installer.
+* Notifications are implemented with **BroadcastReceiver** and **NotificationManagerCompat**.
+* Period reports are generated locally with **PdfDocument** and exported through Android's document picker API, including grouped summary cards, multi-column day cards, and a larger notes section.
+* Shared state between fragments is managed with **SharedViewModel** and **LiveData**.
+* Home-screen widgets are implemented via **AppWidgetProvider**.
+* Core user data remains stored locally on the device.
+
+* * *
+
+## 🔒 Privacy
 
 * Privacy Policy: [PRIVACY_POLICY.md](PRIVACY_POLICY.md)
-    
 
 * * *
 
-📜 License
-----------
+## 📜 License
 
 This project is licensed under the **Non-Commercial Software License (MIT-style) v1.0** and was developed as an educational project. You are free to use, modify, and distribute the code for **non-commercial purposes only**, and must credit the author:
 
@@ -290,4 +254,4 @@ The full license is available in the [LICENSE](LICENSE) file.
 
 * * *
 
-<div align="center"> <sub>Created with ❤️ by Daniel Sichler</sub> </div>
+<div align="center"><sub>Created with ❤️ by Daniel Sichler</sub></div>

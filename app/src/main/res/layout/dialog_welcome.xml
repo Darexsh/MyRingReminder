@@ -86,24 +86,6 @@
                     android:textSize="14sp" />
 
                 <TextView
-                    android:id="@+id/welcome_permissions_title"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="12dp"
-                    android:text="@string/welcome_permissions_title"
-                    android:textStyle="bold"
-                    android:textSize="14sp" />
-
-                <TextView
-                    android:id="@+id/welcome_permissions_body"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="4dp"
-                    android:text="@string/welcome_permissions_body"
-                    android:textColor="?attr/colorOnBackground"
-                    android:textSize="14sp" />
-
-                <TextView
                     android:id="@+id/welcome_privacy_note"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"

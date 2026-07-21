@@ -3,6 +3,7 @@ package com.darexsh.myringreminder;
 import android.content.ContentResolver;
 import android.content.ClipData;
 import android.content.Intent;
+import android.content.Context;
 import android.app.NotificationChannel;
 import android.app.NotificationManager;
 import android.app.PendingIntent;
@@ -14,11 +15,17 @@ import android.graphics.pdf.PdfDocument;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.view.LayoutInflater;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.inputmethod.InputMethodManager;
+import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.LinearLayout;
+import android.widget.ScrollView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -34,6 +41,7 @@ import androidx.lifecycle.ViewModelProvider;
 import androidx.core.content.ContextCompat;
 import com.google.android.material.button.MaterialButton;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
+import com.google.android.material.chip.Chip;
 import com.google.android.material.chip.ChipGroup;
 
 import java.io.IOException;
@@ -56,6 +64,11 @@ public class PeriodDetailsFragment extends Fragment {
     private int anchorYear;
     private int anchorMonthOneBased;
     private int selectedRangeMonths = 3; // -1 = all
+    private String searchQuery = "";
+    private boolean filterSymptomsOnly = false;
+    private boolean filterPainOnly = false;
+    private boolean filterStartOnly = false;
+    private boolean filterEndOnly = false;
     private final List<DisplayEntry> visibleEntries = new ArrayList<>();
     private String visibleRangeLabel = "";
     private ActivityResultLauncher<String> createPdfLauncher;
@@ -107,10 +120,19 @@ public class PeriodDetailsFragment extends Fragment {
         TextView title = view.findViewById(R.id.tv_period_details_title);
         TextView month = view.findViewById(R.id.tv_period_details_month);
         TextView emptyView = view.findViewById(R.id.tv_period_details_empty);
+        TextView rangeLabel = view.findViewById(R.id.tv_period_details_range_label);
+        TextView filterLabel = view.findViewById(R.id.tv_period_details_filter_label);
         ImageButton closeButton = view.findViewById(R.id.btn_close_period_details);
         MaterialButton savePdfButton = view.findViewById(R.id.btn_period_details_save_pdf);
         LinearLayout listContainer = view.findViewById(R.id.layout_period_details_list);
+        ScrollView scrollView = view.findViewById(R.id.scroll_period_details);
         ChipGroup rangeGroup = view.findViewById(R.id.chip_group_period_range);
+        ChipGroup filterGroup = view.findViewById(R.id.chip_group_period_filters);
+        EditText searchField = view.findViewById(R.id.et_period_details_search);
+        Chip symptomsChip = view.findViewById(R.id.chip_period_filter_symptoms);
+        Chip painChip = view.findViewById(R.id.chip_period_filter_pain);
+        Chip startChip = view.findViewById(R.id.chip_period_filter_start);
+        Chip endChip = view.findViewById(R.id.chip_period_filter_end);
 
         if (title != null) {
             title.setText(R.string.btn_period_details);
@@ -137,8 +159,100 @@ public class PeriodDetailsFragment extends Fragment {
                 populateList(listContainer, emptyView, month);
             });
         }
-        applyAccentColor(title, closeButton, savePdfButton);
+        if (filterGroup != null) {
+            filterGroup.setOnCheckedStateChangeListener((group, checkedIds) -> {
+                filterSymptomsOnly = symptomsChip != null && symptomsChip.isChecked();
+                filterPainOnly = painChip != null && painChip.isChecked();
+                filterStartOnly = startChip != null && startChip.isChecked();
+                filterEndOnly = endChip != null && endChip.isChecked();
+                populateList(listContainer, emptyView, month);
+            });
+        }
+        if (searchField != null) {
+            searchField.addTextChangedListener(new TextWatcher() {
+                @Override
+                public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+                }
+
+                @Override
+                public void onTextChanged(CharSequence s, int start, int before, int count) {
+                }
+
+                @Override
+                public void afterTextChanged(Editable s) {
+                    searchQuery = s != null ? s.toString().trim() : "";
+                    populateList(listContainer, emptyView, month);
+                }
+            });
+            setupOutsideTapDismiss(view, scrollView, listContainer, rangeGroup, filterGroup,
+                    title, month, rangeLabel, filterLabel, emptyView, closeButton, savePdfButton, searchField);
+        }
+        applyAccentColor(title, rangeLabel, filterLabel, closeButton, savePdfButton, searchField);
         return view;
+    }
+
+    private void setupOutsideTapDismiss(@NonNull View root,
+                                        @Nullable ScrollView scrollView,
+                                        @Nullable LinearLayout listContainer,
+                                        @Nullable ChipGroup rangeGroup,
+                                        @Nullable ChipGroup filterGroup,
+                                        @Nullable TextView title,
+                                        @Nullable TextView month,
+                                        @Nullable TextView rangeLabel,
+                                        @Nullable TextView filterLabel,
+                                        @Nullable TextView emptyView,
+                                        @Nullable ImageButton closeButton,
+                                        @Nullable MaterialButton savePdfButton,
+                                        @NonNull EditText searchField) {
+        View.OnTouchListener listener = (v, event) -> {
+            if (event.getAction() == MotionEvent.ACTION_DOWN) {
+                dismissSearchInput(searchField);
+            }
+            return false;
+        };
+        root.setOnTouchListener(listener);
+        if (scrollView != null) {
+            scrollView.setOnTouchListener(listener);
+        }
+        if (listContainer != null) {
+            listContainer.setOnTouchListener(listener);
+        }
+        if (rangeGroup != null) {
+            rangeGroup.setOnTouchListener(listener);
+        }
+        if (filterGroup != null) {
+            filterGroup.setOnTouchListener(listener);
+        }
+        if (title != null) {
+            title.setOnTouchListener(listener);
+        }
+        if (month != null) {
+            month.setOnTouchListener(listener);
+        }
+        if (rangeLabel != null) {
+            rangeLabel.setOnTouchListener(listener);
+        }
+        if (filterLabel != null) {
+            filterLabel.setOnTouchListener(listener);
+        }
+        if (emptyView != null) {
+            emptyView.setOnTouchListener(listener);
+        }
+        if (closeButton != null) {
+            closeButton.setOnTouchListener(listener);
+        }
+        if (savePdfButton != null) {
+            savePdfButton.setOnTouchListener(listener);
+        }
+    }
+
+    private void dismissSearchInput(@NonNull EditText searchField) {
+        searchField.clearFocus();
+        Context context = requireContext();
+        InputMethodManager imm = (InputMethodManager) context.getSystemService(Context.INPUT_METHOD_SERVICE);
+        if (imm != null) {
+            imm.hideSoftInputFromWindow(searchField.getWindowToken(), 0);
+        }
     }
 
     private void closeToCalendar() {
@@ -190,6 +304,14 @@ public class PeriodDetailsFragment extends Fragment {
             rangeStart.set(Calendar.MINUTE, 0);
             rangeStart.set(Calendar.SECOND, 0);
             rangeStart.set(Calendar.MILLISECOND, 0);
+
+            rangeEnd.set(Calendar.YEAR, 9999);
+            rangeEnd.set(Calendar.MONTH, Calendar.DECEMBER);
+            rangeEnd.set(Calendar.DAY_OF_MONTH, 31);
+            rangeEnd.set(Calendar.HOUR_OF_DAY, 23);
+            rangeEnd.set(Calendar.MINUTE, 59);
+            rangeEnd.set(Calendar.SECOND, 59);
+            rangeEnd.set(Calendar.MILLISECOND, 999);
         }
 
         if (monthLabel != null) {
@@ -200,7 +322,7 @@ public class PeriodDetailsFragment extends Fragment {
         }
 
         Map<String, PeriodDayEntry> allEntries = viewModel.getRepository().getAllPeriodDayEntries();
-        List<Map.Entry<String, PeriodDayEntry>> monthEntries = new ArrayList<>();
+        List<Map.Entry<String, PeriodDayEntry>> rangeEntries = new ArrayList<>();
         for (Map.Entry<String, PeriodDayEntry> item : allEntries.entrySet()) {
             PeriodDayEntry entry = item.getValue();
             if (entry == null || !entry.isPeriodDay()) {
@@ -212,6 +334,18 @@ public class PeriodDetailsFragment extends Fragment {
             }
             long dayMillis = day.getTimeInMillis();
             if (dayMillis >= rangeStart.getTimeInMillis() && dayMillis <= rangeEnd.getTimeInMillis()) {
+                rangeEntries.add(item);
+            }
+        }
+
+        List<Map.Entry<String, PeriodDayEntry>> monthEntries = new ArrayList<>();
+        for (Map.Entry<String, PeriodDayEntry> item : rangeEntries) {
+            PeriodDayEntry entry = item.getValue();
+            Calendar day = parseDateKey(item.getKey());
+            if (entry == null || day == null) {
+                continue;
+            }
+            if (matchesActiveFilters(day, entry)) {
                 monthEntries.add(item);
             }
         }
@@ -235,6 +369,9 @@ public class PeriodDetailsFragment extends Fragment {
         });
         if (monthEntries.isEmpty()) {
             if (emptyView != null) {
+                emptyView.setText(rangeEntries.isEmpty()
+                        ? R.string.period_details_empty
+                        : R.string.period_details_empty_filtered);
                 emptyView.setVisibility(View.VISIBLE);
             }
             return;
@@ -271,6 +408,53 @@ public class PeriodDetailsFragment extends Fragment {
             container.addView(card);
             visibleEntries.add(new DisplayEntry((Calendar) day.clone(), entry, currentMonthHeader));
         }
+    }
+
+    private boolean matchesActiveFilters(@NonNull Calendar day, @NonNull PeriodDayEntry entry) {
+        if (filterSymptomsOnly && !(entry.hasAnyAdditionalSymptoms() || entry.hasIllness())) {
+            return false;
+        }
+        if (filterPainOnly && (entry.getPainSeverity() == null || entry.getPainSeverity() == PainSeverity.NONE)) {
+            return false;
+        }
+        if (filterStartOnly && !entry.isStart()) {
+            return false;
+        }
+        if (filterEndOnly && !entry.isEnd()) {
+            return false;
+        }
+        if (searchQuery.isEmpty()) {
+            return true;
+        }
+        String normalizedQuery = normalizeForSearch(searchQuery);
+        String searchableText = buildSearchableText(day, entry);
+        return searchableText.contains(normalizedQuery);
+    }
+
+    @NonNull
+    private String buildSearchableText(@NonNull Calendar day, @NonNull PeriodDayEntry entry) {
+        SimpleDateFormat dateFormat = new SimpleDateFormat("dd.MM.yyyy", Locale.getDefault());
+        SimpleDateFormat monthHeaderFormat = new SimpleDateFormat("MMMM yyyy", Locale.getDefault());
+        String text = dateFormat.format(day.getTime())
+                + " "
+                + monthHeaderFormat.format(day.getTime())
+                + " "
+                + intensityLabel(entry.getIntensity())
+                + " "
+                + painLabel(entry.getPainSeverity())
+                + " "
+                + symptomsLabel(entry)
+                + " "
+                + markersLabel(entry);
+        return normalizeForSearch(text);
+    }
+
+    @NonNull
+    private String normalizeForSearch(@Nullable String value) {
+        if (value == null) {
+            return "";
+        }
+        return value.toLowerCase(Locale.getDefault()).trim();
     }
 
     private String buildRangeLabel(@NonNull Calendar start, @NonNull Calendar end) {
@@ -389,7 +573,7 @@ public class PeriodDetailsFragment extends Fragment {
     private void renderPdf(@NonNull PdfDocument document) {
         final int pageWidth = 595;   // A4 at 72dpi
         final int pageHeight = 842;
-        final int margin = 36;
+        final int margin = 34;
         final int contentWidth = pageWidth - (margin * 2);
         final int accentColor = viewModel != null && viewModel.getButtonColor().getValue() != null
                 ? viewModel.getButtonColor().getValue()
@@ -398,7 +582,12 @@ public class PeriodDetailsFragment extends Fragment {
         Paint titlePaint = new Paint(Paint.ANTI_ALIAS_FLAG);
         titlePaint.setColor(accentColor);
         titlePaint.setTypeface(Typeface.create(Typeface.DEFAULT, Typeface.BOLD));
-        titlePaint.setTextSize(20f);
+        titlePaint.setTextSize(18f);
+
+        Paint subtitlePaint = new Paint(Paint.ANTI_ALIAS_FLAG);
+        subtitlePaint.setColor(0xFF1F1F1F);
+        subtitlePaint.setTypeface(Typeface.create(Typeface.DEFAULT, Typeface.BOLD));
+        subtitlePaint.setTextSize(12f);
 
         Paint sectionPaint = new Paint(Paint.ANTI_ALIAS_FLAG);
         sectionPaint.setColor(accentColor);
@@ -416,11 +605,21 @@ public class PeriodDetailsFragment extends Fragment {
         Paint linePaint = new Paint(Paint.ANTI_ALIAS_FLAG);
         linePaint.setColor(0xFFD6D6D6);
         linePaint.setStrokeWidth(1f);
+
         Paint badgePaint = new Paint(Paint.ANTI_ALIAS_FLAG);
+        Paint cardBgPaint = new Paint(Paint.ANTI_ALIAS_FLAG);
+        cardBgPaint.setColor(0xFFF8F8F8);
+        Paint cardBorderPaint = new Paint(Paint.ANTI_ALIAS_FLAG);
+        cardBorderPaint.setColor(0xFFD6D6D6);
+        cardBorderPaint.setStyle(Paint.Style.STROKE);
+        cardBorderPaint.setStrokeWidth(1f);
+        Paint softAccentPaint = new Paint(Paint.ANTI_ALIAS_FLAG);
+        softAccentPaint.setColor(Color.argb(28, Color.red(accentColor), Color.green(accentColor), Color.blue(accentColor)));
 
         PdfState state = startPdfPage(document, pageWidth, pageHeight, 1, margin);
-        state.y = drawPdfHeader(state.canvas, margin, state.y, contentWidth, titlePaint, subtlePaint, linePaint);
-        state.y += 8f;
+        state.y = drawPdfHeader(state.canvas, margin, state.y, contentWidth,
+                titlePaint, subtitlePaint, subtlePaint, linePaint);
+        state.y += 14f;
 
         int totalEntries = visibleEntries.size();
         int startCount = 0;
@@ -438,65 +637,89 @@ public class PeriodDetailsFragment extends Fragment {
             }
         }
 
-        state = ensurePageSpace(document, state, 56f, margin, pageWidth, pageHeight, linePaint, subtlePaint);
-        state.canvas.drawText(getString(R.string.period_details_pdf_summary_title), margin, state.y, sectionPaint);
-        state.y += 14f;
-        state.canvas.drawText(getString(R.string.period_details_pdf_summary_entries, totalEntries), margin, state.y, normalPaint);
-        state.y += 12f;
-        state.canvas.drawText(getString(R.string.period_details_pdf_summary_starts, startCount), margin, state.y, normalPaint);
-        state.y += 12f;
-        state.canvas.drawText(getString(R.string.period_details_pdf_summary_ends, endCount), margin, state.y, normalPaint);
-        state.y += 12f;
-        state.canvas.drawText(getString(R.string.period_details_pdf_summary_pain_days, painCount), margin, state.y, normalPaint);
-        state.y += 14f;
-        state.canvas.drawLine(margin, state.y, pageWidth - margin, state.y, linePaint);
-        state.y += 12f;
-
-        state = ensurePageSpace(document, state, 64f, margin, pageWidth, pageHeight, linePaint, subtlePaint);
-        state.canvas.drawText(getString(R.string.period_details_pdf_legend_title), margin, state.y, sectionPaint);
-        state.y += 14f;
-        state.y = drawLegendRow(state.canvas, margin, state.y, getString(R.string.period_modal_intensity_light), 0x88EF9A9A, subtlePaint, badgePaint);
-        state.y = drawLegendRow(state.canvas, margin, state.y, getString(R.string.period_modal_intensity_medium), 0x99EF5350, subtlePaint, badgePaint);
-        state.y = drawLegendRow(state.canvas, margin, state.y, getString(R.string.period_modal_intensity_heavy), 0xCCB71C1C, subtlePaint, badgePaint);
-        state.y = drawLegendRow(state.canvas, margin, state.y, getString(R.string.period_details_pdf_legend_pain_badge), 0xFFFFB300, subtlePaint, badgePaint);
-        state.y = drawLegendRow(state.canvas, margin, state.y, getString(R.string.period_details_pdf_legend_symptom_badge), 0xFF40C4FF, subtlePaint, badgePaint);
-        state.y += 4f;
-        state.canvas.drawLine(margin, state.y, pageWidth - margin, state.y, linePaint);
-        state.y += 12f;
-
         int longStreak = findLongestPeriodStreak();
         int symptomDays = countSymptomDays();
         int strongPainDays = countStrongPainDays();
-        state = ensurePageSpace(document, state, 56f, margin, pageWidth, pageHeight, linePaint, subtlePaint);
-        state.canvas.drawText(getString(R.string.period_details_pdf_anomalies_title), margin, state.y, sectionPaint);
-        state.y += 14f;
-        state.canvas.drawText(getString(R.string.period_details_pdf_anomalies_longest_streak, longStreak), margin, state.y, subtlePaint);
-        state.y += 12f;
-        state.canvas.drawText(getString(R.string.period_details_pdf_anomalies_symptom_days, symptomDays), margin, state.y, subtlePaint);
-        state.y += 12f;
-        state.canvas.drawText(getString(R.string.period_details_pdf_anomalies_strong_pain_days, strongPainDays), margin, state.y, subtlePaint);
-        state.y += 10f;
-        state.canvas.drawLine(margin, state.y, pageWidth - margin, state.y, linePaint);
-        state.y += 12f;
-
         final float gridGap = 10f;
-        final float cardWidth = (contentWidth - gridGap) / 2f;
-        final float cardPadding = 8f;
-        final Paint cardBgPaint = new Paint(Paint.ANTI_ALIAS_FLAG);
-        cardBgPaint.setColor(0xFFF8F8F8);
-        final Paint cardBorderPaint = new Paint(Paint.ANTI_ALIAS_FLAG);
-        cardBorderPaint.setColor(0xFFD6D6D6);
-        cardBorderPaint.setStyle(Paint.Style.STROKE);
-        cardBorderPaint.setStrokeWidth(1f);
-        final float cardCorner = 6f;
+        final float infoCardWidth = (contentWidth - gridGap) / 2f;
+        final float infoCardPadding = 8f;
+        final float infoCardCorner = 8f;
+
+        float summaryHeight = estimateInfoCardHeight(
+                getString(R.string.period_details_pdf_summary_title),
+                new String[]{
+                        getString(R.string.period_details_pdf_summary_entries, totalEntries),
+                        getString(R.string.period_details_pdf_summary_starts, startCount),
+                        getString(R.string.period_details_pdf_summary_ends, endCount),
+                        getString(R.string.period_details_pdf_summary_pain_days, painCount)
+                },
+                sectionPaint, normalPaint, infoCardWidth, infoCardPadding
+        );
+        float legendHeight = estimateInfoCardHeight(
+                getString(R.string.period_details_pdf_legend_title),
+                new String[]{
+                        getString(R.string.period_modal_intensity_light),
+                        getString(R.string.period_modal_intensity_medium),
+                        getString(R.string.period_modal_intensity_heavy),
+                        getString(R.string.period_details_pdf_legend_pain_badge),
+                        getString(R.string.period_details_pdf_legend_symptom_badge)
+                },
+                sectionPaint, subtlePaint, infoCardWidth, infoCardPadding
+        );
+        float anomaliesHeight = estimateInfoCardHeight(
+                getString(R.string.period_details_pdf_anomalies_title),
+                new String[]{
+                        getString(R.string.period_details_pdf_anomalies_longest_streak, longStreak),
+                        getString(R.string.period_details_pdf_anomalies_symptom_days, symptomDays),
+                        getString(R.string.period_details_pdf_anomalies_strong_pain_days, strongPainDays)
+                },
+                sectionPaint, subtlePaint, contentWidth, infoCardPadding
+        );
+
+        state = ensurePageSpace(document, state,
+                Math.max(summaryHeight, legendHeight) + anomaliesHeight + 16f,
+                margin, pageWidth, pageHeight, linePaint, subtlePaint);
+
+        float summaryRowY = state.y;
+        drawInfoCard(state.canvas, margin, summaryRowY, infoCardWidth, summaryHeight,
+                getString(R.string.period_details_pdf_summary_title),
+                new String[]{
+                        getString(R.string.period_details_pdf_summary_entries, totalEntries),
+                        getString(R.string.period_details_pdf_summary_starts, startCount),
+                        getString(R.string.period_details_pdf_summary_ends, endCount),
+                        getString(R.string.period_details_pdf_summary_pain_days, painCount)
+                },
+                sectionPaint, normalPaint, infoCardPadding, infoCardCorner, cardBgPaint, cardBorderPaint, null, null);
+        drawInfoCard(state.canvas, margin + infoCardWidth + gridGap, summaryRowY, infoCardWidth, legendHeight,
+                getString(R.string.period_details_pdf_legend_title),
+                new String[]{
+                        getString(R.string.period_modal_intensity_light),
+                        getString(R.string.period_modal_intensity_medium),
+                        getString(R.string.period_modal_intensity_heavy),
+                        getString(R.string.period_details_pdf_legend_pain_badge),
+                        getString(R.string.period_details_pdf_legend_symptom_badge)
+                },
+                sectionPaint, subtlePaint, infoCardPadding, infoCardCorner, cardBgPaint, cardBorderPaint,
+                new int[]{0x88EF9A9A, 0x99EF5350, 0xCCB71C1C, 0xFFFFB300, 0xFF40C4FF}, badgePaint);
+        state.y += Math.max(summaryHeight, legendHeight) + 8f;
+
+        drawInfoCard(state.canvas, margin, state.y, contentWidth, anomaliesHeight,
+                getString(R.string.period_details_pdf_anomalies_title),
+                new String[]{
+                        getString(R.string.period_details_pdf_anomalies_longest_streak, longStreak),
+                        getString(R.string.period_details_pdf_anomalies_symptom_days, symptomDays),
+                        getString(R.string.period_details_pdf_anomalies_strong_pain_days, strongPainDays)
+                },
+                sectionPaint, subtlePaint, infoCardPadding, infoCardCorner, softAccentPaint, cardBorderPaint, null, null);
+        state.y += anomaliesHeight + 18f;
 
         SimpleDateFormat dayFormat = new SimpleDateFormat("dd.MM.yyyy", Locale.getDefault());
         int index = 0;
         while (index < visibleEntries.size()) {
             String month = visibleEntries.get(index).monthHeader;
-            state = ensurePageSpace(document, state, 24f, margin, pageWidth, pageHeight, linePaint, subtlePaint);
+            state = ensurePageSpace(document, state, 20f, margin, pageWidth, pageHeight, linePaint, subtlePaint);
             state.canvas.drawText(month, margin, state.y, sectionPaint);
-            state.y += 14f;
+            state.y += 12f;
 
             List<DisplayEntry> monthEntries = new ArrayList<>();
             while (index < visibleEntries.size() && month.equals(visibleEntries.get(index).monthHeader)) {
@@ -504,34 +727,55 @@ public class PeriodDetailsFragment extends Fragment {
                 index++;
             }
 
-            for (int i = 0; i < monthEntries.size(); i += 2) {
-                DisplayEntry left = monthEntries.get(i);
-                DisplayEntry right = i + 1 < monthEntries.size() ? monthEntries.get(i + 1) : null;
-
-                float leftHeight = estimateEntryCardHeight(left, dayFormat, normalPaint, subtlePaint, cardWidth, cardPadding);
-                float rightHeight = right != null
-                        ? estimateEntryCardHeight(right, dayFormat, normalPaint, subtlePaint, cardWidth, cardPadding)
-                        : 0f;
-                float rowHeight = Math.max(leftHeight, rightHeight);
-
-                state = ensurePageSpace(document, state, rowHeight + 8f, margin, pageWidth, pageHeight, linePaint, subtlePaint);
-                drawEntryCard(state.canvas, left, dayFormat, margin, state.y, cardWidth, rowHeight, cardPadding,
-                        cardCorner, cardBgPaint, cardBorderPaint, normalPaint, subtlePaint, badgePaint);
-                if (right != null) {
-                    drawEntryCard(state.canvas, right, dayFormat, margin + cardWidth + gridGap, state.y, cardWidth,
-                            rowHeight, cardPadding, cardCorner, cardBgPaint, cardBorderPaint, normalPaint, subtlePaint, badgePaint);
+            final float entryCardPadding = 8f;
+            final float entryCardCorner = 8f;
+            final float entryCardGap = 6f;
+            final int entryColumns = 3;
+            final float entryCardWidth = (contentWidth - (entryCardGap * (entryColumns - 1))) / entryColumns;
+            for (int rowStart = 0; rowStart < monthEntries.size(); rowStart += entryColumns) {
+                int rowEnd = Math.min(rowStart + entryColumns, monthEntries.size());
+                float[] rowHeights = new float[rowEnd - rowStart];
+                float rowMaxHeight = 0f;
+                for (int i = rowStart; i < rowEnd; i++) {
+                    float entryHeight = estimateEntryCardHeight(monthEntries.get(i), dayFormat, normalPaint, subtlePaint,
+                            entryCardWidth, entryCardPadding);
+                    rowHeights[i - rowStart] = entryHeight;
+                    if (entryHeight > rowMaxHeight) {
+                        rowMaxHeight = entryHeight;
+                    }
                 }
-                state.y += rowHeight + 8f;
+
+                state = ensurePageSpace(document, state, rowMaxHeight + entryCardGap, margin, pageWidth, pageHeight, linePaint, subtlePaint);
+                for (int i = rowStart; i < rowEnd; i++) {
+                    float cardX = margin + ((i - rowStart) * (entryCardWidth + entryCardGap));
+                    drawEntryCard(state.canvas, monthEntries.get(i), dayFormat, cardX, state.y, entryCardWidth, rowHeights[i - rowStart],
+                            entryCardPadding, entryCardCorner, cardBgPaint, cardBorderPaint,
+                            normalPaint, subtlePaint, badgePaint);
+                }
+                state.y += rowMaxHeight + entryCardGap;
             }
-            state = ensurePageSpace(document, state, 52f, margin, pageWidth, pageHeight, linePaint, subtlePaint);
-            state.canvas.drawText(getString(R.string.period_details_pdf_notes_title), margin, state.y, sectionPaint);
-            state.y += 10f;
-            for (int n = 0; n < 3; n++) {
-                state.canvas.drawLine(margin, state.y, margin + contentWidth, state.y, linePaint);
-                state.y += 12f;
-            }
-            state.y += 4f;
+            state.y += 8f;
         }
+
+        final float notesCardPadding = 8f;
+        final int notesLineCount = 10;
+        final float notesLineSpacing = 10f;
+        final float notesCardHeight = notesCardPadding + sectionPaint.getTextSize() + 12f
+                + (notesLineCount * notesLineSpacing) + 8f;
+        state = ensurePageSpace(document, state, notesCardHeight + 4f, margin, pageWidth, pageHeight, linePaint, subtlePaint);
+        android.graphics.RectF notesRect = new android.graphics.RectF(margin, state.y, margin + contentWidth, state.y + notesCardHeight);
+        state.canvas.drawRoundRect(notesRect, infoCardCorner, infoCardCorner, cardBgPaint);
+        state.canvas.drawRoundRect(notesRect, infoCardCorner, infoCardCorner, cardBorderPaint);
+
+        float notesX = margin + notesCardPadding;
+        state.y += notesCardPadding + sectionPaint.getTextSize();
+        state.canvas.drawText(getString(R.string.period_details_pdf_notes_title), notesX, state.y, sectionPaint);
+        state.y += 12f;
+        for (int n = 0; n < notesLineCount; n++) {
+            state.canvas.drawLine(notesX, state.y, margin + contentWidth - notesCardPadding, state.y, linePaint);
+            state.y += notesLineSpacing;
+        }
+        state.y = notesRect.bottom + 2f;
 
         drawPdfFooter(state.canvas, margin, pageWidth, pageHeight, subtlePaint, state.pageNumber);
         document.finishPage(state.page);
@@ -553,25 +797,28 @@ public class PeriodDetailsFragment extends Fragment {
                                 float y,
                                 int contentWidth,
                                 @NonNull Paint titlePaint,
+                                @NonNull Paint subtitlePaint,
                                 @NonNull Paint subtlePaint,
                                 @NonNull Paint linePaint) {
-        int iconSize = dpToPx(24);
+        int iconSize = dpToPx(16);
         android.graphics.drawable.Drawable icon = ContextCompat.getDrawable(requireContext(), R.mipmap.ic_launcher);
+        float iconX = margin + contentWidth - iconSize;
         if (icon != null) {
-            icon.setBounds(margin, Math.round(y - 18f), margin + iconSize, Math.round(y - 18f) + iconSize);
+            icon.setBounds(Math.round(iconX), Math.round(y - 2f), Math.round(iconX + iconSize), Math.round(y - 2f + iconSize));
             icon.draw(canvas);
         }
 
-        float textStartX = margin + iconSize + dpToPx(12);
-        canvas.drawText(getString(R.string.app_info_name), textStartX, y, titlePaint);
-        y += 16f;
-        canvas.drawText(getString(R.string.app_info_developer_label) + " " + getString(R.string.app_info_developer_name), textStartX, y, subtlePaint);
-        y += 16f;
-        canvas.drawText(getString(R.string.period_details_range_label) + ": " + visibleRangeLabel, textStartX, y, subtlePaint);
-        y += 12f;
+        float maxTextWidth = contentWidth - iconSize - 16f;
+        y = drawWrappedText(canvas, getString(R.string.period_details_pdf_export_title),
+                margin, y + titlePaint.getTextSize(), maxTextWidth, titlePaint);
+        y = drawWrappedText(canvas, getString(R.string.app_info_name),
+                margin, y + 2f, maxTextWidth, subtitlePaint);
+        y = drawWrappedText(canvas, getString(R.string.period_details_range_label) + ": " + visibleRangeLabel,
+                margin, y + 3f, maxTextWidth, subtlePaint);
         String created = new SimpleDateFormat("dd.MM.yyyy HH:mm", Locale.getDefault()).format(new Date());
-        canvas.drawText(getString(R.string.period_details_pdf_created_at, created), textStartX, y, subtlePaint);
-        y += 10f;
+        y = drawWrappedText(canvas, getString(R.string.period_details_pdf_created_at, created),
+                margin, y + 3f, maxTextWidth, subtlePaint);
+        y += 4f;
         canvas.drawLine(margin, y, margin + contentWidth, y, linePaint);
         return y;
     }
@@ -601,24 +848,29 @@ public class PeriodDetailsFragment extends Fragment {
         canvas.drawText(pageText, pageWidth - margin - width, pageHeight - margin + 8f, paint);
     }
 
-    private float drawLegendRow(@NonNull android.graphics.Canvas canvas,
-                                float x,
-                                float y,
-                                @NonNull String label,
-                                int color,
-                                @NonNull Paint textPaint,
-                                @NonNull Paint badgePaint) {
-        badgePaint.setColor(color);
-        canvas.drawCircle(x + 4f, y - 3f, 3.8f, badgePaint);
-        canvas.drawText(label, x + 14f, y, textPaint);
-        return y + 11f;
-    }
-
     private float estimateWrappedBlockHeight(@NonNull String text, @NonNull Paint paint, float maxWidth) {
         List<String> lines = wrapText(text, paint, maxWidth);
+        if (lines.isEmpty()) {
+            return 0f;
+        }
         Paint.FontMetrics metrics = paint.getFontMetrics();
-        float lineHeight = (metrics.descent - metrics.ascent) + 1.5f;
-        return (lines.size() * lineHeight) + 1f;
+        float lineHeight = (metrics.descent - metrics.ascent) + 2f;
+        return lines.size() * lineHeight;
+    }
+
+    private float estimateInfoCardHeight(@NonNull String title,
+                                         @NonNull String[] lines,
+                                         @NonNull Paint titlePaint,
+                                         @NonNull Paint bodyPaint,
+                                         float cardWidth,
+                                         float padding) {
+        float innerWidth = cardWidth - (padding * 2f);
+        float height = padding;
+        height += estimateWrappedBlockHeight(title, titlePaint, innerWidth) + 4f;
+        for (String line : lines) {
+            height += estimateBulletRowHeight(line, bodyPaint, innerWidth);
+        }
+        return height + padding;
     }
 
     private float estimateEntryCardHeight(@NonNull DisplayEntry displayEntry,
@@ -629,16 +881,19 @@ public class PeriodDetailsFragment extends Fragment {
                                           float cardPadding) {
         float innerWidth = cardWidth - (cardPadding * 2f);
         String dateText = dayFormat.format(displayEntry.day.getTime());
-        String intensityText = getString(R.string.period_modal_intensity_title) + ": " + intensityLabel(displayEntry.entry.getIntensity());
-        String painText = getString(R.string.period_modal_pain_title) + ": " + painLabel(displayEntry.entry.getPainSeverity());
-        String symptomsText = getString(R.string.period_modal_symptoms_title) + ": " + symptomsLabel(displayEntry.entry);
-        String markersText = getString(R.string.period_modal_markers_title) + ": " + markersLabel(displayEntry.entry);
-        return estimateWrappedBlockHeight(dateText, normalPaint, innerWidth)
-                + estimateWrappedBlockHeight(intensityText, subtlePaint, innerWidth)
-                + estimateWrappedBlockHeight(painText, subtlePaint, innerWidth)
-                + estimateWrappedBlockHeight(symptomsText, subtlePaint, innerWidth)
-                + estimateWrappedBlockHeight(markersText, subtlePaint, innerWidth)
-                + cardPadding * 2f + 4f;
+        String intensityText = intensityLabel(displayEntry.entry.getIntensity());
+        String painText = painLabel(displayEntry.entry.getPainSeverity());
+        String symptomsText = symptomsLabel(displayEntry.entry);
+        String markersText = markersLabel(displayEntry.entry);
+
+        float totalHeight = cardPadding * 2f;
+        totalHeight += estimateWrappedBlockHeight(dateText, normalPaint, innerWidth);
+        totalHeight += estimateInlineDetailRowHeight(getString(R.string.period_modal_intensity_title), intensityText, subtlePaint, innerWidth);
+        totalHeight += estimateInlineDetailRowHeight(getString(R.string.period_modal_pain_title), painText, subtlePaint, innerWidth);
+        totalHeight += estimateInlineDetailRowHeight(getString(R.string.period_modal_symptoms_title), symptomsText, subtlePaint, innerWidth);
+        totalHeight += estimateInlineDetailRowHeight(getString(R.string.period_modal_markers_title), markersText, subtlePaint, innerWidth);
+
+        return totalHeight - 2f;
     }
 
     private void drawEntryCard(@NonNull android.graphics.Canvas canvas,
@@ -659,47 +914,115 @@ public class PeriodDetailsFragment extends Fragment {
         canvas.drawRoundRect(rect, cardCorner, cardCorner, bgPaint);
         canvas.drawRoundRect(rect, cardCorner, cardCorner, borderPaint);
 
-        float cursorY = y + cardPadding + 2f;
+        Paint.FontMetrics normalMetrics = normalPaint.getFontMetrics();
+        float cursorY = y + cardPadding + Math.abs(normalMetrics.ascent);
         float innerX = x + cardPadding;
         float innerWidth = cardWidth - (cardPadding * 2f);
 
         String dateText = dayFormat.format(displayEntry.day.getTime());
-        String intensityText = getString(R.string.period_modal_intensity_title) + ": " + intensityLabel(displayEntry.entry.getIntensity());
-        String painText = getString(R.string.period_modal_pain_title) + ": " + painLabel(displayEntry.entry.getPainSeverity());
-        String symptomsText = getString(R.string.period_modal_symptoms_title) + ": " + symptomsLabel(displayEntry.entry);
-        String markersText = getString(R.string.period_modal_markers_title) + ": " + markersLabel(displayEntry.entry);
-
         cursorY = drawWrappedText(canvas, dateText, innerX, cursorY, innerWidth, normalPaint);
-        badgePaint.setColor(intensityBadgeColor(displayEntry.entry.getIntensity()));
-        cursorY = drawWrappedTextWithBadge(canvas, intensityText, innerX, cursorY, innerWidth, subtlePaint, badgePaint);
-        badgePaint.setColor(painBadgeColor(displayEntry.entry.getPainSeverity()));
-        cursorY = drawWrappedTextWithBadge(canvas, painText, innerX, cursorY, innerWidth, subtlePaint, badgePaint);
-        badgePaint.setColor((displayEntry.entry.hasAnyAdditionalSymptoms() || displayEntry.entry.hasIllness()) ? 0xFF40C4FF : 0xFFBDBDBD);
-        cursorY = drawWrappedTextWithBadge(canvas, symptomsText, innerX, cursorY, innerWidth, subtlePaint, badgePaint);
-        badgePaint.setColor((displayEntry.entry.isStart() || displayEntry.entry.isEnd()) ? 0xFF8E24AA : 0xFFBDBDBD);
-        drawWrappedTextWithBadge(canvas, markersText, innerX, cursorY, innerWidth, subtlePaint, badgePaint);
+
+        // Detail rows
+        cursorY = drawInlineDetailRow(canvas, innerX, cursorY, innerWidth,
+                getString(R.string.period_modal_intensity_title), intensityLabel(displayEntry.entry.getIntensity()),
+                intensityBadgeColor(displayEntry.entry.getIntensity()), subtlePaint, badgePaint);
+
+        cursorY = drawInlineDetailRow(canvas, innerX, cursorY, innerWidth,
+                getString(R.string.period_modal_pain_title), painLabel(displayEntry.entry.getPainSeverity()),
+                painBadgeColor(displayEntry.entry.getPainSeverity()), subtlePaint, badgePaint);
+
+        cursorY = drawInlineDetailRow(canvas, innerX, cursorY, innerWidth,
+                getString(R.string.period_modal_symptoms_title), symptomsLabel(displayEntry.entry),
+                (displayEntry.entry.hasAnyAdditionalSymptoms() || displayEntry.entry.hasIllness()) ? 0xFF40C4FF : 0xFFBDBDBD,
+                subtlePaint, badgePaint);
+
+        drawInlineDetailRow(canvas, innerX, cursorY, innerWidth,
+                getString(R.string.period_modal_markers_title), markersLabel(displayEntry.entry),
+                (displayEntry.entry.isStart() || displayEntry.entry.isEnd()) ? 0xFF8E24AA : 0xFFBDBDBD,
+                subtlePaint, badgePaint);
     }
 
-    private float drawWrappedTextWithBadge(@NonNull android.graphics.Canvas canvas,
-                                           @NonNull String text,
-                                           float x,
-                                           float y,
-                                           float maxWidth,
-                                           @NonNull Paint textPaint,
-                                           @NonNull Paint badgePaint) {
-        float badgeX = x + 3f;
-        float textX = x + 10f;
-        float textWidth = maxWidth - 10f;
-        Paint.FontMetrics metrics = textPaint.getFontMetrics();
-        float baseline = y;
-        canvas.drawCircle(badgeX, baseline - 3f, 2.5f, badgePaint);
-        List<String> lines = wrapText(text, textPaint, textWidth);
-        float lineHeight = (metrics.descent - metrics.ascent) + 1.5f;
-        for (String line : lines) {
-            canvas.drawText(line, textX, baseline, textPaint);
-            baseline += lineHeight;
+    private void drawInfoCard(@NonNull android.graphics.Canvas canvas,
+                              float x,
+                              float y,
+                              float width,
+                              float height,
+                              @NonNull String title,
+                              @NonNull String[] lines,
+                              @NonNull Paint titlePaint,
+                              @NonNull Paint bodyPaint,
+                              float padding,
+                              float corner,
+                              @NonNull Paint bgPaint,
+                              @NonNull Paint borderPaint,
+                              @Nullable int[] badgeColors,
+                              @Nullable Paint badgePaint) {
+        android.graphics.RectF rect = new android.graphics.RectF(x, y, x + width, y + height);
+        canvas.drawRoundRect(rect, corner, corner, bgPaint);
+        canvas.drawRoundRect(rect, corner, corner, borderPaint);
+
+        Paint.FontMetrics titleMetrics = titlePaint.getFontMetrics();
+        float cursorY = y + padding + Math.abs(titleMetrics.ascent);
+        float innerX = x + padding;
+        float textWidth = width - (padding * 2f);
+
+        cursorY = drawWrappedText(canvas, title, innerX, cursorY, textWidth, titlePaint) + 2f;
+
+        for (int i = 0; i < lines.length; i++) {
+            int badgeColor = badgeColors != null && i < badgeColors.length ? badgeColors[i] : 0;
+            if (badgePaint != null && badgeColor != 0) {
+                badgePaint.setColor(badgeColor);
+                cursorY = drawBulletText(canvas, lines[i], innerX, cursorY, textWidth, bodyPaint, badgePaint);
+            } else {
+                cursorY = drawBulletText(canvas, lines[i], innerX, cursorY, textWidth, bodyPaint, null);
+            }
         }
-        return baseline + 1f;
+    }
+
+    private float estimateBulletRowHeight(@NonNull String text,
+                                          @NonNull Paint textPaint,
+                                          float maxWidth) {
+        return estimateWrappedBlockHeight(text, textPaint, maxWidth - 11f) + 1f;
+    }
+
+    private float estimateInlineDetailRowHeight(@NonNull String label,
+                                                @NonNull String value,
+                                                @NonNull Paint valuePaint,
+                                                float maxWidth) {
+        return estimateBulletRowHeight(label + ": " + value, valuePaint, maxWidth) + 2f;
+    }
+
+    private float drawInlineDetailRow(@NonNull android.graphics.Canvas canvas,
+                                float x,
+                                float y,
+                                float maxWidth,
+                                @NonNull String label,
+                                @NonNull String value,
+                                int badgeColor,
+                                @NonNull Paint valuePaint,
+                                @NonNull Paint badgePaint) {
+        badgePaint.setColor(badgeColor);
+        return drawBulletText(canvas, label + ": " + value, x, y, maxWidth, valuePaint, badgePaint) + 1f;
+    }
+
+    private float drawBulletText(@NonNull android.graphics.Canvas canvas,
+                                 @NonNull String text,
+                                 float x,
+                                 float y,
+                                 float maxWidth,
+                                 @NonNull Paint textPaint,
+                                 @Nullable Paint badgePaint) {
+        float badgeX = x + 3f;
+        float textX = x + 11f;
+        float textWidth = maxWidth - 11f;
+        if (badgePaint != null) {
+            canvas.drawCircle(badgeX, y - 3f, 2.7f, badgePaint);
+        } else {
+            Paint bulletPaint = new Paint(textPaint);
+            bulletPaint.setColor(0xFF9E9E9E);
+            canvas.drawCircle(badgeX, y - 3f, 2.2f, bulletPaint);
+        }
+        return drawWrappedText(canvas, text, textX, y, textWidth, textPaint) + 1f;
     }
 
     private int intensityBadgeColor(@Nullable BleedingIntensity intensity) {
@@ -777,13 +1100,13 @@ public class PeriodDetailsFragment extends Fragment {
                                   @NonNull Paint paint) {
         List<String> lines = wrapText(text, paint, maxWidth);
         Paint.FontMetrics metrics = paint.getFontMetrics();
-        float lineHeight = (metrics.descent - metrics.ascent) + 1.5f;
+        float lineHeight = (metrics.descent - metrics.ascent) + 2f;
         float baseline = y;
         for (String line : lines) {
             canvas.drawText(line, x, baseline, paint);
             baseline += lineHeight;
         }
-        return baseline + 1f;
+        return baseline;
     }
 
     @NonNull
@@ -901,8 +1224,11 @@ public class PeriodDetailsFragment extends Fragment {
     }
 
     private void applyAccentColor(@Nullable TextView title,
+                                  @Nullable TextView rangeLabel,
+                                  @Nullable TextView filterLabel,
                                   @Nullable ImageButton closeButton,
-                                  @Nullable MaterialButton savePdfButton) {
+                                  @Nullable MaterialButton savePdfButton,
+                                  @Nullable EditText searchField) {
         if (viewModel == null) {
             return;
         }
@@ -912,6 +1238,12 @@ public class PeriodDetailsFragment extends Fragment {
         } else if (title != null) {
             title.setTextColor(Color.WHITE);
         }
+        if (rangeLabel != null && color != null) {
+            rangeLabel.setTextColor(color);
+        }
+        if (filterLabel != null && color != null) {
+            filterLabel.setTextColor(color);
+        }
         if (closeButton != null && color != null) {
             closeButton.setImageTintList(null);
             closeButton.setColorFilter(color, PorterDuff.Mode.SRC_IN);
@@ -920,6 +1252,10 @@ public class PeriodDetailsFragment extends Fragment {
         if (savePdfButton != null && color != null) {
             ButtonColorHelper.applyPrimaryColor(savePdfButton, color);
             savePdfButton.setTextColor(Color.WHITE);
+        }
+        if (searchField != null) {
+            searchField.setTextColor(Color.WHITE);
+            searchField.setHintTextColor(0xFFBDBDBD);
         }
     }
 }

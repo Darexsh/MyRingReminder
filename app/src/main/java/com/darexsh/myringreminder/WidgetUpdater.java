@@ -24,6 +24,7 @@ public final class WidgetUpdater {
         Context localized = getLocalizedContext(context);
         AppWidgetManager manager = AppWidgetManager.getInstance(localized);
         updateSmallWidgets(localized, manager);
+        updateCompactWidgets(localized, manager);
         updateLargeWidgets(localized, manager);
         scheduleNextUpdate(localized);
     }
@@ -42,12 +43,22 @@ public final class WidgetUpdater {
         }
     }
 
+    private static void updateCompactWidgets(Context context, AppWidgetManager manager) {
+        int[] widgetIds = manager.getAppWidgetIds(new ComponentName(context, CycleWidgetCompactProvider.class));
+        for (int appWidgetId : widgetIds) {
+            CycleWidgetCompactProvider.updateAppWidget(context, manager, appWidgetId);
+        }
+    }
+
     public static void scheduleNextUpdate(Context context) {
         Context localized = getLocalizedContext(context);
         AppWidgetManager manager = AppWidgetManager.getInstance(localized);
         int[] smallIds = manager.getAppWidgetIds(new ComponentName(localized, CycleWidgetSmallProvider.class));
+        int[] compactIds = manager.getAppWidgetIds(new ComponentName(localized, CycleWidgetCompactProvider.class));
         int[] largeIds = manager.getAppWidgetIds(new ComponentName(localized, CycleWidgetLargeProvider.class));
-        if ((smallIds == null || smallIds.length == 0) && (largeIds == null || largeIds.length == 0)) {
+        if ((smallIds == null || smallIds.length == 0)
+                && (compactIds == null || compactIds.length == 0)
+                && (largeIds == null || largeIds.length == 0)) {
             cancelScheduledUpdate(localized);
             return;
         }

@@ -4,13 +4,17 @@ import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
+import android.util.Log;
 import android.os.Build;
 import android.app.PendingIntent;
+import android.app.NotificationChannel;
+import android.app.NotificationManager;
 import androidx.core.app.ActivityCompat;
 import androidx.core.app.NotificationCompat;
 import androidx.core.app.NotificationManagerCompat;
 
 public class NotificationReceiver extends BroadcastReceiver {
+    private static final String TAG = "ReminderNotification";
 
     @Override
     public void onReceive(Context context, Intent intent) {
@@ -36,7 +40,7 @@ public class NotificationReceiver extends BroadcastReceiver {
         );
 
         // Build the notification
-        NotificationCompat.Builder builder = new NotificationCompat.Builder(context, "reminder_channel")
+        NotificationCompat.Builder builder = new NotificationCompat.Builder(context, Constants.REMINDER_CHANNEL_ID)
                 .setSmallIcon(R.drawable.ic_notification) // Notification icon
                 .setContentTitle(title)                  // Title
                 .setContentText(message)                 // Message
@@ -46,6 +50,20 @@ public class NotificationReceiver extends BroadcastReceiver {
                 .setDefaults(NotificationCompat.DEFAULT_SOUND | NotificationCompat.DEFAULT_VIBRATE); // Sound & vibration
 
         NotificationManagerCompat manager = NotificationManagerCompat.from(context);
+
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+            NotificationManager notificationManager = context.getSystemService(NotificationManager.class);
+            NotificationChannel channel = notificationManager != null
+                    ? notificationManager.getNotificationChannel(Constants.REMINDER_CHANNEL_ID)
+                    : null;
+            Log.d(
+                    TAG,
+                    "Sending reminder via channel="
+                            + Constants.REMINDER_CHANNEL_ID
+                            + ", channelFound=" + (channel != null)
+                            + ", shouldVibrate=" + (channel != null && channel.shouldVibrate())
+            );
+        }
 
         // Check if the app has permission to post notifications (Android 13+)
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU

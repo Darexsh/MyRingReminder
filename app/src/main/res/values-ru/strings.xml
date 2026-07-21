@@ -97,6 +97,7 @@
     <string name="settings_background_blur_dashboard_title">Главный экран</string>
     <string name="settings_background_blur_format">Размытие фона:\nГлавный %1$d%%, Остальные %2$d%%</string>
     <string name="settings_background_blur_label">Размытие фона</string>
+    <string name="settings_background_blur_value">%1$d%% / %2$d%%</string>
     <string name="settings_background_blur_others">Другие экраны: %1$d%%</string>
     <string name="settings_background_blur_others_title">Другие экраны</string>
     <string name="settings_background_blur_title">Размытие фона</string>
@@ -122,6 +123,10 @@
     <string name="settings_calendar_insertion_color_dialog_title">Выберите цвет вставки</string>
     <string name="settings_calendar_insertion_color_format">Цвет вставки: %1$s</string>
     <string name="settings_calendar_insertion_color_label">Цвет вставки</string>
+    <string name="settings_label_calendar_range">Диапазон календаря</string>
+    <string name="settings_label_cycle_length">Длина цикла</string>
+    <string name="settings_label_start_date">Дата вставки</string>
+    <string name="settings_label_time">Время вставки</string>
     <string name="settings_calendar_range_back">Назад</string>
     <string name="settings_calendar_range_button">Диапазон календаря:\n%1$d %2$s назад, %3$d %4$s вперед</string>
     <string name="settings_calendar_range_forward">Вперед</string>
@@ -148,6 +153,7 @@
     <string name="settings_circle_style_format">Стиль круга: %1$s</string>
     <string name="settings_circle_style_label">Стиль круга на главном</string>
     <string name="settings_cycle_length_button">Длина цикла: %1$d дн.</string>
+    <string name="settings_cycle_length_value">%1$d дн.</string>
     <string name="settings_cycle_length_message">Выберите длину цикла в днях:</string>
     <string name="settings_cycle_length_title">Установить длину цикла</string>
     <string name="settings_date_button_format">Дата вставки: %1$02d.%2$02d.%3$d</string>
@@ -198,6 +204,7 @@
     <string name="notification_test_sent">Тестовое уведомление отправлено.</string>
     <string name="notification_test_title">MyRingReminder тест</string>
     <string name="notification_times_button_label">Напоминания:\nза %1$d ч до извлечения, за %2$d ч до вставки</string>
+    <string name="notification_times_value_label">%1$d ч / %2$d ч</string>
     <string name="notification_times_button_unknown">Напоминания:\nнеизвестно</string>
     <string name="notifications_channel_description">Уведомления о циклах кольца</string>
     <string name="notifications_channel_name">Напоминания</string>
@@ -233,6 +240,8 @@
     <string name="home_days">17</string>
     <string name="home_days_left">Дней осталось</string>
     <string name="home_days_until_insertion">Дней до вставки</string>
+    <string name="home_phase_active_cycle">Активный цикл</string>
+    <string name="home_phase_ring_free_phase">Фаза без кольца</string>
     <string name="home_delay_confirm">Обновить</string>
     <string name="home_delay_info_desc">Информация о ношении кольца дольше положенного срока</string>
     <string name="home_delay_info_message"><![CDATA[
@@ -275,6 +284,7 @@
     <string name="btn_period_details">Детали менструации</string>
     <string name="btn_period_details_save_pdf">Сохранить как PDF</string>
     <string name="period_details_pdf_file_name">detali_menstruacii_%1$s.pdf</string>
+    <string name="period_details_pdf_export_title">Eksport tsikla</string>
     <string name="period_details_pdf_saved">PDF успешно сохранен.</string>
     <string name="period_details_pdf_save_failed">Не удалось сохранить PDF.</string>
     <string name="period_details_pdf_no_data">Нет записей для экспорта.</string>
@@ -299,7 +309,14 @@
     <string name="period_details_range_12m">12 месяцев</string>
     <string name="period_details_range_all">Все</string>
     <string name="period_details_range_between">%1$s - %2$s</string>
+    <string name="period_details_filter_label">Поиск / фильтр</string>
+    <string name="period_details_search_hint">Поиск по дате, симптому, боли или метке</string>
+    <string name="period_details_filter_symptoms">Симптомы</string>
+    <string name="period_details_filter_pain">Боль</string>
+    <string name="period_details_filter_start">Начало</string>
+    <string name="period_details_filter_end">Конец</string>
     <string name="period_details_empty">Нет записей о менструации за этот период.</string>
+    <string name="period_details_empty_filtered">Нет записей, соответствующих текущему поиску или фильтру.</string>
     <string name="period_modal_title_for_date">Запись менструации: %1$s</string>
     <string name="period_modal_period_day">День менструации</string>
     <string name="period_modal_intensity_title">Интенсивность кровотечения</string>
@@ -344,6 +361,16 @@
 
     <!-- Cycles -->
     <string name="cycles_clear_history">Очистить историю</string>
+    <string name="cycles_empty">История циклов пока пуста.</string>
+    <string name="cycles_rebuild_history">Восстановить историю</string>
+    <string name="cycles_rebuild_history_confirm">Восстановить</string>
+    <string name="cycles_rebuild_history_message">Заново создать историю циклов на основе сохранённой даты вставки и настроек цикла.</string>
+    <string name="cycles_rebuild_history_title">Восстановить историю циклов?</string>
+    <string name="cycles_sort_label">Сортировка</string>
+    <string name="cycles_sort_newest">Сначала новые</string>
+    <string name="cycles_sort_oldest">Сначала старые</string>
+    <string name="cycles_summary_count">Отслежено циклов: %1$d</string>
+    <string name="cycles_summary_count_placeholder">Отслежено циклов: 0</string>
     <string name="cycles_status_inserted">Кольцо вставлено</string>
     <string name="cycles_status_removed">Кольцо извлечено</string>
     <string name="cycles_title">История циклов</string>
@@ -366,6 +393,7 @@
 
     <!-- Widgets -->
     <string name="widget_large_name">Виджет кольца (большой)</string>
+    <string name="widget_compact_name">Виджет кольца (компактный)</string>
     <string name="widget_small_name">Виджет кольца (маленький)</string>
     <string name="widget_title">Следующие даты:</string>
 
@@ -547,6 +575,7 @@
     <string name="tour_body_calendar_legend">Эти цвета показывают время ношения, перерыв, извлечение и вставку.\nВы можете изменить цвета, нажав на точки в легенде.</string>
     <string name="tour_body_cycles">Отслеживайте предыдущие циклы и события вставки/извлечения.</string>
     <string name="tour_body_cycles_clear">Удалить все сохраненные записи циклов из списка.</string>
+    <string name="tour_body_cycles_rebuild">Снова создаёт историю циклов на основе сохранённой даты вставки, настроек цикла и сохранённых особых случаев после её очистки.</string>
     <string name="tour_body_delay">Используйте это, чтобы записать лишние дни, если кольцо носилось дольше. Подробности — по кнопке инфо.</string>
     <string name="tour_body_navigation">Здесь можно переключаться между главным экраном, календарем, циклами и настройками.</string>
     <string name="tour_body_notes">Сохраняйте напоминания и личные заметки для этого цикла.</string>
@@ -570,7 +599,7 @@
     <string name="tour_body_settings_cycle">Установите дату, время вставки и длину цикла.</string>
     <string name="tour_body_settings_info">Показывает версию, инфо о разработчике и контакты.</string>
     <string name="tour_body_settings_language">Переключение между языками.</string>
-    <string name="tour_body_settings_notifications">Установите время напоминаний о вставке и извлечении.\nЕсли уведомления не приходят, отключите оптимизацию батареи.</string>
+    <string name="tour_body_settings_notifications">Открывает подробные настройки напоминаний. Здесь можно задать время напоминаний, отправить тестовое уведомление, разрешить уведомления, разрешить точные сигналы и отключить оптимизацию батареи, если напоминания приходят с задержкой.</string>
     <string name="tour_body_settings_reset">Удалить все данные и сбросить приложение.</string>
     <string name="tour_body_settings_update">Проверяйте и устанавливайте новые версии приложения.</string>
     <string name="tour_complete_done">Готово</string>
@@ -584,6 +613,7 @@
     <string name="tour_title_calendar_legend">Легенда календаря</string>
     <string name="tour_title_cycles">История циклов</string>
     <string name="tour_title_cycles_clear">Очистить историю</string>
+    <string name="tour_title_cycles_rebuild">Создать историю</string>
     <string name="tour_title_delay">Продлить цикл</string>
     <string name="tour_title_navigation">Навигация</string>
     <string name="tour_title_notes">Быстрые заметки</string>
@@ -611,6 +641,11 @@
     <string name="tour_title_settings_reset">Сброс приложения</string>
     <string name="tour_title_settings_update">Обновления</string>
     <string name="tour_body_period_entry">Нажмите на день, чтобы добавить или изменить данные менструации. Редактирование доступно только в неделю без кольца и ±4 дня вокруг неё.</string>
+    <string name="tour_body_period_intensity">Интенсивность кровотечения обязательна для сохранения записи менструации. Выберите слабую, среднюю или сильную, чтобы показать, насколько интенсивным был этот день.</string>
+    <string name="tour_body_period_pain">Уровень боли необязателен. Используйте слабую, среднюю или сильную, если боль нужно сохранить для этого дня.</string>
+    <string name="tour_body_period_symptoms">Добавьте симптомы, которые подходят для этого дня. Можно выбрать несколько симптомов одновременно.</string>
+    <string name="tour_body_period_markers">Используйте маркер начала для первого дня менструации и маркер конца для последнего дня. В один день может быть активен только один из двух маркеров.</string>
+    <string name="tour_body_period_actions">Используйте "Очистить запись", чтобы удалить сохранённые данные за этот день. Отмена закрывает окно без изменений, а OK сохраняет текущую запись.</string>
     <string name="tour_body_period_modal">В записи менструации можно указать день менструации, интенсивность кровотечения, уровень боли (слабая/средняя/сильная), дополнительные симптомы и необязательные маркеры начала/конца.\nИспользуйте "Очистить запись", чтобы удалить сохраненные данные за этот день.</string>
     <string name="tour_body_period_indicators">Дни менструации отображаются прямо в календаре с оттенком интенсивности, точками-индикаторами и метками S/E.\nВ месяцах с записями менструации можно также открыть Детали менструации и экспортировать форматированный PDF-отчёт.</string>
     <string name="tour_title_period_entry">Запись менструации</string>
@@ -622,8 +657,6 @@
     <string name="welcome_features_title">Функции приложения</string>
     <string name="welcome_info_note">Вы можете открыть инфо о приложении в любое время в Настройках.</string>
     <string name="welcome_intro">Держите под контролем цикл контрацептивного кольца и отслеживание менструации с вашими личными данными, напоминаниями и заметками.</string>
-    <string name="welcome_permissions_body">- 🖼️ Доступ к медиафайлам: выбор фонового изображения\n- 🔔 Уведомления: напоминания о цикле\n- ⏰ Точные будильники: точное планирование</string>
-    <string name="welcome_permissions_title">Используемые разрешения</string>
     <string name="welcome_privacy_note">Ваши данные хранятся только на этом устройстве. Обязательно создайте резервную копию после настройки 😊</string>
     <string name="welcome_skip_tour">Не сейчас</string>
     <string name="welcome_start_tour">Начать тур</string>

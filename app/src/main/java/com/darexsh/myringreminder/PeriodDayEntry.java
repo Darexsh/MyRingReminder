@@ -18,9 +18,6 @@ public class PeriodDayEntry {
     private boolean end;
     private long updatedAt;
 
-    public PeriodDayEntry() {
-    }
-
     public PeriodDayEntry(String dateKey,
                           boolean periodDay,
                           BleedingIntensity intensity,
@@ -53,92 +50,44 @@ public class PeriodDayEntry {
         return dateKey;
     }
 
-    public void setDateKey(String dateKey) {
-        this.dateKey = dateKey;
-    }
-
     public boolean isPeriodDay() {
         return periodDay;
-    }
-
-    public void setPeriodDay(boolean periodDay) {
-        this.periodDay = periodDay;
     }
 
     public BleedingIntensity getIntensity() {
         return intensity;
     }
 
-    public void setIntensity(BleedingIntensity intensity) {
-        this.intensity = intensity;
-    }
-
     public boolean hasPain() {
         return painSeverity != null ? painSeverity != PainSeverity.NONE : pain;
-    }
-
-    public void setPain(boolean pain) {
-        this.pain = pain;
-        this.painSeverity = pain ? PainSeverity.MEDIUM : PainSeverity.NONE;
     }
 
     public boolean hasIllness() {
         return symptomIllness || illness;
     }
 
-    public void setIllness(boolean illness) {
-        this.illness = illness;
-        this.symptomIllness = illness;
-    }
-
     public PainSeverity getPainSeverity() {
         return painSeverity;
-    }
-
-    public void setPainSeverity(PainSeverity painSeverity) {
-        this.painSeverity = painSeverity;
-        this.pain = painSeverity != null && painSeverity != PainSeverity.NONE;
     }
 
     public boolean isSymptomIllness() {
         return symptomIllness;
     }
 
-    public void setSymptomIllness(boolean symptomIllness) {
-        this.symptomIllness = symptomIllness;
-        this.illness = symptomIllness;
-    }
-
     public boolean isSymptomNausea() {
         return symptomNausea;
-    }
-
-    public void setSymptomNausea(boolean symptomNausea) {
-        this.symptomNausea = symptomNausea;
     }
 
     public boolean isSymptomFatigue() {
         return symptomFatigue;
     }
 
-    public void setSymptomFatigue(boolean symptomFatigue) {
-        this.symptomFatigue = symptomFatigue;
-    }
-
     public boolean isSymptomDizziness() {
         return symptomDizziness;
     }
 
-    public void setSymptomDizziness(boolean symptomDizziness) {
-        this.symptomDizziness = symptomDizziness;
-    }
-
     public boolean isSymptomDiarrhea() {
         return symptomDiarrhea;
-    }
-
-    public void setSymptomDiarrhea(boolean symptomDiarrhea) {
-        this.symptomDiarrhea = symptomDiarrhea;
     }
 
     public boolean hasAnyAdditionalSymptoms() {
@@ -149,23 +98,11 @@ public class PeriodDayEntry {
         return start;
     }
 
-    public void setStart(boolean start) {
-        this.start = start;
-    }
-
     public boolean isEnd() {
         return end;
     }
 
-    public void setEnd(boolean end) {
-        this.end = end;
-    }
-
     public long getUpdatedAt() {
         return updatedAt;
-    }
-
-    public void setUpdatedAt(long updatedAt) {
-        this.updatedAt = updatedAt;
     }
 }

@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <appwidget-provider xmlns:android="http://schemas.android.com/apk/res/android"
-    android:initialLayout="@layout/widget_ring_small"
-    android:minWidth="120dp"
-    android:minHeight="60dp"
+    android:initialLayout="@layout/widget_ring_compact"
+    android:minWidth="180dp"
+    android:minHeight="56dp"
     android:updatePeriodMillis="3600000"
     android:widgetCategory="home_screen"
-    android:label="@string/widget_small_name" />
+    android:label="@string/widget_compact_name" />

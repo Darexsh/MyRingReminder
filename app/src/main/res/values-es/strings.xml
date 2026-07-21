@@ -97,6 +97,7 @@
     <string name="settings_background_blur_dashboard_title">Panel de control</string>
     <string name="settings_background_blur_format">Desenfoque de fondo:\nPanel de control %1$d%%, Otras %2$d%%</string>
     <string name="settings_background_blur_label">Desenfoque de fondo</string>
+    <string name="settings_background_blur_value">%1$d%% / %2$d%%</string>
     <string name="settings_background_blur_others">Otras pantallas: %1$d%%</string>
     <string name="settings_background_blur_others_title">Otras pantallas</string>
     <string name="settings_background_blur_title">Desenfoque de fondo</string>
@@ -122,6 +123,10 @@
     <string name="settings_calendar_insertion_color_dialog_title">Elegir color de inserción</string>
     <string name="settings_calendar_insertion_color_format">Color de inserción: %1$s</string>
     <string name="settings_calendar_insertion_color_label">Color de inserción</string>
+    <string name="settings_label_calendar_range">Intervalo del calendario</string>
+    <string name="settings_label_cycle_length">Duración del ciclo</string>
+    <string name="settings_label_start_date">Fecha de inserción</string>
+    <string name="settings_label_time">Hora de inserción</string>
     <string name="settings_calendar_range_back">Atrás</string>
     <string name="settings_calendar_range_button">Rango del calendario:\n%1$d %2$s atrás, %3$d %4$s adelante</string>
     <string name="settings_calendar_range_forward">Adelante</string>
@@ -148,6 +153,7 @@
     <string name="settings_circle_style_format">Estilo del círculo de inicio: %1$s</string>
     <string name="settings_circle_style_label">Estilo del círculo de inicio</string>
     <string name="settings_cycle_length_button">Establecer duración del ciclo: %1$d días</string>
+    <string name="settings_cycle_length_value">%1$d días</string>
     <string name="settings_cycle_length_message">Elige la duración del ciclo en días:</string>
     <string name="settings_cycle_length_title">Establecer duración del ciclo</string>
     <string name="settings_date_button_format">Establecer fecha de inserción: %1$02d.%2$02d.%3$d</string>
@@ -198,6 +204,7 @@
     <string name="notification_test_sent">Notificación de prueba enviada.</string>
     <string name="notification_test_title">Prueba de MyRingReminder</string>
     <string name="notification_times_button_label">Recordatorios:\n%1$d horas antes de la extracción, %2$d horas antes de la inserción</string>
+    <string name="notification_times_value_label">%1$d h / %2$d h</string>
     <string name="notification_times_button_unknown">Recordatorios:\ndesconocido</string>
     <string name="notifications_channel_description">Notificaciones para ciclos de anillos</string>
     <string name="notifications_channel_name">Recordatorios</string>
@@ -233,6 +240,8 @@
     <string name="home_days">17</string>
     <string name="home_days_left">Días restantes</string>
     <string name="home_days_until_insertion">Días hasta la inserción</string>
+    <string name="home_phase_active_cycle">Ciclo activo</string>
+    <string name="home_phase_ring_free_phase">Fase sin anillo</string>
     <string name="home_delay_confirm">Actualizar</string>
     <string name="home_delay_info_desc">Información sobre el uso prolongado del anillo</string>
     <string name="home_delay_info_message"><![CDATA[
@@ -275,6 +284,7 @@
     <string name="btn_period_details">Detalles del período</string>
     <string name="btn_period_details_save_pdf">Guardar como PDF</string>
     <string name="period_details_pdf_file_name">detalles_periodo_%1$s.pdf</string>
+    <string name="period_details_pdf_export_title">Exportacion del ciclo</string>
     <string name="period_details_pdf_saved">PDF guardado correctamente.</string>
     <string name="period_details_pdf_save_failed">No se pudo guardar el PDF.</string>
     <string name="period_details_pdf_no_data">No hay entradas del período para exportar.</string>
@@ -299,7 +309,14 @@
     <string name="period_details_range_12m">12 meses</string>
     <string name="period_details_range_all">Todo</string>
     <string name="period_details_range_between">%1$s - %2$s</string>
+    <string name="period_details_filter_label">Buscar / filtrar</string>
+    <string name="period_details_search_hint">Buscar por fecha, síntoma, dolor o marcador</string>
+    <string name="period_details_filter_symptoms">Síntomas</string>
+    <string name="period_details_filter_pain">Dolor</string>
+    <string name="period_details_filter_start">Inicio</string>
+    <string name="period_details_filter_end">Fin</string>
     <string name="period_details_empty">No hay registros del período en este rango.</string>
+    <string name="period_details_empty_filtered">Ningún registro del período coincide con la búsqueda o el filtro actual.</string>
     <string name="period_modal_title_for_date">Registro del período: %1$s</string>
     <string name="period_modal_period_day">Día del período</string>
     <string name="period_modal_intensity_title">Intensidad del sangrado</string>
@@ -344,6 +361,16 @@
 
     <!-- Cycles -->
     <string name="cycles_clear_history">Borrar historial</string>
+    <string name="cycles_empty">Aún no hay historial de ciclos.</string>
+    <string name="cycles_rebuild_history">Reconstruir historial</string>
+    <string name="cycles_rebuild_history_confirm">Reconstruir</string>
+    <string name="cycles_rebuild_history_message">Recrear el historial de ciclos a partir de la fecha de inserción guardada y la configuración del ciclo.</string>
+    <string name="cycles_rebuild_history_title">¿Reconstruir historial de ciclos?</string>
+    <string name="cycles_sort_label">Ordenar</string>
+    <string name="cycles_sort_newest">Más recientes primero</string>
+    <string name="cycles_sort_oldest">Más antiguos primero</string>
+    <string name="cycles_summary_count">%1$d ciclos registrados</string>
+    <string name="cycles_summary_count_placeholder">0 ciclos registrados</string>
     <string name="cycles_status_inserted">Anillo insertado</string>
     <string name="cycles_status_removed">Anillo retirado</string>
     <string name="cycles_title">Historial de ciclos</string>
@@ -366,6 +393,7 @@
 
     <!-- Widgets -->
     <string name="widget_large_name">Widget de llamadas (grande)</string>
+    <string name="widget_compact_name">Widget de llamadas (compacto)</string>
     <string name="widget_small_name">Widget de llamadas (pequeño)</string>
     <string name="widget_title">Próximas fechas de llamadas:</string>
 
@@ -547,6 +575,7 @@
     <string name="tour_body_calendar_legend">Estos colores indican el tiempo de uso, los días de descanso, la retirada y la colocación.\nTambién puedes cambiar los colores tocando los puntos de la leyenda.</string>
     <string name="tour_body_cycles">Realiza un seguimiento de los ciclos anteriores y de sus eventos de colocación/retirada.</string>
     <string name="tour_body_cycles_clear">Elimina todas las entradas de ciclos guardadas de la lista.</string>
+    <string name="tour_body_cycles_rebuild">Vuelve a crear el historial de ciclos a partir de la fecha de inserción guardada, la configuración del ciclo y los casos especiales guardados después de haberlo borrado.</string>
     <string name="tour_body_delay">Utiliza esta opción para registrar días adicionales si el anillo se ha llevado puesto durante más tiempo. Hay más información disponible a través del botón de información.</string>
     <string name="tour_body_navigation">Cambia aquí entre Inicio, Calendario, Ciclos y Ajustes.</string>
     <string name="tour_body_notes">Guarda recordatorios y notas personales para este ciclo.</string>
@@ -570,7 +599,7 @@
     <string name="tour_body_settings_cycle">Establece la fecha, la hora y la duración del ciclo de inserción.</string>
     <string name="tour_body_settings_info">Muestra la versión, la información del desarrollador y los enlaces de contacto.</string>
     <string name="tour_body_settings_language">Cambiar entre diferentes idiomas.</string>
-    <string name="tour_body_settings_notifications">Configura cuándo deseas recibir recordatorios en los días de inserción y extracción.\nSi los recordatorios no son fiables, desactiva la optimización de la batería y habilita las alarmas exactas en estos ajustes.</string>
+    <string name="tour_body_settings_notifications">Abre los ajustes detallados de recordatorios. Allí puedes configurar los horarios, enviar una notificación de prueba, permitir el permiso de notificaciones, habilitar alarmas exactas y desactivar la optimización de la batería si los recordatorios se retrasan.</string>
     <string name="tour_body_settings_reset">Elimina todos los datos guardados y restablece la aplicación.</string>
     <string name="tour_body_settings_update">Busca nuevas versiones de la aplicación e instálalas.</string>
     <string name="tour_complete_done">Hecho</string>
@@ -584,6 +613,7 @@
     <string name="tour_title_calendar_legend">Leyenda del calendario</string>
     <string name="tour_title_cycles">Historial de ciclos</string>
     <string name="tour_title_cycles_clear">Borrar historial</string>
+    <string name="tour_title_cycles_rebuild">Crear historial</string>
     <string name="tour_title_delay">Retrasar el ciclo</string>
     <string name="tour_title_navigation">Navegar</string>
     <string name="tour_title_notes">Notas rápidas</string>
@@ -611,6 +641,11 @@
     <string name="tour_title_settings_reset">Restablecer aplicación</string>
     <string name="tour_title_settings_update">Actualizaciones</string>
     <string name="tour_body_period_entry">Toca un día para añadir o editar registros del período.\nLa edición solo está disponible durante la semana sin anillo y ±4 días alrededor.</string>
+    <string name="tour_body_period_intensity">La intensidad del sangrado es obligatoria para guardar una entrada del período. Elige leve, media o fuerte para indicar cuánto sangrado hubo ese día.</string>
+    <string name="tour_body_period_pain">El nivel de dolor es opcional. Usa leve, moderado o fuerte si quieres registrar dolor para ese día.</string>
+    <string name="tour_body_period_symptoms">Añade los síntomas que correspondan a ese día. Puedes seleccionar varios síntomas al mismo tiempo.</string>
+    <string name="tour_body_period_markers">Usa el marcador de inicio para el primer día del período y el marcador de fin para el último día. Solo uno de los dos marcadores puede estar activo el mismo día.</string>
+    <string name="tour_body_period_actions">Usa "Eliminar registro" para borrar los datos guardados de ese día. Cancelar cierra la ventana sin cambios y OK guarda la entrada actual del período.</string>
     <string name="tour_body_period_modal">En el registro del período puedes definir día del período, intensidad del sangrado, nivel de dolor (leve/moderado/fuerte), síntomas adicionales y marcadores opcionales de inicio/fin.\nUsa "Eliminar registro" para borrar los datos guardados de ese día.</string>
     <string name="tour_body_period_indicators">Los días del período se muestran directamente en el calendario con sombreado de intensidad, puntos indicadores y marcadores S/E.\nEn meses con registros del período también puedes abrir Detalles del período y exportar un informe PDF formateado.</string>
     <string name="tour_title_period_entry">Registro del período</string>
@@ -622,8 +657,6 @@
     <string name="welcome_features_title">Qué hace esta aplicación</string>
     <string name="welcome_info_note">Puedes abrir la información de la aplicación en cualquier momento en Ajustes.</string>
     <string name="welcome_intro">Mantén bajo control tu ciclo del anillo anticonceptivo y el seguimiento del período con tus datos personales, recordatorios y notas.</string>
-    <string name="welcome_permissions_body">- 🖼️ Acceso a los archivos multimedia: elige una imagen de fondo\n- 🔔 Notificaciones: recordatorios del ciclo\n- ⏰ Alarmas exactas: programación precisa</string>
-    <string name="welcome_permissions_title">Permisos utilizados</string>
     <string name="welcome_privacy_note">Tus datos se almacenan únicamente en este dispositivo. Asegúrate de crear una copia de seguridad una vez que hayas configurado todos los datos y ajustes 😊</string>
     <string name="welcome_skip_tour">Ahora no</string>
     <string name="welcome_start_tour">Iniciar recorrido</string>

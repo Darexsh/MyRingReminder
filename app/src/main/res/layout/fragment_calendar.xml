@@ -26,7 +26,7 @@
             android:contentDescription="@string/calendar_previous_month_desc"
             android:padding="8dp"
             android:src="@drawable/ic_calendar_arrow_left"
-            android:tint="?attr/colorOnSurface" />
+            app:tint="?attr/colorOnSurface" />
 
         <Space
             android:layout_width="0dp"
@@ -40,7 +40,7 @@
             android:background="?attr/selectableItemBackgroundBorderless"
             android:clickable="true"
             android:contentDescription="@string/calendar_month_selector_desc"
-            android:drawableEnd="@drawable/ic_triangle_down"
+            app:drawableEndCompat="@drawable/ic_triangle_down"
             android:drawablePadding="6dp"
             android:focusable="true"
             android:gravity="center"
@@ -64,7 +64,7 @@
             android:contentDescription="@string/calendar_next_month_desc"
             android:padding="8dp"
             android:src="@drawable/ic_calendar_arrow_right"
-            android:tint="?attr/colorOnSurface" />
+            app:tint="?attr/colorOnSurface" />
     </LinearLayout>
 
     <com.prolificinteractive.materialcalendarview.MaterialCalendarView

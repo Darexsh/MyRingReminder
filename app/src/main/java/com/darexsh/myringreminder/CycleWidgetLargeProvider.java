@@ -31,7 +31,7 @@ public class CycleWidgetLargeProvider extends AppWidgetProvider {
 
     @Override
     public void onDisabled(Context context) {
-        WidgetUpdater.cancelScheduledUpdate(context);
+        WidgetUpdater.scheduleNextUpdate(context);
     }
 
     public static void updateAppWidget(Context context, AppWidgetManager appWidgetManager, int appWidgetId) {
