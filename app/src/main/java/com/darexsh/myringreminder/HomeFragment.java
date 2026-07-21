@@ -358,6 +358,7 @@ public class HomeFragment extends Fragment {
             String secondaryTextDate;
             int progressMax;
             int progressValue;
+            boolean showPeriodRain;
 
             // Calculate remaining days and progress based on day changes (midnight), except at removal/insertion time
             if (displayNow.before(removalDate)) {
@@ -367,6 +368,7 @@ public class HomeFragment extends Fragment {
                 phaseLabelText = getString(R.string.home_phase_active_cycle);
                 progressMax = cycleLength;
                 progressValue = progressMax - remainingDays;
+                showPeriodRain = false;
 
                 @SuppressLint("DefaultLocale") String removalDateText = String.format("%02d.%02d.%d",
                         removalDate.get(Calendar.DAY_OF_MONTH),
@@ -385,6 +387,7 @@ public class HomeFragment extends Fragment {
                 phaseLabelText = getString(R.string.home_phase_ring_free_phase);
                 progressMax = Math.max(1, ringFreeDays);
                 progressValue = progressMax - remainingDays;
+                showPeriodRain = true;
 
                 @SuppressLint("DefaultLocale") String reinsertionDateText = String.format("%02d.%02d.%d",
                         reinsertionDate.get(Calendar.DAY_OF_MONTH),
@@ -402,6 +405,7 @@ public class HomeFragment extends Fragment {
                 phaseLabelText = getString(R.string.home_phase_active_cycle);
                 progressMax = cycleLength;
                 progressValue = 0;
+                showPeriodRain = false;
 
                 @SuppressLint("DefaultLocale") String removalDateText = String.format("%02d.%02d.%d",
                         removalDate.get(Calendar.DAY_OF_MONTH),
@@ -417,6 +421,7 @@ public class HomeFragment extends Fragment {
 
             circularProgress.setMax(progressMax);
             circularProgress.setProgress(progressValue);
+            circularProgress.setPeriodActive(showPeriodRain);
             if (tvCyclePhaseLabel != null) {
                 tvCyclePhaseLabel.setText(phaseLabelText);
             }
