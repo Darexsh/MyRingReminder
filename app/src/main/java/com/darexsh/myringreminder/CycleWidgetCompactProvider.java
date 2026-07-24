@@ -5,6 +5,7 @@ import android.appwidget.AppWidgetManager;
 import android.appwidget.AppWidgetProvider;
 import android.content.Context;
 import android.content.Intent;
+import android.os.Bundle;
 import android.widget.RemoteViews;
 
 public class CycleWidgetCompactProvider extends AppWidgetProvider {
@@ -35,7 +36,11 @@ public class CycleWidgetCompactProvider extends AppWidgetProvider {
     }
 
     public static void updateAppWidget(Context context, AppWidgetManager appWidgetManager, int appWidgetId) {
-        RemoteViews views = new RemoteViews(context.getPackageName(), R.layout.widget_ring_compact);
+        Bundle options = appWidgetManager.getAppWidgetOptions(appWidgetId);
+        boolean useTallLayout = options != null
+                && options.getInt(AppWidgetManager.OPTION_APPWIDGET_MIN_HEIGHT, 0) >= 88;
+        int layoutRes = useTallLayout ? R.layout.widget_ring_compact_tall : R.layout.widget_ring_compact;
+        RemoteViews views = new RemoteViews(context.getPackageName(), layoutRes);
         CycleWidgetUtils.State state = CycleWidgetUtils.calculateState(context);
         SettingsRepository repository = new SettingsRepository(context);
         views.setInt(R.id.widget_bg_image, "setColorFilter", repository.getButtonColor());

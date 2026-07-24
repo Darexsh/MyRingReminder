@@ -165,8 +165,10 @@ public class HomeCircleView extends View {
             progressPaint.setStrokeWidth(thickness);
             drawSegmented(canvas, thickness, progressFraction);
             if (progressFraction > 0f) {
-                drawLeadingEdgeHighlight(canvas, thickness, progressFraction);
+                drawSegmentedLeadingEdgeHighlight(canvas, thickness, progressFraction);
             }
+            drawInnerParticleEffect(canvas, thickness);
+            postInvalidateOnAnimation();
             return;
         }
 
@@ -282,16 +284,35 @@ public class HomeCircleView extends View {
             canvas.drawArc(arcRect, segStart, sweep, false, trackPaint);
         }
 
-        int filled = Math.round(segments * fraction);
+        int filled = Math.max(0, Math.min(segments, (int) Math.floor((segments * fraction) + 0.0001f)));
         for (int i = 0; i < filled; i++) {
             float segStart = start + i * (sweep + gap);
             canvas.drawArc(arcRect, segStart, sweep, false, progressPaint);
         }
     }
 
+    private void drawSegmentedLeadingEdgeHighlight(@NonNull Canvas canvas, float thickness, float fraction) {
+        int segments = Math.max(1, max);
+        int filled = Math.max(0, Math.min(segments, (int) Math.floor((segments * fraction) + 0.0001f)));
+        if (filled <= 0) {
+            return;
+        }
+
+        float gap = 360f / segments * 0.55f;
+        float sweep = 360f / segments - gap;
+        float slot = sweep + gap;
+        float endAngleDegrees = -90f + ((filled - 1) * slot) + sweep;
+        float angle = (float) Math.toRadians(endAngleDegrees);
+        drawLeadingEdgeHighlightAtAngle(canvas, thickness, angle);
+    }
+
     private void drawLeadingEdgeHighlight(@NonNull Canvas canvas, float thickness, float progressFraction) {
         float sweep = 360f * progressFraction;
         float angle = (float) Math.toRadians(-90f + sweep);
+        drawLeadingEdgeHighlightAtAngle(canvas, thickness, angle);
+    }
+
+    private void drawLeadingEdgeHighlightAtAngle(@NonNull Canvas canvas, float thickness, float angle) {
         float radius = arcRect.width() / 2f;
         float cx = arcRect.centerX();
         float cy = arcRect.centerY();

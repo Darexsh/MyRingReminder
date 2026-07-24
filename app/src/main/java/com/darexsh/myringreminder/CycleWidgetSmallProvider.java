@@ -5,6 +5,7 @@ import android.appwidget.AppWidgetManager;
 import android.appwidget.AppWidgetProvider;
 import android.content.Context;
 import android.content.Intent;
+import android.os.Bundle;
 import android.widget.RemoteViews;
 
 public class CycleWidgetSmallProvider extends AppWidgetProvider {
@@ -35,13 +36,21 @@ public class CycleWidgetSmallProvider extends AppWidgetProvider {
     }
 
     public static void updateAppWidget(Context context, AppWidgetManager appWidgetManager, int appWidgetId) {
-        RemoteViews views = new RemoteViews(context.getPackageName(), R.layout.widget_ring_small);
+        Bundle options = appWidgetManager.getAppWidgetOptions(appWidgetId);
+        boolean useTallLayout = options != null
+                && options.getInt(AppWidgetManager.OPTION_APPWIDGET_MIN_HEIGHT, 0) >= 96;
+        int layoutRes = useTallLayout ? R.layout.widget_ring_small_tall : R.layout.widget_ring_small;
+        RemoteViews views = new RemoteViews(context.getPackageName(), layoutRes);
         CycleWidgetUtils.State state = CycleWidgetUtils.calculateState(context);
         SettingsRepository repository = new SettingsRepository(context);
         views.setInt(R.id.widget_bg_image, "setColorFilter", repository.getButtonColor());
 
         views.setTextViewText(R.id.tv_widget_days_number, String.valueOf(state.daysLeft));
         views.setTextViewText(R.id.tv_widget_days_label, state.label);
+        if (useTallLayout) {
+            views.setTextViewText(R.id.tv_widget_removal, state.removalText);
+            views.setTextViewText(R.id.tv_widget_insertion, state.insertionText);
+        }
         PendingIntent launchIntent = buildLaunchIntent(context, appWidgetId);
         views.setOnClickPendingIntent(R.id.widget_root, launchIntent);
         views.setOnClickPendingIntent(R.id.widget_bg_image, launchIntent);
@@ -49,6 +58,10 @@ public class CycleWidgetSmallProvider extends AppWidgetProvider {
         views.setOnClickPendingIntent(R.id.tv_widget_days_label, launchIntent);
         views.setOnClickPendingIntent(R.id.img_widget_logo, launchIntent);
         views.setOnClickPendingIntent(R.id.tv_widget_app_name, launchIntent);
+        if (useTallLayout) {
+            views.setOnClickPendingIntent(R.id.tv_widget_removal, launchIntent);
+            views.setOnClickPendingIntent(R.id.tv_widget_insertion, launchIntent);
+        }
 
         appWidgetManager.updateAppWidget(appWidgetId, views);
     }

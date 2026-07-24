@@ -3,6 +3,9 @@
     android:initialLayout="@layout/widget_ring_small"
     android:minWidth="120dp"
     android:minHeight="60dp"
+    android:minResizeWidth="120dp"
+    android:minResizeHeight="60dp"
+    android:resizeMode="horizontal|vertical"
     android:updatePeriodMillis="3600000"
     android:widgetCategory="home_screen"
     android:label="@string/widget_small_name" />
