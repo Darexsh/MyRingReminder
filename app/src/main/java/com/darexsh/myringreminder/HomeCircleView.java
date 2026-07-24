@@ -284,24 +284,40 @@ public class HomeCircleView extends View {
             canvas.drawArc(arcRect, segStart, sweep, false, trackPaint);
         }
 
-        int filled = Math.max(0, Math.min(segments, (int) Math.floor((segments * fraction) + 0.0001f)));
-        for (int i = 0; i < filled; i++) {
+        float filledFloat = Math.max(0f, Math.min(segments, segments * fraction));
+        int filledWhole = Math.max(0, Math.min(segments, (int) Math.floor(filledFloat + 0.0001f)));
+        for (int i = 0; i < filledWhole; i++) {
             float segStart = start + i * (sweep + gap);
             canvas.drawArc(arcRect, segStart, sweep, false, progressPaint);
+        }
+
+        if (filledWhole < segments) {
+            float partialFraction = filledFloat - filledWhole;
+            if (partialFraction > 0.0001f) {
+                float segStart = start + (filledWhole * (sweep + gap));
+                canvas.drawArc(arcRect, segStart, sweep * partialFraction, false, progressPaint);
+            }
         }
     }
 
     private void drawSegmentedLeadingEdgeHighlight(@NonNull Canvas canvas, float thickness, float fraction) {
         int segments = Math.max(1, max);
-        int filled = Math.max(0, Math.min(segments, (int) Math.floor((segments * fraction) + 0.0001f)));
-        if (filled <= 0) {
+        float filledFloat = Math.max(0f, Math.min(segments, segments * fraction));
+        int filledWhole = Math.max(0, Math.min(segments, (int) Math.floor(filledFloat + 0.0001f)));
+        float partialFraction = filledFloat - filledWhole;
+        if (filledWhole <= 0 && partialFraction <= 0.0001f) {
             return;
         }
 
         float gap = 360f / segments * 0.55f;
         float sweep = 360f / segments - gap;
         float slot = sweep + gap;
-        float endAngleDegrees = -90f + ((filled - 1) * slot) + sweep;
+        float endAngleDegrees;
+        if (partialFraction > 0.0001f && filledWhole < segments) {
+            endAngleDegrees = -90f + (filledWhole * slot) + (sweep * partialFraction);
+        } else {
+            endAngleDegrees = -90f + ((filledWhole - 1) * slot) + sweep;
+        }
         float angle = (float) Math.toRadians(endAngleDegrees);
         drawLeadingEdgeHighlightAtAngle(canvas, thickness, angle);
     }
