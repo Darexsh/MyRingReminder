@@ -9,49 +9,33 @@ import java.util.Calendar;
 
 public final class ReminderScheduler {
 
-    private static final int NOTIFY_TWO_WEEKS = 0;
-    private static final int NOTIFY_ONE_WEEK = 1;
-    private static final int NOTIFY_REMOVAL_REMINDER = 2;
-    private static final int NOTIFY_REMOVAL_EXACT = 3;
-    private static final int NOTIFY_INSERTION_REMINDER = 4;
-    private static final int NOTIFY_INSERTION_EXACT = 5;
-
     private ReminderScheduler() {
     }
 
     public static void scheduleCurrentCycle(Context context) {
         SettingsRepository repository = new SettingsRepository(context);
-
-        Calendar startDate = repository.getStartDate();
-        startDate.set(Calendar.SECOND, 0);
-        startDate.set(Calendar.MILLISECOND, 0);
-        int cycleLength = repository.getCycleLength();
-
-        int delayDays = repository.getCycleDelayDays(startDate.getTimeInMillis());
-        int ringFreeDays = repository.getRingFreeDaysForCycle(startDate.getTimeInMillis());
-        Calendar removalDate = (Calendar) startDate.clone();
-        removalDate.add(Calendar.DAY_OF_MONTH, cycleLength + delayDays);
-        Calendar reinsertionDate = (Calendar) removalDate.clone();
-        reinsertionDate.add(Calendar.DAY_OF_MONTH, ringFreeDays);
-
         Calendar now = Calendar.getInstance();
-        Calendar nowDay = startOfDay(now);
-        Calendar reinsertionDay = startOfDay(reinsertionDate);
+        CycleComputation.CycleWindow cycleWindow = CycleComputation.calculateCurrentCycle(
+                repository.getStartDate(),
+                repository.getCycleLength(),
+                now,
+                new CycleComputation.CycleConfig() {
+                    @Override
+                    public int getDelayDays(long cycleStartMillis) {
+                        return repository.getCycleDelayDays(cycleStartMillis);
+                    }
 
-        while (nowDay.after(reinsertionDay)) {
-            startDate.add(Calendar.DAY_OF_MONTH, cycleLength + ringFreeDays + delayDays);
-            delayDays = repository.getCycleDelayDays(startDate.getTimeInMillis());
-            ringFreeDays = repository.getRingFreeDaysForCycle(startDate.getTimeInMillis());
-            removalDate = (Calendar) startDate.clone();
-            removalDate.add(Calendar.DAY_OF_MONTH, cycleLength + delayDays);
-            reinsertionDate = (Calendar) removalDate.clone();
-            reinsertionDate.add(Calendar.DAY_OF_MONTH, ringFreeDays);
-            reinsertionDay = startOfDay(reinsertionDate);
-        }
+                    @Override
+                    public int getRingFreeDays(long cycleStartMillis) {
+                        return repository.getRingFreeDaysForCycle(cycleStartMillis);
+                    }
+                }
+        );
 
-        if (!now.before(reinsertionDate)) {
-            return;
-        }
+        Calendar startDate = cycleWindow.currentStart;
+        Calendar removalDate = cycleWindow.removalDate;
+        Calendar reinsertionDate = cycleWindow.reinsertionDate;
+        int cycleLength = cycleWindow.cycleLength;
 
         long cycleStartMillis = startDate.getTimeInMillis();
         cancelNotificationsForCycle(context, cycleStartMillis);
@@ -69,7 +53,7 @@ public final class ReminderScheduler {
                     twoWeeksRemaining,
                     context.getString(R.string.notif_cycle_duration_title),
                     context.getString(R.string.notif_two_weeks_remaining),
-                    buildRequestCode(cycleStartMillis, NOTIFY_TWO_WEEKS)
+                    ReminderRequestCodes.buildRequestCode(cycleStartMillis, ReminderRequestCodes.NOTIFY_TWO_WEEKS)
             );
         }
 
@@ -83,7 +67,7 @@ public final class ReminderScheduler {
                     oneWeekRemaining,
                     context.getString(R.string.notif_cycle_duration_title),
                     context.getString(R.string.notif_one_week_remaining),
-                    buildRequestCode(cycleStartMillis, NOTIFY_ONE_WEEK)
+                    ReminderRequestCodes.buildRequestCode(cycleStartMillis, ReminderRequestCodes.NOTIFY_ONE_WEEK)
             );
         }
 
@@ -96,7 +80,7 @@ public final class ReminderScheduler {
                     removalReminder,
                     context.getString(R.string.notif_remove_title),
                     context.getString(R.string.notif_remove_in_hours, removalReminderHours),
-                    buildRequestCode(cycleStartMillis, NOTIFY_REMOVAL_REMINDER)
+                    ReminderRequestCodes.buildRequestCode(cycleStartMillis, ReminderRequestCodes.NOTIFY_REMOVAL_REMINDER)
             );
         }
 
@@ -109,7 +93,7 @@ public final class ReminderScheduler {
                 removalExact,
                 context.getString(R.string.notif_remove_title),
                 context.getString(R.string.notif_remove_now, removalTimeText),
-                buildRequestCode(cycleStartMillis, NOTIFY_REMOVAL_EXACT)
+                ReminderRequestCodes.buildRequestCode(cycleStartMillis, ReminderRequestCodes.NOTIFY_REMOVAL_EXACT)
         );
 
         int insertionReminderHours = repository.getInsertionReminderHours();
@@ -121,7 +105,7 @@ public final class ReminderScheduler {
                     insertionReminder,
                     context.getString(R.string.notif_insert_title),
                     context.getString(R.string.notif_insert_in_hours, insertionReminderHours),
-                    buildRequestCode(cycleStartMillis, NOTIFY_INSERTION_REMINDER)
+                    ReminderRequestCodes.buildRequestCode(cycleStartMillis, ReminderRequestCodes.NOTIFY_INSERTION_REMINDER)
             );
         }
 
@@ -134,7 +118,7 @@ public final class ReminderScheduler {
                 insertionExact,
                 context.getString(R.string.notif_insert_title),
                 context.getString(R.string.notif_insert_now, insertionTimeText),
-                buildRequestCode(cycleStartMillis, NOTIFY_INSERTION_EXACT)
+                ReminderRequestCodes.buildRequestCode(cycleStartMillis, ReminderRequestCodes.NOTIFY_INSERTION_EXACT)
         );
 
         int settingsHash = repository.getNotificationSettingsHash();
@@ -144,16 +128,8 @@ public final class ReminderScheduler {
 
     public static boolean hasAnyScheduledForCycle(Context context, long cycleStartMillis) {
         Intent intent = new Intent(context, NotificationReceiver.class);
-        int[] types = new int[]{
-                NOTIFY_TWO_WEEKS,
-                NOTIFY_ONE_WEEK,
-                NOTIFY_REMOVAL_REMINDER,
-                NOTIFY_REMOVAL_EXACT,
-                NOTIFY_INSERTION_REMINDER,
-                NOTIFY_INSERTION_EXACT
-        };
-        for (int type : types) {
-            int requestCode = buildRequestCode(cycleStartMillis, type);
+        for (int type : ReminderRequestCodes.ALL_TYPES) {
+            int requestCode = ReminderRequestCodes.buildRequestCode(cycleStartMillis, type);
             PendingIntent pendingIntent = PendingIntent.getBroadcast(
                     context,
                     requestCode,
@@ -165,6 +141,36 @@ public final class ReminderScheduler {
             }
         }
         return false;
+    }
+
+    public static void cancelAllScheduledNotifications(Context context) {
+        SettingsRepository repository = new SettingsRepository(context);
+
+        for (Long cycleStartMillis : repository.getNotificationScheduledCycleStarts()) {
+            cancelNotificationsForCycle(context, cycleStartMillis);
+        }
+
+        Calendar now = Calendar.getInstance();
+        CycleComputation.CycleWindow cycleWindow = CycleComputation.calculateCurrentCycle(
+                repository.getStartDate(),
+                repository.getCycleLength(),
+                now,
+                new CycleComputation.CycleConfig() {
+                    @Override
+                    public int getDelayDays(long cycleStartMillis) {
+                        return repository.getCycleDelayDays(cycleStartMillis);
+                    }
+
+                    @Override
+                    public int getRingFreeDays(long cycleStartMillis) {
+                        return repository.getRingFreeDaysForCycle(cycleStartMillis);
+                    }
+                }
+        );
+        cancelNotificationsForCycle(context, cycleWindow.currentStart.getTimeInMillis());
+        if (cycleWindow.previousStart != null) {
+            cancelNotificationsForCycle(context, cycleWindow.previousStart.getTimeInMillis());
+        }
     }
 
     private static void scheduleNotification(Context context, Calendar calendar, String title, String message, int requestCode) {
@@ -199,16 +205,8 @@ public final class ReminderScheduler {
         if (alarmManager == null) {
             return;
         }
-        int[] types = new int[]{
-                NOTIFY_TWO_WEEKS,
-                NOTIFY_ONE_WEEK,
-                NOTIFY_REMOVAL_REMINDER,
-                NOTIFY_REMOVAL_EXACT,
-                NOTIFY_INSERTION_REMINDER,
-                NOTIFY_INSERTION_EXACT
-        };
-        for (int type : types) {
-            int requestCode = buildRequestCode(cycleStartMillis, type);
+        for (int type : ReminderRequestCodes.ALL_TYPES) {
+            int requestCode = ReminderRequestCodes.buildRequestCode(cycleStartMillis, type);
             PendingIntent pendingIntent = PendingIntent.getBroadcast(
                     context,
                     requestCode,
@@ -222,26 +220,10 @@ public final class ReminderScheduler {
         }
     }
 
-    private static int buildRequestCode(long cycleStartMillis, int typeId) {
-        long hash = cycleStartMillis ^ (cycleStartMillis >>> 32);
-        int base = (int) (hash & 0x7fffffff);
-        int code = base + (typeId + 1) * 1000;
-        return code < 0 ? base : code;
-    }
-
     private static boolean canScheduleExactAlarms(AlarmManager alarmManager) {
         if (Build.VERSION.SDK_INT < Build.VERSION_CODES.S) {
             return true;
         }
         return alarmManager.canScheduleExactAlarms();
-    }
-
-    private static Calendar startOfDay(Calendar source) {
-        Calendar day = (Calendar) source.clone();
-        day.set(Calendar.HOUR_OF_DAY, 0);
-        day.set(Calendar.MINUTE, 0);
-        day.set(Calendar.SECOND, 0);
-        day.set(Calendar.MILLISECOND, 0);
-        return day;
     }
 }

@@ -59,13 +59,6 @@ import android.view.animation.LinearInterpolator;
 
 // HomeFragment displays the current cycle status and allows users to manage their cycle settings
 public class HomeFragment extends Fragment {
-
-    private static final int NOTIFY_TWO_WEEKS = 0;
-    private static final int NOTIFY_ONE_WEEK = 1;
-    private static final int NOTIFY_REMOVAL_REMINDER = 2;
-    private static final int NOTIFY_REMOVAL_EXACT = 3;
-    private static final int NOTIFY_INSERTION_REMINDER = 4;
-    private static final int NOTIFY_INSERTION_EXACT = 5;
     private SharedViewModel viewModel;
     private int currentCircleStyle = SettingsRepository.DEFAULT_HOME_CIRCLE_STYLE;
     private int currentCircleColor = SettingsRepository.DEFAULT_HOME_CIRCLE_COLOR;
@@ -285,13 +278,13 @@ public class HomeFragment extends Fragment {
             startDate.set(Calendar.SECOND, 0);
             startDate.set(Calendar.MILLISECOND, 0);
 
-            int delayDays = viewModel.getRepository().getCycleDelayDays(startDate.getTimeInMillis());
-            int ringFreeDays = viewModel.getRepository().getRingFreeDaysForCycle(startDate.getTimeInMillis());
+            int initialDelayDays = viewModel.getRepository().getCycleDelayDays(startDate.getTimeInMillis());
+            int initialRingFreeDays = viewModel.getRepository().getRingFreeDaysForCycle(startDate.getTimeInMillis());
             Calendar removalDate = (Calendar) startDate.clone();
-            removalDate.add(Calendar.DAY_OF_MONTH, cycleLength + delayDays);
+            removalDate.add(Calendar.DAY_OF_MONTH, cycleLength + initialDelayDays);
 
             Calendar reinsertionDate = (Calendar) removalDate.clone();
-            reinsertionDate.add(Calendar.DAY_OF_MONTH, ringFreeDays);
+            reinsertionDate.add(Calendar.DAY_OF_MONTH, initialRingFreeDays);
 
             // Retrieve cycle history from preferences
             List<Cycle> cycleHistory = viewModel.getRepository().getCycleHistory();
@@ -326,20 +319,26 @@ public class HomeFragment extends Fragment {
                 count++;
             }
 
-            Calendar nowDay = startOfDay(displayNow);
-            Calendar reinsertionDay = startOfDay(reinsertionDate);
+            CycleComputation.CycleWindow cycleWindow = CycleComputation.calculateCurrentCycle(
+                    vmStartDate,
+                    cycleLength,
+                    displayNow,
+                    new CycleComputation.CycleConfig() {
+                        @Override
+                        public int getDelayDays(long cycleStartMillis) {
+                            return viewModel.getRepository().getCycleDelayDays(cycleStartMillis);
+                        }
 
-            // Adjust start date to the current cycle window (day-based to avoid skipping the current day)
-            while (nowDay.after(reinsertionDay)) {
-                startDate.add(Calendar.DAY_OF_MONTH, cycleLength + ringFreeDays + delayDays);
-                delayDays = viewModel.getRepository().getCycleDelayDays(startDate.getTimeInMillis());
-                ringFreeDays = viewModel.getRepository().getRingFreeDaysForCycle(startDate.getTimeInMillis());
-                removalDate = (Calendar) startDate.clone();
-                removalDate.add(Calendar.DAY_OF_MONTH, cycleLength + delayDays);
-                reinsertionDate = (Calendar) removalDate.clone();
-                reinsertionDate.add(Calendar.DAY_OF_MONTH, ringFreeDays);
-                reinsertionDay = startOfDay(reinsertionDate);
-            }
+                        @Override
+                        public int getRingFreeDays(long cycleStartMillis) {
+                            return viewModel.getRepository().getRingFreeDaysForCycle(cycleStartMillis);
+                        }
+                    }
+            );
+            startDate = cycleWindow.currentStart;
+            removalDate = cycleWindow.removalDate;
+            reinsertionDate = cycleWindow.reinsertionDate;
+            int ringFreeDays = cycleWindow.ringFreeDays;
 
             // Add phases as soon as each phase ends, even if the app wasn't opened at the exact time.
             if (!cycleHistoryCleared && (systemNow.equals(removalDate) || systemNow.after(removalDate))) {
@@ -1083,7 +1082,7 @@ public class HomeFragment extends Fragment {
             scheduleNotification(twoWeeksRemaining,
                     getString(R.string.notif_cycle_duration_title),
                     getString(R.string.notif_two_weeks_remaining),
-                    buildRequestCode(cycleStartMillis, NOTIFY_TWO_WEEKS));
+                    ReminderRequestCodes.buildRequestCode(cycleStartMillis, ReminderRequestCodes.NOTIFY_TWO_WEEKS));
         }
 
         Calendar oneWeekRemaining = (Calendar) removalDate.clone();
@@ -1094,7 +1093,7 @@ public class HomeFragment extends Fragment {
             scheduleNotification(oneWeekRemaining,
                     getString(R.string.notif_cycle_duration_title),
                     getString(R.string.notif_one_week_remaining),
-                    buildRequestCode(cycleStartMillis, NOTIFY_ONE_WEEK));
+                    ReminderRequestCodes.buildRequestCode(cycleStartMillis, ReminderRequestCodes.NOTIFY_ONE_WEEK));
         }
 
         // ---- Ring Removal Notifications ----
@@ -1105,7 +1104,7 @@ public class HomeFragment extends Fragment {
             scheduleNotification(removalReminder,
                     getString(R.string.notif_remove_title),
                     getString(R.string.notif_remove_in_hours, removalReminderHours),
-                    buildRequestCode(cycleStartMillis, NOTIFY_REMOVAL_REMINDER));
+                    ReminderRequestCodes.buildRequestCode(cycleStartMillis, ReminderRequestCodes.NOTIFY_REMOVAL_REMINDER));
         }
 
         Calendar removalExact = (Calendar) removalDate.clone();
@@ -1115,7 +1114,7 @@ public class HomeFragment extends Fragment {
         scheduleNotification(removalExact,
                 getString(R.string.notif_remove_title),
                 getString(R.string.notif_remove_now, removalTimeText),
-                buildRequestCode(cycleStartMillis, NOTIFY_REMOVAL_EXACT));
+                ReminderRequestCodes.buildRequestCode(cycleStartMillis, ReminderRequestCodes.NOTIFY_REMOVAL_EXACT));
 
         // ---- Ring Insertion Notifications ----
         int insertionReminderHours = viewModel.getRepository().getInsertionReminderHours();
@@ -1125,7 +1124,7 @@ public class HomeFragment extends Fragment {
             scheduleNotification(reinsertionReminder,
                     getString(R.string.notif_insert_title),
                     getString(R.string.notif_insert_in_hours, insertionReminderHours),
-                    buildRequestCode(cycleStartMillis, NOTIFY_INSERTION_REMINDER));
+                    ReminderRequestCodes.buildRequestCode(cycleStartMillis, ReminderRequestCodes.NOTIFY_INSERTION_REMINDER));
         }
 
         Calendar reinsertionExact = (Calendar) reinsertionDate.clone();
@@ -1135,7 +1134,7 @@ public class HomeFragment extends Fragment {
         scheduleNotification(reinsertionExact,
                 getString(R.string.notif_insert_title),
                 getString(R.string.notif_insert_now, reinsertionTimeText),
-                buildRequestCode(cycleStartMillis, NOTIFY_INSERTION_EXACT));
+                ReminderRequestCodes.buildRequestCode(cycleStartMillis, ReminderRequestCodes.NOTIFY_INSERTION_EXACT));
     }
 
     // Schedule a single notification with a unique ID
@@ -1166,16 +1165,8 @@ public class HomeFragment extends Fragment {
     // Cancel all notifications for a specific cycle to avoid duplicates
     private void cancelNotificationsForCycle(long cycleStartMillis) {
         Intent intent = new Intent(requireContext(), NotificationReceiver.class);
-        int[] types = new int[]{
-                NOTIFY_TWO_WEEKS,
-                NOTIFY_ONE_WEEK,
-                NOTIFY_REMOVAL_REMINDER,
-                NOTIFY_REMOVAL_EXACT,
-                NOTIFY_INSERTION_REMINDER,
-                NOTIFY_INSERTION_EXACT
-        };
-        for (int type : types) {
-            int requestCode = buildRequestCode(cycleStartMillis, type);
+        for (int type : ReminderRequestCodes.ALL_TYPES) {
+            int requestCode = ReminderRequestCodes.buildRequestCode(cycleStartMillis, type);
             PendingIntent pendingIntent = PendingIntent.getBroadcast(
                     requireContext(),
                     requestCode,
@@ -1188,13 +1179,6 @@ public class HomeFragment extends Fragment {
                 pendingIntent.cancel();
             }
         }
-    }
-
-    private int buildRequestCode(long cycleStartMillis, int typeId) {
-        long hash = cycleStartMillis ^ (cycleStartMillis >>> 32);
-        int base = (int) (hash & 0x7fffffff);
-        int code = base + (typeId + 1) * 1000;
-        return code < 0 ? base : code;
     }
 
     private boolean canScheduleExactAlarms(AlarmManager alarmManager) {
@@ -1275,25 +1259,24 @@ public class HomeFragment extends Fragment {
                     }
 
                     Calendar now = Calendar.getInstance();
-                    Calendar currentStart = (Calendar) baseStart.clone();
-                    currentStart.set(Calendar.SECOND, 0);
-                    currentStart.set(Calendar.MILLISECOND, 0);
-                    int delayDays = viewModel.getRepository().getCycleDelayDays(currentStart.getTimeInMillis());
-                    int ringFreeDays = viewModel.getRepository().getRingFreeDaysForCycle(currentStart.getTimeInMillis());
-                    Calendar removalDate = (Calendar) currentStart.clone();
-                    removalDate.add(Calendar.DAY_OF_MONTH, cycleLength + delayDays);
-                    Calendar reinsertionDate = (Calendar) removalDate.clone();
-                    reinsertionDate.add(Calendar.DAY_OF_MONTH, ringFreeDays);
+                    CycleComputation.CycleWindow cycleWindow = CycleComputation.calculateCurrentCycle(
+                            baseStart,
+                            cycleLength,
+                            now,
+                            new CycleComputation.CycleConfig() {
+                                @Override
+                                public int getDelayDays(long cycleStartMillis) {
+                                    return viewModel.getRepository().getCycleDelayDays(cycleStartMillis);
+                                }
 
-                    while (now.after(reinsertionDate)) {
-                        currentStart.add(Calendar.DAY_OF_MONTH, cycleLength + ringFreeDays + delayDays);
-                        delayDays = viewModel.getRepository().getCycleDelayDays(currentStart.getTimeInMillis());
-                        ringFreeDays = viewModel.getRepository().getRingFreeDaysForCycle(currentStart.getTimeInMillis());
-                        removalDate = (Calendar) currentStart.clone();
-                        removalDate.add(Calendar.DAY_OF_MONTH, cycleLength + delayDays);
-                        reinsertionDate = (Calendar) removalDate.clone();
-                        reinsertionDate.add(Calendar.DAY_OF_MONTH, ringFreeDays);
-                    }
+                                @Override
+                                public int getRingFreeDays(long cycleStartMillis) {
+                                    return viewModel.getRepository().getRingFreeDaysForCycle(cycleStartMillis);
+                                }
+                            }
+                    );
+                    Calendar currentStart = cycleWindow.currentStart;
+                    int ringFreeDays = cycleWindow.ringFreeDays;
 
                     long cycleStartMillis = currentStart.getTimeInMillis();
                     viewModel.getRepository().pruneCycleHistoryFrom(cycleStartMillis);
@@ -1340,25 +1323,24 @@ public class HomeFragment extends Fragment {
                     }
 
                     Calendar now = Calendar.getInstance();
-                    Calendar currentStart = (Calendar) baseStart.clone();
-                    currentStart.set(Calendar.SECOND, 0);
-                    currentStart.set(Calendar.MILLISECOND, 0);
-                    int delayDays = viewModel.getRepository().getCycleDelayDays(currentStart.getTimeInMillis());
-                    int ringFreeDays = viewModel.getRepository().getRingFreeDaysForCycle(currentStart.getTimeInMillis());
-                    Calendar removalDate = (Calendar) currentStart.clone();
-                    removalDate.add(Calendar.DAY_OF_MONTH, cycleLength + delayDays);
-                    Calendar reinsertionDate = (Calendar) removalDate.clone();
-                    reinsertionDate.add(Calendar.DAY_OF_MONTH, ringFreeDays);
+                    CycleComputation.CycleWindow cycleWindow = CycleComputation.calculateCurrentCycle(
+                            baseStart,
+                            cycleLength,
+                            now,
+                            new CycleComputation.CycleConfig() {
+                                @Override
+                                public int getDelayDays(long cycleStartMillis) {
+                                    return viewModel.getRepository().getCycleDelayDays(cycleStartMillis);
+                                }
 
-                    while (now.after(reinsertionDate)) {
-                        currentStart.add(Calendar.DAY_OF_MONTH, cycleLength + ringFreeDays + delayDays);
-                        delayDays = viewModel.getRepository().getCycleDelayDays(currentStart.getTimeInMillis());
-                        ringFreeDays = viewModel.getRepository().getRingFreeDaysForCycle(currentStart.getTimeInMillis());
-                        removalDate = (Calendar) currentStart.clone();
-                        removalDate.add(Calendar.DAY_OF_MONTH, cycleLength + delayDays);
-                        reinsertionDate = (Calendar) removalDate.clone();
-                        reinsertionDate.add(Calendar.DAY_OF_MONTH, ringFreeDays);
-                    }
+                                @Override
+                                public int getRingFreeDays(long cycleStartMillis) {
+                                    return viewModel.getRepository().getRingFreeDaysForCycle(cycleStartMillis);
+                                }
+                            }
+                    );
+                    Calendar currentStart = cycleWindow.currentStart;
+                    int delayDays = cycleWindow.delayDays;
 
                     long cycleStartMillis = currentStart.getTimeInMillis();
                     viewModel.getRepository().pruneCycleHistoryFrom(cycleStartMillis);

@@ -1282,27 +1282,6 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void clearAllScheduledNotifications() {
-        Intent intent = new Intent(this, NotificationReceiver.class);
-        AlarmManager alarmManager = (AlarmManager) getSystemService(Context.ALARM_SERVICE);
-
-        int daysRange = 365;
-        for (int d = -daysRange; d < daysRange; d++) {
-            for (int offset = 0; offset < 6; offset++) {
-                long triggerTime = System.currentTimeMillis() + d * 24L * 60 * 60 * 1000;
-                int requestCode = (int) ((triggerTime / 1000) % Integer.MAX_VALUE) + offset;
-
-                PendingIntent pendingIntent = PendingIntent.getBroadcast(
-                        this,
-                        requestCode,
-                        intent,
-                        PendingIntent.FLAG_NO_CREATE | PendingIntent.FLAG_IMMUTABLE
-                );
-
-                if (pendingIntent != null) {
-                    alarmManager.cancel(pendingIntent);
-                    pendingIntent.cancel();
-                }
-            }
-        }
+        ReminderScheduler.cancelAllScheduledNotifications(this);
     }
 }

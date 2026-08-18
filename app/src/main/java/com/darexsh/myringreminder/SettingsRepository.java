@@ -8,10 +8,12 @@ import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 import java.lang.reflect.Type;
 import java.util.ArrayList;
+import java.util.LinkedHashSet;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
+import java.util.Set;
 import java.util.regex.Pattern;
 
 public class SettingsRepository {
@@ -473,6 +475,22 @@ public class SettingsRepository {
             }
         }
         editor.apply();
+    }
+
+    public Set<Long> getNotificationScheduledCycleStarts() {
+        Set<Long> cycleStarts = new LinkedHashSet<>();
+        for (String key : sharedPreferences.getAll().keySet()) {
+            if (!key.startsWith("notified_") || key.startsWith("notified_settings_")) {
+                continue;
+            }
+            String suffix = key.substring("notified_".length());
+            try {
+                cycleStarts.add(Long.parseLong(suffix));
+            } catch (NumberFormatException ignored) {
+                // Ignore malformed legacy keys.
+            }
+        }
+        return cycleStarts;
     }
 
     public int getCycleDelayDays(long cycleStartMillis) {
