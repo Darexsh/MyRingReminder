@@ -1,5 +1,6 @@
 package com.darexsh.myringreminder;
 
+import android.Manifest;
 import android.content.ContentResolver;
 import android.content.ClipData;
 import android.content.Intent;
@@ -7,6 +8,7 @@ import android.content.Context;
 import android.app.NotificationChannel;
 import android.app.NotificationManager;
 import android.app.PendingIntent;
+import android.content.pm.PackageManager;
 import android.graphics.Color;
 import android.graphics.Paint;
 import android.graphics.PorterDuff;
@@ -567,7 +569,26 @@ public class PeriodDetailsFragment extends Fragment {
                 .setCategory(NotificationCompat.CATEGORY_STATUS)
                 .setDefaults(NotificationCompat.DEFAULT_LIGHTS);
 
-        NotificationManagerCompat.from(requireContext()).notify(PDF_NOTIFICATION_ID, builder.build());
+        NotificationManagerCompat managerCompat = NotificationManagerCompat.from(requireContext());
+        if (!canShowPdfSavedNotification(managerCompat)) {
+            Toast.makeText(requireContext(), R.string.period_details_pdf_saved, Toast.LENGTH_SHORT).show();
+            return;
+        }
+
+        try {
+            managerCompat.notify(PDF_NOTIFICATION_ID, builder.build());
+        } catch (SecurityException ignored) {
+            Toast.makeText(requireContext(), R.string.period_details_pdf_saved, Toast.LENGTH_SHORT).show();
+        }
+    }
+
+    private boolean canShowPdfSavedNotification(@NonNull NotificationManagerCompat managerCompat) {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU
+                && ContextCompat.checkSelfPermission(requireContext(), Manifest.permission.POST_NOTIFICATIONS)
+                != PackageManager.PERMISSION_GRANTED) {
+            return false;
+        }
+        return managerCompat.areNotificationsEnabled();
     }
 
     private void renderPdf(@NonNull PdfDocument document) {
