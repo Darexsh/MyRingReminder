@@ -50,6 +50,11 @@ public class CycleWidgetCompactProvider extends AppWidgetProvider {
         views.setTextViewText(R.id.tv_widget_compact_days_number, String.valueOf(state.daysLeft));
         views.setTextViewText(R.id.tv_widget_compact_removal, state.removalText);
         views.setTextViewText(R.id.tv_widget_compact_insertion, state.insertionText);
+        views.setTextViewText(R.id.tv_widget_compact_stock, state.stockText);
+        views.setViewVisibility(
+                R.id.tv_widget_compact_stock,
+                state.stockTrackingEnabled ? android.view.View.VISIBLE : android.view.View.GONE
+        );
 
         PendingIntent launchIntent = buildLaunchIntent(context, appWidgetId);
         views.setOnClickPendingIntent(R.id.widget_root, launchIntent);
@@ -60,6 +65,7 @@ public class CycleWidgetCompactProvider extends AppWidgetProvider {
         views.setOnClickPendingIntent(R.id.tv_widget_compact_days_number, launchIntent);
         views.setOnClickPendingIntent(R.id.tv_widget_compact_removal, launchIntent);
         views.setOnClickPendingIntent(R.id.tv_widget_compact_insertion, launchIntent);
+        views.setOnClickPendingIntent(R.id.tv_widget_compact_stock, launchIntent);
 
         appWidgetManager.updateAppWidget(appWidgetId, views);
     }

@@ -56,6 +56,12 @@ public class SettingsRepository {
     private static final String KEY_APP_LOCK_ENABLED = "app_lock_enabled";
     private static final String KEY_APP_LOCK_TIMEOUT_MS = "app_lock_timeout_ms";
     private static final String KEY_PERIOD_DAY_ENTRIES = "period_day_entries";
+    private static final String KEY_STOCK_TRACKING_ENABLED = "stock_tracking_enabled";
+    private static final String KEY_RING_STOCK_COUNT = "ring_stock_count";
+    private static final String KEY_LOW_STOCK_THRESHOLD = "low_stock_threshold";
+    private static final String KEY_LOW_STOCK_REMINDER_ENABLED = "low_stock_reminder_enabled";
+    private static final String KEY_LAST_STOCK_DECREMENT_CYCLE_START = "last_stock_decrement_cycle_start";
+    private static final String KEY_LAST_LOW_STOCK_NOTIFICATION_COUNT = "last_low_stock_notification_count";
     private static final Pattern PERIOD_DAY_KEY_PATTERN = Pattern.compile("^\\d{4}-\\d{2}-\\d{2}$");
     public static final int DEFAULT_BUTTON_COLOR = 0xFF2E7D32;
     public static final int DEFAULT_HOME_CIRCLE_COLOR = 0xFFBB86FC;
@@ -367,6 +373,58 @@ public class SettingsRepository {
 
     public void setAppLockTimeoutMs(int timeoutMs) {
         sharedPreferences.edit().putInt(KEY_APP_LOCK_TIMEOUT_MS, Math.max(0, timeoutMs)).apply();
+    }
+
+    public boolean isStockTrackingEnabled() {
+        return sharedPreferences.getBoolean(KEY_STOCK_TRACKING_ENABLED, false);
+    }
+
+    public void setStockTrackingEnabled(boolean enabled) {
+        sharedPreferences.edit().putBoolean(KEY_STOCK_TRACKING_ENABLED, enabled).apply();
+    }
+
+    public int getRingStockCount() {
+        return Math.max(0, sharedPreferences.getInt(KEY_RING_STOCK_COUNT, 0));
+    }
+
+    public void setRingStockCount(int count) {
+        sharedPreferences.edit().putInt(KEY_RING_STOCK_COUNT, Math.max(0, count)).apply();
+    }
+
+    public int getLowStockThreshold() {
+        return Math.max(0, sharedPreferences.getInt(KEY_LOW_STOCK_THRESHOLD, 1));
+    }
+
+    public void setLowStockThreshold(int threshold) {
+        sharedPreferences.edit().putInt(KEY_LOW_STOCK_THRESHOLD, Math.max(0, threshold)).apply();
+    }
+
+    public boolean isLowStockReminderEnabled() {
+        return sharedPreferences.getBoolean(KEY_LOW_STOCK_REMINDER_ENABLED, true);
+    }
+
+    public void setLowStockReminderEnabled(boolean enabled) {
+        sharedPreferences.edit().putBoolean(KEY_LOW_STOCK_REMINDER_ENABLED, enabled).apply();
+    }
+
+    public long getLastStockDecrementCycleStartMillis() {
+        return sharedPreferences.getLong(KEY_LAST_STOCK_DECREMENT_CYCLE_START, 0L);
+    }
+
+    public void setLastStockDecrementCycleStartMillis(long cycleStartMillis) {
+        sharedPreferences.edit().putLong(KEY_LAST_STOCK_DECREMENT_CYCLE_START, Math.max(0L, cycleStartMillis)).apply();
+    }
+
+    public int getLastLowStockNotificationCount() {
+        return sharedPreferences.getInt(KEY_LAST_LOW_STOCK_NOTIFICATION_COUNT, -1);
+    }
+
+    public void setLastLowStockNotificationCount(int count) {
+        sharedPreferences.edit().putInt(KEY_LAST_LOW_STOCK_NOTIFICATION_COUNT, count).apply();
+    }
+
+    public void clearLastLowStockNotificationCount() {
+        sharedPreferences.edit().remove(KEY_LAST_LOW_STOCK_NOTIFICATION_COUNT).apply();
     }
 
     private int remapHomeCircleStyleV1(int style) {

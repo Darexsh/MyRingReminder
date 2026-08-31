@@ -95,6 +95,7 @@ import com.google.gson.JsonParser;
 // SettingsFragment allows users to configure app settings such as cycle start date, time, length, and background image
 public class SettingsFragment extends Fragment {
     public static final String ARG_OPEN_UPDATE_BACKUP_DIALOG = "open_update_backup_dialog";
+    public static final String ARG_OPEN_STOCK_TRACKER_DIALOG = "open_stock_tracker_dialog";
     private static final String TAG = "SettingsNotification";
 
     private View btnBackgroundTools;
@@ -128,6 +129,8 @@ public class SettingsFragment extends Fragment {
     private View notificationToolsDialogView;
     private AlertDialog backgroundToolsDialog;
     private View backgroundToolsDialogView;
+    private AlertDialog stockToolsDialog;
+    private View stockToolsDialogView;
     private final List<ValueAnimator> notificationWarningAnimators = new ArrayList<>();
     private final List<TextView> settingsAccentTextViews = new ArrayList<>();
     private TextView tvSetTimeValue;
@@ -142,6 +145,7 @@ public class SettingsFragment extends Fragment {
     private TextView tvSetCircleStyleValue;
     private TextView tvSetNavigationAnimationValue;
     private TextView tvAppLockValue;
+    private TextView tvStockTrackerValue;
     private ValueAnimator resetAppAnimator;
 
     private interface ColorConsumer {
@@ -244,6 +248,7 @@ public class SettingsFragment extends Fragment {
         View btnSetTime = view.findViewById(R.id.btn_set_time);
         View btnSetStartDate = view.findViewById(R.id.btn_set_start_date);
         View btnSetCycleLength = view.findViewById(R.id.btn_set_cycle_length);
+        View btnStockTracker = view.findViewById(R.id.btn_stock_tracker);
         btnBackgroundTools = view.findViewById(R.id.btn_background_tools);
         View btnSetCalendarRange = view.findViewById(R.id.btn_set_calendar_range);
         View btnResetApp = view.findViewById(R.id.btn_reset_app);
@@ -273,6 +278,7 @@ public class SettingsFragment extends Fragment {
         tvSetCircleStyleValue = view.findViewById(R.id.tv_set_circle_style_value);
         tvSetNavigationAnimationValue = view.findViewById(R.id.tv_set_navigation_animation_value);
         tvAppLockValue = view.findViewById(R.id.tv_app_lock_value);
+        tvStockTrackerValue = view.findViewById(R.id.tv_stock_tracker_value);
         debugSection = view.findViewById(R.id.debug_section);
         tvDebugTimeStatus = view.findViewById(R.id.tv_debug_time_status);
         switchDebugTime = view.findViewById(R.id.switch_debug_time);
@@ -299,6 +305,7 @@ public class SettingsFragment extends Fragment {
                 tvSetStartDateValue,
                 tvSetTimeValue,
                 tvSetCycleLengthValue,
+                tvStockTrackerValue,
                 tvSetCalendarRangeValue,
                 tvNotificationGroupValue,
                 tvBackgroundToolsValue,
@@ -311,6 +318,7 @@ public class SettingsFragment extends Fragment {
                 view.findViewById(R.id.tv_set_start_date_chevron),
                 view.findViewById(R.id.tv_set_time_chevron),
                 view.findViewById(R.id.tv_set_cycle_length_chevron),
+                view.findViewById(R.id.tv_stock_tracker_chevron),
                 view.findViewById(R.id.tv_set_calendar_range_chevron),
                 view.findViewById(R.id.tv_notification_group_chevron),
                 view.findViewById(R.id.tv_background_tools_chevron),
@@ -344,6 +352,9 @@ public class SettingsFragment extends Fragment {
                 updateCycleLengthButtonText(length);
             }
         });
+        viewModel.getStockTrackingEnabled().observe(getViewLifecycleOwner(), value -> updateStockTrackerButtonText());
+        viewModel.getRingStockCount().observe(getViewLifecycleOwner(), value -> updateStockTrackerButtonText());
+        viewModel.getLowStockReminderEnabled().observe(getViewLifecycleOwner(), value -> updateStockTrackerButtonText());
 
         viewModel.getRemovalReminderHours().observe(getViewLifecycleOwner(), hours -> updateNotificationGroupButtonText());
         viewModel.getInsertionReminderHours().observe(getViewLifecycleOwner(), hours -> updateNotificationGroupButtonText());
@@ -422,6 +433,7 @@ public class SettingsFragment extends Fragment {
         btnSetTime.setOnClickListener(v -> showTimePicker());
         btnSetStartDate.setOnClickListener(v -> showDatePicker());
         btnSetCycleLength.setOnClickListener(v -> showCycleLengthDialog());
+        btnStockTracker.setOnClickListener(v -> showStockTrackerDialog());
         btnBackgroundTools.setOnClickListener(v -> showBackgroundToolsDialog());
         btnSetCalendarRange.setOnClickListener(v -> showCalendarRangeDialog());
         btnResetApp.setOnClickListener(v -> showResetDialog());
@@ -507,6 +519,10 @@ public class SettingsFragment extends Fragment {
             getArguments().putBoolean(ARG_OPEN_UPDATE_BACKUP_DIALOG, false);
             view.post(this::showUpdateBackupConfirmDialog);
         }
+        if (getArguments() != null && getArguments().getBoolean(ARG_OPEN_STOCK_TRACKER_DIALOG, false)) {
+            getArguments().putBoolean(ARG_OPEN_STOCK_TRACKER_DIALOG, false);
+            view.post(this::showStockTrackerDialog);
+        }
 
         return view;
     }
@@ -587,6 +603,16 @@ public class SettingsFragment extends Fragment {
         tvSetCycleLengthValue.setText(getString(R.string.settings_cycle_length_value, cycleLength));
     }
 
+    private void updateStockTrackerButtonText() {
+        if (tvStockTrackerValue == null || viewModel == null) {
+            return;
+        }
+        boolean enabled = Boolean.TRUE.equals(viewModel.getStockTrackingEnabled().getValue());
+        tvStockTrackerValue.setText(enabled
+                ? R.string.settings_background_all_screens_on
+                : R.string.settings_stock_tracker_off);
+    }
+
     private void updateCalendarRangeButtonText(Integer pastAmount, String pastUnit,
                                                Integer futureAmount, String futureUnit) {
         if (pastAmount == null || pastUnit == null || futureAmount == null || futureUnit == null) {
@@ -619,6 +645,7 @@ public class SettingsFragment extends Fragment {
         TimePickerDialog dialog = new TimePickerDialog(requireContext(), (TimePicker view, int selectedHour, int selectedMinute) -> {
             currentCalendar.set(Calendar.HOUR_OF_DAY, selectedHour);
             currentCalendar.set(Calendar.MINUTE, selectedMinute);
+            adoptStockCycleForManualConfig(currentCalendar, getCurrentCycleLength());
             viewModel.setStartDate(currentCalendar);
             WidgetUpdater.updateAllWidgets(requireContext());
         }, currentCalendar.get(Calendar.HOUR_OF_DAY), currentCalendar.get(Calendar.MINUTE), true);
@@ -636,6 +663,7 @@ public class SettingsFragment extends Fragment {
         DatePickerDialog dialog = new DatePickerDialog(requireContext(),
                 (DatePicker view, int selectedYear, int selectedMonth, int selectedDay) -> {
                     currentCalendar.set(selectedYear, selectedMonth, selectedDay);
+                    adoptStockCycleForManualConfig(currentCalendar, getCurrentCycleLength());
                     viewModel.setStartDate(currentCalendar);
                     WidgetUpdater.updateAllWidgets(requireContext());
                 }, currentCalendar.get(Calendar.YEAR), currentCalendar.get(Calendar.MONTH), currentCalendar.get(Calendar.DAY_OF_MONTH));
@@ -668,12 +696,167 @@ public class SettingsFragment extends Fragment {
                 .setMessage(R.string.settings_cycle_length_message)
                 .setView(layout)
                 .setPositiveButton(R.string.dialog_ok, (dlg, which) -> {
+                    Calendar startDate = viewModel.getStartDate().getValue() != null
+                            ? (Calendar) viewModel.getStartDate().getValue().clone()
+                            : Calendar.getInstance();
+                    adoptStockCycleForManualConfig(startDate, picker.getValue());
                     viewModel.setCycleLength(picker.getValue());
                     WidgetUpdater.updateAllWidgets(requireContext());
                 })
                 .setNegativeButton(R.string.dialog_cancel, null)
                 .show();
         applyDialogButtonColors(dialog);
+    }
+
+    private void showStockTrackerDialog() {
+        View content = LayoutInflater.from(requireContext())
+                .inflate(R.layout.dialog_stock_tools, null);
+        View btnEnabled = content.findViewById(R.id.btn_stock_tools_enabled);
+        View btnCount = content.findViewById(R.id.btn_stock_tools_count);
+        View btnReminder = content.findViewById(R.id.btn_stock_tools_reminder);
+        applyDialogRowAccent(content,
+                R.id.tv_stock_tools_enabled_value, R.id.tv_stock_tools_enabled_chevron,
+                R.id.tv_stock_tools_count_value, R.id.tv_stock_tools_count_chevron,
+                R.id.tv_stock_tools_reminder_value, R.id.tv_stock_tools_reminder_chevron);
+        updateStockToolsDialogLabels(content);
+
+        AlertDialog dialog = new AlertDialog.Builder(requireContext())
+                .setTitle(R.string.settings_stock_tracker_dialog_title)
+                .setView(content)
+                .setNegativeButton(R.string.dialog_cancel, null)
+                .show();
+        stockToolsDialog = dialog;
+        stockToolsDialogView = content;
+        applyDialogButtonColors(dialog);
+        dialog.setOnDismissListener(d -> {
+            stockToolsDialog = null;
+            stockToolsDialogView = null;
+        });
+
+        btnEnabled.setOnClickListener(v -> toggleStockTrackingFromToolsDialog());
+        btnCount.setOnClickListener(v -> {
+            dialog.dismiss();
+            showRingStockCountDialog();
+        });
+        btnReminder.setOnClickListener(v -> toggleStockReminderFromToolsDialog());
+    }
+
+    private void updateStockToolsDialogLabels(@Nullable View root) {
+        if (root == null || viewModel == null) {
+            return;
+        }
+        SettingsRepository repository = viewModel.getRepository();
+        boolean enabled = repository.isStockTrackingEnabled();
+        TextView enabledValue = root.findViewById(R.id.tv_stock_tools_enabled_value);
+        TextView countValue = root.findViewById(R.id.tv_stock_tools_count_value);
+        TextView reminderValue = root.findViewById(R.id.tv_stock_tools_reminder_value);
+        if (enabledValue != null) {
+            enabledValue.setText(enabled ? R.string.settings_background_all_screens_on : R.string.settings_background_all_screens_off);
+        }
+        if (countValue != null) {
+            countValue.setText(getResources().getQuantityString(R.plurals.settings_stock_count_value, repository.getRingStockCount(), repository.getRingStockCount()));
+            countValue.setEnabled(enabled);
+        }
+        if (reminderValue != null) {
+            reminderValue.setText(repository.isLowStockReminderEnabled()
+                    ? getString(R.string.settings_background_all_screens_on)
+                    : getString(R.string.settings_background_all_screens_off));
+            reminderValue.setEnabled(enabled);
+        }
+        setStockToolsRowEnabled(root, R.id.btn_stock_tools_count, enabled);
+        setStockToolsRowEnabled(root, R.id.btn_stock_tools_reminder, enabled);
+    }
+
+    private void setStockToolsRowEnabled(@NonNull View root, int rowId, boolean enabled) {
+        View row = root.findViewById(rowId);
+        if (row == null) {
+            return;
+        }
+        row.setEnabled(enabled);
+        row.setAlpha(enabled ? 1f : 0.45f);
+    }
+
+    private void toggleStockTrackingFromToolsDialog() {
+        SettingsRepository repository = viewModel.getRepository();
+        boolean enabled = repository.isStockTrackingEnabled();
+        boolean newEnabled = !enabled;
+        viewModel.setStockTrackingEnabled(newEnabled);
+        if (newEnabled && repository.getLastStockDecrementCycleStartMillis() <= 0L) {
+            StockManager.adoptCurrentCycleAsCounted(repository);
+        }
+        if (!newEnabled) {
+            StockManager.refreshReminderState(requireContext(), repository);
+            repository.setLastStockDecrementCycleStartMillis(0L);
+        }
+        StockManager.refreshReminderState(requireContext(), repository);
+        viewModel.refreshStockState();
+        updateStockTrackerButtonText();
+        WidgetUpdater.updateAllWidgets(requireContext());
+        updateStockToolsDialogLabels(stockToolsDialogView);
+    }
+
+    private void showRingStockCountDialog() {
+        NumberPicker picker = new NumberPicker(requireContext());
+        picker.setMinValue(0);
+        picker.setMaxValue(24);
+        picker.setValue(Math.min(24, viewModel.getRepository().getRingStockCount()));
+
+        android.widget.LinearLayout layout = new android.widget.LinearLayout(requireContext());
+        layout.setOrientation(android.widget.LinearLayout.VERTICAL);
+        int padding = (int) (16 * getResources().getDisplayMetrics().density);
+        layout.setPadding(padding, padding, padding, padding);
+        layout.addView(picker);
+
+        AlertDialog dialog = new AlertDialog.Builder(requireContext())
+                .setTitle(R.string.settings_stock_count_label)
+                .setMessage(R.string.settings_stock_tools_hint_count)
+                .setView(layout)
+                .setPositiveButton(R.string.dialog_ok, (d, which) -> {
+                    viewModel.setRingStockCount(picker.getValue());
+                    StockManager.refreshReminderState(requireContext(), viewModel.getRepository());
+                    viewModel.refreshStockState();
+                    updateStockTrackerButtonText();
+                    WidgetUpdater.updateAllWidgets(requireContext());
+                    reopenStockToolsDialog();
+                })
+                .setNegativeButton(R.string.dialog_cancel, (d, which) -> reopenStockToolsDialog())
+                .show();
+        applyDialogButtonColors(dialog);
+    }
+
+    private void toggleStockReminderFromToolsDialog() {
+        SettingsRepository repository = viewModel.getRepository();
+        boolean enabled = repository.isLowStockReminderEnabled();
+        viewModel.setLowStockReminderEnabled(!enabled);
+        StockManager.refreshReminderState(requireContext(), repository);
+        viewModel.refreshStockState();
+        updateStockTrackerButtonText();
+        WidgetUpdater.updateAllWidgets(requireContext());
+        updateStockToolsDialogLabels(stockToolsDialogView);
+    }
+
+    private void reopenStockToolsDialog() {
+        if (!isAdded()) {
+            return;
+        }
+        View root = getView();
+        if (root == null) {
+            return;
+        }
+        root.post(this::showStockTrackerDialog);
+    }
+
+    private int getCurrentCycleLength() {
+        Integer cycleLength = viewModel.getCycleLength().getValue();
+        return cycleLength != null ? cycleLength : 21;
+    }
+
+    private void adoptStockCycleForManualConfig(Calendar startDate, int cycleLength) {
+        SettingsRepository repository = viewModel.getRepository();
+        if (!repository.isStockTrackingEnabled()) {
+            return;
+        }
+        StockManager.adoptCurrentCycleAsCounted(repository, startDate, cycleLength);
     }
 
     private void showCalendarRangeDialog() {
@@ -1413,12 +1596,57 @@ public class SettingsFragment extends Fragment {
         return decor instanceof ViewGroup ? (ViewGroup) decor : null;
     }
 
+    private boolean isStockToolsDialogTarget(int targetViewId) {
+        return targetViewId == R.id.btn_stock_tools_enabled
+                || targetViewId == R.id.btn_stock_tools_count
+                || targetViewId == R.id.btn_stock_tools_reminder;
+    }
+
+    public void ensureStockToolsDialogVisibleForTour(int targetViewId) {
+        if (!isStockToolsDialogTarget(targetViewId)) {
+            if (stockToolsDialog != null && stockToolsDialog.isShowing()) {
+                stockToolsDialog.dismiss();
+            }
+            return;
+        }
+        if (stockToolsDialog != null && stockToolsDialog.isShowing()) {
+            return;
+        }
+        showStockTrackerDialog();
+    }
+
+    public boolean isStockToolsDialogTourTarget(int targetViewId) {
+        return isStockToolsDialogTarget(targetViewId);
+    }
+
+    @Nullable
+    public ViewGroup getStockToolsDialogTourHost(int targetViewId) {
+        if (!isStockToolsDialogTarget(targetViewId)
+                || stockToolsDialog == null
+                || !stockToolsDialog.isShowing()
+                || stockToolsDialog.getWindow() == null) {
+            return null;
+        }
+        View contentRoot = stockToolsDialog.getWindow().findViewById(android.R.id.content);
+        if (contentRoot instanceof ViewGroup) {
+            return (ViewGroup) contentRoot;
+        }
+        View decor = stockToolsDialog.getWindow().getDecorView();
+        return decor instanceof ViewGroup ? (ViewGroup) decor : null;
+    }
+
     @Nullable
     public View findTourTargetView(int targetViewId) {
         if (notificationToolsDialogView != null) {
             View inNotificationDialog = notificationToolsDialogView.findViewById(targetViewId);
             if (inNotificationDialog != null) {
                 return inNotificationDialog;
+            }
+        }
+        if (stockToolsDialogView != null) {
+            View inDialog = stockToolsDialogView.findViewById(targetViewId);
+            if (inDialog != null) {
+                return inDialog;
             }
         }
         if (backgroundToolsDialogView != null) {
@@ -2634,6 +2862,18 @@ public class SettingsFragment extends Fragment {
                 return null;
             case "cycle_length":
                 return getString(R.string.backup_field_cycle_length) + ": " + prefToInt(value) + " " + getString(R.string.backup_unit_days);
+            case "stock_tracking_enabled":
+                return getString(R.string.backup_field_stock_tracking) + ": " + formatBoolean(value);
+            case "ring_stock_count":
+                return getString(R.string.backup_field_stock_count) + ": " + prefToInt(value);
+            case "low_stock_threshold":
+                return getString(R.string.backup_field_low_stock_threshold) + ": " + prefToInt(value);
+            case "low_stock_reminder_enabled":
+                return getString(R.string.backup_field_low_stock_reminder) + ": " + formatBoolean(value);
+            case "last_stock_decrement_cycle_start":
+                return getString(R.string.backup_field_last_stock_decrement) + ": " + formatTimestamp(value);
+            case "last_low_stock_notification_count":
+                return getString(R.string.backup_field_last_low_stock_notification) + ": " + prefToInt(value);
             case "removal_reminder_hours":
                 return getString(R.string.backup_field_reminder_removal) + ": " + prefToInt(value) + "h";
             case "insertion_reminder_hours":
@@ -2898,6 +3138,10 @@ public class SettingsFragment extends Fragment {
         viewModel.setCalendarRemovalColor(restoredRepository.getCalendarRemovalColor());
         viewModel.setCalendarInsertionColor(restoredRepository.getCalendarInsertionColor());
         viewModel.setNavigationAnimationStyle(restoredRepository.getNavigationAnimationStyle());
+        viewModel.setStockTrackingEnabled(restoredRepository.isStockTrackingEnabled());
+        viewModel.setRingStockCount(restoredRepository.getRingStockCount());
+        viewModel.setLowStockThreshold(restoredRepository.getLowStockThreshold());
+        viewModel.setLowStockReminderEnabled(restoredRepository.isLowStockReminderEnabled());
 
         WidgetUpdater.updateAllWidgets(requireContext());
         Toast.makeText(requireContext(), R.string.backup_restored_toast, Toast.LENGTH_SHORT).show();

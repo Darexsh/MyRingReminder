@@ -91,6 +91,7 @@ public class HomeFragment extends Fragment {
         final HomeCircleView circularProgress = view.findViewById(R.id.circularProgress); // Home circle for cycle status
         final TextView tvRemovalDate = view.findViewById(R.id.tv_removal_date); // TextView to display the removal date
         final TextView tvSecondaryDate = view.findViewById(R.id.tv_secondary_date);
+        final TextView tvStockStatus = view.findViewById(R.id.tv_stock_status);
         final TextView tvCyclePhaseLabel = view.findViewById(R.id.tv_cycle_phase_label);
         final TextView tvDaysNumber = view.findViewById(R.id.tv_days_number);   // TextView to display the number of days left
         final TextView tvDaysLabel = view.findViewById(R.id.tv_days_left_label);    // TextView to display the label for days left
@@ -122,6 +123,14 @@ public class HomeFragment extends Fragment {
                 ButtonColorHelper.applyPrimaryColor(btnSpecialActionsToggle, color);
                 applyDelayInfoIconTint(btnDelayInfo, color);
                 applyDelayInfoIconTint(btnSkipRingFreeInfo, color);
+                if (tvStockStatus.getBackground() != null) {
+                    tvStockStatus.getBackground().setTint(color);
+                }
+            }
+        });
+        tvStockStatus.setOnClickListener(v -> {
+            if (getActivity() instanceof MainActivity) {
+                ((MainActivity) getActivity()).openStockTrackerSettings();
             }
         });
         btnDelayInfo.setOnClickListener(v -> {
@@ -167,6 +176,8 @@ public class HomeFragment extends Fragment {
                 applyHomeCircleStyle(circularProgress, currentCircleStyle, currentCircleColor);
             }
         });
+        viewModel.getStockTrackingEnabled().observe(getViewLifecycleOwner(), value -> updateStockStatus(tvStockStatus));
+        viewModel.getRingStockCount().observe(getViewLifecycleOwner(), value -> updateStockStatus(tvStockStatus));
 
         // Set background image if available
         Runnable loadBackgroundImage = () -> {
@@ -339,6 +350,7 @@ public class HomeFragment extends Fragment {
             removalDate = cycleWindow.removalDate;
             reinsertionDate = cycleWindow.reinsertionDate;
             int ringFreeDays = cycleWindow.ringFreeDays;
+            updateStockStatus(tvStockStatus);
 
             // Add phases as soon as each phase ends, even if the app wasn't opened at the exact time.
             if (!cycleHistoryCleared && (systemNow.equals(removalDate) || systemNow.after(removalDate))) {
@@ -1018,6 +1030,20 @@ public class HomeFragment extends Fragment {
         return (percent / 100f) * 28f * density;
     }
 
+    private void updateStockStatus(TextView view) {
+        if (view == null || viewModel == null) {
+            return;
+        }
+        boolean enabled = Boolean.TRUE.equals(viewModel.getStockTrackingEnabled().getValue());
+        if (!enabled) {
+            view.setVisibility(View.GONE);
+            return;
+        }
+        int stockCount = viewModel.getRingStockCount().getValue() != null ? viewModel.getRingStockCount().getValue() : 0;
+        view.setText(getResources().getQuantityString(R.plurals.home_stock_status, stockCount, stockCount));
+        view.setVisibility(View.VISIBLE);
+    }
+
     @Override
     public void onDestroyView() {
         if (specialActionsAutoHideRunnable != null) {
@@ -1258,7 +1284,7 @@ public class HomeFragment extends Fragment {
                         return;
                     }
 
-                    Calendar now = Calendar.getInstance();
+                    Calendar now = DebugTimeProvider.now(viewModel.getRepository());
                     CycleComputation.CycleWindow cycleWindow = CycleComputation.calculateCurrentCycle(
                             baseStart,
                             cycleLength,
@@ -1304,6 +1330,8 @@ public class HomeFragment extends Fragment {
                     }
 
                     viewModel.setStartDate((Calendar) baseStart.clone());
+                    StockManager.syncCurrentCycle(requireContext(), viewModel.getRepository());
+                    viewModel.refreshStockState();
                     WidgetUpdater.updateAllWidgets(requireContext());
                 })
                 .setNegativeButton(R.string.dialog_cancel, null)
@@ -1322,7 +1350,7 @@ public class HomeFragment extends Fragment {
                         return;
                     }
 
-                    Calendar now = Calendar.getInstance();
+                    Calendar now = DebugTimeProvider.now(viewModel.getRepository());
                     CycleComputation.CycleWindow cycleWindow = CycleComputation.calculateCurrentCycle(
                             baseStart,
                             cycleLength,
@@ -1368,6 +1396,8 @@ public class HomeFragment extends Fragment {
                     }
 
                     viewModel.setStartDate((Calendar) baseStart.clone());
+                    StockManager.syncCurrentCycle(requireContext(), viewModel.getRepository());
+                    viewModel.refreshStockState();
                     WidgetUpdater.updateAllWidgets(requireContext());
                 })
                 .setNegativeButton(R.string.dialog_cancel, null)

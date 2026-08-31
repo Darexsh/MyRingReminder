@@ -63,11 +63,12 @@ It combines cycle timing, reminders, period tracking during the ring-free window
 * **Wear Ring Longer**: Extend the current cycle by extra days, with built-in information guidance.
 * **Skip Ring-Free Week**: Skip the current ring-free week for immediate reinsertion, then continue with normal cycle behavior afterward.
 * **Special Cases Menu (Home)**: Access “Wear ring longer” and “Skip ring-free week” quickly from a compact, auto-hiding Home action menu.
+* **Ring Supply Tracker**: Keep track of how many future rings are still available, show the current supply directly on the Home screen, decrease stock automatically when a new ring is inserted, and optionally receive a supply update notification after each counted insertion plus a one-week prescription follow-up when only one ring remains.
 
 ### Convenience & Personalization
 
 * **Backup / Restore**: Export and import local app data including settings, notes, cycle history, period tracking, and saved special cases, with validation and a readable restore preview.
-* **Home Screen Widgets**: Choose between a small `2x1` widget, a compact `3x1` status widget, and a larger detailed widget for quick at-a-glance status, all color-synced with app settings.
+* **Home Screen Widgets**: Choose between a small `2x1` widget, a compact `3x1` status widget, and a larger detailed widget for quick at-a-glance status, all color-synced with app settings. When Ring Supply tracking is enabled, the compact and large widgets also show the current saved supply.
 * **Refined Home Status View**: See a clearer main status ring with subtle phase labeling, improved event hierarchy, cleaner spacing, and conditional inner particle effects that adapt to the current cycle phase.
 * **Customization**: Adjust cycle settings, reminder times, language, background image, calendar range, and accent colors through a grouped settings layout with modern list-style cards, including matching notification and background tools, plus widget, home ring, and calendar personalization.
 * **Enhanced Calendar Navigation**: Move through months with arrows, jump directly by tapping the month header, and browse without a fixed scrolling limit.
@@ -164,10 +165,13 @@ An overview of the current visual experience across the app:
 ### 3. Let reminders handle the timing
 
 * Receive vibrating notifications for insertion and removal based on your selected reminder times.
+* Optionally enable ring supply notifications to get an updated remaining stock message whenever a newly inserted ring reduces the saved supply.
+* If your remaining ring supply reaches `1`, the app can send a follow-up reminder one week later asking whether a new prescription has already been arranged.
 
 ### 4. Add widgets for at-a-glance status
 
 * Add the small `2x1`, compact `3x1`, or larger detailed widget to your home screen for quick status.
+* If Ring Supply tracking is enabled, the compact and large widgets also show the current saved supply.
 * The larger widget remains resizable from the launcher.
 
 ### 5. Track period entries when relevant
@@ -196,12 +200,19 @@ An overview of the current visual experience across the app:
 * Use **Skip ring-free week** to set immediate reinsertion for the current cycle.
 * Tap the **info** icon next to **Wear ring longer** or **Skip ring-free week** for additional guidance.
 
-### 10. Keep the app up to date
+### 10. Track ring supply
+
+* Enable **Ring supply** in **Settings** if you want the app to track how many future rings are still available.
+* Adjust the saved ring count directly in the stock dialog.
+* The Home screen shows the current saved supply in a small status pill and lets you jump straight into the stock settings.
+* Automatic stock reduction applies only when a new ring insertion is actually counted, such as after a skipped ring-free week or when the next cycle starts normally.
+
+### 11. Keep the app up to date
 
 * Use the update entry in **Settings → Advanced** or the update card on the Home screen to check for newer app versions.
 * If an update is available, the app can download the APK and prompt installation directly.
 
-### 11. Enable optional security
+### 12. Enable optional security
 
 * Open **Settings → Advanced → App lock**.
 * In the popup, enable or disable app lock and set the auto-lock delay.

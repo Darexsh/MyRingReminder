@@ -46,6 +46,11 @@ public class CycleWidgetLargeProvider extends AppWidgetProvider {
         views.setTextViewText(R.id.tv_widget_days_label, state.label);
         views.setTextViewText(R.id.tv_widget_removal, state.removalText);
         views.setTextViewText(R.id.tv_widget_insertion, state.insertionText);
+        views.setTextViewText(R.id.tv_widget_stock, state.stockText);
+        views.setViewVisibility(
+                R.id.tv_widget_stock,
+                state.stockTrackingEnabled ? android.view.View.VISIBLE : android.view.View.GONE
+        );
         float fraction = state.maxProgress > 0
                 ? (float) state.currentProgress / (float) state.maxProgress
                 : 0f;
@@ -63,6 +68,7 @@ public class CycleWidgetLargeProvider extends AppWidgetProvider {
         views.setOnClickPendingIntent(R.id.tv_widget_subtitle, launchIntent);
         views.setOnClickPendingIntent(R.id.tv_widget_removal, launchIntent);
         views.setOnClickPendingIntent(R.id.tv_widget_insertion, launchIntent);
+        views.setOnClickPendingIntent(R.id.tv_widget_stock, launchIntent);
         views.setOnClickPendingIntent(R.id.img_widget_logo, launchIntent);
 
         appWidgetManager.updateAppWidget(appWidgetId, views);

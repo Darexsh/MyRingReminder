@@ -23,14 +23,19 @@ public final class CycleWidgetUtils {
         public final String label;
         public final String removalText;
         public final String insertionText;
+        public final boolean stockTrackingEnabled;
+        public final String stockText;
 
-        public State(int daysLeft, int maxProgress, int currentProgress, String label, String removalText, String insertionText) {
+        public State(int daysLeft, int maxProgress, int currentProgress, String label, String removalText,
+                     String insertionText, boolean stockTrackingEnabled, String stockText) {
             this.daysLeft = daysLeft;
             this.maxProgress = maxProgress;
             this.currentProgress = currentProgress;
             this.label = label;
             this.removalText = removalText;
             this.insertionText = insertionText;
+            this.stockTrackingEnabled = stockTrackingEnabled;
+            this.stockText = stockText;
         }
     }
 
@@ -83,8 +88,24 @@ public final class CycleWidgetUtils {
         SimpleDateFormat format = new SimpleDateFormat("dd.MM.yyyy", Locale.getDefault());
         String removalText = context.getString(R.string.home_removal_on, format.format(removalDate.getTime()));
         String insertionText = context.getString(R.string.home_insertion_on, format.format(reinsertionDate.getTime()));
+        boolean stockTrackingEnabled = repository.isStockTrackingEnabled();
+        int stockCount = repository.getRingStockCount();
+        String stockText = context.getResources().getQuantityString(
+                R.plurals.home_stock_status,
+                stockCount,
+                stockCount
+        );
 
-        return new State(remainingDays, maxProgress, currentProgress, label, removalText, insertionText);
+        return new State(
+                remainingDays,
+                maxProgress,
+                currentProgress,
+                label,
+                removalText,
+                insertionText,
+                stockTrackingEnabled,
+                stockText
+        );
     }
 
     private static Calendar startOfDay(Calendar source) {

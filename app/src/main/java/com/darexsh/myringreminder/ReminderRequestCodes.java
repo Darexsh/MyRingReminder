@@ -8,6 +8,7 @@ final class ReminderRequestCodes {
     static final int NOTIFY_REMOVAL_EXACT = 3;
     static final int NOTIFY_INSERTION_REMINDER = 4;
     static final int NOTIFY_INSERTION_EXACT = 5;
+    static final int NOTIFY_STOCK_RECIPE_CHECK = 6;
 
     static final int[] ALL_TYPES = new int[]{
             NOTIFY_TWO_WEEKS,
@@ -15,7 +16,8 @@ final class ReminderRequestCodes {
             NOTIFY_REMOVAL_REMINDER,
             NOTIFY_REMOVAL_EXACT,
             NOTIFY_INSERTION_REMINDER,
-            NOTIFY_INSERTION_EXACT
+            NOTIFY_INSERTION_EXACT,
+            NOTIFY_STOCK_RECIPE_CHECK
     };
 
     private ReminderRequestCodes() {

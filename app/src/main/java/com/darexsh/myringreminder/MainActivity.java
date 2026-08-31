@@ -86,6 +86,7 @@ public class MainActivity extends AppCompatActivity {
     private boolean appMovedToBackground = false;
     private long appBackgroundedAtMillis = 0L;
     private boolean openUpdateBackupOnNextSettings = false;
+    private boolean openStockTrackerOnNextSettings = false;
     private boolean startupUpdateCheckConsumed = false;
 
     @Override
@@ -191,11 +192,17 @@ public class MainActivity extends AppCompatActivity {
                 btnNotes.setVisibility(View.GONE);
             } else if (id == R.id.nav_settings) {
                 SettingsFragment settingsFragment = new SettingsFragment();
-                if (openUpdateBackupOnNextSettings) {
+                if (openUpdateBackupOnNextSettings || openStockTrackerOnNextSettings) {
                     Bundle args = new Bundle();
-                    args.putBoolean(SettingsFragment.ARG_OPEN_UPDATE_BACKUP_DIALOG, true);
+                    if (openUpdateBackupOnNextSettings) {
+                        args.putBoolean(SettingsFragment.ARG_OPEN_UPDATE_BACKUP_DIALOG, true);
+                    }
+                    if (openStockTrackerOnNextSettings) {
+                        args.putBoolean(SettingsFragment.ARG_OPEN_STOCK_TRACKER_DIALOG, true);
+                    }
                     settingsFragment.setArguments(args);
                     openUpdateBackupOnNextSettings = false;
+                    openStockTrackerOnNextSettings = false;
                 }
                 selectedFragment = settingsFragment;
                 btnNotes.setVisibility(View.GONE);
@@ -245,6 +252,8 @@ public class MainActivity extends AppCompatActivity {
         createNotificationChannel();
         requestNotificationPermission();
         ReminderScheduler.scheduleCurrentCycle(this);
+        StockManager.syncCurrentCycle(this, viewModel.getRepository());
+        viewModel.refreshStockState();
 
         maybeStartWelcomeFlow();
     }
@@ -428,6 +437,10 @@ public class MainActivity extends AppCompatActivity {
         super.onResume();
         updateNotesButtonVisibility();
         maybeRequestAppUnlock();
+        if (viewModel != null) {
+            StockManager.syncCurrentCycle(this, viewModel.getRepository());
+            viewModel.refreshStockState();
+        }
     }
 
     @Override
@@ -468,6 +481,13 @@ public class MainActivity extends AppCompatActivity {
         }
         startupUpdateCheckConsumed = true;
         return true;
+    }
+
+    public void openStockTrackerSettings() {
+        openStockTrackerOnNextSettings = true;
+        fragmentManager.popBackStack(null, FragmentManager.POP_BACK_STACK_INCLUSIVE);
+        bottomNavigationView.setSelectedItemId(R.id.nav_settings);
+        btnNotes.setVisibility(View.GONE);
     }
 
     public void openUpdateBackupFlowFromHome() {
@@ -847,6 +867,7 @@ public class MainActivity extends AppCompatActivity {
         if (settingsFragment != null) {
             settingsFragment.ensureNotificationToolsDialogVisibleForTour(step.targetViewId);
             settingsFragment.ensureBackgroundToolsDialogVisibleForTour(step.targetViewId);
+            settingsFragment.ensureStockToolsDialogVisibleForTour(step.targetViewId);
         }
         ViewGroup host = findViewById(android.R.id.content);
         if (calendarFragment != null && calendarFragment.isPeriodDialogTourTarget(step.targetViewId)) {
@@ -864,6 +885,11 @@ public class MainActivity extends AppCompatActivity {
             if (dialogHost != null) {
                 host = dialogHost;
             }
+        } else if (settingsFragment != null && settingsFragment.isStockToolsDialogTourTarget(step.targetViewId)) {
+            ViewGroup dialogHost = settingsFragment.getStockToolsDialogTourHost(step.targetViewId);
+            if (dialogHost != null) {
+                host = dialogHost;
+            }
         }
         reattachTourOverlay(host);
         View fragmentView = currentFragment != null ? currentFragment.getView() : null;
@@ -877,6 +903,14 @@ public class MainActivity extends AppCompatActivity {
                 target = settingsFragment.findTourTargetView(step.targetViewId);
             } else {
                 target = fragmentView != null ? fragmentView.findViewById(step.targetViewId) : null;
+            }
+            if ((target == null || target.getVisibility() != View.VISIBLE)
+                    && step.targetViewId == R.id.legend_period_column
+                    && fragmentView != null) {
+                View fallbackCalendar = fragmentView.findViewById(R.id.calendarView);
+                if (fallbackCalendar != null && fallbackCalendar.getVisibility() == View.VISIBLE) {
+                    target = fallbackCalendar;
+                }
             }
             if ((target == null || target.getVisibility() != View.VISIBLE)
                     && step.targetViewId == R.id.legend_tables_row
@@ -1114,9 +1148,21 @@ public class MainActivity extends AppCompatActivity {
 
         steps.add(new TourStep(R.id.nav_settings, R.id.btn_settings_info,
                 R.string.tour_title_settings_info, R.string.tour_body_settings_info, 0, false));
-        steps.add(new TourStep(R.id.nav_settings, R.id.settings_cycle_container,
+        steps.add(new TourStep(R.id.nav_settings, R.id.settings_cycle_fields_container,
                 R.string.tour_title_settings_cycle, R.string.tour_body_settings_cycle,
                 R.id.settings_scroll, false));
+        steps.add(new TourStep(R.id.nav_settings, R.id.btn_stock_tracker,
+                R.string.settings_stock_tracker_label, R.string.tour_body_settings_stock,
+                R.id.settings_scroll, false));
+        steps.add(new TourStep(R.id.nav_settings, R.id.btn_stock_tools_enabled,
+                R.string.settings_stock_tracker_enable_label, R.string.settings_stock_tools_hint_enable,
+                0, false));
+        steps.add(new TourStep(R.id.nav_settings, R.id.btn_stock_tools_count,
+                R.string.settings_stock_count_label, R.string.settings_stock_tools_hint_count,
+                0, false));
+        steps.add(new TourStep(R.id.nav_settings, R.id.btn_stock_tools_reminder,
+                R.string.settings_stock_reminder_label, R.string.settings_stock_tools_hint_reminder,
+                0, false));
         steps.add(new TourStep(R.id.nav_settings, R.id.btn_set_calendar_range,
                 R.string.tour_title_settings_calendar, R.string.tour_body_settings_calendar,
                 R.id.settings_scroll, false));

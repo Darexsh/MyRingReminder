@@ -11,5 +11,6 @@ public class ReminderRescheduleReceiver extends BroadcastReceiver {
     @Override
     public void onReceive(Context context, Intent intent) {
         ReminderScheduler.scheduleCurrentCycle(context);
+        StockManager.syncCurrentCycle(context);
     }
 }

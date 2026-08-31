@@ -126,6 +126,26 @@
     <string name="settings_label_calendar_range">Takvim aralığı</string>
     <string name="settings_label_cycle_length">Döngü süresi</string>
     <string name="settings_label_start_date">Yerleştirme tarihi</string>
+    <string name="settings_stock_tracker_dialog_title">Stok takibi</string>
+    <string name="settings_stock_tracker_enable">Etkinleştir</string>
+    <string name="settings_stock_tracker_enable_label">Stok takibini etkinleştir</string>
+    <string name="settings_stock_tracker_enable_message">Gelecekte kullanılmak üzere kaç halkanın kaldığını takip et.</string>
+    <string name="settings_stock_tracker_disable">Devre dışı bırak</string>
+    <string name="settings_stock_tracker_disable_message">Stok takibini kapat. Kaydedilen miktar, yeniden etkinleştirene kadar korunur.</string>
+    <string name="settings_stock_tracker_hint">Stok yalnızca gelecekte kullanılacak halkaları sayar. Şu anda kullanılan halka zaten kullanılmış kabul edilir.</string>
+    <string name="settings_stock_tracker_label">Halka stoğu</string>
+    <string name="settings_stock_tracker_off">Kapalı</string>
+    <string name="settings_stock_tracker_value">%1$d kaldı, uyarı eşiği %2$d</string>
+    <string name="settings_stock_count_label">Kalan halkalar</string>
+    <string name="settings_low_stock_threshold_label">Düşük stok uyarı eşiği</string>
+    <string name="settings_low_stock_reminder_label">Düşük stok uyarısını etkinleştir</string>
+    <string name="settings_stock_reminder_label">Stok bildirimleri</string>
+    <string name="settings_stock_reminder_enable_message">Yeni takılan bir halka kalan stoğu azalttığında bildirim gönder.</string>
+    <string name="settings_stock_reminder_disable_message">Yeniden açana kadar halka stoğu bildirimleri gönderme.</string>
+    <string name="settings_stock_tools_hint_enable">Halka stok takibini aç veya kapat.</string>
+    <string name="settings_stock_tools_hint_count">Hala kaç halkanın mevcut olduğunu ayarla.</string>
+    <string name="settings_stock_tools_hint_threshold">Düşük stok uyarısının ne zaman görünmesi gerektiğini seç.</string>
+    <string name="settings_stock_tools_hint_reminder">Uygulamanın halka stoğu hakkında bildirim gönderip göndermeyeceğini belirle.</string>
     <string name="settings_label_time">Yerleştirme saati</string>
     <string name="settings_calendar_range_back">Geri</string>
     <string name="settings_calendar_range_button">Takvim aralığı:\n%1$d %2$s geri, %3$d %4$s ileri</string>
@@ -233,6 +253,9 @@
     <string name="notif_remove_now">Halkayı şimdi saat %1$s itibarıyla çıkarın!</string>
     <string name="notif_remove_title">Halkayı çıkar</string>
     <string name="notif_two_weeks_remaining">Halkalı son iki hafta.</string>
+    <string name="stock_notification_title">Halka stoğu güncellendi</string>
+    <string name="stock_recipe_check_title">Receteyi kontrol et</string>
+    <string name="stock_recipe_check_message">Yeni bir reçete alındı mı? Evetse halka stoğunu tekrar artır.</string>
 
     <!-- Home -->
     <string name="home_at_time">%1$s saatinde</string>
@@ -447,6 +470,12 @@
     <string name="backup_field_navigation_animation">Navigasyon animasyonu</string>
     <string name="backup_field_notes_last_saved">Notların son kaydedilme zamanı</string>
     <string name="backup_field_notes_text">Not içeriği</string>
+    <string name="backup_field_stock_tracking">Stok takibi etkin</string>
+    <string name="backup_field_stock_count">Kalan halkalar</string>
+    <string name="backup_field_low_stock_threshold">Düşük stok eşiği</string>
+    <string name="backup_field_low_stock_reminder">Stok bildirimleri etkin</string>
+    <string name="backup_field_last_stock_decrement">Son sayılan takma işlemi</string>
+    <string name="backup_field_last_low_stock_notification">Son bildirilen stok sayısı</string>
     <string name="backup_field_notification_flags_format">Bildirim bayrakları: %1$d giriş (%2$d aktif)</string>
     <string name="backup_field_notification_hashes_format">Bildirim ayarları anlık görüntüleri: %1$d giriş</string>
     <string name="backup_field_period_tracking">Adet takibi</string>
@@ -600,6 +629,7 @@
     <string name="tour_body_settings_info">Sürüm, geliştirici bilgisi ve iletişim linklerini gösterir.</string>
     <string name="tour_body_settings_language">Diller arasında geçiş yapın.</string>
     <string name="tour_body_settings_notifications">Ayrıntılı hatırlatıcı ayarlarını açar. Burada hatırlatma saatlerini ayarlayabilir, test bildirimi gönderebilir, bildirim izni verebilir, kesin alarmlara izin verebilir ve hatırlatmalar gecikirse pil optimizasyonunu kapatabilirsiniz.</string>
+    <string name="tour_body_settings_stock">Halka stoğu araçlarını buradan açın. Stok takibini açıp kapatabilir, kaç halka kaldığını ayarlayabilir ve stok bildirimlerini yönetebilirsiniz.</string>
     <string name="tour_body_settings_reset">Tüm verileri silin ve uygulamayı sıfırlayın.</string>
     <string name="tour_body_settings_update">Yeni uygulama sürümlerini kontrol edin ve yükleyin.</string>
     <string name="tour_complete_done">Tamam</string>
@@ -667,4 +697,23 @@
     <string name="period_details_pdf_notification_title">PDF kaydedildi</string>
     <string name="period_details_pdf_notification_text">Dışa aktarılan dönem detayları PDF\'sini açmak için dokun.</string>
     <string name="period_details_pdf_open_action">PDF\'yi aç</string>
+    <string name="stock_adjust_minus">-1</string>
+    <string name="stock_adjust_plus">+1</string>
+    <string name="stock_adjust_reset">Sıfırla</string>
+    <plurals name="home_stock_status">
+        <item quantity="one">Halka stoğu: %d halka</item>
+        <item quantity="other">Halka stoğu: %d halka</item>
+    </plurals>
+    <plurals name="settings_stock_count_value">
+        <item quantity="one">%d halka</item>
+        <item quantity="other">%d halka</item>
+    </plurals>
+    <plurals name="settings_stock_threshold_value">
+        <item quantity="one">%d halka</item>
+        <item quantity="other">%d halka</item>
+    </plurals>
+    <plurals name="stock_notification_message">
+        <item quantity="one">Halka stoğu: %d halka</item>
+        <item quantity="other">Halka stoğu: %d halka</item>
+    </plurals>
 </resources>

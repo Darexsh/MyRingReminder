@@ -126,6 +126,26 @@
     <string name="settings_label_calendar_range">Intervallo calendario</string>
     <string name="settings_label_cycle_length">Durata ciclo</string>
     <string name="settings_label_start_date">Data inserimento</string>
+    <string name="settings_stock_tracker_dialog_title">Gestione scorte</string>
+    <string name="settings_stock_tracker_enable">Attiva</string>
+    <string name="settings_stock_tracker_enable_label">Attiva monitoraggio scorte</string>
+    <string name="settings_stock_tracker_enable_message">Tieni traccia di quanti anelli sono ancora disponibili per l\'uso futuro.</string>
+    <string name="settings_stock_tracker_disable">Disattiva</string>
+    <string name="settings_stock_tracker_disable_message">Disattiva il monitoraggio scorte. La quantità salvata resta disponibile finché non lo riattivi.</string>
+    <string name="settings_stock_tracker_hint">Le scorte contano solo l\'uso futuro degli anelli. L\'anello attualmente indossato viene considerato già usato.</string>
+    <string name="settings_stock_tracker_label">Scorta anelli</string>
+    <string name="settings_stock_tracker_off">Disattivato</string>
+    <string name="settings_stock_tracker_value">%1$d rimasti, avviso a %2$d</string>
+    <string name="settings_stock_count_label">Anelli rimanenti</string>
+    <string name="settings_low_stock_threshold_label">Soglia avviso scorte basse</string>
+    <string name="settings_low_stock_reminder_label">Attiva avviso scorte basse</string>
+    <string name="settings_stock_reminder_label">Notifiche scorta anelli</string>
+    <string name="settings_stock_reminder_enable_message">Invia una notifica ogni volta che un nuovo inserimento riduce la scorta anelli rimanente.</string>
+    <string name="settings_stock_reminder_disable_message">Non inviare più notifiche sulla scorta anelli finché non le riattivi.</string>
+    <string name="settings_stock_tools_hint_enable">Attiva o disattiva il monitoraggio della scorta anelli.</string>
+    <string name="settings_stock_tools_hint_count">Imposta quanti anelli hai ancora disponibili.</string>
+    <string name="settings_stock_tools_hint_threshold">Scegli quando deve apparire l\'avviso di scorte basse.</string>
+    <string name="settings_stock_tools_hint_reminder">Decidi se l\'app deve inviare notifiche sulla scorta anelli.</string>
     <string name="settings_label_time">Ora inserimento</string>
     <string name="settings_calendar_range_back">Indietro</string>
     <string name="settings_calendar_range_button">Intervallo calendario:\n%1$d %2$s indietro, %3$d %4$s avanti</string>
@@ -233,6 +253,9 @@
     <string name="notif_remove_now">Rimuovi l\'anello ora alle %1$s!</string>
     <string name="notif_remove_title">Rimuovi anello</string>
     <string name="notif_two_weeks_remaining">Rimangono due settimane con l\'anello.</string>
+    <string name="stock_notification_title">Scorta anelli aggiornata</string>
+    <string name="stock_recipe_check_title">Controlla prescrizione</string>
+    <string name="stock_recipe_check_message">Hai ottenuto una nuova prescrizione? Se sì, aumenta di nuovo la scorta anelli.</string>
 
     <!-- Home -->
     <string name="home_at_time">alle %1$s</string>
@@ -447,6 +470,12 @@
     <string name="backup_field_navigation_animation">Animazione navigazione</string>
     <string name="backup_field_notes_last_saved">Ultimo salvataggio note</string>
     <string name="backup_field_notes_text">Contenuto note</string>
+    <string name="backup_field_stock_tracking">Monitoraggio scorte attivo</string>
+    <string name="backup_field_stock_count">Anelli rimanenti</string>
+    <string name="backup_field_low_stock_threshold">Soglia scorte basse</string>
+    <string name="backup_field_low_stock_reminder">Notifiche scorta anelli attive</string>
+    <string name="backup_field_last_stock_decrement">Ultimo inserimento conteggiato</string>
+    <string name="backup_field_last_low_stock_notification">Ultima scorta notificata</string>
     <string name="backup_field_notification_flags_format">Flag notifiche: %1$d voci (%2$d attive)</string>
     <string name="backup_field_notification_hashes_format">Istantanee impostazioni notifiche: %1$d voci</string>
     <string name="backup_field_period_tracking">Monitoraggio del ciclo mestruale</string>
@@ -600,6 +629,7 @@
     <string name="tour_body_settings_info">Mostra versione, info sviluppatore e link di contatto.</string>
     <string name="tour_body_settings_language">Passa tra le diverse lingue.</string>
     <string name="tour_body_settings_notifications">Apre le impostazioni dettagliate dei promemoria. Qui puoi impostare gli orari, inviare una notifica di test, consentire le notifiche, consentire gli allarmi esatti e disattivare l\'ottimizzazione della batteria se i promemoria arrivano in ritardo.</string>
+    <string name="tour_body_settings_stock">Apri qui gli strumenti della scorta anelli. Puoi attivare o disattivare il monitoraggio, regolare quanti anelli restano e gestire le notifiche della scorta.</string>
     <string name="tour_body_settings_reset">Elimina tutti i dati e ripristina l\'app.</string>
     <string name="tour_body_settings_update">Controlla nuove versioni dell\'app e installale.</string>
     <string name="tour_complete_done">Fatto</string>
@@ -667,4 +697,23 @@
     <string name="period_details_pdf_notification_title">PDF salvato</string>
     <string name="period_details_pdf_notification_text">Tocca per aprire il PDF esportato dei dettagli ciclo.</string>
     <string name="period_details_pdf_open_action">Apri PDF</string>
+    <string name="stock_adjust_minus">-1</string>
+    <string name="stock_adjust_plus">+1</string>
+    <string name="stock_adjust_reset">Reimposta</string>
+    <plurals name="home_stock_status">
+        <item quantity="one">Scorta anelli: %d anello</item>
+        <item quantity="other">Scorta anelli: %d anelli</item>
+    </plurals>
+    <plurals name="settings_stock_count_value">
+        <item quantity="one">%d anello</item>
+        <item quantity="other">%d anelli</item>
+    </plurals>
+    <plurals name="settings_stock_threshold_value">
+        <item quantity="one">%d anello</item>
+        <item quantity="other">%d anelli</item>
+    </plurals>
+    <plurals name="stock_notification_message">
+        <item quantity="one">Scorta anelli: %d anello</item>
+        <item quantity="other">Scorta anelli: %d anelli</item>
+    </plurals>
 </resources>

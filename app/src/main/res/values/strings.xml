@@ -126,6 +126,26 @@
     <string name="settings_label_calendar_range">Calendar range</string>
     <string name="settings_label_cycle_length">Cycle length</string>
     <string name="settings_label_start_date">Insertion date</string>
+    <string name="settings_stock_tracker_dialog_title">Supply tracker</string>
+    <string name="settings_stock_tracker_enable">Enable</string>
+    <string name="settings_stock_tracker_enable_label">Enable supply tracking</string>
+    <string name="settings_stock_tracker_enable_message">Track how many rings are still available for future use.</string>
+    <string name="settings_stock_tracker_disable">Disable</string>
+    <string name="settings_stock_tracker_disable_message">Turn off supply tracking. The saved stock amount stays available until you enable it again.</string>
+    <string name="settings_stock_tracker_hint">Stock counts only future ring use. The currently active ring is treated as already used.</string>
+    <string name="settings_stock_tracker_label">Ring supply</string>
+    <string name="settings_stock_tracker_off">Off</string>
+    <string name="settings_stock_tracker_value">%1$d left, alert at %2$d</string>
+    <string name="settings_stock_count_label">Rings remaining</string>
+    <string name="settings_stock_reminder_label">Supply notifications</string>
+    <string name="settings_low_stock_threshold_label">Low-stock warning threshold</string>
+    <string name="settings_low_stock_reminder_label">Enable low-stock reminder</string>
+    <string name="settings_stock_reminder_enable_message">Send a notification whenever a newly inserted ring reduces your remaining supply.</string>
+    <string name="settings_stock_reminder_disable_message">Stop sending ring supply notifications until you turn them on again.</string>
+    <string name="settings_stock_tools_hint_enable">Turn ring supply tracking on or off.</string>
+    <string name="settings_stock_tools_hint_count">Set how many rings you still have available.</string>
+    <string name="settings_stock_tools_hint_threshold">Choose when the low-stock reminder should appear.</string>
+    <string name="settings_stock_tools_hint_reminder">Turn ring supply notifications on or off.</string>
     <string name="settings_label_time">Insertion time</string>
     <string name="settings_calendar_range_back">Back</string>
     <string name="settings_calendar_range_button">Calendar range:\n%1$d %2$s back, %3$d %4$s ahead</string>
@@ -257,6 +277,12 @@
     <string name="home_insertion_on_placeholder">Insertion on --</string>
     <string name="home_removal_on">Removal on %1$s</string>
     <string name="home_removal_on_placeholder">Removal on --</string>
+    <string name="stock_adjust_minus">-1</string>
+    <string name="stock_adjust_plus">+1</string>
+    <string name="stock_adjust_reset">Reset</string>
+    <string name="stock_notification_title">Ring supply updated</string>
+    <string name="stock_recipe_check_title">Prescription check</string>
+    <string name="stock_recipe_check_message">Did you get a new prescription? If yes, increase your ring supply again.</string>
     <string name="home_skip_ring_free_confirm">Skip now</string>
     <string name="home_skip_ring_free_info_desc">Info about skipping the ring-free week</string>
     <string name="home_skip_ring_free_info_message"><![CDATA[
@@ -447,6 +473,12 @@
     <string name="backup_field_navigation_animation">Navigation animation</string>
     <string name="backup_field_notes_last_saved">Notes last saved</string>
     <string name="backup_field_notes_text">Notes content</string>
+    <string name="backup_field_stock_tracking">Supply tracking enabled</string>
+    <string name="backup_field_stock_count">Rings remaining</string>
+    <string name="backup_field_low_stock_threshold">Low-stock threshold</string>
+    <string name="backup_field_low_stock_reminder">Supply notifications enabled</string>
+    <string name="backup_field_last_stock_decrement">Last counted insertion</string>
+    <string name="backup_field_last_low_stock_notification">Last supply notification count</string>
     <string name="backup_field_notification_flags_format">Notification flags: %1$d entries (%2$d active)</string>
     <string name="backup_field_notification_hashes_format">Notification settings snapshots: %1$d entries</string>
     <string name="backup_field_period_tracking">Period tracking</string>
@@ -608,6 +640,7 @@
     <string name="tour_body_settings_info">Shows version, developer info, and contact links.</string>
     <string name="tour_body_settings_language">Switch between different languages.</string>
     <string name="tour_body_settings_notifications">Open the detailed reminder settings. Inside, you can set reminder times, send a test notification, allow notification permission, allow exact alarms, and disable battery optimization if reminders are delayed.</string>
+    <string name="tour_body_settings_stock">Open the ring supply tools here. You can turn supply tracking on or off, adjust how many rings are left, and control the supply notifications.</string>
     <string name="tour_body_settings_reset">Delete all saved data and reset the app.</string>
     <string name="tour_body_settings_update">Check for new app versions and install them.</string>
     <string name="tour_complete_done">Done</string>
@@ -667,4 +700,20 @@
     <string name="period_details_pdf_notification_title">PDF saved</string>
     <string name="period_details_pdf_notification_text">Tap to open your exported period details PDF.</string>
     <string name="period_details_pdf_open_action">Open PDF</string>
+    <plurals name="home_stock_status">
+        <item quantity="one">Ring supply: %d ring</item>
+        <item quantity="other">Ring supply: %d rings</item>
+    </plurals>
+    <plurals name="settings_stock_count_value">
+        <item quantity="one">%d ring</item>
+        <item quantity="other">%d rings</item>
+    </plurals>
+    <plurals name="settings_stock_threshold_value">
+        <item quantity="one">%d ring</item>
+        <item quantity="other">%d rings</item>
+    </plurals>
+    <plurals name="stock_notification_message">
+        <item quantity="one">Ring supply: %d ring</item>
+        <item quantity="other">Ring supply: %d rings</item>
+    </plurals>
 </resources>

@@ -126,6 +126,26 @@
     <string name="settings_label_calendar_range">Intervalo do calendário</string>
     <string name="settings_label_cycle_length">Duração do ciclo</string>
     <string name="settings_label_start_date">Data de inserção</string>
+    <string name="settings_stock_tracker_dialog_title">Controle de estoque</string>
+    <string name="settings_stock_tracker_enable">Ativar</string>
+    <string name="settings_stock_tracker_enable_label">Ativar controle de estoque</string>
+    <string name="settings_stock_tracker_enable_message">Acompanhe quantos anéis ainda estão disponíveis para uso futuro.</string>
+    <string name="settings_stock_tracker_disable">Desativar</string>
+    <string name="settings_stock_tracker_disable_message">Desative o controle de estoque. A quantidade salva continuará disponível até você ativá-lo novamente.</string>
+    <string name="settings_stock_tracker_hint">O estoque conta apenas o uso futuro de anéis. O anel atualmente em uso é tratado como já utilizado.</string>
+    <string name="settings_stock_tracker_label">Estoque de anéis</string>
+    <string name="settings_stock_tracker_off">Desativado</string>
+    <string name="settings_stock_tracker_value">%1$d restantes, alerta em %2$d</string>
+    <string name="settings_stock_count_label">Anéis restantes</string>
+    <string name="settings_low_stock_threshold_label">Limite de alerta de estoque baixo</string>
+    <string name="settings_low_stock_reminder_label">Ativar alerta de estoque baixo</string>
+    <string name="settings_stock_reminder_label">Notificações de estoque</string>
+    <string name="settings_stock_reminder_enable_message">Envie uma notificação sempre que um anel recém-inserido reduzir o estoque restante.</string>
+    <string name="settings_stock_reminder_disable_message">Pare de enviar notificações do estoque de anéis até que você as ative novamente.</string>
+    <string name="settings_stock_tools_hint_enable">Ative ou desative o controle do estoque de anéis.</string>
+    <string name="settings_stock_tools_hint_count">Defina quantos anéis você ainda tem disponíveis.</string>
+    <string name="settings_stock_tools_hint_threshold">Escolha quando o alerta de estoque baixo deve aparecer.</string>
+    <string name="settings_stock_tools_hint_reminder">Decida se o app deve enviar notificações sobre o estoque de anéis.</string>
     <string name="settings_label_time">Hora de inserção</string>
     <string name="settings_calendar_range_back">Atrás</string>
     <string name="settings_calendar_range_button">Intervalo do calendário:\n%1$d %2$s atrás, %3$d %4$s à frente</string>
@@ -233,6 +253,9 @@
     <string name="notif_remove_now">Remova o anel agora às %1$s!</string>
     <string name="notif_remove_title">Remover anel</string>
     <string name="notif_two_weeks_remaining">Restam duas semanas com o anel.</string>
+    <string name="stock_notification_title">Estoque de anéis atualizado</string>
+    <string name="stock_recipe_check_title">Verificar receita</string>
+    <string name="stock_recipe_check_message">Uma nova receita foi conseguida? Se sim, aumente novamente o estoque de anéis.</string>
 
     <!-- Home -->
     <string name="home_at_time">às %1$s</string>
@@ -447,6 +470,12 @@
     <string name="backup_field_navigation_animation">Animação de navegação</string>
     <string name="backup_field_notes_last_saved">Última gravação das notas</string>
     <string name="backup_field_notes_text">Conteúdo das notas</string>
+    <string name="backup_field_stock_tracking">Controle de estoque ativado</string>
+    <string name="backup_field_stock_count">Anéis restantes</string>
+    <string name="backup_field_low_stock_threshold">Limite de estoque baixo</string>
+    <string name="backup_field_low_stock_reminder">Notificações de estoque ativadas</string>
+    <string name="backup_field_last_stock_decrement">Última inserção contabilizada</string>
+    <string name="backup_field_last_low_stock_notification">Última contagem de estoque notificada</string>
     <string name="backup_field_notification_flags_format">Sinalizadores de notificação: %1$d entradas (%2$d ativas)</string>
     <string name="backup_field_notification_hashes_format">Snapshots de configurações de notificação: %1$d entradas</string>
     <string name="backup_field_period_tracking">Acompanhamento menstrual</string>
@@ -600,6 +629,7 @@
     <string name="tour_body_settings_info">Mostra versão, info do desenvolvedor e links de contato.</string>
     <string name="tour_body_settings_language">Alterne entre diferentes idiomas.</string>
     <string name="tour_body_settings_notifications">Abre as configurações detalhadas de lembretes. Lá você pode definir os horários, enviar uma notificação de teste, permitir notificações, permitir alarmes exatos e desativar a otimização da bateria se os lembretes atrasarem.</string>
+    <string name="tour_body_settings_stock">Abra aqui as ferramentas do estoque de anéis. Você pode ativar ou desativar o controle, ajustar quantos anéis restam e controlar as notificações do estoque.</string>
     <string name="tour_body_settings_reset">Exclua todos os dados salvos e reinicie o app.</string>
     <string name="tour_body_settings_update">Verifique novas versões do app e instale-as.</string>
     <string name="tour_complete_done">Pronto</string>
@@ -667,4 +697,23 @@
     <string name="period_details_pdf_notification_title">PDF salvo</string>
     <string name="period_details_pdf_notification_text">Toque para abrir o PDF exportado com os detalhes do período.</string>
     <string name="period_details_pdf_open_action">Abrir PDF</string>
+    <string name="stock_adjust_minus">-1</string>
+    <string name="stock_adjust_plus">+1</string>
+    <string name="stock_adjust_reset">Redefinir</string>
+    <plurals name="home_stock_status">
+        <item quantity="one">Estoque de anéis: %d anel</item>
+        <item quantity="other">Estoque de anéis: %d anéis</item>
+    </plurals>
+    <plurals name="settings_stock_count_value">
+        <item quantity="one">%d anel</item>
+        <item quantity="other">%d anéis</item>
+    </plurals>
+    <plurals name="settings_stock_threshold_value">
+        <item quantity="one">%d anel</item>
+        <item quantity="other">%d anéis</item>
+    </plurals>
+    <plurals name="stock_notification_message">
+        <item quantity="one">Estoque de anéis: %d anel</item>
+        <item quantity="other">Estoque de anéis: %d anéis</item>
+    </plurals>
 </resources>

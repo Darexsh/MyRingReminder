@@ -126,6 +126,26 @@
     <string name="settings_label_calendar_range">Диапазон календаря</string>
     <string name="settings_label_cycle_length">Длина цикла</string>
     <string name="settings_label_start_date">Дата вставки</string>
+    <string name="settings_stock_tracker_dialog_title">Учет запаса</string>
+    <string name="settings_stock_tracker_enable">Включить</string>
+    <string name="settings_stock_tracker_enable_label">Включить учет запаса</string>
+    <string name="settings_stock_tracker_enable_message">Отслеживайте, сколько колец еще доступно для будущего использования.</string>
+    <string name="settings_stock_tracker_disable">Выключить</string>
+    <string name="settings_stock_tracker_disable_message">Выключите учет запаса. Сохраненное количество останется, пока вы не включите его снова.</string>
+    <string name="settings_stock_tracker_hint">Запас учитывает только будущее использование колец. Кольцо, которое используется сейчас, считается уже израсходованным.</string>
+    <string name="settings_stock_tracker_label">Запас колец</string>
+    <string name="settings_stock_tracker_off">Выключено</string>
+    <string name="settings_stock_tracker_value">Осталось %1$d, предупреждение при %2$d</string>
+    <string name="settings_stock_count_label">Оставшиеся кольца</string>
+    <string name="settings_low_stock_threshold_label">Порог предупреждения о низком запасе</string>
+    <string name="settings_low_stock_reminder_label">Включить предупреждение о низком запасе</string>
+    <string name="settings_stock_reminder_label">Уведомления о запасе</string>
+    <string name="settings_stock_reminder_enable_message">Отправляйте уведомление каждый раз, когда новое установленное кольцо уменьшает оставшийся запас.</string>
+    <string name="settings_stock_reminder_disable_message">Не отправляйте уведомления о запасе колец, пока вы снова их не включите.</string>
+    <string name="settings_stock_tools_hint_enable">Включите или выключите учет запаса колец.</string>
+    <string name="settings_stock_tools_hint_count">Укажите, сколько колец у вас еще доступно.</string>
+    <string name="settings_stock_tools_hint_threshold">Выберите, когда должно появляться предупреждение о низком запасе.</string>
+    <string name="settings_stock_tools_hint_reminder">Решите, должно ли приложение отправлять уведомления о запасе колец.</string>
     <string name="settings_label_time">Время вставки</string>
     <string name="settings_calendar_range_back">Назад</string>
     <string name="settings_calendar_range_button">Диапазон календаря:\n%1$d %2$s назад, %3$d %4$s вперед</string>
@@ -233,6 +253,9 @@
     <string name="notif_remove_now">Извлеките кольцо сейчас в %1$s!</string>
     <string name="notif_remove_title">Извлечь кольцо</string>
     <string name="notif_two_weeks_remaining">Осталось две недели с кольцом.</string>
+    <string name="stock_notification_title">Запас колец обновлён</string>
+    <string name="stock_recipe_check_title">Проверьте рецепт</string>
+    <string name="stock_recipe_check_message">Удалось получить новый рецепт? Если да, снова увеличьте запас колец.</string>
 
     <!-- Home -->
     <string name="home_at_time">в %1$s</string>
@@ -447,6 +470,12 @@
     <string name="backup_field_navigation_animation">Анимация навигации</string>
     <string name="backup_field_notes_last_saved">Заметки последний раз сохранены</string>
     <string name="backup_field_notes_text">Содержимое заметок</string>
+    <string name="backup_field_stock_tracking">Учет запаса включен</string>
+    <string name="backup_field_stock_count">Оставшиеся кольца</string>
+    <string name="backup_field_low_stock_threshold">Порог низкого запаса</string>
+    <string name="backup_field_low_stock_reminder">Уведомления о запасе включены</string>
+    <string name="backup_field_last_stock_decrement">Последняя учтенная установка</string>
+    <string name="backup_field_last_low_stock_notification">Последний уведомлённый остаток запаса</string>
     <string name="backup_field_notification_flags_format">Флаги уведомлений: %1$d записей (%2$d активных)</string>
     <string name="backup_field_notification_hashes_format">Снимки настроек уведомлений: %1$d записей</string>
     <string name="backup_field_period_tracking">Отслеживание менструации</string>
@@ -600,6 +629,7 @@
     <string name="tour_body_settings_info">Показывает версию, инфо о разработчике и контакты.</string>
     <string name="tour_body_settings_language">Переключение между языками.</string>
     <string name="tour_body_settings_notifications">Открывает подробные настройки напоминаний. Здесь можно задать время напоминаний, отправить тестовое уведомление, разрешить уведомления, разрешить точные сигналы и отключить оптимизацию батареи, если напоминания приходят с задержкой.</string>
+    <string name="tour_body_settings_stock">Здесь открываются инструменты запаса колец. Можно включить или выключить учет запаса, изменить количество оставшихся колец и управлять уведомлениями о запасе.</string>
     <string name="tour_body_settings_reset">Удалить все данные и сбросить приложение.</string>
     <string name="tour_body_settings_update">Проверяйте и устанавливайте новые версии приложения.</string>
     <string name="tour_complete_done">Готово</string>
@@ -667,4 +697,31 @@
     <string name="period_details_pdf_notification_title">PDF сохранен</string>
     <string name="period_details_pdf_notification_text">Нажмите, чтобы открыть экспортированный PDF с деталями менструации.</string>
     <string name="period_details_pdf_open_action">Открыть PDF</string>
+    <string name="stock_adjust_minus">-1</string>
+    <string name="stock_adjust_plus">+1</string>
+    <string name="stock_adjust_reset">Сбросить</string>
+    <plurals name="home_stock_status">
+        <item quantity="one">Запас колец: %d кольцо</item>
+        <item quantity="few">Запас колец: %d кольца</item>
+        <item quantity="many">Запас колец: %d колец</item>
+        <item quantity="other">Запас колец: %d кольца</item>
+    </plurals>
+    <plurals name="settings_stock_count_value">
+        <item quantity="one">%d кольцо</item>
+        <item quantity="few">%d кольца</item>
+        <item quantity="many">%d колец</item>
+        <item quantity="other">%d кольца</item>
+    </plurals>
+    <plurals name="settings_stock_threshold_value">
+        <item quantity="one">%d кольцо</item>
+        <item quantity="few">%d кольца</item>
+        <item quantity="many">%d колец</item>
+        <item quantity="other">%d кольца</item>
+    </plurals>
+    <plurals name="stock_notification_message">
+        <item quantity="one">Запас колец: %d кольцо</item>
+        <item quantity="few">Запас колец: %d кольца</item>
+        <item quantity="many">Запас колец: %d колец</item>
+        <item quantity="other">Запас колец: %d кольца</item>
+    </plurals>
 </resources>

@@ -14,7 +14,10 @@ public final class ReminderScheduler {
 
     public static void scheduleCurrentCycle(Context context) {
         SettingsRepository repository = new SettingsRepository(context);
-        Calendar now = Calendar.getInstance();
+        cancelAllScheduledNotifications(context);
+        repository.clearNotificationFlags();
+
+        Calendar now = DebugTimeProvider.now(repository);
         CycleComputation.CycleWindow cycleWindow = CycleComputation.calculateCurrentCycle(
                 repository.getStartDate(),
                 repository.getCycleLength(),
@@ -150,7 +153,7 @@ public final class ReminderScheduler {
             cancelNotificationsForCycle(context, cycleStartMillis);
         }
 
-        Calendar now = Calendar.getInstance();
+        Calendar now = DebugTimeProvider.now(repository);
         CycleComputation.CycleWindow cycleWindow = CycleComputation.calculateCurrentCycle(
                 repository.getStartDate(),
                 repository.getCycleLength(),

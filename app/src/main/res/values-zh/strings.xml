@@ -126,6 +126,26 @@
     <string name="settings_label_calendar_range">日历范围</string>
     <string name="settings_label_cycle_length">周期长度</string>
     <string name="settings_label_start_date">置入日期</string>
+    <string name="settings_stock_tracker_dialog_title">库存跟踪</string>
+    <string name="settings_stock_tracker_enable">启用</string>
+    <string name="settings_stock_tracker_enable_label">启用库存跟踪</string>
+    <string name="settings_stock_tracker_enable_message">跟踪未来还可使用多少个避孕环。</string>
+    <string name="settings_stock_tracker_disable">停用</string>
+    <string name="settings_stock_tracker_disable_message">关闭库存跟踪。保存的数量会保留，直到你再次启用它。</string>
+    <string name="settings_stock_tracker_hint">库存只统计未来要使用的避孕环。当前正在使用的避孕环视为已经使用。</string>
+    <string name="settings_stock_tracker_label">避孕环库存</string>
+    <string name="settings_stock_tracker_off">关闭</string>
+    <string name="settings_stock_tracker_value">剩余 %1$d，提醒阈值 %2$d</string>
+    <string name="settings_stock_count_label">剩余避孕环</string>
+    <string name="settings_low_stock_threshold_label">低库存提醒阈值</string>
+    <string name="settings_low_stock_reminder_label">启用低库存提醒</string>
+    <string name="settings_stock_reminder_label">库存通知</string>
+    <string name="settings_stock_reminder_enable_message">每当新置入的避孕环使剩余库存减少时发送通知。</string>
+    <string name="settings_stock_reminder_disable_message">在你再次开启之前，不再发送避孕环库存通知。</string>
+    <string name="settings_stock_tools_hint_enable">开启或关闭避孕环库存跟踪。</string>
+    <string name="settings_stock_tools_hint_count">设置你目前还剩多少个避孕环可用。</string>
+    <string name="settings_stock_tools_hint_threshold">选择何时显示低库存提醒。</string>
+    <string name="settings_stock_tools_hint_reminder">决定应用是否应发送避孕环库存通知。</string>
     <string name="settings_label_time">置入时间</string>
     <string name="settings_calendar_range_back">回顾</string>
     <string name="settings_calendar_range_button">日历范围：\n向后 %1$d %2$s，向前 %3$d %4$s</string>
@@ -233,6 +253,9 @@
     <string name="notif_remove_now">请立即在 %1$s 取出圆环！</string>
     <string name="notif_remove_title">取出圆环</string>
     <string name="notif_two_weeks_remaining">佩戴期还剩两周。</string>
+    <string name="stock_notification_title">避孕环库存已更新</string>
+    <string name="stock_recipe_check_title">检查处方</string>
+    <string name="stock_recipe_check_message">拿到新的处方了吗？如果拿到了，请再次增加避孕环库存。</string>
 
     <!-- Home -->
     <string name="home_at_time">%1$s</string>
@@ -447,6 +470,12 @@
     <string name="backup_field_navigation_animation">导航动画</string>
     <string name="backup_field_notes_last_saved">备注上次保存时间</string>
     <string name="backup_field_notes_text">备注内容</string>
+    <string name="backup_field_stock_tracking">已启用库存跟踪</string>
+    <string name="backup_field_stock_count">剩余避孕环</string>
+    <string name="backup_field_low_stock_threshold">低库存阈值</string>
+    <string name="backup_field_low_stock_reminder">已启用库存通知</string>
+    <string name="backup_field_last_stock_decrement">上次已计入的置入时间</string>
+    <string name="backup_field_last_low_stock_notification">上次通知的库存数量</string>
     <string name="backup_field_notification_flags_format">通知标记：%1$d 条（%2$d 条激活）</string>
     <string name="backup_field_notification_hashes_format">通知设置快照：%1$d 条</string>
     <string name="backup_field_period_tracking">经期追踪</string>
@@ -600,6 +629,7 @@
     <string name="tour_body_settings_info">显示版本、开发者信息和联系方式链接。</string>
     <string name="tour_body_settings_language">在不同语言之间切换。</string>
     <string name="tour_body_settings_notifications">打开详细的提醒设置。在这里你可以设置提醒时间、发送测试通知、允许通知权限、允许精确闹钟，并在提醒延迟时关闭电池优化。</string>
+    <string name="tour_body_settings_stock">在这里打开避孕环库存工具。你可以开启或关闭库存跟踪、调整剩余数量，并管理库存通知。</string>
     <string name="tour_body_settings_reset">删除所有保存的数据并重置应用。</string>
     <string name="tour_body_settings_update">检查新版本应用并安装。</string>
     <string name="tour_complete_done">完成</string>
@@ -667,4 +697,19 @@
     <string name="period_details_pdf_notification_title">PDF 已保存</string>
     <string name="period_details_pdf_notification_text">点击以打开导出的经期详情 PDF。</string>
     <string name="period_details_pdf_open_action">打开 PDF</string>
+    <string name="stock_adjust_minus">-1</string>
+    <string name="stock_adjust_plus">+1</string>
+    <string name="stock_adjust_reset">重置</string>
+    <plurals name="home_stock_status">
+        <item quantity="other">避孕环库存：%d 个</item>
+    </plurals>
+    <plurals name="settings_stock_count_value">
+        <item quantity="other">%d 个</item>
+    </plurals>
+    <plurals name="settings_stock_threshold_value">
+        <item quantity="other">%d 个</item>
+    </plurals>
+    <plurals name="stock_notification_message">
+        <item quantity="other">避孕环库存：%d</item>
+    </plurals>
 </resources>

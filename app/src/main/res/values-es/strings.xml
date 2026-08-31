@@ -126,6 +126,26 @@
     <string name="settings_label_calendar_range">Intervalo del calendario</string>
     <string name="settings_label_cycle_length">Duración del ciclo</string>
     <string name="settings_label_start_date">Fecha de inserción</string>
+    <string name="settings_stock_tracker_dialog_title">Control de existencias</string>
+    <string name="settings_stock_tracker_enable">Activar</string>
+    <string name="settings_stock_tracker_enable_label">Activar seguimiento del stock</string>
+    <string name="settings_stock_tracker_enable_message">Haz seguimiento de cuántos anillos siguen disponibles para uso futuro.</string>
+    <string name="settings_stock_tracker_disable">Desactivar</string>
+    <string name="settings_stock_tracker_disable_message">Desactiva el seguimiento del stock. La cantidad guardada seguirá disponible hasta que lo actives de nuevo.</string>
+    <string name="settings_stock_tracker_hint">El stock solo cuenta el uso futuro de anillos. El anillo actualmente en uso se considera ya utilizado.</string>
+    <string name="settings_stock_tracker_label">Stock de anillos</string>
+    <string name="settings_stock_tracker_off">Desactivado</string>
+    <string name="settings_stock_tracker_value">%1$d restantes, aviso en %2$d</string>
+    <string name="settings_stock_count_label">Anillos restantes</string>
+    <string name="settings_low_stock_threshold_label">Umbral de aviso por bajo stock</string>
+    <string name="settings_low_stock_reminder_label">Activar aviso por bajo stock</string>
+    <string name="settings_stock_reminder_label">Notificaciones de stock</string>
+    <string name="settings_stock_reminder_enable_message">Envía una notificación cada vez que un anillo recién insertado reduzca el stock restante.</string>
+    <string name="settings_stock_reminder_disable_message">Deja de enviar notificaciones del stock de anillos hasta que las actives de nuevo.</string>
+    <string name="settings_stock_tools_hint_enable">Activa o desactiva el seguimiento del stock de anillos.</string>
+    <string name="settings_stock_tools_hint_count">Establece cuántos anillos sigues teniendo disponibles.</string>
+    <string name="settings_stock_tools_hint_threshold">Elige cuándo debe aparecer el aviso de bajo stock.</string>
+    <string name="settings_stock_tools_hint_reminder">Decide si la app debe enviar notificaciones sobre el stock de anillos.</string>
     <string name="settings_label_time">Hora de inserción</string>
     <string name="settings_calendar_range_back">Atrás</string>
     <string name="settings_calendar_range_button">Rango del calendario:\n%1$d %2$s atrás, %3$d %4$s adelante</string>
@@ -233,6 +253,9 @@
     <string name="notif_remove_now">¡Quita el anillo ahora en %1$s!</string>
     <string name="notif_remove_title">Quitar el anillo</string>
     <string name="notif_two_weeks_remaining">Quedan dos semanas con el anillo.</string>
+    <string name="stock_notification_title">Stock de anillos actualizado</string>
+    <string name="stock_recipe_check_title">Revisar receta</string>
+    <string name="stock_recipe_check_message">¿Se consiguió una receta nueva? Si sí, vuelve a aumentar el stock de anillos.</string>
 
     <!-- Home -->
     <string name="home_at_time">a las %1$s</string>
@@ -447,6 +470,12 @@
     <string name="backup_field_navigation_animation">Animación de navegación</string>
     <string name="backup_field_notes_last_saved">Última fecha de guardado de las notas</string>
     <string name="backup_field_notes_text">Contenido de las notas</string>
+    <string name="backup_field_stock_tracking">Seguimiento del stock activado</string>
+    <string name="backup_field_stock_count">Anillos restantes</string>
+    <string name="backup_field_low_stock_threshold">Umbral de bajo stock</string>
+    <string name="backup_field_low_stock_reminder">Notificaciones de stock activadas</string>
+    <string name="backup_field_last_stock_decrement">Última inserción contada</string>
+    <string name="backup_field_last_low_stock_notification">Último recuento notificado del stock</string>
     <string name="backup_field_notification_flags_format">Indicadores de notificación: %1$d entradas (%2$d activas)</string>
     <string name="backup_field_notification_hashes_format">Instantáneas de la configuración de notificaciones: %1$d entradas</string>
     <string name="backup_field_period_tracking">Seguimiento del período</string>
@@ -600,6 +629,7 @@
     <string name="tour_body_settings_info">Muestra la versión, la información del desarrollador y los enlaces de contacto.</string>
     <string name="tour_body_settings_language">Cambiar entre diferentes idiomas.</string>
     <string name="tour_body_settings_notifications">Abre los ajustes detallados de recordatorios. Allí puedes configurar los horarios, enviar una notificación de prueba, permitir el permiso de notificaciones, habilitar alarmas exactas y desactivar la optimización de la batería si los recordatorios se retrasan.</string>
+    <string name="tour_body_settings_stock">Abre aquí las herramientas del stock de anillos. Puedes activar o desactivar el seguimiento, ajustar cuántos anillos quedan y controlar las notificaciones del stock.</string>
     <string name="tour_body_settings_reset">Elimina todos los datos guardados y restablece la aplicación.</string>
     <string name="tour_body_settings_update">Busca nuevas versiones de la aplicación e instálalas.</string>
     <string name="tour_complete_done">Hecho</string>
@@ -667,4 +697,23 @@
     <string name="period_details_pdf_notification_title">PDF guardado</string>
     <string name="period_details_pdf_notification_text">Pulsa para abrir el PDF exportado con los detalles del periodo.</string>
     <string name="period_details_pdf_open_action">Abrir PDF</string>
+    <string name="stock_adjust_minus">-1</string>
+    <string name="stock_adjust_plus">+1</string>
+    <string name="stock_adjust_reset">Restablecer</string>
+    <plurals name="home_stock_status">
+        <item quantity="one">Stock de anillos: %d anillo</item>
+        <item quantity="other">Stock de anillos: %d anillos</item>
+    </plurals>
+    <plurals name="settings_stock_count_value">
+        <item quantity="one">%d anillo</item>
+        <item quantity="other">%d anillos</item>
+    </plurals>
+    <plurals name="settings_stock_threshold_value">
+        <item quantity="one">%d anillo</item>
+        <item quantity="other">%d anillos</item>
+    </plurals>
+    <plurals name="stock_notification_message">
+        <item quantity="one">Stock de anillos: %d anillo</item>
+        <item quantity="other">Stock de anillos: %d anillos</item>
+    </plurals>
 </resources>

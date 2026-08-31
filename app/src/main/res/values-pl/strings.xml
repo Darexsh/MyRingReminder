@@ -126,6 +126,26 @@
     <string name="settings_label_calendar_range">Zakres kalendarza</string>
     <string name="settings_label_cycle_length">Długość cyklu</string>
     <string name="settings_label_start_date">Data założenia</string>
+    <string name="settings_stock_tracker_dialog_title">Kontrola zapasu</string>
+    <string name="settings_stock_tracker_enable">Włącz</string>
+    <string name="settings_stock_tracker_enable_label">Włącz śledzenie zapasu</string>
+    <string name="settings_stock_tracker_enable_message">Śledź, ile krążków jest jeszcze dostępnych do przyszłego użycia.</string>
+    <string name="settings_stock_tracker_disable">Wyłącz</string>
+    <string name="settings_stock_tracker_disable_message">Wyłącz śledzenie zapasu. Zapisana ilość pozostanie zachowana do czasu ponownego włączenia.</string>
+    <string name="settings_stock_tracker_hint">Zapas obejmuje tylko przyszłe użycie krążków. Aktualnie używany krążek jest traktowany jako już zużyty.</string>
+    <string name="settings_stock_tracker_label">Zapas krążków</string>
+    <string name="settings_stock_tracker_off">Wyłączone</string>
+    <string name="settings_stock_tracker_value">%1$d pozostało, alert przy %2$d</string>
+    <string name="settings_stock_count_label">Pozostałe krążki</string>
+    <string name="settings_low_stock_threshold_label">Próg alertu niskiego zapasu</string>
+    <string name="settings_low_stock_reminder_label">Włącz alert niskiego zapasu</string>
+    <string name="settings_stock_reminder_label">Powiadomienia o zapasie</string>
+    <string name="settings_stock_reminder_enable_message">Wyślij powiadomienie za każdym razem, gdy nowo założony krążek zmniejszy pozostały zapas.</string>
+    <string name="settings_stock_reminder_disable_message">Przestań wysyłać powiadomienia o zapasie krążków, dopóki nie włączysz ich ponownie.</string>
+    <string name="settings_stock_tools_hint_enable">Włącz lub wyłącz śledzenie zapasu krążków.</string>
+    <string name="settings_stock_tools_hint_count">Ustaw, ile krążków masz jeszcze dostępnych.</string>
+    <string name="settings_stock_tools_hint_threshold">Wybierz, kiedy ma pojawić się alert niskiego zapasu.</string>
+    <string name="settings_stock_tools_hint_reminder">Zdecyduj, czy aplikacja ma wysyłać powiadomienia o zapasie krążków.</string>
     <string name="settings_label_time">Godzina założenia</string>
     <string name="settings_calendar_range_back">Wstecz</string>
     <string name="settings_calendar_range_button">Zakres kalendarza:\n%1$d %2$s wstecz, %3$d %4$s w przód</string>
@@ -233,6 +253,9 @@
     <string name="notif_remove_now">Zdejmij pierścień teraz o %1$s!</string>
     <string name="notif_remove_title">Zdejmij pierścień</string>
     <string name="notif_two_weeks_remaining">Pozostały dwa tygodnie z pierścieniem.</string>
+    <string name="stock_notification_title">Zapas krążków zaktualizowany</string>
+    <string name="stock_recipe_check_title">Sprawdź receptę</string>
+    <string name="stock_recipe_check_message">Czy udało się zdobyć nową receptę? Jeśli tak, zwiększ ponownie zapas krążków.</string>
 
     <!-- Home -->
     <string name="home_at_time">o %1$s</string>
@@ -447,6 +470,12 @@
     <string name="backup_field_navigation_animation">Animacja nawigacji</string>
     <string name="backup_field_notes_last_saved">Ostatni zapis notatek</string>
     <string name="backup_field_notes_text">Treść notatek</string>
+    <string name="backup_field_stock_tracking">Śledzenie zapasu włączone</string>
+    <string name="backup_field_stock_count">Pozostałe krążki</string>
+    <string name="backup_field_low_stock_threshold">Próg niskiego zapasu</string>
+    <string name="backup_field_low_stock_reminder">Powiadomienia o zapasie włączone</string>
+    <string name="backup_field_last_stock_decrement">Ostatnio policzone założenie</string>
+    <string name="backup_field_last_low_stock_notification">Ostatni powiadomiony stan zapasu</string>
     <string name="backup_field_notification_flags_format">Flagi powiadomień: %1$d wpisów (aktywne: %2$d)</string>
     <string name="backup_field_notification_hashes_format">Migawki ustawień powiadomień: %1$d wpisów</string>
     <string name="backup_field_period_tracking">Śledzenie okresu</string>
@@ -600,6 +629,7 @@
     <string name="tour_body_settings_info">Pokazuje wersję, informacje o deweloperze i linki kontaktowe.</string>
     <string name="tour_body_settings_language">Przełączaj między różnymi językami.</string>
     <string name="tour_body_settings_notifications">Otwiera szczegółowe ustawienia przypomnień. Tutaj możesz ustawić czasy przypomnień, wysłać powiadomienie testowe, zezwolić na powiadomienia, zezwolić na dokładne alarmy i wyłączyć optymalizację baterii, jeśli przypomnienia się opóźniają.</string>
+    <string name="tour_body_settings_stock">Tutaj otworzysz narzędzia zapasu krążków. Możesz włączyć lub wyłączyć śledzenie zapasu, ustawić ile krążków zostało i sterować powiadomieniami o zapasie.</string>
     <string name="tour_body_settings_reset">Usuń wszystkie dane i zresetuj aplikację.</string>
     <string name="tour_body_settings_update">Sprawdzaj i instaluj nowe wersje aplikacji.</string>
     <string name="tour_complete_done">Gotowe</string>
@@ -667,4 +697,31 @@
     <string name="period_details_pdf_notification_title">PDF zapisano</string>
     <string name="period_details_pdf_notification_text">Dotknij, aby otworzyć wyeksportowany PDF ze szczegółami okresu.</string>
     <string name="period_details_pdf_open_action">Otwórz PDF</string>
+    <string name="stock_adjust_minus">-1</string>
+    <string name="stock_adjust_plus">+1</string>
+    <string name="stock_adjust_reset">Resetuj</string>
+    <plurals name="home_stock_status">
+        <item quantity="one">Zapas krążków: %d krążek</item>
+        <item quantity="few">Zapas krążków: %d krążki</item>
+        <item quantity="many">Zapas krążków: %d krążków</item>
+        <item quantity="other">Zapas krążków: %d krążka</item>
+    </plurals>
+    <plurals name="settings_stock_count_value">
+        <item quantity="one">%d krążek</item>
+        <item quantity="few">%d krążki</item>
+        <item quantity="many">%d krążków</item>
+        <item quantity="other">%d krążka</item>
+    </plurals>
+    <plurals name="settings_stock_threshold_value">
+        <item quantity="one">%d krążek</item>
+        <item quantity="few">%d krążki</item>
+        <item quantity="many">%d krążków</item>
+        <item quantity="other">%d krążka</item>
+    </plurals>
+    <plurals name="stock_notification_message">
+        <item quantity="one">Zapas krążków: %d krążek</item>
+        <item quantity="few">Zapas krążków: %d krążki</item>
+        <item quantity="many">Zapas krążków: %d krążków</item>
+        <item quantity="other">Zapas krążków: %d krążka</item>
+    </plurals>
 </resources>

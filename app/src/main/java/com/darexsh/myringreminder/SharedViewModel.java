@@ -32,6 +32,10 @@ public class SharedViewModel extends ViewModel {
     private final MutableLiveData<Integer> calendarRemovalColor = new MutableLiveData<>();
     private final MutableLiveData<Integer> calendarInsertionColor = new MutableLiveData<>();
     private final MutableLiveData<Integer> navigationAnimationStyle = new MutableLiveData<>();
+    private final MutableLiveData<Boolean> stockTrackingEnabled = new MutableLiveData<>();
+    private final MutableLiveData<Integer> ringStockCount = new MutableLiveData<>();
+    private final MutableLiveData<Integer> lowStockThreshold = new MutableLiveData<>();
+    private final MutableLiveData<Boolean> lowStockReminderEnabled = new MutableLiveData<>();
 
     public SharedViewModel(SettingsRepository repository) {
         this.repository = repository;
@@ -56,6 +60,10 @@ public class SharedViewModel extends ViewModel {
         calendarRemovalColor.setValue(repository.getCalendarRemovalColor());
         calendarInsertionColor.setValue(repository.getCalendarInsertionColor());
         navigationAnimationStyle.setValue(repository.getNavigationAnimationStyle());
+        stockTrackingEnabled.setValue(repository.isStockTrackingEnabled());
+        ringStockCount.setValue(repository.getRingStockCount());
+        lowStockThreshold.setValue(repository.getLowStockThreshold());
+        lowStockReminderEnabled.setValue(repository.isLowStockReminderEnabled());
     }
 
     // Getters for LiveData
@@ -141,6 +149,22 @@ public class SharedViewModel extends ViewModel {
 
     public LiveData<Integer> getNavigationAnimationStyle() {
         return navigationAnimationStyle;
+    }
+
+    public LiveData<Boolean> getStockTrackingEnabled() {
+        return stockTrackingEnabled;
+    }
+
+    public LiveData<Integer> getRingStockCount() {
+        return ringStockCount;
+    }
+
+    public LiveData<Integer> getLowStockThreshold() {
+        return lowStockThreshold;
+    }
+
+    public LiveData<Boolean> getLowStockReminderEnabled() {
+        return lowStockReminderEnabled;
     }
 
     public SettingsRepository getRepository() {
@@ -245,5 +269,32 @@ public class SharedViewModel extends ViewModel {
     public void setNavigationAnimationStyle(int style) {
         repository.saveNavigationAnimationStyle(style);
         navigationAnimationStyle.setValue(style);
+    }
+
+    public void setStockTrackingEnabled(boolean enabled) {
+        repository.setStockTrackingEnabled(enabled);
+        stockTrackingEnabled.setValue(enabled);
+    }
+
+    public void setRingStockCount(int count) {
+        repository.setRingStockCount(count);
+        ringStockCount.setValue(Math.max(0, count));
+    }
+
+    public void setLowStockThreshold(int threshold) {
+        repository.setLowStockThreshold(threshold);
+        lowStockThreshold.setValue(Math.max(0, threshold));
+    }
+
+    public void setLowStockReminderEnabled(boolean enabled) {
+        repository.setLowStockReminderEnabled(enabled);
+        lowStockReminderEnabled.setValue(enabled);
+    }
+
+    public void refreshStockState() {
+        stockTrackingEnabled.setValue(repository.isStockTrackingEnabled());
+        ringStockCount.setValue(repository.getRingStockCount());
+        lowStockThreshold.setValue(repository.getLowStockThreshold());
+        lowStockReminderEnabled.setValue(repository.isLowStockReminderEnabled());
     }
 }

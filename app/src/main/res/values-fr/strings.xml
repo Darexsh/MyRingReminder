@@ -126,6 +126,26 @@
     <string name="settings_label_calendar_range">Plage du calendrier</string>
     <string name="settings_label_cycle_length">Durée du cycle</string>
     <string name="settings_label_start_date">Date d\'insertion</string>
+    <string name="settings_stock_tracker_dialog_title">Suivi du stock</string>
+    <string name="settings_stock_tracker_enable">Activer</string>
+    <string name="settings_stock_tracker_enable_label">Activer le suivi du stock</string>
+    <string name="settings_stock_tracker_enable_message">Suivez combien d\'anneaux restent disponibles pour une utilisation future.</string>
+    <string name="settings_stock_tracker_disable">Désactiver</string>
+    <string name="settings_stock_tracker_disable_message">Désactive le suivi du stock. La quantité enregistrée reste conservée jusqu\'à la prochaine activation.</string>
+    <string name="settings_stock_tracker_hint">Le stock ne compte que l\'utilisation future des anneaux. L\'anneau actuellement porté est considéré comme déjà utilisé.</string>
+    <string name="settings_stock_tracker_label">Stock d\'anneaux</string>
+    <string name="settings_stock_tracker_off">Désactivé</string>
+    <string name="settings_stock_tracker_value">%1$d restants, alerte à %2$d</string>
+    <string name="settings_stock_count_label">Anneaux restants</string>
+    <string name="settings_low_stock_threshold_label">Seuil d\'alerte stock faible</string>
+    <string name="settings_low_stock_reminder_label">Activer l\'alerte stock faible</string>
+    <string name="settings_stock_reminder_label">Notifications de stock</string>
+    <string name="settings_stock_reminder_enable_message">Envoie une notification chaque fois qu\'une nouvelle insertion réduit le stock restant d\'anneaux.</string>
+    <string name="settings_stock_reminder_disable_message">N\'envoie plus de notifications de stock d\'anneaux jusqu\'à la prochaine activation.</string>
+    <string name="settings_stock_tools_hint_enable">Active ou désactive le suivi du stock d\'anneaux.</string>
+    <string name="settings_stock_tools_hint_count">Définis combien d\'anneaux sont encore disponibles.</string>
+    <string name="settings_stock_tools_hint_threshold">Choisis quand l\'alerte de stock faible doit apparaître.</string>
+    <string name="settings_stock_tools_hint_reminder">Décide si l\'application doit envoyer des notifications sur le stock d\'anneaux.</string>
     <string name="settings_label_time">Heure d\'insertion</string>
     <string name="settings_calendar_range_back">Précédent</string>
     <string name="settings_calendar_range_button">Plage du calendrier :\n%1$d %2$s avant, %3$d %4$s après</string>
@@ -233,6 +253,9 @@
     <string name="notif_remove_now">Retirez l\'anneau maintenant à %1$s !</string>
     <string name="notif_remove_title">Retirer l\'anneau</string>
     <string name="notif_two_weeks_remaining">Encore deux semaines avec l\'anneau.</string>
+    <string name="stock_notification_title">Stock d\'anneaux mis à jour</string>
+    <string name="stock_recipe_check_title">Vérifier l\'ordonnance</string>
+    <string name="stock_recipe_check_message">Une nouvelle ordonnance a-t-elle été obtenue ? Si oui, augmente à nouveau le stock d\'anneaux.</string>
 
     <!-- Home -->
     <string name="home_at_time">à %1$s</string>
@@ -447,6 +470,12 @@
     <string name="backup_field_navigation_animation">Animation de navigation</string>
     <string name="backup_field_notes_last_saved">Dernière sauvegarde des notes</string>
     <string name="backup_field_notes_text">Contenu des notes</string>
+    <string name="backup_field_stock_tracking">Suivi du stock activé</string>
+    <string name="backup_field_stock_count">Anneaux restants</string>
+    <string name="backup_field_low_stock_threshold">Seuil de stock faible</string>
+    <string name="backup_field_low_stock_reminder">Notifications de stock activées</string>
+    <string name="backup_field_last_stock_decrement">Dernière insertion comptée</string>
+    <string name="backup_field_last_low_stock_notification">Dernier stock notifié</string>
     <string name="backup_field_notification_flags_format">Drapeaux de notification : %1$d entrées (%2$d actives)</string>
     <string name="backup_field_notification_hashes_format">Instantannés des paramètres de notification : %1$d entrées</string>
     <string name="backup_field_period_tracking">Suivi des règles</string>
@@ -600,6 +629,7 @@
     <string name="tour_body_settings_info">Affiche la version, les infos développeur et les liens de contact.</string>
     <string name="tour_body_settings_language">Basculez entre les différentes langues.</string>
     <string name="tour_body_settings_notifications">Ouvre les réglages détaillés des rappels. Vous pouvez y définir les heures de rappel, envoyer une notification de test, autoriser les notifications, autoriser les alarmes exactes et désactiver l\'optimisation de la batterie si les rappels arrivent en retard.</string>
+    <string name="tour_body_settings_stock">Ouvrez ici les outils du stock d\'anneaux. Vous pouvez activer ou désactiver le suivi, ajuster le nombre d\'anneaux restants et gérer les notifications de stock.</string>
     <string name="tour_body_settings_reset">Supprimez toutes les données et réinitialisez l\'application.</string>
     <string name="tour_body_settings_update">Vérifiez les nouvelles versions et installez-les.</string>
     <string name="tour_complete_done">Terminé</string>
@@ -667,4 +697,23 @@
     <string name="period_details_pdf_notification_title">PDF enregistré</string>
     <string name="period_details_pdf_notification_text">Appuyez pour ouvrir le PDF exporté des détails de période.</string>
     <string name="period_details_pdf_open_action">Ouvrir le PDF</string>
+    <string name="stock_adjust_minus">-1</string>
+    <string name="stock_adjust_plus">+1</string>
+    <string name="stock_adjust_reset">Réinitialiser</string>
+    <plurals name="home_stock_status">
+        <item quantity="one">Stock d\'anneaux : %d anneau</item>
+        <item quantity="other">Stock d\'anneaux : %d anneaux</item>
+    </plurals>
+    <plurals name="settings_stock_count_value">
+        <item quantity="one">%d anneau</item>
+        <item quantity="other">%d anneaux</item>
+    </plurals>
+    <plurals name="settings_stock_threshold_value">
+        <item quantity="one">%d anneau</item>
+        <item quantity="other">%d anneaux</item>
+    </plurals>
+    <plurals name="stock_notification_message">
+        <item quantity="one">Stock d\'anneaux : %d anneau</item>
+        <item quantity="other">Stock d\'anneaux : %d anneaux</item>
+    </plurals>
 </resources>
