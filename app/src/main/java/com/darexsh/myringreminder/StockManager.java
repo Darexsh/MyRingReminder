@@ -16,8 +16,6 @@ import java.util.Calendar;
 final class StockManager {
 
     private static final int STOCK_NOTIFICATION_ID = 830421;
-    private static final long RECIPE_CHECK_DELAY_MS = 7L * 24L * 60L * 60L * 1000L;
-
     private StockManager() {
     }
 
@@ -205,8 +203,9 @@ final class StockManager {
             return;
         }
 
-        long triggerAtMillis = cycleStartMillis + RECIPE_CHECK_DELAY_MS;
-        if (triggerAtMillis <= System.currentTimeMillis()) {
+        long triggerAtMillis = cycleStartMillis
+                + (long) repository.getStockRecipeCheckDelayDays() * 24L * 60L * 60L * 1000L;
+        if (triggerAtMillis <= DebugTimeProvider.now(repository).getTimeInMillis()) {
             return;
         }
 

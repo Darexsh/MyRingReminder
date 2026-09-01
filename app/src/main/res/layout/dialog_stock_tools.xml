@@ -208,6 +208,72 @@
                     android:textColor="?attr/colorOnBackground"
                     android:textSize="15sp" />
             </LinearLayout>
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:background="#20FFFFFF" />
+
+            <LinearLayout
+                android:id="@+id/btn_stock_tools_recipe_delay"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="?attr/selectableItemBackground"
+                android:clickable="true"
+                android:focusable="true"
+                android:gravity="center_vertical"
+                android:minHeight="64dp"
+                android:orientation="horizontal"
+                android:paddingStart="8dp"
+                android:paddingTop="14dp"
+                android:paddingEnd="8dp"
+                android:paddingBottom="14dp">
+
+                <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:id="@+id/tv_stock_tools_recipe_delay_label"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/settings_stock_recipe_delay_label"
+                        android:textColor="?attr/colorOnBackground"
+                        android:textSize="15sp"
+                        android:textStyle="bold" />
+
+                    <TextView
+                        android:id="@+id/tv_stock_tools_recipe_delay_hint"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="2dp"
+                        android:text="@string/settings_stock_tools_hint_recipe_delay"
+                        android:textColor="?attr/colorOnBackground"
+                        android:textSize="12sp" />
+                </LinearLayout>
+
+                <TextView
+                    android:id="@+id/tv_stock_tools_recipe_delay_value"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="12dp"
+                    android:ellipsize="end"
+                    android:maxWidth="132dp"
+                    android:singleLine="true"
+                    android:textColor="?attr/colorOnBackground"
+                    android:textSize="14sp" />
+
+                <TextView
+                    android:id="@+id/tv_stock_tools_recipe_delay_chevron"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="12dp"
+                    android:text=">"
+                    android:textColor="?attr/colorOnBackground"
+                    android:textSize="15sp" />
+            </LinearLayout>
         </LinearLayout>
     </LinearLayout>
 </ScrollView>

@@ -1,7 +1,7 @@
 <resources>
     <!-- App -->
     <string name="app_info_actions_title">Eylemler</string>
-    <string name="app_info_description">MyRingReminder, doğum kontrol halkası döngülerini yönetmek ve takip etmek için geliştirilmiş bir Android uygulamasıdır. Uygulama; takma, çıkarma ve halkasız günler için renk kodlu bir takvim, özelleştirilebilir hatırlatıcılar, notlar, widget\'lar ve yedekleme/geri yükleme özellikleri sunar. Ayrıca bir hoş geldiniz turu, döngü geçmişi, döngünün uzatılması için rehberlik (\"halkayı daha uzun süre kullan\"), halkasız hafta sırasında adet takibi ve aralık filtreleri ile biçimlendirilmiş PDF dışa aktarma sunan özel bir Adet Detayları görünümü içerir. Arka plan görselleri ve renk ayarları gibi kişiselleştirme seçenekleri, uygulamayı isteğe göre özelleştirmeyi sağlar.\n\nÖnemli not: Bu uygulama yalnızca doğum kontrol halkası döngülerinin kişisel organizasyonu ve takibi amacıyla tasarlanmıştır. Tıbbi bir ürün değildir, tıbbi tavsiyenin yerine geçmez ve tıbbi değerlendirme veya teşhise dayanmaz. Kullanım hakkında sorularınız veya sağlıkla ilgili endişeleriniz varsa bir sağlık uzmanına danışın.\n\nTüm veriler yalnızca bu cihazda yerel olarak saklanır.</string>
+    <string name="app_info_description">MyRingReminder, doğum kontrol halkası döngülerini yönetmek ve takip etmek için geliştirilmiş bir Android uygulamasıdır. Uygulama; takma, çıkarma ve halkasız günler için renk kodlu bir takvim, özelleştirilebilir hatırlatıcılar, halka stoğu takibi, notlar, widget\'lar ve yedekleme/geri yükleme özellikleri sunar. Ayrıca bir hoş geldiniz turu, döngü geçmişi, döngünün uzatılması için rehberlik (\"halkayı daha uzun süre kullan\"), halkasız hafta sırasında adet takibi ve aralık filtreleri ile biçimlendirilmiş PDF dışa aktarma sunan özel bir Adet Detayları görünümü içerir. Arka plan görselleri ve renk ayarları gibi kişiselleştirme seçenekleri, uygulamayı isteğe göre özelleştirmeyi sağlar.\n\nÖnemli not: Bu uygulama yalnızca doğum kontrol halkası döngülerinin kişisel organizasyonu ve takibi amacıyla tasarlanmıştır. Tıbbi bir ürün değildir, tıbbi tavsiyenin yerine geçmez ve tıbbi değerlendirme veya teşhise dayanmaz. Kullanım hakkında sorularınız veya sağlıkla ilgili endişeleriniz varsa bir sağlık uzmanına danışın.\n\nTüm veriler yalnızca bu cihazda yerel olarak saklanır.</string>
     <string name="app_info_developer">Geliştirici: %1$s</string>
     <string name="app_info_developer_label">Geliştirici:</string>
     <string name="app_info_developer_name">Daniel Sichler tarafından Darexsh</string>
@@ -140,12 +140,14 @@
     <string name="settings_low_stock_threshold_label">Düşük stok uyarı eşiği</string>
     <string name="settings_low_stock_reminder_label">Düşük stok uyarısını etkinleştir</string>
     <string name="settings_stock_reminder_label">Stok bildirimleri</string>
+    <string name="settings_stock_recipe_delay_label">Son halka takibi</string>
     <string name="settings_stock_reminder_enable_message">Yeni takılan bir halka kalan stoğu azalttığında bildirim gönder.</string>
     <string name="settings_stock_reminder_disable_message">Yeniden açana kadar halka stoğu bildirimleri gönderme.</string>
     <string name="settings_stock_tools_hint_enable">Halka stok takibini aç veya kapat.</string>
     <string name="settings_stock_tools_hint_count">Hala kaç halkanın mevcut olduğunu ayarla.</string>
     <string name="settings_stock_tools_hint_threshold">Düşük stok uyarısının ne zaman görünmesi gerektiğini seç.</string>
     <string name="settings_stock_tools_hint_reminder">Uygulamanın halka stoğu hakkında bildirim gönderip göndermeyeceğini belirle.</string>
+    <string name="settings_stock_tools_hint_recipe_delay">Yalnızca 1 halka kaldığında uygulamanın yeni reçeteyi kaç gün sonra sorması gerektiğini seç.</string>
     <string name="settings_label_time">Yerleştirme saati</string>
     <string name="settings_calendar_range_back">Geri</string>
     <string name="settings_calendar_range_button">Takvim aralığı:\n%1$d %2$s geri, %3$d %4$s ileri</string>
@@ -474,6 +476,7 @@
     <string name="backup_field_stock_count">Kalan halkalar</string>
     <string name="backup_field_low_stock_threshold">Düşük stok eşiği</string>
     <string name="backup_field_low_stock_reminder">Stok bildirimleri etkin</string>
+    <string name="backup_field_stock_recipe_delay">Son halka takip gecikmesi</string>
     <string name="backup_field_last_stock_decrement">Son sayılan takma işlemi</string>
     <string name="backup_field_last_low_stock_notification">Son bildirilen stok sayısı</string>
     <string name="backup_field_notification_flags_format">Bildirim bayrakları: %1$d giriş (%2$d aktif)</string>
@@ -711,6 +714,10 @@
     <plurals name="settings_stock_threshold_value">
         <item quantity="one">%d halka</item>
         <item quantity="other">%d halka</item>
+    </plurals>
+    <plurals name="settings_stock_recipe_delay_value">
+        <item quantity="one">%d gün</item>
+        <item quantity="other">%d gün</item>
     </plurals>
     <plurals name="stock_notification_message">
         <item quantity="one">Halka stoğu: %d halka</item>

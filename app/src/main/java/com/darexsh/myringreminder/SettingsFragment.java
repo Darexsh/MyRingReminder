@@ -714,10 +714,12 @@ public class SettingsFragment extends Fragment {
         View btnEnabled = content.findViewById(R.id.btn_stock_tools_enabled);
         View btnCount = content.findViewById(R.id.btn_stock_tools_count);
         View btnReminder = content.findViewById(R.id.btn_stock_tools_reminder);
+        View btnRecipeDelay = content.findViewById(R.id.btn_stock_tools_recipe_delay);
         applyDialogRowAccent(content,
                 R.id.tv_stock_tools_enabled_value, R.id.tv_stock_tools_enabled_chevron,
                 R.id.tv_stock_tools_count_value, R.id.tv_stock_tools_count_chevron,
-                R.id.tv_stock_tools_reminder_value, R.id.tv_stock_tools_reminder_chevron);
+                R.id.tv_stock_tools_reminder_value, R.id.tv_stock_tools_reminder_chevron,
+                R.id.tv_stock_tools_recipe_delay_value, R.id.tv_stock_tools_recipe_delay_chevron);
         updateStockToolsDialogLabels(content);
 
         AlertDialog dialog = new AlertDialog.Builder(requireContext())
@@ -739,6 +741,14 @@ public class SettingsFragment extends Fragment {
             showRingStockCountDialog();
         });
         btnReminder.setOnClickListener(v -> toggleStockReminderFromToolsDialog());
+        btnRecipeDelay.setOnClickListener(v -> {
+            SettingsRepository repository = viewModel.getRepository();
+            if (!repository.isStockTrackingEnabled() || !repository.isLowStockReminderEnabled()) {
+                return;
+            }
+            dialog.dismiss();
+            showStockRecipeCheckDelayDialog();
+        });
     }
 
     private void updateStockToolsDialogLabels(@Nullable View root) {
@@ -747,9 +757,11 @@ public class SettingsFragment extends Fragment {
         }
         SettingsRepository repository = viewModel.getRepository();
         boolean enabled = repository.isStockTrackingEnabled();
+        boolean reminderEnabled = repository.isLowStockReminderEnabled();
         TextView enabledValue = root.findViewById(R.id.tv_stock_tools_enabled_value);
         TextView countValue = root.findViewById(R.id.tv_stock_tools_count_value);
         TextView reminderValue = root.findViewById(R.id.tv_stock_tools_reminder_value);
+        TextView recipeDelayValue = root.findViewById(R.id.tv_stock_tools_recipe_delay_value);
         if (enabledValue != null) {
             enabledValue.setText(enabled ? R.string.settings_background_all_screens_on : R.string.settings_background_all_screens_off);
         }
@@ -758,13 +770,23 @@ public class SettingsFragment extends Fragment {
             countValue.setEnabled(enabled);
         }
         if (reminderValue != null) {
-            reminderValue.setText(repository.isLowStockReminderEnabled()
+            reminderValue.setText(reminderEnabled
                     ? getString(R.string.settings_background_all_screens_on)
                     : getString(R.string.settings_background_all_screens_off));
             reminderValue.setEnabled(enabled);
         }
+        if (recipeDelayValue != null) {
+            int delayDays = repository.getStockRecipeCheckDelayDays();
+            recipeDelayValue.setText(getResources().getQuantityString(
+                    R.plurals.settings_stock_recipe_delay_value,
+                    delayDays,
+                    delayDays
+            ));
+            recipeDelayValue.setEnabled(enabled && reminderEnabled);
+        }
         setStockToolsRowEnabled(root, R.id.btn_stock_tools_count, enabled);
         setStockToolsRowEnabled(root, R.id.btn_stock_tools_reminder, enabled);
+        setStockToolsRowEnabled(root, R.id.btn_stock_tools_recipe_delay, enabled && reminderEnabled);
     }
 
     private void setStockToolsRowEnabled(@NonNull View root, int rowId, boolean enabled) {
@@ -833,6 +855,35 @@ public class SettingsFragment extends Fragment {
         updateStockTrackerButtonText();
         WidgetUpdater.updateAllWidgets(requireContext());
         updateStockToolsDialogLabels(stockToolsDialogView);
+    }
+
+    private void showStockRecipeCheckDelayDialog() {
+        NumberPicker picker = new NumberPicker(requireContext());
+        picker.setMinValue(1);
+        picker.setMaxValue(30);
+        picker.setValue(viewModel.getRepository().getStockRecipeCheckDelayDays());
+
+        android.widget.LinearLayout layout = new android.widget.LinearLayout(requireContext());
+        layout.setOrientation(android.widget.LinearLayout.VERTICAL);
+        int padding = (int) (16 * getResources().getDisplayMetrics().density);
+        layout.setPadding(padding, padding, padding, padding);
+        layout.addView(picker);
+
+        AlertDialog dialog = new AlertDialog.Builder(requireContext())
+                .setTitle(R.string.settings_stock_recipe_delay_label)
+                .setMessage(R.string.settings_stock_tools_hint_recipe_delay)
+                .setView(layout)
+                .setPositiveButton(R.string.dialog_ok, (d, which) -> {
+                    viewModel.setStockRecipeCheckDelayDays(picker.getValue());
+                    StockManager.refreshReminderState(requireContext(), viewModel.getRepository());
+                    viewModel.refreshStockState();
+                    updateStockTrackerButtonText();
+                    WidgetUpdater.updateAllWidgets(requireContext());
+                    reopenStockToolsDialog();
+                })
+                .setNegativeButton(R.string.dialog_cancel, (d, which) -> reopenStockToolsDialog())
+                .show();
+        applyDialogButtonColors(dialog);
     }
 
     private void reopenStockToolsDialog() {
@@ -1599,7 +1650,8 @@ public class SettingsFragment extends Fragment {
     private boolean isStockToolsDialogTarget(int targetViewId) {
         return targetViewId == R.id.btn_stock_tools_enabled
                 || targetViewId == R.id.btn_stock_tools_count
-                || targetViewId == R.id.btn_stock_tools_reminder;
+                || targetViewId == R.id.btn_stock_tools_reminder
+                || targetViewId == R.id.btn_stock_tools_recipe_delay;
     }
 
     public void ensureStockToolsDialogVisibleForTour(int targetViewId) {
@@ -2870,6 +2922,13 @@ public class SettingsFragment extends Fragment {
                 return getString(R.string.backup_field_low_stock_threshold) + ": " + prefToInt(value);
             case "low_stock_reminder_enabled":
                 return getString(R.string.backup_field_low_stock_reminder) + ": " + formatBoolean(value);
+            case "stock_recipe_check_delay_days":
+                return getString(R.string.backup_field_stock_recipe_delay) + ": "
+                        + getResources().getQuantityString(
+                        R.plurals.settings_stock_recipe_delay_value,
+                        prefToInt(value),
+                        prefToInt(value)
+                );
             case "last_stock_decrement_cycle_start":
                 return getString(R.string.backup_field_last_stock_decrement) + ": " + formatTimestamp(value);
             case "last_low_stock_notification_count":
@@ -3142,6 +3201,7 @@ public class SettingsFragment extends Fragment {
         viewModel.setRingStockCount(restoredRepository.getRingStockCount());
         viewModel.setLowStockThreshold(restoredRepository.getLowStockThreshold());
         viewModel.setLowStockReminderEnabled(restoredRepository.isLowStockReminderEnabled());
+        viewModel.setStockRecipeCheckDelayDays(restoredRepository.getStockRecipeCheckDelayDays());
 
         WidgetUpdater.updateAllWidgets(requireContext());
         Toast.makeText(requireContext(), R.string.backup_restored_toast, Toast.LENGTH_SHORT).show();

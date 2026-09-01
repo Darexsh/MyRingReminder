@@ -1,7 +1,7 @@
 <resources>
     <!-- App -->
     <string name="app_info_actions_title">Ações</string>
-    <string name="app_info_description">MyRingReminder é um aplicativo Android para gerenciamento e acompanhamento dos ciclos do anel contraceptivo. O aplicativo oferece um calendário com cores para os dias de inserção, remoção e período sem anel, lembretes personalizáveis, notas, widgets e recursos de backup/restauração. Também inclui um tour de boas-vindas, histórico de ciclos, orientações para prolongar um ciclo ("usar o anel por mais tempo"), acompanhamento menstrual durante a semana sem anel e uma visualização dedicada de Detalhes do período com filtros de intervalo e exportação de PDF formatado. Opções de personalização, como imagens de fundo e configurações de cores, permitem ajustes individuais.\n\nAviso importante: Este aplicativo destina-se exclusivamente à organização pessoal e ao acompanhamento dos ciclos do anel contraceptivo. Não é um produto médico, não substitui orientação médica e não se baseia em avaliações ou diagnósticos médicos. Se tiver dúvidas sobre o uso ou questões relacionadas à saúde, procure orientação médica.\n\nTodos os dados são armazenados apenas localmente neste dispositivo.</string>
+    <string name="app_info_description">MyRingReminder é um aplicativo Android para gerenciamento e acompanhamento dos ciclos do anel contraceptivo. O aplicativo oferece um calendário com cores para os dias de inserção, remoção e período sem anel, lembretes personalizáveis, acompanhamento do estoque de anéis, notas, widgets e recursos de backup/restauração. Também inclui um tour de boas-vindas, histórico de ciclos, orientações para prolongar um ciclo ("usar o anel por mais tempo"), acompanhamento menstrual durante a semana sem anel e uma visualização dedicada de Detalhes do período com filtros de intervalo e exportação de PDF formatado. Opções de personalização, como imagens de fundo e configurações de cores, permitem ajustes individuais.\n\nAviso importante: Este aplicativo destina-se exclusivamente à organização pessoal e ao acompanhamento dos ciclos do anel contraceptivo. Não é um produto médico, não substitui orientação médica e não se baseia em avaliações ou diagnósticos médicos. Se tiver dúvidas sobre o uso ou questões relacionadas à saúde, procure orientação médica.\n\nTodos os dados são armazenados apenas localmente neste dispositivo.</string>
     <string name="app_info_developer">Desenvolvedor: %1$s</string>
     <string name="app_info_developer_label">Desenvolvedor:</string>
     <string name="app_info_developer_name">Darexsh por Daniel Sichler</string>
@@ -140,12 +140,14 @@
     <string name="settings_low_stock_threshold_label">Limite de alerta de estoque baixo</string>
     <string name="settings_low_stock_reminder_label">Ativar alerta de estoque baixo</string>
     <string name="settings_stock_reminder_label">Notificações de estoque</string>
+    <string name="settings_stock_recipe_delay_label">Acompanhamento do último anel</string>
     <string name="settings_stock_reminder_enable_message">Envie uma notificação sempre que um anel recém-inserido reduzir o estoque restante.</string>
     <string name="settings_stock_reminder_disable_message">Pare de enviar notificações do estoque de anéis até que você as ative novamente.</string>
     <string name="settings_stock_tools_hint_enable">Ative ou desative o controle do estoque de anéis.</string>
     <string name="settings_stock_tools_hint_count">Defina quantos anéis você ainda tem disponíveis.</string>
     <string name="settings_stock_tools_hint_threshold">Escolha quando o alerta de estoque baixo deve aparecer.</string>
     <string name="settings_stock_tools_hint_reminder">Decida se o app deve enviar notificações sobre o estoque de anéis.</string>
+    <string name="settings_stock_tools_hint_recipe_delay">Escolha após quantos dias o app deve perguntar sobre uma nova receita quando restar apenas 1 anel.</string>
     <string name="settings_label_time">Hora de inserção</string>
     <string name="settings_calendar_range_back">Atrás</string>
     <string name="settings_calendar_range_button">Intervalo do calendário:\n%1$d %2$s atrás, %3$d %4$s à frente</string>
@@ -474,6 +476,7 @@
     <string name="backup_field_stock_count">Anéis restantes</string>
     <string name="backup_field_low_stock_threshold">Limite de estoque baixo</string>
     <string name="backup_field_low_stock_reminder">Notificações de estoque ativadas</string>
+    <string name="backup_field_stock_recipe_delay">Atraso do acompanhamento do último anel</string>
     <string name="backup_field_last_stock_decrement">Última inserção contabilizada</string>
     <string name="backup_field_last_low_stock_notification">Última contagem de estoque notificada</string>
     <string name="backup_field_notification_flags_format">Sinalizadores de notificação: %1$d entradas (%2$d ativas)</string>
@@ -711,6 +714,10 @@
     <plurals name="settings_stock_threshold_value">
         <item quantity="one">%d anel</item>
         <item quantity="other">%d anéis</item>
+    </plurals>
+    <plurals name="settings_stock_recipe_delay_value">
+        <item quantity="one">%d dia</item>
+        <item quantity="other">%d dias</item>
     </plurals>
     <plurals name="stock_notification_message">
         <item quantity="one">Estoque de anéis: %d anel</item>

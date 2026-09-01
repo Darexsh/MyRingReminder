@@ -1,7 +1,7 @@
 <resources>
     <!-- App -->
     <string name="app_info_actions_title">操作</string>
-    <string name="app_info_description">MyRingReminder 是一款用于管理和跟踪避孕环周期的 Android 应用程序。该应用提供带颜色标记的日历，用于显示放置日、取出日和无环日，并提供可自定义提醒、笔记、小组件以及备份/恢复功能。此外，它还包含欢迎引导、周期历史记录、周期延长说明（"延长佩戴避孕环"）、无环周期间的经期追踪，以及带范围筛选和格式化 PDF 导出的经期详情页面。背景图片和颜色设置等个性化选项可实现自定义设置。\n\n重要说明：本应用仅用于个人组织和跟踪避孕环周期。它不是医疗产品，不能替代医疗建议，也不基于医学评估或诊断。如果您对使用方法或健康问题有疑问，请咨询医疗专业人员。\n\n所有数据仅存储在此设备本地。</string>
+    <string name="app_info_description">MyRingReminder 是一款用于管理和跟踪避孕环周期的 Android 应用程序。该应用提供带颜色标记的日历，用于显示放置日、取出日和无环日，并提供可自定义提醒、避孕环库存跟踪、笔记、小组件以及备份/恢复功能。此外，它还包含欢迎引导、周期历史记录、周期延长说明（"延长佩戴避孕环"）、无环周期间的经期追踪，以及带范围筛选和格式化 PDF 导出的经期详情页面。背景图片和颜色设置等个性化选项可实现自定义设置。\n\n重要说明：本应用仅用于个人组织和跟踪避孕环周期。它不是医疗产品，不能替代医疗建议，也不基于医学评估或诊断。如果您对使用方法或健康问题有疑问，请咨询医疗专业人员。\n\n所有数据仅存储在此设备本地。</string>
     <string name="app_info_developer">开发者：%1$s</string>
     <string name="app_info_developer_label">开发者：</string>
     <string name="app_info_developer_name">Daniel Sichler 创作的 Darexsh</string>
@@ -140,12 +140,14 @@
     <string name="settings_low_stock_threshold_label">低库存提醒阈值</string>
     <string name="settings_low_stock_reminder_label">启用低库存提醒</string>
     <string name="settings_stock_reminder_label">库存通知</string>
+    <string name="settings_stock_recipe_delay_label">最后一个避孕环跟进</string>
     <string name="settings_stock_reminder_enable_message">每当新置入的避孕环使剩余库存减少时发送通知。</string>
     <string name="settings_stock_reminder_disable_message">在你再次开启之前，不再发送避孕环库存通知。</string>
     <string name="settings_stock_tools_hint_enable">开启或关闭避孕环库存跟踪。</string>
     <string name="settings_stock_tools_hint_count">设置你目前还剩多少个避孕环可用。</string>
     <string name="settings_stock_tools_hint_threshold">选择何时显示低库存提醒。</string>
     <string name="settings_stock_tools_hint_reminder">决定应用是否应发送避孕环库存通知。</string>
+    <string name="settings_stock_tools_hint_recipe_delay">选择当只剩 1 个避孕环时，应用应在几天后询问是否拿到了新处方。</string>
     <string name="settings_label_time">置入时间</string>
     <string name="settings_calendar_range_back">回顾</string>
     <string name="settings_calendar_range_button">日历范围：\n向后 %1$d %2$s，向前 %3$d %4$s</string>
@@ -474,6 +476,7 @@
     <string name="backup_field_stock_count">剩余避孕环</string>
     <string name="backup_field_low_stock_threshold">低库存阈值</string>
     <string name="backup_field_low_stock_reminder">已启用库存通知</string>
+    <string name="backup_field_stock_recipe_delay">最后一个避孕环跟进延迟</string>
     <string name="backup_field_last_stock_decrement">上次已计入的置入时间</string>
     <string name="backup_field_last_low_stock_notification">上次通知的库存数量</string>
     <string name="backup_field_notification_flags_format">通知标记：%1$d 条（%2$d 条激活）</string>
@@ -708,6 +711,9 @@
     </plurals>
     <plurals name="settings_stock_threshold_value">
         <item quantity="other">%d 个</item>
+    </plurals>
+    <plurals name="settings_stock_recipe_delay_value">
+        <item quantity="other">%d 天</item>
     </plurals>
     <plurals name="stock_notification_message">
         <item quantity="other">避孕环库存：%d</item>

@@ -1,7 +1,7 @@
 <resources>
     <!-- App -->
     <string name="app_info_actions_title">Действия</string>
-    <string name="app_info_description">MyRingReminder — это приложение для Android, предназначенное для управления и отслеживания циклов использования контрацептивного кольца. Приложение предоставляет календарь с цветовой маркировкой дней установки, удаления и периода без кольца, настраиваемые напоминания, заметки, виджеты, а также функции резервного копирования и восстановления. Также доступны приветственный тур, история циклов, рекомендации по продлению цикла ("носить кольцо дольше"), отслеживание менструации в неделю без кольца и отдельный экран Детали менструации с фильтрами периода и форматированным экспортом PDF. Возможности персонализации, такие как фоновые изображения и настройки цветов, позволяют настроить приложение индивидуально.\n\nВажно: это приложение предназначено исключительно для личной организации и отслеживания циклов использования контрацептивного кольца. Оно не является медицинским продуктом, не заменяет консультацию врача и не основано на медицинской оценке или диагностике. Если у вас возникли вопросы по использованию приложения или проблемы со здоровьем, обратитесь к медицинскому специалисту.\n\nВсе данные хранятся только локально на данном устройстве.</string>
+    <string name="app_info_description">MyRingReminder — это приложение для Android, предназначенное для управления и отслеживания циклов использования контрацептивного кольца. Приложение предоставляет календарь с цветовой маркировкой дней установки, удаления и периода без кольца, настраиваемые напоминания, отслеживание запаса колец, заметки, виджеты, а также функции резервного копирования и восстановления. Также доступны приветственный тур, история циклов, рекомендации по продлению цикла ("носить кольцо дольше"), отслеживание менструации в неделю без кольца и отдельный экран Детали менструации с фильтрами периода и форматированным экспортом PDF. Возможности персонализации, такие как фоновые изображения и настройки цветов, позволяют настроить приложение индивидуально.\n\nВажно: это приложение предназначено исключительно для личной организации и отслеживания циклов использования контрацептивного кольца. Оно не является медицинским продуктом, не заменяет консультацию врача и не основано на медицинской оценке или диагностике. Если у вас возникли вопросы по использованию приложения или проблемы со здоровьем, обратитесь к медицинскому специалисту.\n\nВсе данные хранятся только локально на данном устройстве.</string>
     <string name="app_info_developer">Разработчик: %1$s</string>
     <string name="app_info_developer_label">Разработчик:</string>
     <string name="app_info_developer_name">Darexsh (Даниэль Сихлер)</string>
@@ -140,12 +140,14 @@
     <string name="settings_low_stock_threshold_label">Порог предупреждения о низком запасе</string>
     <string name="settings_low_stock_reminder_label">Включить предупреждение о низком запасе</string>
     <string name="settings_stock_reminder_label">Уведомления о запасе</string>
+    <string name="settings_stock_recipe_delay_label">Проверка последнего кольца</string>
     <string name="settings_stock_reminder_enable_message">Отправляйте уведомление каждый раз, когда новое установленное кольцо уменьшает оставшийся запас.</string>
     <string name="settings_stock_reminder_disable_message">Не отправляйте уведомления о запасе колец, пока вы снова их не включите.</string>
     <string name="settings_stock_tools_hint_enable">Включите или выключите учет запаса колец.</string>
     <string name="settings_stock_tools_hint_count">Укажите, сколько колец у вас еще доступно.</string>
     <string name="settings_stock_tools_hint_threshold">Выберите, когда должно появляться предупреждение о низком запасе.</string>
     <string name="settings_stock_tools_hint_reminder">Решите, должно ли приложение отправлять уведомления о запасе колец.</string>
+    <string name="settings_stock_tools_hint_recipe_delay">Выберите, через сколько дней приложение должно спросить о новом рецепте, когда останется только 1 кольцо.</string>
     <string name="settings_label_time">Время вставки</string>
     <string name="settings_calendar_range_back">Назад</string>
     <string name="settings_calendar_range_button">Диапазон календаря:\n%1$d %2$s назад, %3$d %4$s вперед</string>
@@ -474,6 +476,7 @@
     <string name="backup_field_stock_count">Оставшиеся кольца</string>
     <string name="backup_field_low_stock_threshold">Порог низкого запаса</string>
     <string name="backup_field_low_stock_reminder">Уведомления о запасе включены</string>
+    <string name="backup_field_stock_recipe_delay">Задержка проверки последнего кольца</string>
     <string name="backup_field_last_stock_decrement">Последняя учтенная установка</string>
     <string name="backup_field_last_low_stock_notification">Последний уведомлённый остаток запаса</string>
     <string name="backup_field_notification_flags_format">Флаги уведомлений: %1$d записей (%2$d активных)</string>
@@ -717,6 +720,12 @@
         <item quantity="few">%d кольца</item>
         <item quantity="many">%d колец</item>
         <item quantity="other">%d кольца</item>
+    </plurals>
+    <plurals name="settings_stock_recipe_delay_value">
+        <item quantity="one">%d день</item>
+        <item quantity="few">%d дня</item>
+        <item quantity="many">%d дней</item>
+        <item quantity="other">%d дня</item>
     </plurals>
     <plurals name="stock_notification_message">
         <item quantity="one">Запас колец: %d кольцо</item>

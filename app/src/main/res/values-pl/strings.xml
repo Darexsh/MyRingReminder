@@ -1,7 +1,7 @@
 <resources>
     <!-- App -->
     <string name="app_info_actions_title">Akcje</string>
-    <string name="app_info_description">MyRingReminder to aplikacja na Androida służąca do zarządzania i śledzenia cykli pierścienia antykoncepcyjnego. Aplikacja oferuje oznaczony kolorami kalendarz dla dni założenia, usunięcia oraz dni bez pierścienia, konfigurowalne przypomnienia, notatki, widżety oraz funkcje tworzenia i przywracania kopii zapasowych. Zawiera również samouczek powitalny, historię cykli, wskazówki dotyczące wydłużenia cyklu ("noszenie pierścienia dłużej"), śledzenie okresu w tygodniu bez pierścienia oraz dedykowany widok Szczegóły okresu z filtrami zakresu i sformatowanym eksportem PDF. Opcje personalizacji, takie jak obrazy tła i ustawienia kolorów, umożliwiają indywidualne dostosowanie aplikacji.\n\nWażna informacja: Ta aplikacja służy wyłącznie do osobistej organizacji i śledzenia cykli pierścienia antykoncepcyjnego. Nie jest wyrobem medycznym, nie zastępuje porady lekarskiej i nie opiera się na ocenie ani diagnozie medycznej. W przypadku pytań dotyczących użytkowania lub problemów zdrowotnych należy skonsultować się z lekarzem lub specjalistą medycznym.\n\nWszystkie dane są przechowywane wyłącznie lokalnie na tym urządzeniu.</string>
+    <string name="app_info_description">MyRingReminder to aplikacja na Androida służąca do zarządzania i śledzenia cykli pierścienia antykoncepcyjnego. Aplikacja oferuje oznaczony kolorami kalendarz dla dni założenia, usunięcia oraz dni bez pierścienia, konfigurowalne przypomnienia, śledzenie zapasu krążków, notatki, widżety oraz funkcje tworzenia i przywracania kopii zapasowych. Zawiera również samouczek powitalny, historię cykli, wskazówki dotyczące wydłużenia cyklu ("noszenie pierścienia dłużej"), śledzenie okresu w tygodniu bez pierścienia oraz dedykowany widok Szczegóły okresu z filtrami zakresu i sformatowanym eksportem PDF. Opcje personalizacji, takie jak obrazy tła i ustawienia kolorów, umożliwiają indywidualne dostosowanie aplikacji.\n\nWażna informacja: Ta aplikacja służy wyłącznie do osobistej organizacji i śledzenia cykli pierścienia antykoncepcyjnego. Nie jest wyrobem medycznym, nie zastępuje porady lekarskiej i nie opiera się na ocenie ani diagnozie medycznej. W przypadku pytań dotyczących użytkowania lub problemów zdrowotnych należy skonsultować się z lekarzem lub specjalistą medycznym.\n\nWszystkie dane są przechowywane wyłącznie lokalnie na tym urządzeniu.</string>
     <string name="app_info_developer">Programista: %1$s</string>
     <string name="app_info_developer_label">Programista:</string>
     <string name="app_info_developer_name">Darexsh autorstwa Daniela Sichlera</string>
@@ -140,12 +140,14 @@
     <string name="settings_low_stock_threshold_label">Próg alertu niskiego zapasu</string>
     <string name="settings_low_stock_reminder_label">Włącz alert niskiego zapasu</string>
     <string name="settings_stock_reminder_label">Powiadomienia o zapasie</string>
+    <string name="settings_stock_recipe_delay_label">Kontrola ostatniego krążka</string>
     <string name="settings_stock_reminder_enable_message">Wyślij powiadomienie za każdym razem, gdy nowo założony krążek zmniejszy pozostały zapas.</string>
     <string name="settings_stock_reminder_disable_message">Przestań wysyłać powiadomienia o zapasie krążków, dopóki nie włączysz ich ponownie.</string>
     <string name="settings_stock_tools_hint_enable">Włącz lub wyłącz śledzenie zapasu krążków.</string>
     <string name="settings_stock_tools_hint_count">Ustaw, ile krążków masz jeszcze dostępnych.</string>
     <string name="settings_stock_tools_hint_threshold">Wybierz, kiedy ma pojawić się alert niskiego zapasu.</string>
     <string name="settings_stock_tools_hint_reminder">Zdecyduj, czy aplikacja ma wysyłać powiadomienia o zapasie krążków.</string>
+    <string name="settings_stock_tools_hint_recipe_delay">Wybierz, po ilu dniach aplikacja ma zapytać o nową receptę, gdy zostanie tylko 1 krążek.</string>
     <string name="settings_label_time">Godzina założenia</string>
     <string name="settings_calendar_range_back">Wstecz</string>
     <string name="settings_calendar_range_button">Zakres kalendarza:\n%1$d %2$s wstecz, %3$d %4$s w przód</string>
@@ -474,6 +476,7 @@
     <string name="backup_field_stock_count">Pozostałe krążki</string>
     <string name="backup_field_low_stock_threshold">Próg niskiego zapasu</string>
     <string name="backup_field_low_stock_reminder">Powiadomienia o zapasie włączone</string>
+    <string name="backup_field_stock_recipe_delay">Opóźnienie kontroli ostatniego krążka</string>
     <string name="backup_field_last_stock_decrement">Ostatnio policzone założenie</string>
     <string name="backup_field_last_low_stock_notification">Ostatni powiadomiony stan zapasu</string>
     <string name="backup_field_notification_flags_format">Flagi powiadomień: %1$d wpisów (aktywne: %2$d)</string>
@@ -717,6 +720,12 @@
         <item quantity="few">%d krążki</item>
         <item quantity="many">%d krążków</item>
         <item quantity="other">%d krążka</item>
+    </plurals>
+    <plurals name="settings_stock_recipe_delay_value">
+        <item quantity="one">%d dzień</item>
+        <item quantity="few">%d dni</item>
+        <item quantity="many">%d dni</item>
+        <item quantity="other">%d dnia</item>
     </plurals>
     <plurals name="stock_notification_message">
         <item quantity="one">Zapas krążków: %d krążek</item>

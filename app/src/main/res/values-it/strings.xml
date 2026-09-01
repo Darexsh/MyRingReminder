@@ -1,7 +1,7 @@
 <resources>
     <!-- App -->
     <string name="app_info_actions_title">Azioni</string>
-    <string name="app_info_description">MyRingReminder è un\'app Android per la gestione e il monitoraggio dei cicli dell\'anello contraccettivo. L\'app offre un calendario con codifica a colori per i giorni di inserimento, rimozione e pausa senza anello, promemoria personalizzabili, note, widget e funzioni di backup/ripristino. Include inoltre un tour di benvenuto, uno storico dei cicli, indicazioni per prolungare un ciclo (\"indossare l\'anello più a lungo\"), il monitoraggio mestruale durante la settimana senza anello e una vista dedicata Dettagli ciclo con filtri periodo ed esportazione PDF formattata. Le opzioni di personalizzazione, come immagini di sfondo e impostazioni dei colori, consentono una configurazione personalizzata.\n\nNota importante: questa app è destinata esclusivamente all\'organizzazione personale e al monitoraggio dei cicli dell\'anello contraccettivo. Non è un dispositivo medico, non sostituisce il parere medico e non si basa su valutazioni o diagnosi mediche. In caso di domande sull\'utilizzo o di problemi di salute, consultare un professionista sanitario.\n\nTutti i dati vengono memorizzati esclusivamente in locale su questo dispositivo.</string>
+    <string name="app_info_description">MyRingReminder è un\'app Android per la gestione e il monitoraggio dei cicli dell\'anello contraccettivo. L\'app offre un calendario con codifica a colori per i giorni di inserimento, rimozione e pausa senza anello, promemoria personalizzabili, monitoraggio della scorta anelli, note, widget e funzioni di backup/ripristino. Include inoltre un tour di benvenuto, uno storico dei cicli, indicazioni per prolungare un ciclo (\"indossare l\'anello più a lungo\"), il monitoraggio mestruale durante la settimana senza anello e una vista dedicata Dettagli ciclo con filtri periodo ed esportazione PDF formattata. Le opzioni di personalizzazione, come immagini di sfondo e impostazioni dei colori, consentono una configurazione personalizzata.\n\nNota importante: questa app è destinata esclusivamente all\'organizzazione personale e al monitoraggio dei cicli dell\'anello contraccettivo. Non è un dispositivo medico, non sostituisce il parere medico e non si basa su valutazioni o diagnosi mediche. In caso di domande sull\'utilizzo o di problemi di salute, consultare un professionista sanitario.\n\nTutti i dati vengono memorizzati esclusivamente in locale su questo dispositivo.</string>
     <string name="app_info_developer">Sviluppatore: %1$s</string>
     <string name="app_info_developer_label">Sviluppatore:</string>
     <string name="app_info_developer_name">Darexsh di Daniel Sichler</string>
@@ -140,12 +140,14 @@
     <string name="settings_low_stock_threshold_label">Soglia avviso scorte basse</string>
     <string name="settings_low_stock_reminder_label">Attiva avviso scorte basse</string>
     <string name="settings_stock_reminder_label">Notifiche scorta anelli</string>
+    <string name="settings_stock_recipe_delay_label">Controllo ultimo anello</string>
     <string name="settings_stock_reminder_enable_message">Invia una notifica ogni volta che un nuovo inserimento riduce la scorta anelli rimanente.</string>
     <string name="settings_stock_reminder_disable_message">Non inviare più notifiche sulla scorta anelli finché non le riattivi.</string>
     <string name="settings_stock_tools_hint_enable">Attiva o disattiva il monitoraggio della scorta anelli.</string>
     <string name="settings_stock_tools_hint_count">Imposta quanti anelli hai ancora disponibili.</string>
     <string name="settings_stock_tools_hint_threshold">Scegli quando deve apparire l\'avviso di scorte basse.</string>
     <string name="settings_stock_tools_hint_reminder">Decidi se l\'app deve inviare notifiche sulla scorta anelli.</string>
+    <string name="settings_stock_tools_hint_recipe_delay">Scegli dopo quanti giorni l\'app deve chiedere di una nuova prescrizione quando resta solo 1 anello.</string>
     <string name="settings_label_time">Ora inserimento</string>
     <string name="settings_calendar_range_back">Indietro</string>
     <string name="settings_calendar_range_button">Intervallo calendario:\n%1$d %2$s indietro, %3$d %4$s avanti</string>
@@ -474,6 +476,7 @@
     <string name="backup_field_stock_count">Anelli rimanenti</string>
     <string name="backup_field_low_stock_threshold">Soglia scorte basse</string>
     <string name="backup_field_low_stock_reminder">Notifiche scorta anelli attive</string>
+    <string name="backup_field_stock_recipe_delay">Ritardo controllo ultimo anello</string>
     <string name="backup_field_last_stock_decrement">Ultimo inserimento conteggiato</string>
     <string name="backup_field_last_low_stock_notification">Ultima scorta notificata</string>
     <string name="backup_field_notification_flags_format">Flag notifiche: %1$d voci (%2$d attive)</string>
@@ -711,6 +714,10 @@
     <plurals name="settings_stock_threshold_value">
         <item quantity="one">%d anello</item>
         <item quantity="other">%d anelli</item>
+    </plurals>
+    <plurals name="settings_stock_recipe_delay_value">
+        <item quantity="one">%d giorno</item>
+        <item quantity="other">%d giorni</item>
     </plurals>
     <plurals name="stock_notification_message">
         <item quantity="one">Scorta anelli: %d anello</item>

@@ -60,6 +60,7 @@ public class SettingsRepository {
     private static final String KEY_RING_STOCK_COUNT = "ring_stock_count";
     private static final String KEY_LOW_STOCK_THRESHOLD = "low_stock_threshold";
     private static final String KEY_LOW_STOCK_REMINDER_ENABLED = "low_stock_reminder_enabled";
+    private static final String KEY_STOCK_RECIPE_CHECK_DELAY_DAYS = "stock_recipe_check_delay_days";
     private static final String KEY_LAST_STOCK_DECREMENT_CYCLE_START = "last_stock_decrement_cycle_start";
     private static final String KEY_LAST_LOW_STOCK_NOTIFICATION_COUNT = "last_low_stock_notification_count";
     private static final Pattern PERIOD_DAY_KEY_PATTERN = Pattern.compile("^\\d{4}-\\d{2}-\\d{2}$");
@@ -405,6 +406,16 @@ public class SettingsRepository {
 
     public void setLowStockReminderEnabled(boolean enabled) {
         sharedPreferences.edit().putBoolean(KEY_LOW_STOCK_REMINDER_ENABLED, enabled).apply();
+    }
+
+    public int getStockRecipeCheckDelayDays() {
+        int days = sharedPreferences.getInt(KEY_STOCK_RECIPE_CHECK_DELAY_DAYS, 7);
+        return Math.max(1, Math.min(30, days));
+    }
+
+    public void setStockRecipeCheckDelayDays(int days) {
+        int clamped = Math.max(1, Math.min(30, days));
+        sharedPreferences.edit().putInt(KEY_STOCK_RECIPE_CHECK_DELAY_DAYS, clamped).apply();
     }
 
     public long getLastStockDecrementCycleStartMillis() {

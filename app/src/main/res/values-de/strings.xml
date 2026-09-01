@@ -1,7 +1,7 @@
 <resources>
     <!-- App -->
     <string name="app_info_actions_title">Aktionen</string>
-    <string name="app_info_description">MyRingReminder ist eine Android-App zur Verwaltung und Nachverfolgung von Verhütungsring-Zyklen. Die App bietet einen farbcodierten Kalender für Einsetz-, Entfernungs- und ringfreie Tage, anpassbare Erinnerungen, Notizen, Widgets sowie Sicherungs- und Wiederherstellungsfunktionen. Zusätzlich enthält sie eine Willkommenstour, einen Zyklusverlauf, Hinweise zum Verlängern eines Zyklus ("Ring länger tragen"), Perioden-Tracking während der ringfreien Woche sowie eine eigene Ansicht Perioden-Details mit Zeitraumfiltern und formatiertem PDF-Export. Personalisierungsoptionen wie Hintergrundbilder und Farbeinstellungen ermöglichen eine individuelle Anpassung.\n\nWichtiger Hinweis: Diese App dient ausschließlich der persönlichen Organisation und Nachverfolgung von Verhütungsring-Zyklen. Sie ist kein Medizinprodukt, ersetzt keine medizinische Beratung und basiert nicht auf medizinischer Beurteilung oder Diagnose. Bei Fragen zur Anwendung oder gesundheitlichen Beschwerden wenden Sie sich bitte an medizinisches Fachpersonal.\n\nAlle Daten werden ausschließlich lokal auf diesem Gerät gespeichert.</string>
+    <string name="app_info_description">MyRingReminder ist eine Android-App zur Verwaltung und Nachverfolgung von Verhütungsring-Zyklen. Die App bietet einen farbcodierten Kalender für Einsetz-, Entfernungs- und ringfreie Tage, anpassbare Erinnerungen, Ringvorrats-Tracking, Notizen, Widgets sowie Sicherungs- und Wiederherstellungsfunktionen. Zusätzlich enthält sie eine Willkommenstour, einen Zyklusverlauf, Hinweise zum Verlängern eines Zyklus ("Ring länger tragen"), Perioden-Tracking während der ringfreien Woche sowie eine eigene Ansicht Perioden-Details mit Zeitraumfiltern und formatiertem PDF-Export. Personalisierungsoptionen wie Hintergrundbilder und Farbeinstellungen ermöglichen eine individuelle Anpassung.\n\nWichtiger Hinweis: Diese App dient ausschließlich der persönlichen Organisation und Nachverfolgung von Verhütungsring-Zyklen. Sie ist kein Medizinprodukt, ersetzt keine medizinische Beratung und basiert nicht auf medizinischer Beurteilung oder Diagnose. Bei Fragen zur Anwendung oder gesundheitlichen Beschwerden wenden Sie sich bitte an medizinisches Fachpersonal.\n\nAlle Daten werden ausschließlich lokal auf diesem Gerät gespeichert.</string>
     <string name="app_info_developer">Entwickler: %1$s</string>
     <string name="app_info_developer_label">Entwickler:</string>
     <string name="app_info_developer_name">Darexsh by Daniel Sichler</string>
@@ -140,12 +140,14 @@
     <string name="settings_low_stock_threshold_label">Warnschwelle bei niedrigem Vorrat</string>
     <string name="settings_low_stock_reminder_label">Warnung bei niedrigem Vorrat aktivieren</string>
     <string name="settings_stock_reminder_label">Ringvorrat-Benachrichtigungen</string>
+    <string name="settings_stock_recipe_delay_label">Nachfrage beim letzten Ring</string>
     <string name="settings_stock_reminder_enable_message">Sende eine Benachrichtigung, wenn durch ein neues Einsetzen der Ringvorrat sinkt.</string>
     <string name="settings_stock_reminder_disable_message">Sende keine Ringvorrat-Benachrichtigungen mehr, bis du sie wieder aktivierst.</string>
     <string name="settings_stock_tools_hint_enable">Ringvorrat ein- oder ausschalten.</string>
     <string name="settings_stock_tools_hint_count">Lege fest, wie viele Ringe noch verfügbar sind.</string>
     <string name="settings_stock_tools_hint_threshold">Wähle, wann die Warnung bei niedrigem Vorrat erscheinen soll.</string>
     <string name="settings_stock_tools_hint_reminder">Lege fest, ob die App Benachrichtigungen zum Ringvorrat senden soll.</string>
+    <string name="settings_stock_tools_hint_recipe_delay">Lege fest, nach wie vielen Tagen die App bei nur noch 1 Ring nach einem neuen Rezept fragen soll.</string>
     <string name="settings_label_time">Einsetzzeit</string>
     <string name="settings_calendar_range_back">Zurück</string>
     <string name="settings_calendar_range_button">Kalender-Reichweite:\n%1$d %2$s zurück, %3$d %4$s voraus</string>
@@ -474,6 +476,7 @@
     <string name="backup_field_stock_count">Verbleibende Ringe</string>
     <string name="backup_field_low_stock_threshold">Warnschwelle für niedrigen Vorrat</string>
     <string name="backup_field_low_stock_reminder">Ringvorrat-Benachrichtigungen aktiviert</string>
+    <string name="backup_field_stock_recipe_delay">Verzögerung der Nachfrage beim letzten Ring</string>
     <string name="backup_field_last_stock_decrement">Zuletzt gezähltes Einsetzen</string>
     <string name="backup_field_last_low_stock_notification">Letzter Ringvorrat-Benachrichtigungsstand</string>
     <string name="backup_field_notification_flags_format">Benachrichtigungs-Flags: %1$d Einträge (%2$d aktiv)</string>
@@ -711,6 +714,10 @@
     <plurals name="settings_stock_threshold_value">
         <item quantity="one">%d Ring</item>
         <item quantity="other">%d Ringe</item>
+    </plurals>
+    <plurals name="settings_stock_recipe_delay_value">
+        <item quantity="one">%d Tag</item>
+        <item quantity="other">%d Tage</item>
     </plurals>
     <plurals name="stock_notification_message">
         <item quantity="one">Ringvorrat: %d Ring</item>

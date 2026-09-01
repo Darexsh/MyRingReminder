@@ -1,7 +1,7 @@
 <resources>
     <!-- App -->
     <string name="app_info_actions_title">Actions</string>
-    <string name="app_info_description">MyRingReminder est une application Android destinée à la gestion et au suivi des cycles d\'anneaux contraceptifs. L\'application propose un calendrier avec code couleur pour les jours d\'insertion, de retrait et de pause sans anneau, des rappels personnalisables, des notes, des widgets ainsi que des fonctions de sauvegarde et de restauration. Elle comprend également une visite de bienvenue, un historique des cycles, des conseils pour prolonger un cycle (\"porter l\'anneau plus longtemps\"), le suivi des règles pendant la semaine sans anneau, ainsi qu\'une vue dédiée Détails des règles avec filtres de période et export PDF formaté. Des options de personnalisation telles que les images de fond et les paramètres de couleur permettent une adaptation individuelle.\n\nRemarque importante : cette application est destinée uniquement à l\'organisation personnelle et au suivi des cycles d\'anneaux contraceptifs. Elle n\'est pas un dispositif médical, ne remplace pas un avis médical et ne repose sur aucune évaluation ou diagnostic médical. Si vous avez des questions concernant son utilisation ou des préoccupations liées à votre santé, veuillez consulter un professionnel de santé.\n\nToutes les données sont stockées uniquement localement sur cet appareil.</string>
+    <string name="app_info_description">MyRingReminder est une application Android destinée à la gestion et au suivi des cycles d\'anneaux contraceptifs. L\'application propose un calendrier avec code couleur pour les jours d\'insertion, de retrait et de pause sans anneau, des rappels personnalisables, le suivi du stock d\'anneaux, des notes, des widgets ainsi que des fonctions de sauvegarde et de restauration. Elle comprend également une visite de bienvenue, un historique des cycles, des conseils pour prolonger un cycle (\"porter l\'anneau plus longtemps\"), le suivi des règles pendant la semaine sans anneau, ainsi qu\'une vue dédiée Détails des règles avec filtres de période et export PDF formaté. Des options de personnalisation telles que les images de fond et les paramètres de couleur permettent une adaptation individuelle.\n\nRemarque importante : cette application est destinée uniquement à l\'organisation personnelle et au suivi des cycles d\'anneaux contraceptifs. Elle n\'est pas un dispositif médical, ne remplace pas un avis médical et ne repose sur aucune évaluation ou diagnostic médical. Si vous avez des questions concernant son utilisation ou des préoccupations liées à votre santé, veuillez consulter un professionnel de santé.\n\nToutes les données sont stockées uniquement localement sur cet appareil.</string>
     <string name="app_info_developer">Développeur : %1$s</string>
     <string name="app_info_developer_label">Développeur :</string>
     <string name="app_info_developer_name">Darexsh par Daniel Sichler</string>
@@ -140,12 +140,14 @@
     <string name="settings_low_stock_threshold_label">Seuil d\'alerte stock faible</string>
     <string name="settings_low_stock_reminder_label">Activer l\'alerte stock faible</string>
     <string name="settings_stock_reminder_label">Notifications de stock</string>
+    <string name="settings_stock_recipe_delay_label">Suivi du dernier anneau</string>
     <string name="settings_stock_reminder_enable_message">Envoie une notification chaque fois qu\'une nouvelle insertion réduit le stock restant d\'anneaux.</string>
     <string name="settings_stock_reminder_disable_message">N\'envoie plus de notifications de stock d\'anneaux jusqu\'à la prochaine activation.</string>
     <string name="settings_stock_tools_hint_enable">Active ou désactive le suivi du stock d\'anneaux.</string>
     <string name="settings_stock_tools_hint_count">Définis combien d\'anneaux sont encore disponibles.</string>
     <string name="settings_stock_tools_hint_threshold">Choisis quand l\'alerte de stock faible doit apparaître.</string>
     <string name="settings_stock_tools_hint_reminder">Décide si l\'application doit envoyer des notifications sur le stock d\'anneaux.</string>
+    <string name="settings_stock_tools_hint_recipe_delay">Choisis après combien de jours l\'application doit demander si une nouvelle ordonnance a été obtenue quand il ne reste qu\'1 anneau.</string>
     <string name="settings_label_time">Heure d\'insertion</string>
     <string name="settings_calendar_range_back">Précédent</string>
     <string name="settings_calendar_range_button">Plage du calendrier :\n%1$d %2$s avant, %3$d %4$s après</string>
@@ -474,6 +476,7 @@
     <string name="backup_field_stock_count">Anneaux restants</string>
     <string name="backup_field_low_stock_threshold">Seuil de stock faible</string>
     <string name="backup_field_low_stock_reminder">Notifications de stock activées</string>
+    <string name="backup_field_stock_recipe_delay">Délai de suivi du dernier anneau</string>
     <string name="backup_field_last_stock_decrement">Dernière insertion comptée</string>
     <string name="backup_field_last_low_stock_notification">Dernier stock notifié</string>
     <string name="backup_field_notification_flags_format">Drapeaux de notification : %1$d entrées (%2$d actives)</string>
@@ -711,6 +714,10 @@
     <plurals name="settings_stock_threshold_value">
         <item quantity="one">%d anneau</item>
         <item quantity="other">%d anneaux</item>
+    </plurals>
+    <plurals name="settings_stock_recipe_delay_value">
+        <item quantity="one">%d jour</item>
+        <item quantity="other">%d jours</item>
     </plurals>
     <plurals name="stock_notification_message">
         <item quantity="one">Stock d\'anneaux : %d anneau</item>

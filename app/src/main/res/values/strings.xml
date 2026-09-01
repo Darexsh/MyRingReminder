@@ -1,7 +1,7 @@
 <resources>
     <!-- App -->
     <string name="app_info_actions_title">Actions</string>
-    <string name="app_info_description">MyRingReminder is an Android app for managing and tracking contraceptive ring cycles. The app provides a color-coded calendar for insertion, removal, and ring-free days, customizable reminders, notes, widgets, and backup/restore features. It also includes a welcome tour, cycle history, guidance for extending a cycle ("wear ring longer"), period tracking during the ring-free week, and a dedicated Period Details view with range filters and formatted PDF export. Personalization options such as background images and color settings allow individual customization.\n\nImportant note: This app is intended solely for personal organization and tracking of contraceptive ring cycles. It is not a medical product, does not replace medical advice, and is not based on medical evaluation or diagnosis. If you have questions about usage or health concerns, please seek medical advice.\n\nAll data is stored locally on this device only.</string>
+    <string name="app_info_description">MyRingReminder is an Android app for managing and tracking contraceptive ring cycles. The app provides a color-coded calendar for insertion, removal, and ring-free days, customizable reminders, ring supply tracking, notes, widgets, and backup/restore features. It also includes a welcome tour, cycle history, guidance for extending a cycle ("wear ring longer"), period tracking during the ring-free week, and a dedicated Period Details view with range filters and formatted PDF export. Personalization options such as background images and color settings allow individual customization.\n\nImportant note: This app is intended solely for personal organization and tracking of contraceptive ring cycles. It is not a medical product, does not replace medical advice, and is not based on medical evaluation or diagnosis. If you have questions about usage or health concerns, please seek medical advice.\n\nAll data is stored locally on this device only.</string>
     <string name="app_info_developer">Developer: %1$s</string>
     <string name="app_info_developer_label">Developer:</string>
     <string name="app_info_developer_name">Darexsh by Daniel Sichler</string>
@@ -138,6 +138,7 @@
     <string name="settings_stock_tracker_value">%1$d left, alert at %2$d</string>
     <string name="settings_stock_count_label">Rings remaining</string>
     <string name="settings_stock_reminder_label">Supply notifications</string>
+    <string name="settings_stock_recipe_delay_label">Last ring follow-up</string>
     <string name="settings_low_stock_threshold_label">Low-stock warning threshold</string>
     <string name="settings_low_stock_reminder_label">Enable low-stock reminder</string>
     <string name="settings_stock_reminder_enable_message">Send a notification whenever a newly inserted ring reduces your remaining supply.</string>
@@ -146,6 +147,7 @@
     <string name="settings_stock_tools_hint_count">Set how many rings you still have available.</string>
     <string name="settings_stock_tools_hint_threshold">Choose when the low-stock reminder should appear.</string>
     <string name="settings_stock_tools_hint_reminder">Turn ring supply notifications on or off.</string>
+    <string name="settings_stock_tools_hint_recipe_delay">Choose after how many days the app should ask about a new prescription when only 1 ring remains.</string>
     <string name="settings_label_time">Insertion time</string>
     <string name="settings_calendar_range_back">Back</string>
     <string name="settings_calendar_range_button">Calendar range:\n%1$d %2$s back, %3$d %4$s ahead</string>
@@ -477,6 +479,7 @@
     <string name="backup_field_stock_count">Rings remaining</string>
     <string name="backup_field_low_stock_threshold">Low-stock threshold</string>
     <string name="backup_field_low_stock_reminder">Supply notifications enabled</string>
+    <string name="backup_field_stock_recipe_delay">Last ring follow-up delay</string>
     <string name="backup_field_last_stock_decrement">Last counted insertion</string>
     <string name="backup_field_last_low_stock_notification">Last supply notification count</string>
     <string name="backup_field_notification_flags_format">Notification flags: %1$d entries (%2$d active)</string>
@@ -711,6 +714,10 @@
     <plurals name="settings_stock_threshold_value">
         <item quantity="one">%d ring</item>
         <item quantity="other">%d rings</item>
+    </plurals>
+    <plurals name="settings_stock_recipe_delay_value">
+        <item quantity="one">%d day</item>
+        <item quantity="other">%d days</item>
     </plurals>
     <plurals name="stock_notification_message">
         <item quantity="one">Ring supply: %d ring</item>

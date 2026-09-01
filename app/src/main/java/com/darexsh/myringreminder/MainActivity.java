@@ -1163,6 +1163,9 @@ public class MainActivity extends AppCompatActivity {
         steps.add(new TourStep(R.id.nav_settings, R.id.btn_stock_tools_reminder,
                 R.string.settings_stock_reminder_label, R.string.settings_stock_tools_hint_reminder,
                 0, false));
+        steps.add(new TourStep(R.id.nav_settings, R.id.btn_stock_tools_recipe_delay,
+                R.string.settings_stock_recipe_delay_label, R.string.settings_stock_tools_hint_recipe_delay,
+                0, false));
         steps.add(new TourStep(R.id.nav_settings, R.id.btn_set_calendar_range,
                 R.string.tour_title_settings_calendar, R.string.tour_body_settings_calendar,
                 R.id.settings_scroll, false));

@@ -36,6 +36,7 @@ public class SharedViewModel extends ViewModel {
     private final MutableLiveData<Integer> ringStockCount = new MutableLiveData<>();
     private final MutableLiveData<Integer> lowStockThreshold = new MutableLiveData<>();
     private final MutableLiveData<Boolean> lowStockReminderEnabled = new MutableLiveData<>();
+    private final MutableLiveData<Integer> stockRecipeCheckDelayDays = new MutableLiveData<>();
 
     public SharedViewModel(SettingsRepository repository) {
         this.repository = repository;
@@ -64,6 +65,7 @@ public class SharedViewModel extends ViewModel {
         ringStockCount.setValue(repository.getRingStockCount());
         lowStockThreshold.setValue(repository.getLowStockThreshold());
         lowStockReminderEnabled.setValue(repository.isLowStockReminderEnabled());
+        stockRecipeCheckDelayDays.setValue(repository.getStockRecipeCheckDelayDays());
     }
 
     // Getters for LiveData
@@ -165,6 +167,10 @@ public class SharedViewModel extends ViewModel {
 
     public LiveData<Boolean> getLowStockReminderEnabled() {
         return lowStockReminderEnabled;
+    }
+
+    public LiveData<Integer> getStockRecipeCheckDelayDays() {
+        return stockRecipeCheckDelayDays;
     }
 
     public SettingsRepository getRepository() {
@@ -291,10 +297,16 @@ public class SharedViewModel extends ViewModel {
         lowStockReminderEnabled.setValue(enabled);
     }
 
+    public void setStockRecipeCheckDelayDays(int days) {
+        repository.setStockRecipeCheckDelayDays(days);
+        stockRecipeCheckDelayDays.setValue(repository.getStockRecipeCheckDelayDays());
+    }
+
     public void refreshStockState() {
         stockTrackingEnabled.setValue(repository.isStockTrackingEnabled());
         ringStockCount.setValue(repository.getRingStockCount());
         lowStockThreshold.setValue(repository.getLowStockThreshold());
         lowStockReminderEnabled.setValue(repository.isLowStockReminderEnabled());
+        stockRecipeCheckDelayDays.setValue(repository.getStockRecipeCheckDelayDays());
     }
 }
