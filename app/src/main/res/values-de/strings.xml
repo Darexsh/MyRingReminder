@@ -105,6 +105,8 @@
     <string name="settings_background_tools_format">Hintergrund-Einstellungen: %1$s</string>
     <string name="settings_background_tools_hint_pick">Wähle ein Hintergrundbild für die App aus.</string>
     <string name="settings_background_tools_hint_all_screens">Aktiviere oder deaktiviere das Hintergrundbild auf allen Bildschirmen.</string>
+    <string name="settings_background_tools_remove_label">Hintergrund zurücksetzen</string>
+    <string name="settings_background_tools_hint_remove">Entferne das aktuell gespeicherte Hintergrundbild und kehre zum Standardhintergrund zurück.</string>
     <string name="settings_background_tools_hint_dim">Passe die Abdunkelung für bessere Lesbarkeit an.</string>
     <string name="settings_background_tools_hint_blur">Passe die Unschärfe für Dashboard und andere Seiten an.</string>
     <string name="settings_background_blur_unavailable_toast">Nur ab Android 12 verfügbar</string>
@@ -398,10 +400,15 @@
     <string name="cycles_summary_count_placeholder">0 Zyklen erfasst</string>
     <string name="cycles_status_inserted">Ring eingesetzt</string>
     <string name="cycles_status_removed">Ring entfernt</string>
+    <string name="cycles_status_new_wear_phase_started">Neue Tragephase gestartet</string>
+    <string name="cycles_badge_wear_phase">Tragephase</string>
+    <string name="cycles_badge_pause">Pause</string>
+    <string name="cycles_badge_direct_switch">Direktwechsel</string>
     <string name="cycles_special_case_single">Besonderheit:</string>
     <string name="cycles_special_case_multiple">Besonderheiten:</string>
     <string name="cycles_special_skip_ring_free">Ringfreie Woche übersprungen</string>
     <string name="cycles_special_wear_longer_days">Ring länger getragen (+%1$d Tage)</string>
+    <string name="cycles_title_seamless_ring_change">Nahtloser Ringwechsel</string>
     <string name="cycles_title">Zyklus-Historie</string>
 
     <!-- Notes -->
@@ -627,6 +634,7 @@
     <string name="tour_body_settings_background_all">Aktiviere dies, um das Hintergrundbild auf allen Bildschirmen der App anzuzeigen, nicht nur auf dem Dashboard.</string>
     <string name="tour_body_settings_background_blur">Passe die Unschärfe für das Dashboard und andere Seiten an, um ein modernes Design zu erzielen.</string>
     <string name="tour_body_settings_background_dim">Stelle ein, wie stark das Bild abgedunkelt werden soll, um die Lesbarkeit der Texte zu verbessern.</string>
+    <string name="tour_body_settings_background_reset">Setze das gespeicherte Hintergrundbild zurück und kehre zum Standardhintergrund zurück.</string>
     <string name="tour_body_settings_backup">Erstelle oder stelle ein Backup deiner Daten wieder her.</string>
     <string name="tour_body_settings_button_color">Ändere die Akzentfarbe für Buttons.\nDies ändert auch den Widget-Hintergrund.</string>
     <string name="tour_body_settings_calendar">Lege fest, wie weit der Kalender vergangene und zukünftige Zyklen anzeigt.</string>

@@ -105,6 +105,8 @@
     <string name="settings_background_tools_format">Configurações de fundo: %1$s</string>
     <string name="settings_background_tools_hint_pick">Escolha uma imagem de fundo para o app.</string>
     <string name="settings_background_tools_hint_all_screens">Ative ou desative o fundo em todas as telas.</string>
+    <string name="settings_background_tools_remove_label">Redefinir fundo</string>
+    <string name="settings_background_tools_hint_remove">Remova a imagem de fundo salva atualmente e volte ao fundo padrão.</string>
     <string name="settings_background_tools_hint_dim">Ajuste o escurecimento para melhorar a leitura.</string>
     <string name="settings_background_tools_hint_blur">Ajuste o desfoque para painel e outras telas.</string>
     <string name="settings_background_blur_unavailable_toast">Disponível apenas a partir do Android 12</string>
@@ -398,10 +400,15 @@
     <string name="cycles_summary_count_placeholder">0 ciclos registrados</string>
     <string name="cycles_status_inserted">Anel inserido</string>
     <string name="cycles_status_removed">Anel removido</string>
+    <string name="cycles_status_new_wear_phase_started">Nova fase de uso iniciada</string>
+    <string name="cycles_badge_wear_phase">Fase de uso</string>
+    <string name="cycles_badge_pause">Pausa</string>
+    <string name="cycles_badge_direct_switch">Troca direta</string>
     <string name="cycles_special_case_single">Caso especial:</string>
     <string name="cycles_special_case_multiple">Casos especiais:</string>
     <string name="cycles_special_skip_ring_free">Semana sem anel pulada</string>
     <string name="cycles_special_wear_longer_days">Anel usado por mais tempo (+%1$d dias)</string>
+    <string name="cycles_title_seamless_ring_change">Troca contínua do anel</string>
     <string name="cycles_title">Histórico de ciclos</string>
 
     <!-- Notes -->
@@ -627,6 +634,7 @@
     <string name="tour_body_settings_background_all">Ative esta opção para exibir sua imagem de fundo em todas as telas do app, não apenas no início.</string>
     <string name="tour_body_settings_background_blur">Ajuste o desfoque da imagem para a tela inicial e outras páginas para um visual mais moderno.</string>
     <string name="tour_body_settings_background_dim">Ajuste o quanto a imagem deve ser escurecida para tornar o texto mais legível.</string>
+    <string name="tour_body_settings_background_reset">Redefina a imagem de fundo salva e volte ao fundo padrão.</string>
     <string name="tour_body_settings_backup">Crie ou restaure um backup dos seus dados.</string>
     <string name="tour_body_settings_button_color">Mude a cor de destaque dos botões.\nIsso também muda o fundo do widget.</string>
     <string name="tour_body_settings_calendar">Escolha o quanto o calendário mostra de ciclos passados e futuros.</string>

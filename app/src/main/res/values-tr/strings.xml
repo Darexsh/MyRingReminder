@@ -105,6 +105,8 @@
     <string name="settings_background_tools_format">Arka plan ayarları: %1$s</string>
     <string name="settings_background_tools_hint_pick">Uygulama için bir arka plan resmi seçin.</string>
     <string name="settings_background_tools_hint_all_screens">Arka planı tüm ekranlarda açın veya kapatın.</string>
+    <string name="settings_background_tools_remove_label">Arka planı sıfırla</string>
+    <string name="settings_background_tools_hint_remove">Şu anda kayıtlı olan arka plan resmini kaldırın ve varsayılan arka plana dönün.</string>
     <string name="settings_background_tools_hint_dim">Daha iyi okunabilirlik için karartmayı ayarlayın.</string>
     <string name="settings_background_tools_hint_blur">Panel ve diğer ekranlar için bulanıklığı ayarlayın.</string>
     <string name="settings_background_blur_unavailable_toast">Yalnızca Android 12 ve üzeri sürümlerde kullanılabilir</string>
@@ -398,10 +400,15 @@
     <string name="cycles_summary_count_placeholder">0 döngü kaydedildi</string>
     <string name="cycles_status_inserted">Halka yerleştirildi</string>
     <string name="cycles_status_removed">Halka çıkarıldı</string>
+    <string name="cycles_status_new_wear_phase_started">Yeni kullanım fazı başladı</string>
+    <string name="cycles_badge_wear_phase">Kullanım fazı</string>
+    <string name="cycles_badge_pause">Ara</string>
+    <string name="cycles_badge_direct_switch">Doğrudan değişim</string>
     <string name="cycles_special_case_single">Özel durum:</string>
     <string name="cycles_special_case_multiple">Özel durumlar:</string>
     <string name="cycles_special_skip_ring_free">Halkasız hafta atlandı</string>
     <string name="cycles_special_wear_longer_days">Halka daha uzun süre takıldı (+%1$d gün)</string>
+    <string name="cycles_title_seamless_ring_change">Kesintisiz halka değişimi</string>
     <string name="cycles_title">Döngü geçmişi</string>
 
     <!-- Notes -->
@@ -627,6 +634,7 @@
     <string name="tour_body_settings_background_all">Arka plan resminin sadece ana ekranda değil, tüm uygulama ekranlarında gösterilmesi için bunu etkinleştirin.</string>
     <string name="tour_body_settings_background_blur">Modern bir görünüm için ana ekran ve diğer sayfalar için bulanıklık seviyesini ayarlayın.</string>
     <string name="tour_body_settings_background_dim">Metnin daha rahat okunması için arka plan resminin ne kadar karanlık olacağını ayarlayın.</string>
+    <string name="tour_body_settings_background_reset">Kayıtlı arka plan resmini sıfırlayın ve varsayılan arka plana dönün.</string>
     <string name="tour_body_settings_backup">Verilerinizin yedeğini oluşturun veya geri yükleyin.</string>
     <string name="tour_body_settings_button_color">Düğmelerin vurgu rengini değiştirin.\nBu aynı zamanda widget arka planını da değiştirir.</string>
     <string name="tour_body_settings_calendar">Takvimin geçmiş ve gelecek döngüleri ne kadar göstereceğini seçin.</string>

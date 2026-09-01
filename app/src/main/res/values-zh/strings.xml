@@ -105,6 +105,8 @@
     <string name="settings_background_tools_format">背景设置：%1$s</string>
     <string name="settings_background_tools_hint_pick">为应用选择一张背景图片。</string>
     <string name="settings_background_tools_hint_all_screens">开启或关闭在所有页面显示背景图片。</string>
+    <string name="settings_background_tools_remove_label">重置背景</string>
+    <string name="settings_background_tools_hint_remove">移除当前保存的背景图片并恢复为默认背景。</string>
     <string name="settings_background_tools_hint_dim">调整背景变暗以提升可读性。</string>
     <string name="settings_background_tools_hint_blur">调整主页与其他页面的模糊强度。</string>
     <string name="settings_background_blur_unavailable_toast">仅支持 Android 12 及以上版本</string>
@@ -398,10 +400,15 @@
     <string name="cycles_summary_count_placeholder">已记录 0 个周期</string>
     <string name="cycles_status_inserted">已置入圆环</string>
     <string name="cycles_status_removed">已取出圆环</string>
+    <string name="cycles_status_new_wear_phase_started">新的佩戴阶段已开始</string>
+    <string name="cycles_badge_wear_phase">佩戴期</string>
+    <string name="cycles_badge_pause">暂停</string>
+    <string name="cycles_badge_direct_switch">直接更换</string>
     <string name="cycles_special_case_single">特殊情况：</string>
     <string name="cycles_special_case_multiple">特殊情况：</string>
     <string name="cycles_special_skip_ring_free">已跳过无环周</string>
     <string name="cycles_special_wear_longer_days">圆环延长佩戴（+%1$d 天）</string>
+    <string name="cycles_title_seamless_ring_change">无缝更换圆环</string>
     <string name="cycles_title">周期历史</string>
 
     <!-- Notes -->
@@ -627,6 +634,7 @@
     <string name="tour_body_settings_background_all">启用此项可在应用的所有屏幕上显示背景图，而不仅仅是在首页。</string>
     <string name="tour_body_settings_background_blur">调整首页和其他页面的背景模糊程度，打造现代化的视觉效果。</string>
     <string name="tour_body_settings_background_dim">调整背景图的暗度，以提高文字的可读性。</string>
+    <string name="tour_body_settings_background_reset">重置已保存的背景图片并恢复为默认背景。</string>
     <string name="tour_body_settings_backup">创建或恢复数据备份。</string>
     <string name="tour_body_settings_button_color">更改按钮的主题色。\n这也会同时更改组件的背景色。</string>
     <string name="tour_body_settings_calendar">选择日历显示过去和未来周期的范围。</string>

@@ -105,6 +105,8 @@
     <string name="settings_background_tools_format">Ajustes de fondo: %1$s</string>
     <string name="settings_background_tools_hint_pick">Elige una imagen de fondo para la app.</string>
     <string name="settings_background_tools_hint_all_screens">Activa o desactiva la imagen de fondo en todas las pantallas.</string>
+    <string name="settings_background_tools_remove_label">Restablecer fondo</string>
+    <string name="settings_background_tools_hint_remove">Quita la imagen de fondo guardada actualmente y vuelve al fondo predeterminado.</string>
     <string name="settings_background_tools_hint_dim">Ajusta el oscurecimiento del fondo para mejorar la legibilidad.</string>
     <string name="settings_background_tools_hint_blur">Ajusta el desenfoque para panel principal y otras pantallas.</string>
     <string name="settings_background_blur_unavailable_toast">Disponible solo a partir de Android 12</string>
@@ -398,10 +400,15 @@
     <string name="cycles_summary_count_placeholder">0 ciclos registrados</string>
     <string name="cycles_status_inserted">Anillo insertado</string>
     <string name="cycles_status_removed">Anillo retirado</string>
+    <string name="cycles_status_new_wear_phase_started">Nueva fase de uso iniciada</string>
+    <string name="cycles_badge_wear_phase">Fase de uso</string>
+    <string name="cycles_badge_pause">Pausa</string>
+    <string name="cycles_badge_direct_switch">Cambio directo</string>
     <string name="cycles_special_case_single">Caso especial:</string>
     <string name="cycles_special_case_multiple">Casos especiales:</string>
     <string name="cycles_special_skip_ring_free">Semana sin anillo omitida</string>
     <string name="cycles_special_wear_longer_days">Anillo usado por más tiempo (+%1$d días)</string>
+    <string name="cycles_title_seamless_ring_change">Cambio de anillo sin pausa</string>
     <string name="cycles_title">Historial de ciclos</string>
 
     <!-- Notes -->
@@ -627,6 +634,7 @@
     <string name="tour_body_settings_background_all">Activa esto para mostrar la imagen de fondo en todas las pantallas de la aplicación, no solo en el inicio.</string>
     <string name="tour_body_settings_background_blur">Ajusta la intensidad del desenfoque para la pantalla de inicio y otras páginas para un estilo moderno.</string>
     <string name="tour_body_settings_background_dim">Ajusta qué tan oscura debe ser la imagen de fondo para mejorar la legibilidad del texto.</string>
+    <string name="tour_body_settings_background_reset">Restablece la imagen de fondo guardada y vuelve al fondo predeterminado.</string>
     <string name="tour_body_settings_backup">Crea o restaura una copia de seguridad de tus datos.</string>
     <string name="tour_body_settings_button_color">Cambia el color de resaltado de los botones.\nEsto también cambia el fondo del widget.</string>
     <string name="tour_body_settings_calendar">Elige hasta qué punto del pasado y del futuro se muestran los ciclos en el calendario.</string>

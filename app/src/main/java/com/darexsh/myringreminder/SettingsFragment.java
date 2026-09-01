@@ -55,6 +55,7 @@ import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatDelegate;
 import androidx.core.content.ContextCompat;
 import androidx.core.content.FileProvider;
+import androidx.core.graphics.ColorUtils;
 import androidx.core.os.LocaleListCompat;
 import androidx.core.app.NotificationManagerCompat;
 import androidx.biometric.BiometricManager;
@@ -1499,11 +1500,14 @@ public class SettingsFragment extends Fragment {
         View btnPick = content.findViewById(R.id.btn_background_tools_pick);
         View btnAllScreens = content.findViewById(R.id.btn_background_tools_all_screens);
         View btnDim = content.findViewById(R.id.btn_background_tools_dim);
+        View btnRemove = content.findViewById(R.id.btn_background_tools_remove);
         View btnBlur = content.findViewById(R.id.btn_background_tools_blur);
         TextView pickValue = content.findViewById(R.id.tv_background_tools_pick_value);
         TextView allScreensValue = content.findViewById(R.id.tv_background_tools_all_screens_value);
         TextView dimValue = content.findViewById(R.id.tv_background_tools_dim_value);
         TextView blurValue = content.findViewById(R.id.tv_background_tools_blur_value);
+        TextView removeLabel = content.findViewById(R.id.tv_background_tools_remove_label);
+        TextView removeChevron = content.findViewById(R.id.tv_background_tools_remove_chevron);
 
         applyDialogRowAccent(content, R.id.tv_background_tools_pick_value, R.id.tv_background_tools_pick_chevron,
                 R.id.tv_background_tools_all_screens_value, R.id.tv_background_tools_all_screens_chevron,
@@ -1511,6 +1515,11 @@ public class SettingsFragment extends Fragment {
                 R.id.tv_background_tools_blur_value, R.id.tv_background_tools_blur_chevron);
 
         pickValue.setText("");
+        boolean hasBackground = viewModel.getBackgroundImageUri().getValue() != null;
+        btnRemove.setAlpha(hasBackground ? 1f : 0.55f);
+        int destructiveColor = 0xFFF44336;
+        removeLabel.setTextColor(destructiveColor);
+        removeChevron.setTextColor(destructiveColor);
 
         Boolean enabled = viewModel.getBackgroundAllScreensEnabled().getValue();
         allScreensValue.setText(getString(Boolean.TRUE.equals(enabled)
@@ -1556,6 +1565,13 @@ public class SettingsFragment extends Fragment {
             dialog.dismiss();
             showBackgroundDimDialog();
         });
+        btnRemove.setOnClickListener(v -> {
+            if (!hasBackground) {
+                return;
+            }
+            dialog.dismiss();
+            clearBackgroundImage();
+        });
         btnBlur.setOnClickListener(v -> {
             dialog.dismiss();
             if (isBackgroundBlurUnavailable()) {
@@ -1569,8 +1585,29 @@ public class SettingsFragment extends Fragment {
     private boolean isBackgroundToolsDialogTarget(int targetViewId) {
         return targetViewId == R.id.btn_background_tools_pick
                 || targetViewId == R.id.btn_background_tools_all_screens
+                || targetViewId == R.id.btn_background_tools_remove
                 || targetViewId == R.id.btn_background_tools_dim
                 || targetViewId == R.id.btn_background_tools_blur;
+    }
+
+    private void clearBackgroundImage() {
+        String uri = viewModel.getBackgroundImageUri().getValue();
+        if (uri != null) {
+            try {
+                Uri parsed = Uri.parse(uri);
+                if ("file".equals(parsed.getScheme()) && parsed.getPath() != null) {
+                    File file = new File(parsed.getPath());
+                    if (file.exists()) {
+                        // Best effort cleanup for the copied app background image.
+                        file.delete();
+                    }
+                }
+            } catch (Exception ignored) {
+                // Keep reset resilient even if the stored URI is malformed.
+            }
+        }
+        viewModel.setBackgroundImageUri(null);
+        updateBackgroundAllScreensButtonText();
     }
 
     private boolean isNotificationToolsDialogTarget(int targetViewId) {

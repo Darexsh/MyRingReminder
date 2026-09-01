@@ -105,6 +105,8 @@
     <string name="settings_background_tools_format">Ustawienia tła: %1$s</string>
     <string name="settings_background_tools_hint_pick">Wybierz obraz tła dla aplikacji.</string>
     <string name="settings_background_tools_hint_all_screens">Włącz lub wyłącz obraz tła na wszystkich ekranach.</string>
+    <string name="settings_background_tools_remove_label">Resetuj tło</string>
+    <string name="settings_background_tools_hint_remove">Usuń aktualnie zapisany obraz tła i wróć do domyślnego tła.</string>
     <string name="settings_background_tools_hint_dim">Dostosuj przyciemnienie tła dla lepszej czytelności.</string>
     <string name="settings_background_tools_hint_blur">Dostosuj rozmycie dla pulpitu i pozostałych ekranów.</string>
     <string name="settings_background_blur_unavailable_toast">Dostępne tylko od systemu Android 12</string>
@@ -398,10 +400,15 @@
     <string name="cycles_summary_count_placeholder">0 zapisanych cykli</string>
     <string name="cycles_status_inserted">Pierścień założony</string>
     <string name="cycles_status_removed">Pierścień zdjęty</string>
+    <string name="cycles_status_new_wear_phase_started">Rozpoczęto nową fazę noszenia</string>
+    <string name="cycles_badge_wear_phase">Faza noszenia</string>
+    <string name="cycles_badge_pause">Przerwa</string>
+    <string name="cycles_badge_direct_switch">Bezpośrednia zmiana</string>
     <string name="cycles_special_case_single">Przypadek specjalny:</string>
     <string name="cycles_special_case_multiple">Przypadki specjalne:</string>
     <string name="cycles_special_skip_ring_free">Pominięto tydzień bez pierścienia</string>
     <string name="cycles_special_wear_longer_days">Pierścień noszony dłużej (+%1$d dni)</string>
+    <string name="cycles_title_seamless_ring_change">Płynna zmiana pierścienia</string>
     <string name="cycles_title">Historia cykli</string>
 
     <!-- Notes -->
@@ -627,6 +634,7 @@
     <string name="tour_body_settings_background_all">Włącz tę opcję, aby pokazać obraz tła na wszystkich ekranach aplikacji, a nie tylko na głównym.</string>
     <string name="tour_body_settings_background_blur">Dostosuj rozmycie tła dla ekranu głównego i pozostałych stron, aby uzyskać nowoczesny wygląd.</string>
     <string name="tour_body_settings_background_dim">Ustaw stopień przyciemnienia obrazu, aby tekst był bardziej czytelny.</string>
+    <string name="tour_body_settings_background_reset">Zresetuj zapisany obraz tła i wróć do domyślnego tła.</string>
     <string name="tour_body_settings_backup">Utwórz lub przywróć kopię zapasową swoich danych.</string>
     <string name="tour_body_settings_button_color">Zmień kolor akcentu przycisków.\nZmieni to również tło widgetu.</string>
     <string name="tour_body_settings_calendar">Wybierz, jak daleko kalendarz ma pokazywać przeszłe i przyszłe cykle.</string>

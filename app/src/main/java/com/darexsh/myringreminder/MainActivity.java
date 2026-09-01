@@ -1202,6 +1202,9 @@ public class MainActivity extends AppCompatActivity {
         steps.add(new TourStep(R.id.nav_settings, R.id.btn_background_tools_blur,
                 R.string.tour_title_settings_background_blur, R.string.tour_body_settings_background_blur,
                 R.id.settings_scroll, false));
+        steps.add(new TourStep(R.id.nav_settings, R.id.btn_background_tools_remove,
+                R.string.settings_background_tools_remove_label, R.string.tour_body_settings_background_reset,
+                R.id.settings_scroll, false));
         steps.add(new TourStep(R.id.nav_settings, R.id.btn_set_button_color,
                 R.string.tour_title_settings_button_color, R.string.tour_body_settings_button_color,
                 R.id.settings_scroll, false));

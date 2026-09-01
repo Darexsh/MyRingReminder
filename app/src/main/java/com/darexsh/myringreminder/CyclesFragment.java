@@ -1,27 +1,34 @@
 package com.darexsh.myringreminder;
 
+import android.graphics.drawable.GradientDrawable;
+import android.graphics.drawable.LayerDrawable;
 import android.os.Bundle;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.appcompat.app.AlertDialog;
+import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+import android.util.TypedValue;
 import androidx.cardview.widget.CardView;
 import androidx.lifecycle.ViewModelProvider;
+import androidx.core.graphics.ColorUtils;
 import com.google.android.material.chip.ChipGroup;
 import com.google.android.material.button.MaterialButton;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
+import java.util.Set;
 import androidx.core.content.ContextCompat;
 
 // CyclesFragment displays a history of cycle events (insertions/removals) in a card format
@@ -66,6 +73,19 @@ public class CyclesFragment extends Fragment {
                 if (sortLabel != null) {
                     sortLabel.setTextColor(color);
                 }
+                if (cycleContainer != null) {
+                    displayCycleHistory(cycleContainer);
+                }
+            }
+        });
+        viewModel.getCalendarWearColor().observe(getViewLifecycleOwner(), color -> {
+            if (cycleContainer != null) {
+                displayCycleHistory(cycleContainer);
+            }
+        });
+        viewModel.getCalendarRingFreeColor().observe(getViewLifecycleOwner(), color -> {
+            if (cycleContainer != null) {
+                displayCycleHistory(cycleContainer);
             }
         });
 
@@ -171,10 +191,10 @@ public class CyclesFragment extends Fragment {
     // Display the cycle history in the provided LinearLayout
     private void displayCycleHistory(LinearLayout cycleContainer) {
         cycleContainer.removeAllViews(); // Clear existing views
-        List<Cycle> cycleHistory = viewModel.getRepository().getCycleHistory();
+        SettingsRepository repository = viewModel.getRepository();
+        List<Cycle> cycleHistory = repository.getCycleHistory();
         SimpleDateFormat dateFormat = new SimpleDateFormat("dd.MM.yyyy", Locale.getDefault());
         SimpleDateFormat monthHeaderFormat = new SimpleDateFormat("MMMM yyyy", Locale.getDefault());
-
         // Filter out invalid cycles and deduce by date+endDate+type
         List<Cycle> validCycles = new ArrayList<>();
         java.util.HashSet<String> seen = new java.util.HashSet<>();
@@ -196,9 +216,21 @@ public class CyclesFragment extends Fragment {
         updateSummary(validCycles);
 
         Map<Long, Long> cycleStartByRemovalMillis = new HashMap<>();
+        Set<Long> seamlessInsertionStarts = new HashSet<>();
         for (Cycle cycle : validCycles) {
             if (CycleType.INSERTION == cycle.getType() && cycle.getEndDateMillis() > 0) {
                 cycleStartByRemovalMillis.put(cycle.getEndDateMillis(), cycle.getDateMillis());
+            }
+        }
+        for (Cycle cycle : validCycles) {
+            if (CycleType.REMOVAL != cycle.getType()) {
+                continue;
+            }
+            long sourceCycleStartMillis = cycleStartByRemovalMillis.getOrDefault(cycle.getDateMillis(), 0L);
+            if (sourceCycleStartMillis > 0
+                    && viewModel.getRepository().getRingFreeDaysForCycle(sourceCycleStartMillis) == 0
+                    && cycle.getEndDateMillis() > 0) {
+                seamlessInsertionStarts.add(cycle.getEndDateMillis());
             }
         }
 
@@ -232,7 +264,7 @@ public class CyclesFragment extends Fragment {
                     LinearLayout.LayoutParams.MATCH_PARENT,
                     LinearLayout.LayoutParams.WRAP_CONTENT
             );
-            cardParams.setMargins(0, 0, 0, 12);
+            cardParams.setMargins(0, 0, 0, 16);
             cardView.setLayoutParams(cardParams);   // Set layout parameters for the card
             cardView.setCardElevation(0f);
             cardView.setRadius(24);
@@ -240,75 +272,91 @@ public class CyclesFragment extends Fragment {
             cardView.setUseCompatPadding(false);
             cardView.setPreventCornerOverlap(true);
 
-            // Create a LinearLayout to hold the card content
-            LinearLayout cardContent = new LinearLayout(requireContext());
-            cardContent.setOrientation(LinearLayout.VERTICAL);
-            cardContent.setLayoutParams(new LinearLayout.LayoutParams(
+            LinearLayout cardShell = new LinearLayout(requireContext());
+            cardShell.setOrientation(LinearLayout.HORIZONTAL);
+            cardShell.setGravity(Gravity.CENTER_VERTICAL);
+            cardShell.setLayoutParams(new LinearLayout.LayoutParams(
                     LinearLayout.LayoutParams.MATCH_PARENT,
                     LinearLayout.LayoutParams.WRAP_CONTENT
             ));
-            cardContent.setBackgroundResource(R.drawable.bg_app_info_dialog);
-            int horizontalPadding = dpToPx(12);
+            cardShell.setBackgroundResource(R.drawable.bg_app_info_dialog);
+            int horizontalPadding = dpToPx(18);
             int verticalPadding = dpToPx(12);
-            cardContent.setPadding(horizontalPadding, verticalPadding, horizontalPadding, verticalPadding);
+            cardShell.setPadding(0, 0, 0, 0);
 
-            // Create and configure the TextView for the date
+            CycleCardPresentation presentation = buildCyclePresentation(
+                    cycle,
+                    cycleStartByRemovalMillis,
+                    seamlessInsertionStarts,
+                    dateFormat
+            );
+            cardShell.setBackground(createHistoryCardBackground(presentation.accentColor));
+
+            LinearLayout textColumn = new LinearLayout(requireContext());
+            textColumn.setOrientation(LinearLayout.VERTICAL);
+            textColumn.setLayoutParams(new LinearLayout.LayoutParams(
+                    LinearLayout.LayoutParams.MATCH_PARENT,
+                    LinearLayout.LayoutParams.WRAP_CONTENT,
+                    1f
+            ));
+            textColumn.setPadding(horizontalPadding, verticalPadding, horizontalPadding, verticalPadding);
+
+            LinearLayout headerRow = new LinearLayout(requireContext());
+            headerRow.setOrientation(LinearLayout.HORIZONTAL);
+            headerRow.setGravity(Gravity.TOP | Gravity.CENTER_VERTICAL);
+            headerRow.setLayoutParams(new LinearLayout.LayoutParams(
+                    LinearLayout.LayoutParams.MATCH_PARENT,
+                    LinearLayout.LayoutParams.WRAP_CONTENT
+            ));
+
             TextView dateTextView = new TextView(requireContext());
             dateTextView.setTextSize(18);
             dateTextView.setTypeface(null, android.graphics.Typeface.BOLD);
-            Calendar cal = Calendar.getInstance();
-            cal.setTimeInMillis(cycle.getDateMillis());
-            String dateText;
+            dateTextView.setLayoutParams(new LinearLayout.LayoutParams(
+                    0,
+                    LinearLayout.LayoutParams.WRAP_CONTENT,
+                    1f
+            ));
+            dateTextView.setText(presentation.titleText);
+            headerRow.addView(dateTextView);
 
-            // Format the date based on the cycle type
-            if (CycleType.INSERTION == cycle.getType() || CycleType.REMOVAL == cycle.getType()) {
-                Calendar endCal = Calendar.getInstance();
-                endCal.setTimeInMillis(cycle.getEndDateMillis());
+            View badgeView = createBadgeView(presentation.badgeText, presentation.accentColor);
+            headerRow.addView(badgeView);
+            textColumn.addView(headerRow);
 
-                if (cycle.getEndDateMillis() > 0) {
-                    dateText = String.format("%s - %s",
-                            dateFormat.format(cal.getTime()),
-                            dateFormat.format(endCal.getTime()));
-                } else {
-                    dateText = dateFormat.format(cal.getTime());
-                }
-            } else {
-                // If the cycle type is unknown, just show the start date
-                dateText = dateFormat.format(cal.getTime());
-            }
-            dateTextView.setText(dateText);
-            cardContent.addView(dateTextView);
-
-            // Create and configure the TextView for the status
             TextView statusTextView = new TextView(requireContext());
             statusTextView.setTextSize(14);
-            statusTextView.setPadding(0, 12, 0, 0); // 4dp top margin
-            if (CycleType.INSERTION == cycle.getType()) {
-                statusTextView.setText(R.string.cycles_status_inserted);
-                statusTextView.setTextColor(0xFF4CAF50); // Green
-            } else {
-                statusTextView.setText(R.string.cycles_status_removed);
-                statusTextView.setTextColor(0xFFF44336); // Red
-            }
-            cardContent.addView(statusTextView);
+            statusTextView.setPadding(0, dpToPx(presentation.statusTopPaddingDp), 0, 0);
+            statusTextView.setText(presentation.statusText);
+            statusTextView.setTextColor(presentation.statusColor);
+            textColumn.addView(statusTextView);
 
-            String specialCaseText = buildSpecialCaseText(cycle, cycleStartByRemovalMillis);
+            String specialCaseText = presentation.detailText;
             if (specialCaseText != null) {
                 TextView specialCaseTextView = new TextView(requireContext());
                 specialCaseTextView.setTextSize(13);
-                specialCaseTextView.setTextColor(0xFFBDBDBD);
-                specialCaseTextView.setPadding(0, dpToPx(4), 0, 0);
+                specialCaseTextView.setTextColor(presentation.detailColor);
+                specialCaseTextView.setPadding(0, dpToPx(presentation.detailTopPaddingDp), 0, 0);
                 specialCaseTextView.setText(specialCaseText);
-                cardContent.addView(specialCaseTextView);
+                textColumn.addView(specialCaseTextView);
             }
 
-            cardView.addView(cardContent);
+            cardShell.addView(textColumn);
+            cardView.addView(cardShell);
             cycleContainer.addView(cardView);
         }
     }
 
-    @Nullable
-    private String buildSpecialCaseText(@NonNull Cycle cycle, @NonNull Map<Long, Long> cycleStartByRemovalMillis) {
+    @NonNull
+    private CycleCardPresentation buildCyclePresentation(@NonNull Cycle cycle,
+                                                         @NonNull Map<Long, Long> cycleStartByRemovalMillis,
+                                                         @NonNull Set<Long> seamlessInsertionStarts,
+                                                         @NonNull SimpleDateFormat dateFormat) {
+        SettingsRepository repository = viewModel.getRepository();
+        int wearColor = getWearPhaseColor();
+        int pauseColor = getPausePhaseColor();
+        int specialColor = getSpecialPhaseColor();
+
         long cycleStartMillis;
         if (CycleType.INSERTION == cycle.getType()) {
             cycleStartMillis = cycle.getDateMillis();
@@ -318,31 +366,190 @@ public class CyclesFragment extends Fragment {
             cycleStartMillis = 0L;
         }
 
-        if (cycleStartMillis <= 0) {
-            return null;
+        boolean skippedRingFree = CycleType.REMOVAL == cycle.getType()
+                && cycleStartMillis > 0
+                && repository.getRingFreeDaysForCycle(cycleStartMillis) == 0;
+        boolean wornLonger = CycleType.INSERTION == cycle.getType()
+                && cycleStartMillis > 0
+                && repository.getCycleDelayDays(cycleStartMillis) > 0;
+        boolean seamlessInsertion = CycleType.INSERTION == cycle.getType()
+                && seamlessInsertionStarts.contains(cycle.getDateMillis());
+
+        String titleText = formatCycleTitle(cycle, dateFormat);
+        String statusText;
+        String badgeText;
+        String detailText = null;
+        int accentColor;
+        int statusColor;
+        int detailColor;
+        int statusTopPaddingDp = 6;
+        int detailTopPaddingDp = 6;
+
+        if (skippedRingFree || seamlessInsertion) {
+            accentColor = specialColor;
+            statusColor = specialColor;
+            detailColor = lightenColor(specialColor, 0.28f);
+            badgeText = getString(R.string.cycles_badge_direct_switch);
+            detailText = getString(R.string.cycles_special_skip_ring_free);
+            statusTopPaddingDp = 6;
+            detailTopPaddingDp = 6;
+
+            if (seamlessInsertion || isSameDay(cycle.getDateMillis(), cycle.getEndDateMillis())) {
+                titleText = getString(R.string.cycles_title_seamless_ring_change);
+                String dateText = new SimpleDateFormat("dd.MM.yyyy", Locale.getDefault())
+                        .format(cycle.getDateMillis());
+                statusText = dateText + " • " + getString(R.string.cycles_status_new_wear_phase_started);
+            } else {
+                statusText = getString(R.string.cycles_status_removed);
+            }
+        } else if (CycleType.INSERTION == cycle.getType()) {
+            accentColor = wearColor;
+            statusColor = wearColor;
+            detailColor = lightenColor(wearColor, 0.28f);
+            badgeText = getString(R.string.cycles_badge_wear_phase);
+            statusText = getString(R.string.cycles_status_inserted);
+            if (wornLonger) {
+                detailText = getString(R.string.cycles_special_wear_longer_days,
+                        repository.getCycleDelayDays(cycleStartMillis));
+            }
+        } else {
+            accentColor = pauseColor;
+            statusColor = pauseColor;
+            detailColor = lightenColor(pauseColor, 0.28f);
+            badgeText = getString(R.string.cycles_badge_pause);
+            statusText = getString(R.string.cycles_status_removed);
         }
 
-        SettingsRepository repository = viewModel.getRepository();
-        List<String> parts = new ArrayList<>();
+        return new CycleCardPresentation(titleText, statusText, badgeText, detailText,
+                accentColor, statusColor, detailColor, statusTopPaddingDp, detailTopPaddingDp);
+    }
 
-        if (CycleType.REMOVAL == cycle.getType()
-                && repository.getRingFreeDaysForCycle(cycleStartMillis) == 0) {
-            parts.add(getString(R.string.cycles_special_skip_ring_free));
+    @NonNull
+    private String formatCycleTitle(@NonNull Cycle cycle, @NonNull SimpleDateFormat dateFormat) {
+        Calendar cal = Calendar.getInstance();
+        cal.setTimeInMillis(cycle.getDateMillis());
+        if (cycle.getEndDateMillis() > 0) {
+            Calendar endCal = Calendar.getInstance();
+            endCal.setTimeInMillis(cycle.getEndDateMillis());
+            if (isSameDay(cycle.getDateMillis(), cycle.getEndDateMillis())) {
+                return dateFormat.format(cal.getTime());
+            }
+            return String.format("%s - %s",
+                    dateFormat.format(cal.getTime()),
+                    dateFormat.format(endCal.getTime()));
         }
+        return dateFormat.format(cal.getTime());
+    }
 
-        int delayDays = repository.getCycleDelayDays(cycleStartMillis);
-        if (CycleType.INSERTION == cycle.getType() && delayDays > 0) {
-            parts.add(getString(R.string.cycles_special_wear_longer_days, delayDays));
+    private boolean isSameDay(long firstMillis, long secondMillis) {
+        if (firstMillis <= 0 || secondMillis <= 0) {
+            return false;
         }
+        Calendar first = Calendar.getInstance();
+        first.setTimeInMillis(firstMillis);
+        Calendar second = Calendar.getInstance();
+        second.setTimeInMillis(secondMillis);
+        return first.get(Calendar.YEAR) == second.get(Calendar.YEAR)
+                && first.get(Calendar.DAY_OF_YEAR) == second.get(Calendar.DAY_OF_YEAR);
+    }
 
-        if (parts.isEmpty()) {
-            return null;
+    private int getWearPhaseColor() {
+        Integer color = viewModel.getCalendarWearColor().getValue();
+        return color != null ? color : viewModel.getRepository().getCalendarWearColor();
+    }
+
+    private int getPausePhaseColor() {
+        Integer color = viewModel.getCalendarRingFreeColor().getValue();
+        return color != null ? color : viewModel.getRepository().getCalendarRingFreeColor();
+    }
+
+    private int getSpecialPhaseColor() {
+        return ContextCompat.getColor(requireContext(), R.color.purple_200);
+    }
+
+    @NonNull
+    private View createBadgeView(@NonNull String text, int accentColor) {
+        LinearLayout badgeContainer = new LinearLayout(requireContext());
+        badgeContainer.setOrientation(LinearLayout.HORIZONTAL);
+        badgeContainer.setGravity(Gravity.CENTER_VERTICAL);
+        badgeContainer.setPadding(dpToPx(12), dpToPx(6), dpToPx(14), dpToPx(6));
+        badgeContainer.setBackground(createTintedShape(
+                R.drawable.bg_cycles_history_badge,
+                ColorUtils.setAlphaComponent(accentColor, 48),
+                ColorUtils.setAlphaComponent(accentColor, 56),
+                dpToPx(1)
+        ));
+        LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(
+                LinearLayout.LayoutParams.WRAP_CONTENT,
+                LinearLayout.LayoutParams.WRAP_CONTENT
+        );
+        params.setMargins(dpToPx(12), 0, 0, 0);
+        badgeContainer.setLayoutParams(params);
+
+        View dotView = new View(requireContext());
+        LinearLayout.LayoutParams dotParams = new LinearLayout.LayoutParams(dpToPx(10), dpToPx(10));
+        dotParams.setMargins(0, 0, dpToPx(8), 0);
+        dotView.setLayoutParams(dotParams);
+        dotView.setBackground(createTintedShape(
+                R.drawable.bg_cycles_history_badge_dot,
+                lightenColor(accentColor, 0.08f),
+                0,
+                0
+        ));
+        badgeContainer.addView(dotView);
+
+        TextView badgeTextView = new TextView(requireContext());
+        badgeTextView.setText(text);
+        badgeTextView.setTextSize(11);
+        badgeTextView.setTypeface(null, android.graphics.Typeface.NORMAL);
+        badgeTextView.setTextColor(lightenColor(accentColor, 0.42f));
+        badgeTextView.setGravity(Gravity.CENTER_VERTICAL);
+        badgeContainer.addView(badgeTextView);
+
+        return badgeContainer;
+    }
+
+    @NonNull
+    private GradientDrawable createTintedShape(int drawableRes, int fillColor, int strokeColor, int strokeWidthPx) {
+        GradientDrawable drawable = (GradientDrawable) ContextCompat.getDrawable(requireContext(), drawableRes).mutate();
+        drawable.setColor(fillColor);
+        if (strokeWidthPx > 0) {
+            drawable.setStroke(strokeWidthPx, strokeColor);
+        } else {
+            drawable.setStroke(0, android.graphics.Color.TRANSPARENT);
         }
+        return drawable;
+    }
 
-        int prefixRes = parts.size() == 1
-                ? R.string.cycles_special_case_single
-                : R.string.cycles_special_case_multiple;
-        return getString(prefixRes) + " " + android.text.TextUtils.join(", ", parts);
+    @NonNull
+    private LayerDrawable createHistoryCardBackground(int accentColor) {
+        GradientDrawable accentLayer = new GradientDrawable();
+        accentLayer.setShape(GradientDrawable.RECTANGLE);
+        accentLayer.setColor(accentColor);
+        accentLayer.setCornerRadius(dpToPx(24));
+
+        GradientDrawable contentLayer = new GradientDrawable();
+        contentLayer.setShape(GradientDrawable.RECTANGLE);
+        contentLayer.setColor(resolveThemeColor(com.google.android.material.R.attr.colorBackgroundFloating));
+        contentLayer.setCornerRadius(dpToPx(24));
+
+        LayerDrawable layers = new LayerDrawable(new android.graphics.drawable.Drawable[]{
+                accentLayer,
+                contentLayer
+        });
+        layers.setLayerInset(1, dpToPx(4), 0, 0, 0);
+        return layers;
+    }
+
+    private int resolveThemeColor(int attrRes) {
+        TypedValue value = new TypedValue();
+        requireContext().getTheme().resolveAttribute(attrRes, value, true);
+        return value.data;
+    }
+
+    private int lightenColor(int color, float amount) {
+        amount = Math.max(0f, Math.min(1f, amount));
+        return ColorUtils.blendARGB(color, 0xFFFFFFFF, amount);
     }
 
     @NonNull
@@ -377,4 +584,37 @@ public class CyclesFragment extends Fragment {
         float density = getResources().getDisplayMetrics().density;
         return Math.round(dp * density);
     }
+
+    private static final class CycleCardPresentation {
+        final String titleText;
+        final String statusText;
+        final String badgeText;
+        @Nullable final String detailText;
+        final int accentColor;
+        final int statusColor;
+        final int detailColor;
+        final int statusTopPaddingDp;
+        final int detailTopPaddingDp;
+
+        CycleCardPresentation(@NonNull String titleText,
+                              @NonNull String statusText,
+                              @NonNull String badgeText,
+                              @Nullable String detailText,
+                              int accentColor,
+                              int statusColor,
+                              int detailColor,
+                              int statusTopPaddingDp,
+                              int detailTopPaddingDp) {
+            this.titleText = titleText;
+            this.statusText = statusText;
+            this.badgeText = badgeText;
+            this.detailText = detailText;
+            this.accentColor = accentColor;
+            this.statusColor = statusColor;
+            this.detailColor = detailColor;
+            this.statusTopPaddingDp = statusTopPaddingDp;
+            this.detailTopPaddingDp = detailTopPaddingDp;
+        }
+    }
+
 }
