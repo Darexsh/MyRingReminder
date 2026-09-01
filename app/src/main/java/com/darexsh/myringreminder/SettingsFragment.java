@@ -132,6 +132,7 @@ public class SettingsFragment extends Fragment {
     private View stockToolsDialogView;
     private final List<ValueAnimator> notificationWarningAnimators = new ArrayList<>();
     private final List<TextView> settingsAccentTextViews = new ArrayList<>();
+    private boolean continueUpdateInstallAfterBackup = false;
     private TextView tvSetTimeValue;
     private TextView tvSetStartDateValue;
     private TextView tvSetCycleLengthValue;
@@ -213,7 +214,9 @@ public class SettingsFragment extends Fragment {
         createBackupLauncher = registerForActivityResult(new ActivityResultContracts.CreateDocument("application/json"), uri -> {
             if (uri != null) {
                 writeBackup(uri);
+                return;
             }
+            continueUpdateInstallAfterBackup = false;
         });
 
         restoreBackupLauncher = registerForActivityResult(new ActivityResultContracts.OpenDocument(), uri -> {
@@ -2185,6 +2188,32 @@ public class SettingsFragment extends Fragment {
         }).start();
     }
 
+    private void checkForUpdatesAndInstall() {
+        Toast.makeText(requireContext(), R.string.update_checking_toast, Toast.LENGTH_SHORT).show();
+        new Thread(() -> {
+            try {
+                ReleaseInfo releaseInfo = fetchLatestReleaseInfo();
+                if (releaseInfo == null) {
+                    showToast(R.string.update_failed_toast);
+                    return;
+                }
+                if (releaseInfo.downloadUrl == null) {
+                    showToast(R.string.update_no_apk_toast);
+                    return;
+                }
+                String currentVersion = getCurrentVersionName();
+                int compare = compareVersions(currentVersion, releaseInfo.versionName);
+                if (compare >= 0) {
+                    showToast(R.string.update_latest_toast);
+                    return;
+                }
+                downloadAndInstall(releaseInfo);
+            } catch (Exception e) {
+                showToast(R.string.update_failed_toast);
+            }
+        }).start();
+    }
+
     private void showToast(int messageResId) {
         if (!isAdded()) {
             return;
@@ -2199,7 +2228,7 @@ public class SettingsFragment extends Fragment {
                 .setTitle(R.string.update_backup_title)
                 .setMessage(R.string.update_backup_message)
                 .setPositiveButton(R.string.update_backup_yes, (dlg, which) -> checkForUpdates())
-                .setNegativeButton(R.string.update_backup_no, (dlg, which) -> showBackupDialog())
+                .setNegativeButton(R.string.update_backup_no, (dlg, which) -> showBackupDialog(true))
                 .show();
         applyDialogButtonColors(dialog);
     }
@@ -2461,11 +2490,18 @@ public class SettingsFragment extends Fragment {
         if (version == null || version.isEmpty()) {
             return new int[]{0};
         }
-        String[] parts = version.split("\\.");
+        String sanitized = version.trim();
+        java.util.regex.Matcher matcher = java.util.regex.Pattern
+                .compile("(\\d+(?:\\.\\d+)*)")
+                .matcher(sanitized);
+        if (matcher.find()) {
+            sanitized = matcher.group(1);
+        }
+        String[] parts = sanitized.split("\\.");
         int[] result = new int[parts.length];
         for (int i = 0; i < parts.length; i++) {
             try {
-                result[i] = Integer.parseInt(parts[i].replaceAll("[^0-9]", ""));
+                result[i] = Integer.parseInt(parts[i]);
             } catch (NumberFormatException e) {
                 result[i] = 0;
             }
@@ -2544,6 +2580,11 @@ public class SettingsFragment extends Fragment {
     }
 
     private void showBackupDialog() {
+        showBackupDialog(false);
+    }
+
+    private void showBackupDialog(boolean continueToUpdateAfterCreate) {
+        continueUpdateInstallAfterBackup = continueToUpdateAfterCreate;
         View content = LayoutInflater.from(requireContext()).inflate(R.layout.dialog_backup_tools, null);
         View btnCreate = content.findViewById(R.id.btn_backup_create);
         View btnRestore = content.findViewById(R.id.btn_backup_restore);
@@ -2723,7 +2764,12 @@ public class SettingsFragment extends Fragment {
             String json = new Gson().toJson(data);
             outputStream.write(json.getBytes(StandardCharsets.UTF_8));
             Toast.makeText(requireContext(), R.string.backup_created_toast, Toast.LENGTH_SHORT).show();
+            if (continueUpdateInstallAfterBackup) {
+                continueUpdateInstallAfterBackup = false;
+                checkForUpdatesAndInstall();
+            }
         } catch (Exception e) {
+            continueUpdateInstallAfterBackup = false;
             Toast.makeText(requireContext(), R.string.backup_failed_toast, Toast.LENGTH_SHORT).show();
         }
     }

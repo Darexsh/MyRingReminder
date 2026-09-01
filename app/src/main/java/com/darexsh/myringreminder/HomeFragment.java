@@ -10,8 +10,11 @@ import android.content.Intent;
 import android.content.UriPermission;
 import android.content.pm.PackageInfo;
 import android.content.res.ColorStateList;
+import android.graphics.Color;
 import android.graphics.RenderEffect;
 import android.graphics.Shader;
+import android.graphics.Typeface;
+import android.graphics.drawable.GradientDrawable;
 import android.graphics.drawable.Drawable;
 import android.net.Uri;
 import android.os.Bundle;
@@ -31,12 +34,15 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.Button;
+import android.widget.ScrollView;
+import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import android.widget.NumberPicker;
 import android.widget.TextView;
 import com.airbnb.lottie.LottieAnimationView;
 import com.airbnb.lottie.LottieDrawable;
 import com.google.android.material.button.MaterialButton;
+import androidx.core.graphics.ColorUtils;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
@@ -51,6 +57,7 @@ import java.net.HttpURLConnection;
 import java.net.URL;
 import java.nio.charset.StandardCharsets;
 import java.util.Calendar;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
 import java.util.Objects;
@@ -767,28 +774,30 @@ public class HomeFragment extends Fragment {
             return;
         }
         String current = currentVersionLabel != null ? currentVersionLabel : "—";
+        boolean hasUpdateAvailable = false;
         String latest = (lastReleaseInfo != null && lastReleaseInfo.versionName != null)
-                ? getString(R.string.update_hero_version_format, lastReleaseInfo.versionName, getCurrentVersionCode())
+                ? getString(R.string.update_hero_version_name_only_format, lastReleaseInfo.versionName)
                 : "—";
-
-        StringBuilder body = new StringBuilder();
-        body.append(getString(R.string.update_hero_details_current, current));
-        body.append("\n");
-        body.append(getString(R.string.update_hero_details_latest, latest));
-
-        if (lastReleaseInfo != null && lastReleaseInfo.releaseNotes != null && !lastReleaseInfo.releaseNotes.trim().isEmpty()) {
-            body.append("\n\n");
-            body.append(getString(R.string.update_hero_details_changelog));
-            body.append("\n");
-            body.append(lastReleaseInfo.releaseNotes.trim());
+        if (lastReleaseInfo != null && lastReleaseInfo.versionName != null) {
+            hasUpdateAvailable = compareVersions(getCurrentVersionName(), lastReleaseInfo.versionName) < 0;
         }
+
+        View content = buildUpdateHeroDetailsContent(
+                current,
+                latest,
+                lastReleaseInfo != null ? lastReleaseInfo.releaseNotes : null,
+                hasUpdateAvailable
+        );
 
         AlertDialog.Builder builder = new AlertDialog.Builder(requireContext())
                 .setTitle(R.string.update_hero_details_title)
-                .setMessage(body.toString())
+                .setView(content)
                 .setPositiveButton(R.string.dialog_ok, null);
 
-        if (lastReleaseInfo != null && lastReleaseInfo.downloadUrl != null && lastReleaseInfo.versionName != null) {
+        if (hasUpdateAvailable
+                && lastReleaseInfo != null
+                && lastReleaseInfo.downloadUrl != null
+                && lastReleaseInfo.versionName != null) {
             builder.setNegativeButton(R.string.update_install, (d, w) -> {
                 if (isAdded() && requireActivity() instanceof MainActivity) {
                     ((MainActivity) requireActivity()).openUpdateBackupFlowFromHome();
@@ -797,6 +806,295 @@ public class HomeFragment extends Fragment {
         }
         AlertDialog dialog = builder.show();
         applyDialogButtonColors(dialog);
+    }
+
+    private View buildUpdateHeroDetailsContent(String currentVersion,
+                                               String latestVersion,
+                                               @Nullable String releaseNotes,
+                                               boolean hasUpdateAvailable) {
+        ScrollView scrollView = new ScrollView(requireContext());
+        LinearLayout root = new LinearLayout(requireContext());
+        root.setOrientation(LinearLayout.VERTICAL);
+        int outerPadding = dpToPx(20);
+        root.setPadding(outerPadding, outerPadding, outerPadding, outerPadding);
+        scrollView.addView(root, new ScrollView.LayoutParams(
+                ScrollView.LayoutParams.MATCH_PARENT,
+                ScrollView.LayoutParams.WRAP_CONTENT
+        ));
+
+        int accentColor = resolveUpdateAccentColor();
+        int surfaceColor = resolveDialogSurfaceColor();
+
+        root.addView(createUpdateSummaryCard(currentVersion, latestVersion, accentColor, surfaceColor, hasUpdateAvailable));
+
+        List<ReleaseSection> sections = parseReleaseSections(releaseNotes);
+        for (ReleaseSection section : sections) {
+            if (section.items.isEmpty()) {
+                continue;
+            }
+            root.addView(createReleaseSectionCard(section, accentColor, surfaceColor));
+        }
+        return scrollView;
+    }
+
+    private View createUpdateSummaryCard(String currentVersion,
+                                         String latestVersion,
+                                         int accentColor,
+                                         int surfaceColor,
+                                         boolean hasUpdateAvailable) {
+        LinearLayout card = createReleaseCardShell(surfaceColor);
+        card.setPadding(dpToPx(18), dpToPx(18), dpToPx(18), dpToPx(18));
+
+        TextView titleChip = new TextView(requireContext());
+        int chipColor = hasUpdateAvailable ? accentColor : 0xFF5EBD7A;
+        titleChip.setText(getString(hasUpdateAvailable ? R.string.update_available_title : R.string.update_startup_latest));
+        titleChip.setTextColor(ColorUtils.blendARGB(Color.WHITE, chipColor, 0.15f));
+        titleChip.setTextSize(12f);
+        titleChip.setTypeface(Typeface.DEFAULT_BOLD);
+        titleChip.setPadding(dpToPx(12), dpToPx(7), dpToPx(12), dpToPx(7));
+        titleChip.setBackground(createPillDrawable(chipColor, hasUpdateAvailable ? 0.24f : 0.18f, hasUpdateAvailable ? 0.42f : 0.30f));
+        card.addView(titleChip);
+
+        TextView currentView = new TextView(requireContext());
+        LinearLayout.LayoutParams currentParams = new LinearLayout.LayoutParams(
+                ViewGroup.LayoutParams.MATCH_PARENT,
+                ViewGroup.LayoutParams.WRAP_CONTENT
+        );
+        currentParams.topMargin = dpToPx(16);
+        currentView.setLayoutParams(currentParams);
+        currentView.setText(getString(R.string.update_hero_details_current, currentVersion));
+        currentView.setTextColor(Color.WHITE);
+        currentView.setTextSize(15f);
+        currentView.setTypeface(Typeface.DEFAULT_BOLD);
+        card.addView(currentView);
+
+        TextView latestView = new TextView(requireContext());
+        LinearLayout.LayoutParams latestParams = new LinearLayout.LayoutParams(
+                ViewGroup.LayoutParams.MATCH_PARENT,
+                ViewGroup.LayoutParams.WRAP_CONTENT
+        );
+        latestParams.topMargin = dpToPx(8);
+        latestView.setLayoutParams(latestParams);
+        latestView.setText(getString(R.string.update_hero_details_latest, latestVersion));
+        latestView.setTextColor(ColorUtils.blendARGB(Color.WHITE, hasUpdateAvailable ? accentColor : 0xFF5EBD7A, 0.18f));
+        latestView.setTextSize(14f);
+        card.addView(latestView);
+
+        return card;
+    }
+
+    private View createReleaseSectionCard(@NonNull ReleaseSection section, int accentColor, int surfaceColor) {
+        LinearLayout card = createReleaseCardShell(surfaceColor);
+        LinearLayout.LayoutParams cardParams = (LinearLayout.LayoutParams) card.getLayoutParams();
+        cardParams.topMargin = dpToPx(14);
+        card.setPadding(dpToPx(18), dpToPx(16), dpToPx(18), dpToPx(16));
+
+        int sectionColor = resolveSectionColor(section.title, accentColor);
+
+        LinearLayout headerRow = new LinearLayout(requireContext());
+        headerRow.setOrientation(LinearLayout.HORIZONTAL);
+        headerRow.setLayoutParams(new LinearLayout.LayoutParams(
+                ViewGroup.LayoutParams.MATCH_PARENT,
+                ViewGroup.LayoutParams.WRAP_CONTENT
+        ));
+
+        TextView titleView = new TextView(requireContext());
+        titleView.setText(section.title);
+        titleView.setTextColor(sectionColor);
+        titleView.setTextSize(16f);
+        titleView.setTypeface(Typeface.DEFAULT_BOLD);
+        titleView.setLayoutParams(new LinearLayout.LayoutParams(
+                0,
+                ViewGroup.LayoutParams.WRAP_CONTENT,
+                1f
+        ));
+        headerRow.addView(titleView);
+
+        TextView countChip = new TextView(requireContext());
+        countChip.setText(String.valueOf(section.items.size()));
+        countChip.setTextColor(ColorUtils.blendARGB(sectionColor, Color.WHITE, 0.55f));
+        countChip.setTextSize(11f);
+        countChip.setTypeface(Typeface.DEFAULT_BOLD);
+        countChip.setPadding(dpToPx(10), dpToPx(5), dpToPx(10), dpToPx(5));
+        countChip.setBackground(createPillDrawable(sectionColor, 0.15f, 0.26f));
+        headerRow.addView(countChip);
+        card.addView(headerRow);
+
+        View divider = new View(requireContext());
+        LinearLayout.LayoutParams dividerParams = new LinearLayout.LayoutParams(
+                ViewGroup.LayoutParams.MATCH_PARENT,
+                dpToPx(1)
+        );
+        dividerParams.topMargin = dpToPx(12);
+        dividerParams.bottomMargin = dpToPx(8);
+        divider.setLayoutParams(dividerParams);
+        divider.setBackgroundColor(ColorUtils.setAlphaComponent(sectionColor, 56));
+        card.addView(divider);
+
+        for (int i = 0; i < section.items.size(); i++) {
+            card.addView(createReleaseBulletRow(section.items.get(i), sectionColor, i > 0));
+        }
+        return card;
+    }
+
+    private View createReleaseBulletRow(String text, int accentColor, boolean addTopSpacing) {
+        LinearLayout row = new LinearLayout(requireContext());
+        row.setOrientation(LinearLayout.HORIZONTAL);
+        row.setBaselineAligned(false);
+        LinearLayout.LayoutParams rowParams = new LinearLayout.LayoutParams(
+                ViewGroup.LayoutParams.MATCH_PARENT,
+                ViewGroup.LayoutParams.WRAP_CONTENT
+        );
+        if (addTopSpacing) {
+            rowParams.topMargin = dpToPx(6);
+        }
+        row.setLayoutParams(rowParams);
+
+        View dot = new View(requireContext());
+        LinearLayout.LayoutParams dotParams = new LinearLayout.LayoutParams(dpToPx(8), dpToPx(8));
+        dotParams.topMargin = dpToPx(7);
+        dotParams.rightMargin = dpToPx(12);
+        dot.setLayoutParams(dotParams);
+        GradientDrawable dotDrawable = new GradientDrawable();
+        dotDrawable.setShape(GradientDrawable.OVAL);
+        dotDrawable.setColor(accentColor);
+        dot.setBackground(dotDrawable);
+        row.addView(dot);
+
+        TextView body = new TextView(requireContext());
+        body.setText(text);
+        body.setTextColor(ColorUtils.setAlphaComponent(Color.WHITE, 232));
+        body.setTextSize(14f);
+        body.setLineSpacing(0f, 1.16f);
+        body.setLayoutParams(new LinearLayout.LayoutParams(
+                0,
+                ViewGroup.LayoutParams.WRAP_CONTENT,
+                1f
+        ));
+        row.addView(body);
+        return row;
+    }
+
+    private LinearLayout createReleaseCardShell(int surfaceColor) {
+        LinearLayout card = new LinearLayout(requireContext());
+        card.setOrientation(LinearLayout.VERTICAL);
+        card.setLayoutParams(new LinearLayout.LayoutParams(
+                ViewGroup.LayoutParams.MATCH_PARENT,
+                ViewGroup.LayoutParams.WRAP_CONTENT
+        ));
+        GradientDrawable background = new GradientDrawable();
+        background.setCornerRadius(dpToPx(22));
+        background.setColor(ColorUtils.blendARGB(surfaceColor, Color.BLACK, 0.08f));
+        background.setStroke(dpToPx(1), 0x28FFFFFF);
+        card.setBackground(background);
+        return card;
+    }
+
+    private GradientDrawable createPillDrawable(int accentColor, float fillBlend, float strokeBlend) {
+        GradientDrawable drawable = new GradientDrawable();
+        drawable.setShape(GradientDrawable.RECTANGLE);
+        drawable.setCornerRadius(dpToPx(999));
+        drawable.setColor(ColorUtils.setAlphaComponent(accentColor, Math.round(255 * fillBlend)));
+        drawable.setStroke(dpToPx(1), ColorUtils.setAlphaComponent(
+                ColorUtils.blendARGB(accentColor, Color.WHITE, strokeBlend),
+                170
+        ));
+        return drawable;
+    }
+
+    private List<ReleaseSection> parseReleaseSections(@Nullable String releaseNotes) {
+        List<ReleaseSection> sections = new ArrayList<>();
+        if (releaseNotes == null || releaseNotes.trim().isEmpty()) {
+            return sections;
+        }
+
+        ReleaseSection currentSection = null;
+        for (String rawLine : releaseNotes.split("\\r?\\n")) {
+            String line = rawLine.trim();
+            if (line.isEmpty()) {
+                continue;
+            }
+            if (line.startsWith("##")) {
+                String title = line.replaceFirst("^##+\\s*", "").trim();
+                if (title.isEmpty()) {
+                    title = getString(R.string.update_hero_details_changelog);
+                }
+                currentSection = new ReleaseSection(title);
+                sections.add(currentSection);
+                continue;
+            }
+
+            String normalizedBullet = normalizeReleaseBullet(line);
+            if (normalizedBullet != null) {
+                if (currentSection == null) {
+                    currentSection = new ReleaseSection(getString(R.string.update_hero_details_changelog));
+                    sections.add(currentSection);
+                }
+                currentSection.items.add(normalizedBullet);
+                continue;
+            }
+
+            if (currentSection == null) {
+                currentSection = new ReleaseSection(getString(R.string.update_hero_details_changelog));
+                sections.add(currentSection);
+            }
+            if (currentSection.items.isEmpty()) {
+                currentSection.items.add(line);
+            } else {
+                int lastIndex = currentSection.items.size() - 1;
+                currentSection.items.set(lastIndex, currentSection.items.get(lastIndex) + " " + line);
+            }
+        }
+        return sections;
+    }
+
+    @Nullable
+    private String normalizeReleaseBullet(String line) {
+        String normalized = line;
+        if (normalized.startsWith("- ")) {
+            normalized = normalized.substring(2).trim();
+        } else if (normalized.startsWith("* ")) {
+            normalized = normalized.substring(2).trim();
+        } else {
+            return null;
+        }
+        return normalized.isEmpty() ? null : normalized;
+    }
+
+    private int resolveUpdateAccentColor() {
+        Integer color = viewModel != null ? viewModel.getButtonColor().getValue() : null;
+        return color != null ? color : 0xFF2E7D32;
+    }
+
+    private int resolveDialogSurfaceColor() {
+        return 0xFF161B22;
+    }
+
+    private int resolveSectionColor(@NonNull String title, int defaultAccentColor) {
+        String normalized = title.toLowerCase(Locale.ROOT);
+        if (normalized.contains("fix")) {
+            return 0xFFFF7A7A;
+        }
+        if (normalized.contains("improv")) {
+            return 0xFF7AD7FF;
+        }
+        if (normalized.contains("new")) {
+            return defaultAccentColor;
+        }
+        return ColorUtils.blendARGB(defaultAccentColor, Color.WHITE, 0.18f);
+    }
+
+    private int dpToPx(int dp) {
+        return Math.round(dp * getResources().getDisplayMetrics().density);
+    }
+
+    private static class ReleaseSection {
+        final String title;
+        final List<String> items = new ArrayList<>();
+
+        ReleaseSection(String title) {
+            this.title = title;
+        }
     }
 
     private ReleaseInfo fetchLatestReleaseInfo() throws IOException {
@@ -931,11 +1229,18 @@ public class HomeFragment extends Fragment {
         if (version == null || version.isEmpty()) {
             return new int[]{0};
         }
-        String[] parts = version.split("\\.");
+        String sanitized = version.trim();
+        java.util.regex.Matcher matcher = java.util.regex.Pattern
+                .compile("(\\d+(?:\\.\\d+)*)")
+                .matcher(sanitized);
+        if (matcher.find()) {
+            sanitized = matcher.group(1);
+        }
+        String[] parts = sanitized.split("\\.");
         int[] result = new int[parts.length];
         for (int i = 0; i < parts.length; i++) {
             try {
-                result[i] = Integer.parseInt(parts[i].replaceAll("[^0-9]", ""));
+                result[i] = Integer.parseInt(parts[i]);
             } catch (NumberFormatException e) {
                 result[i] = 0;
             }

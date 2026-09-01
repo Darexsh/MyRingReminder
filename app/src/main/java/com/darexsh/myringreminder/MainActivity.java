@@ -55,6 +55,13 @@ import java.util.concurrent.Executor;
 public class MainActivity extends AppCompatActivity {
 
     private static final int REQUEST_NOTIFICATION_PERMISSION = 1;
+    private static final String SHORTCUT_SCHEME = "myringreminder";
+    private static final String SHORTCUT_HOST = "shortcut";
+    private static final String SHORTCUT_CALENDAR = "calendar";
+    private static final String SHORTCUT_CYCLES = "cycles";
+    private static final String SHORTCUT_SETTINGS = "settings";
+    private static final String SHORTCUT_STOCK = "stock";
+    private static final String SHORTCUT_NOTES = "notes";
     private static final String PREFS_NAME = "app_prefs";
     private static final String KEY_LAST_VERSION = "last_version";
     private static final String KEY_TOUR_SHOWN = "tour_shown";
@@ -243,7 +250,7 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
-        handleOpenHomeIntent(getIntent());
+        handleLaunchIntent(getIntent());
 
         // Create notification channel and request permission
         createNotificationChannel();
@@ -416,17 +423,75 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onNewIntent(Intent intent) {
         super.onNewIntent(intent);
-        handleOpenHomeIntent(intent);
+        setIntent(intent);
+        handleLaunchIntent(intent);
     }
 
-    private void handleOpenHomeIntent(Intent intent) {
-        if (intent == null || !intent.getBooleanExtra("open_home", false)) {
+    private void handleLaunchIntent(Intent intent) {
+        if (intent == null) {
             return;
         }
+        if (intent.getBooleanExtra("open_home", false)) {
+            openHomeFromExternalTrigger();
+            return;
+        }
+        Uri data = intent.getData();
+        if (data == null
+                || !SHORTCUT_SCHEME.equals(data.getScheme())
+                || !SHORTCUT_HOST.equals(data.getHost())) {
+            return;
+        }
+        String destination = data.getLastPathSegment();
+        if (SHORTCUT_CALENDAR.equals(destination)) {
+            navigateToPrimaryDestination(R.id.nav_calendar);
+        } else if (SHORTCUT_CYCLES.equals(destination)) {
+            navigateToPrimaryDestination(R.id.nav_cycles);
+        } else if (SHORTCUT_SETTINGS.equals(destination)) {
+            navigateToPrimaryDestination(R.id.nav_settings);
+        } else if (SHORTCUT_STOCK.equals(destination)) {
+            openStockTrackerSettings();
+        } else if (SHORTCUT_NOTES.equals(destination)) {
+            openNotesShortcut();
+        }
+    }
+
+    private void openHomeFromExternalTrigger() {
         fragmentManager.popBackStack(null, FragmentManager.POP_BACK_STACK_INCLUSIVE);
         loadFragment(new HomeFragment(), false);
-        bottomNavigationView.setSelectedItemId(R.id.nav_home);
+        if (bottomNavigationView != null) {
+            bottomNavigationView.setSelectedItemId(R.id.nav_home);
+        }
         btnNotes.setVisibility(View.VISIBLE);
+    }
+
+    private void navigateToPrimaryDestination(int navItemId) {
+        fragmentManager.popBackStack(null, FragmentManager.POP_BACK_STACK_INCLUSIVE);
+        if (bottomNavigationView != null && bottomNavigationView.getSelectedItemId() != navItemId) {
+            bottomNavigationView.setSelectedItemId(navItemId);
+            return;
+        }
+        if (navItemId == R.id.nav_calendar) {
+            loadFragment(new CalendarFragment(), false);
+        } else if (navItemId == R.id.nav_cycles) {
+            loadFragment(new CyclesFragment(), false);
+        } else if (navItemId == R.id.nav_settings) {
+            loadFragment(new SettingsFragment(), false);
+        } else {
+            loadFragment(new HomeFragment(), false);
+        }
+    }
+
+    private void openNotesShortcut() {
+        fragmentManager.popBackStack(null, FragmentManager.POP_BACK_STACK_INCLUSIVE);
+        loadFragment(new NotesFragment(), false);
+        if (bottomNavigationView != null) {
+            bottomNavigationView.getMenu().setGroupCheckable(0, true, true);
+            android.view.MenuItem homeItem = bottomNavigationView.getMenu().findItem(R.id.nav_home);
+            if (homeItem != null) {
+                homeItem.setChecked(true);
+            }
+        }
+        btnNotes.setVisibility(View.GONE);
     }
 
     @Override
@@ -483,7 +548,16 @@ public class MainActivity extends AppCompatActivity {
     public void openStockTrackerSettings() {
         openStockTrackerOnNextSettings = true;
         fragmentManager.popBackStack(null, FragmentManager.POP_BACK_STACK_INCLUSIVE);
-        bottomNavigationView.setSelectedItemId(R.id.nav_settings);
+        if (bottomNavigationView != null && bottomNavigationView.getSelectedItemId() != R.id.nav_settings) {
+            bottomNavigationView.setSelectedItemId(R.id.nav_settings);
+        } else {
+            SettingsFragment settingsFragment = new SettingsFragment();
+            Bundle args = new Bundle();
+            args.putBoolean(SettingsFragment.ARG_OPEN_STOCK_TRACKER_DIALOG, true);
+            settingsFragment.setArguments(args);
+            openStockTrackerOnNextSettings = false;
+            loadFragment(settingsFragment, false);
+        }
         btnNotes.setVisibility(View.GONE);
     }
 

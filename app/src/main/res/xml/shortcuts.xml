@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="utf-8"?>
+<shortcuts xmlns:android="http://schemas.android.com/apk/res/android">
+    <shortcut
+        android:shortcutId="shortcut_calendar"
+        android:enabled="true"
+        android:icon="@drawable/ic_shortcut_calendar"
+        android:shortcutShortLabel="@string/nav_calendar"
+        android:shortcutLongLabel="@string/nav_calendar">
+        <intent
+            android:action="android.intent.action.VIEW"
+            android:targetPackage="com.darexsh.myringreminder"
+            android:targetClass="com.darexsh.myringreminder.MainActivity"
+            android:data="myringreminder://shortcut/calendar" />
+    </shortcut>
+
+    <shortcut
+        android:shortcutId="shortcut_cycles"
+        android:enabled="true"
+        android:icon="@drawable/ic_shortcut_cycles"
+        android:shortcutShortLabel="@string/nav_cycles"
+        android:shortcutLongLabel="@string/nav_cycles">
+        <intent
+            android:action="android.intent.action.VIEW"
+            android:targetPackage="com.darexsh.myringreminder"
+            android:targetClass="com.darexsh.myringreminder.MainActivity"
+            android:data="myringreminder://shortcut/cycles" />
+    </shortcut>
+
+    <shortcut
+        android:shortcutId="shortcut_stock"
+        android:enabled="true"
+        android:icon="@drawable/ic_shortcut_ring_supply"
+        android:shortcutShortLabel="@string/settings_stock_tracker_label"
+        android:shortcutLongLabel="@string/settings_stock_tracker_label">
+        <intent
+            android:action="android.intent.action.VIEW"
+            android:targetPackage="com.darexsh.myringreminder"
+            android:targetClass="com.darexsh.myringreminder.MainActivity"
+            android:data="myringreminder://shortcut/stock" />
+    </shortcut>
+
+    <shortcut
+        android:shortcutId="shortcut_notes"
+        android:enabled="true"
+        android:icon="@drawable/ic_shortcut_notes"
+        android:shortcutShortLabel="@string/notes_title"
+        android:shortcutLongLabel="@string/notes_title">
+        <intent
+            android:action="android.intent.action.VIEW"
+            android:targetPackage="com.darexsh.myringreminder"
+            android:targetClass="com.darexsh.myringreminder.MainActivity"
+            android:data="myringreminder://shortcut/notes" />
+    </shortcut>
+</shortcuts>
