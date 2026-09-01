@@ -398,6 +398,10 @@
     <string name="cycles_summary_count_placeholder">0 Zyklen erfasst</string>
     <string name="cycles_status_inserted">Ring eingesetzt</string>
     <string name="cycles_status_removed">Ring entfernt</string>
+    <string name="cycles_special_case_single">Besonderheit:</string>
+    <string name="cycles_special_case_multiple">Besonderheiten:</string>
+    <string name="cycles_special_skip_ring_free">Ringfreie Woche übersprungen</string>
+    <string name="cycles_special_wear_longer_days">Ring länger getragen (+%1$d Tage)</string>
     <string name="cycles_title">Zyklus-Historie</string>
 
     <!-- Notes -->

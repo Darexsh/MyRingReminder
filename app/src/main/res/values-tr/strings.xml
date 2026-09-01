@@ -398,6 +398,10 @@
     <string name="cycles_summary_count_placeholder">0 döngü kaydedildi</string>
     <string name="cycles_status_inserted">Halka yerleştirildi</string>
     <string name="cycles_status_removed">Halka çıkarıldı</string>
+    <string name="cycles_special_case_single">Özel durum:</string>
+    <string name="cycles_special_case_multiple">Özel durumlar:</string>
+    <string name="cycles_special_skip_ring_free">Halkasız hafta atlandı</string>
+    <string name="cycles_special_wear_longer_days">Halka daha uzun süre takıldı (+%1$d gün)</string>
     <string name="cycles_title">Döngü geçmişi</string>
 
     <!-- Notes -->

@@ -398,6 +398,10 @@
     <string name="cycles_summary_count_placeholder">0 ciclos registrados</string>
     <string name="cycles_status_inserted">Anel inserido</string>
     <string name="cycles_status_removed">Anel removido</string>
+    <string name="cycles_special_case_single">Caso especial:</string>
+    <string name="cycles_special_case_multiple">Casos especiais:</string>
+    <string name="cycles_special_skip_ring_free">Semana sem anel pulada</string>
+    <string name="cycles_special_wear_longer_days">Anel usado por mais tempo (+%1$d dias)</string>
     <string name="cycles_title">Histórico de ciclos</string>
 
     <!-- Notes -->

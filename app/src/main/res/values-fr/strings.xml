@@ -398,6 +398,10 @@
     <string name="cycles_summary_count_placeholder">0 cycles enregistrés</string>
     <string name="cycles_status_inserted">Anneau inséré</string>
     <string name="cycles_status_removed">Anneau retiré</string>
+    <string name="cycles_special_case_single">Cas particulier :</string>
+    <string name="cycles_special_case_multiple">Cas particuliers :</string>
+    <string name="cycles_special_skip_ring_free">Semaine sans anneau ignorée</string>
+    <string name="cycles_special_wear_longer_days">Anneau porté plus longtemps (+%1$d jours)</string>
     <string name="cycles_title">Historique des cycles</string>
 
     <!-- Notes -->

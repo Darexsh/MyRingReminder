@@ -398,6 +398,10 @@
     <string name="cycles_summary_count_placeholder">Отслежено циклов: 0</string>
     <string name="cycles_status_inserted">Кольцо вставлено</string>
     <string name="cycles_status_removed">Кольцо извлечено</string>
+    <string name="cycles_special_case_single">Особый случай:</string>
+    <string name="cycles_special_case_multiple">Особые случаи:</string>
+    <string name="cycles_special_skip_ring_free">Пропущена неделя без кольца</string>
+    <string name="cycles_special_wear_longer_days">Кольцо носилось дольше (+%1$d дн.)</string>
     <string name="cycles_title">История циклов</string>
 
     <!-- Notes -->

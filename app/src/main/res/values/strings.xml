@@ -401,6 +401,10 @@
     <string name="cycles_summary_count_placeholder">0 cycles tracked</string>
     <string name="cycles_status_inserted">Ring inserted</string>
     <string name="cycles_status_removed">Ring removed</string>
+    <string name="cycles_special_case_single">Special case:</string>
+    <string name="cycles_special_case_multiple">Special cases:</string>
+    <string name="cycles_special_skip_ring_free">Ring-free week skipped</string>
+    <string name="cycles_special_wear_longer_days">Ring worn longer (+%1$d days)</string>
     <string name="cycles_title">Cycle history</string>
 
     <!-- Notes -->

@@ -18,8 +18,10 @@ import com.google.android.material.button.MaterialButton;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
+import java.util.Map;
 import androidx.core.content.ContextCompat;
 
 // CyclesFragment displays a history of cycle events (insertions/removals) in a card format
@@ -193,6 +195,13 @@ public class CyclesFragment extends Fragment {
 
         updateSummary(validCycles);
 
+        Map<Long, Long> cycleStartByRemovalMillis = new HashMap<>();
+        for (Cycle cycle : validCycles) {
+            if (CycleType.INSERTION == cycle.getType() && cycle.getEndDateMillis() > 0) {
+                cycleStartByRemovalMillis.put(cycle.getEndDateMillis(), cycle.getDateMillis());
+            }
+        }
+
         // Sort cycles by date in descending order (newest first)
         validCycles.sort((c1, c2) -> sortNewestFirst
                 ? Long.compare(c2.getDateMillis(), c1.getDateMillis())
@@ -283,9 +292,57 @@ public class CyclesFragment extends Fragment {
             }
             cardContent.addView(statusTextView);
 
+            String specialCaseText = buildSpecialCaseText(cycle, cycleStartByRemovalMillis);
+            if (specialCaseText != null) {
+                TextView specialCaseTextView = new TextView(requireContext());
+                specialCaseTextView.setTextSize(13);
+                specialCaseTextView.setTextColor(0xFFBDBDBD);
+                specialCaseTextView.setPadding(0, dpToPx(4), 0, 0);
+                specialCaseTextView.setText(specialCaseText);
+                cardContent.addView(specialCaseTextView);
+            }
+
             cardView.addView(cardContent);
             cycleContainer.addView(cardView);
         }
+    }
+
+    @Nullable
+    private String buildSpecialCaseText(@NonNull Cycle cycle, @NonNull Map<Long, Long> cycleStartByRemovalMillis) {
+        long cycleStartMillis;
+        if (CycleType.INSERTION == cycle.getType()) {
+            cycleStartMillis = cycle.getDateMillis();
+        } else if (CycleType.REMOVAL == cycle.getType()) {
+            cycleStartMillis = cycleStartByRemovalMillis.getOrDefault(cycle.getDateMillis(), 0L);
+        } else {
+            cycleStartMillis = 0L;
+        }
+
+        if (cycleStartMillis <= 0) {
+            return null;
+        }
+
+        SettingsRepository repository = viewModel.getRepository();
+        List<String> parts = new ArrayList<>();
+
+        if (CycleType.REMOVAL == cycle.getType()
+                && repository.getRingFreeDaysForCycle(cycleStartMillis) == 0) {
+            parts.add(getString(R.string.cycles_special_skip_ring_free));
+        }
+
+        int delayDays = repository.getCycleDelayDays(cycleStartMillis);
+        if (CycleType.INSERTION == cycle.getType() && delayDays > 0) {
+            parts.add(getString(R.string.cycles_special_wear_longer_days, delayDays));
+        }
+
+        if (parts.isEmpty()) {
+            return null;
+        }
+
+        int prefixRes = parts.size() == 1
+                ? R.string.cycles_special_case_single
+                : R.string.cycles_special_case_multiple;
+        return getString(prefixRes) + " " + android.text.TextUtils.join(", ", parts);
     }
 
     @NonNull

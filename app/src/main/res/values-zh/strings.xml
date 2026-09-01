@@ -398,6 +398,10 @@
     <string name="cycles_summary_count_placeholder">已记录 0 个周期</string>
     <string name="cycles_status_inserted">已置入圆环</string>
     <string name="cycles_status_removed">已取出圆环</string>
+    <string name="cycles_special_case_single">特殊情况：</string>
+    <string name="cycles_special_case_multiple">特殊情况：</string>
+    <string name="cycles_special_skip_ring_free">已跳过无环周</string>
+    <string name="cycles_special_wear_longer_days">圆环延长佩戴（+%1$d 天）</string>
     <string name="cycles_title">周期历史</string>
 
     <!-- Notes -->
