@@ -305,7 +305,7 @@ public class HomeCircleView extends View {
         float filledFloat = Math.max(0f, Math.min(segments, segments * fraction));
         int filledWhole = Math.max(0, Math.min(segments, (int) Math.floor(filledFloat + 0.0001f)));
         float partialFraction = filledFloat - filledWhole;
-        if (filledWhole <= 0 && partialFraction <= 0.0001f) {
+        if (filledWhole == 0 && partialFraction == 0f) {
             return;
         }
 

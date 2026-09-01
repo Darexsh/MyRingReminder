@@ -51,19 +51,17 @@ public class NotificationReceiver extends BroadcastReceiver {
 
         NotificationManagerCompat manager = NotificationManagerCompat.from(context);
 
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-            NotificationManager notificationManager = context.getSystemService(NotificationManager.class);
-            NotificationChannel channel = notificationManager != null
-                    ? notificationManager.getNotificationChannel(Constants.REMINDER_CHANNEL_ID)
-                    : null;
-            Log.d(
-                    TAG,
-                    "Sending reminder via channel="
-                            + Constants.REMINDER_CHANNEL_ID
-                            + ", channelFound=" + (channel != null)
-                            + ", shouldVibrate=" + (channel != null && channel.shouldVibrate())
-            );
-        }
+        NotificationManager notificationManager = context.getSystemService(NotificationManager.class);
+        NotificationChannel channel = notificationManager != null
+                ? notificationManager.getNotificationChannel(Constants.REMINDER_CHANNEL_ID)
+                : null;
+        Log.d(
+                TAG,
+                "Sending reminder via channel="
+                        + Constants.REMINDER_CHANNEL_ID
+                        + ", channelFound=" + (channel != null)
+                        + ", shouldVibrate=" + (channel != null && channel.shouldVibrate())
+        );
 
         // Check if the app has permission to post notifications (Android 13+)
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU

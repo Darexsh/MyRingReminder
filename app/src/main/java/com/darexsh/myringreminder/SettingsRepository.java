@@ -62,7 +62,6 @@ public class SettingsRepository {
     private static final String KEY_LOW_STOCK_REMINDER_ENABLED = "low_stock_reminder_enabled";
     private static final String KEY_STOCK_RECIPE_CHECK_DELAY_DAYS = "stock_recipe_check_delay_days";
     private static final String KEY_LAST_STOCK_DECREMENT_CYCLE_START = "last_stock_decrement_cycle_start";
-    private static final String KEY_LAST_LOW_STOCK_NOTIFICATION_COUNT = "last_low_stock_notification_count";
     private static final Pattern PERIOD_DAY_KEY_PATTERN = Pattern.compile("^\\d{4}-\\d{2}-\\d{2}$");
     public static final int DEFAULT_BUTTON_COLOR = 0xFF2E7D32;
     public static final int DEFAULT_HOME_CIRCLE_COLOR = 0xFFBB86FC;
@@ -424,18 +423,6 @@ public class SettingsRepository {
 
     public void setLastStockDecrementCycleStartMillis(long cycleStartMillis) {
         sharedPreferences.edit().putLong(KEY_LAST_STOCK_DECREMENT_CYCLE_START, Math.max(0L, cycleStartMillis)).apply();
-    }
-
-    public int getLastLowStockNotificationCount() {
-        return sharedPreferences.getInt(KEY_LAST_LOW_STOCK_NOTIFICATION_COUNT, -1);
-    }
-
-    public void setLastLowStockNotificationCount(int count) {
-        sharedPreferences.edit().putInt(KEY_LAST_LOW_STOCK_NOTIFICATION_COUNT, count).apply();
-    }
-
-    public void clearLastLowStockNotificationCount() {
-        sharedPreferences.edit().remove(KEY_LAST_LOW_STOCK_NOTIFICATION_COUNT).apply();
     }
 
     private int remapHomeCircleStyleV1(int style) {

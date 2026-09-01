@@ -106,7 +106,6 @@
     <string name="settings_background_tools_hint_pick">Выберите фоновое изображение для приложения.</string>
     <string name="settings_background_tools_hint_all_screens">Включите или отключите фон на всех экранах.</string>
     <string name="settings_background_tools_remove_label">Сбросить фон</string>
-    <string name="settings_background_tools_hint_remove">Удалите текущее сохранённое фоновое изображение и вернитесь к фону по умолчанию.</string>
     <string name="settings_background_tools_hint_dim">Настройте затемнение фона для лучшей читаемости.</string>
     <string name="settings_background_tools_hint_blur">Настройте размытие для главного и других экранов.</string>
     <string name="settings_background_blur_unavailable_toast">Доступно только начиная с Android 12</string>
@@ -154,6 +153,7 @@
     <string name="settings_calendar_range_back">Назад</string>
     <string name="settings_calendar_range_button">Диапазон календаря:\n%1$d %2$s назад, %3$d %4$s вперед</string>
     <string name="settings_calendar_range_forward">Вперед</string>
+    <string name="settings_calendar_range_value">%1$d %2$s / %3$d %4$s</string>
     <string name="settings_calendar_range_message">Выберите, на какой период отображать календарь.</string>
     <string name="settings_calendar_range_title">Установить диапазон календаря</string>
     <string name="settings_calendar_removal_color_custom_title">Свой цвет извлечения</string>
@@ -342,6 +342,7 @@
     <string name="period_details_filter_pain">Боль</string>
     <string name="period_details_filter_start">Начало</string>
     <string name="period_details_filter_end">Конец</string>
+    <string name="period_details_label_value">%1$s: %2$s</string>
     <string name="period_details_empty">Нет записей о менструации за этот период.</string>
     <string name="period_details_empty_filtered">Нет записей, соответствующих текущему поиску или фильтру.</string>
     <string name="period_modal_title_for_date">Запись менструации: %1$s</string>
@@ -404,8 +405,6 @@
     <string name="cycles_badge_wear_phase">Фаза ношения</string>
     <string name="cycles_badge_pause">Пауза</string>
     <string name="cycles_badge_direct_switch">Прямая замена</string>
-    <string name="cycles_special_case_single">Особый случай:</string>
-    <string name="cycles_special_case_multiple">Особые случаи:</string>
     <string name="cycles_special_skip_ring_free">Пропущена неделя без кольца</string>
     <string name="cycles_special_wear_longer_days">Кольцо носилось дольше (+%1$d дн.)</string>
     <string name="cycles_title_seamless_ring_change">Бесшовная замена кольца</string>

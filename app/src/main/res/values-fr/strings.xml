@@ -106,7 +106,6 @@
     <string name="settings_background_tools_hint_pick">Choisissez une image d\'arrière-plan pour l\'application.</string>
     <string name="settings_background_tools_hint_all_screens">Activez ou désactivez l\'image d\'arrière-plan sur tous les écrans.</string>
     <string name="settings_background_tools_remove_label">Réinitialiser l\'arrière-plan</string>
-    <string name="settings_background_tools_hint_remove">Retirez l\'image d\'arrière-plan actuellement enregistrée et revenez à l\'arrière-plan par défaut.</string>
     <string name="settings_background_tools_hint_dim">Ajustez l\'assombrissement pour améliorer la lisibilité.</string>
     <string name="settings_background_tools_hint_blur">Ajustez le flou pour le tableau de bord et les autres écrans.</string>
     <string name="settings_background_blur_unavailable_toast">Disponible à partir d\'Android 12 uniquement</string>
@@ -154,6 +153,7 @@
     <string name="settings_calendar_range_back">Précédent</string>
     <string name="settings_calendar_range_button">Plage du calendrier :\n%1$d %2$s avant, %3$d %4$s après</string>
     <string name="settings_calendar_range_forward">Suivant</string>
+    <string name="settings_calendar_range_value">%1$d %2$s / %3$d %4$s</string>
     <string name="settings_calendar_range_message">Choisissez jusqu\'où le calendrier est affiché.</string>
     <string name="settings_calendar_range_title">Plage du calendrier</string>
     <string name="settings_calendar_removal_color_custom_title">Couleur de retrait personnalisée</string>
@@ -342,6 +342,7 @@
     <string name="period_details_filter_pain">Douleur</string>
     <string name="period_details_filter_start">Début</string>
     <string name="period_details_filter_end">Fin</string>
+    <string name="period_details_label_value">%1$s: %2$s</string>
     <string name="period_details_empty">Aucune entrée de règles dans cette période.</string>
     <string name="period_details_empty_filtered">Aucune entrée de règles ne correspond à la recherche ou au filtre actuel.</string>
     <string name="period_modal_title_for_date">Entrée des règles : %1$s</string>
@@ -404,8 +405,6 @@
     <string name="cycles_badge_wear_phase">Phase de port</string>
     <string name="cycles_badge_pause">Pause</string>
     <string name="cycles_badge_direct_switch">Changement direct</string>
-    <string name="cycles_special_case_single">Cas particulier :</string>
-    <string name="cycles_special_case_multiple">Cas particuliers :</string>
     <string name="cycles_special_skip_ring_free">Semaine sans anneau ignorée</string>
     <string name="cycles_special_wear_longer_days">Anneau porté plus longtemps (+%1$d jours)</string>
     <string name="cycles_title_seamless_ring_change">Changement d\'anneau sans pause</string>

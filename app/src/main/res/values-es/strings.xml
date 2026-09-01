@@ -106,7 +106,6 @@
     <string name="settings_background_tools_hint_pick">Elige una imagen de fondo para la app.</string>
     <string name="settings_background_tools_hint_all_screens">Activa o desactiva la imagen de fondo en todas las pantallas.</string>
     <string name="settings_background_tools_remove_label">Restablecer fondo</string>
-    <string name="settings_background_tools_hint_remove">Quita la imagen de fondo guardada actualmente y vuelve al fondo predeterminado.</string>
     <string name="settings_background_tools_hint_dim">Ajusta el oscurecimiento del fondo para mejorar la legibilidad.</string>
     <string name="settings_background_tools_hint_blur">Ajusta el desenfoque para panel principal y otras pantallas.</string>
     <string name="settings_background_blur_unavailable_toast">Disponible solo a partir de Android 12</string>
@@ -154,6 +153,7 @@
     <string name="settings_calendar_range_back">Atrás</string>
     <string name="settings_calendar_range_button">Rango del calendario:\n%1$d %2$s atrás, %3$d %4$s adelante</string>
     <string name="settings_calendar_range_forward">Adelante</string>
+    <string name="settings_calendar_range_value">%1$d %2$s / %3$d %4$s</string>
     <string name="settings_calendar_range_message">Elige el intervalo en el que se mostrará el calendario.</string>
     <string name="settings_calendar_range_title">Establecer rango del calendario</string>
     <string name="settings_calendar_removal_color_custom_title">Color de eliminación personalizado</string>
@@ -342,6 +342,7 @@
     <string name="period_details_filter_pain">Dolor</string>
     <string name="period_details_filter_start">Inicio</string>
     <string name="period_details_filter_end">Fin</string>
+    <string name="period_details_label_value">%1$s: %2$s</string>
     <string name="period_details_empty">No hay registros del período en este rango.</string>
     <string name="period_details_empty_filtered">Ningún registro del período coincide con la búsqueda o el filtro actual.</string>
     <string name="period_modal_title_for_date">Registro del período: %1$s</string>
@@ -404,8 +405,6 @@
     <string name="cycles_badge_wear_phase">Fase de uso</string>
     <string name="cycles_badge_pause">Pausa</string>
     <string name="cycles_badge_direct_switch">Cambio directo</string>
-    <string name="cycles_special_case_single">Caso especial:</string>
-    <string name="cycles_special_case_multiple">Casos especiales:</string>
     <string name="cycles_special_skip_ring_free">Semana sin anillo omitida</string>
     <string name="cycles_special_wear_longer_days">Anillo usado por más tiempo (+%1$d días)</string>
     <string name="cycles_title_seamless_ring_change">Cambio de anillo sin pausa</string>

@@ -106,7 +106,6 @@
     <string name="settings_background_tools_hint_pick">Escolha uma imagem de fundo para o app.</string>
     <string name="settings_background_tools_hint_all_screens">Ative ou desative o fundo em todas as telas.</string>
     <string name="settings_background_tools_remove_label">Redefinir fundo</string>
-    <string name="settings_background_tools_hint_remove">Remova a imagem de fundo salva atualmente e volte ao fundo padrão.</string>
     <string name="settings_background_tools_hint_dim">Ajuste o escurecimento para melhorar a leitura.</string>
     <string name="settings_background_tools_hint_blur">Ajuste o desfoque para painel e outras telas.</string>
     <string name="settings_background_blur_unavailable_toast">Disponível apenas a partir do Android 12</string>
@@ -154,6 +153,7 @@
     <string name="settings_calendar_range_back">Atrás</string>
     <string name="settings_calendar_range_button">Intervalo do calendário:\n%1$d %2$s atrás, %3$d %4$s à frente</string>
     <string name="settings_calendar_range_forward">À frente</string>
+    <string name="settings_calendar_range_value">%1$d %2$s / %3$d %4$s</string>
     <string name="settings_calendar_range_message">Escolha o quanto o calendário será exibido.</string>
     <string name="settings_calendar_range_title">Definir intervalo do calendário</string>
     <string name="settings_calendar_removal_color_custom_title">Cor de remoção personalizada</string>
@@ -342,6 +342,7 @@
     <string name="period_details_filter_pain">Dor</string>
     <string name="period_details_filter_start">Início</string>
     <string name="period_details_filter_end">Fim</string>
+    <string name="period_details_label_value">%1$s: %2$s</string>
     <string name="period_details_empty">Sem registros de período neste intervalo.</string>
     <string name="period_details_empty_filtered">Nenhum registro corresponde à busca ou ao filtro atual.</string>
     <string name="period_modal_title_for_date">Registro menstrual: %1$s</string>
@@ -404,8 +405,6 @@
     <string name="cycles_badge_wear_phase">Fase de uso</string>
     <string name="cycles_badge_pause">Pausa</string>
     <string name="cycles_badge_direct_switch">Troca direta</string>
-    <string name="cycles_special_case_single">Caso especial:</string>
-    <string name="cycles_special_case_multiple">Casos especiais:</string>
     <string name="cycles_special_skip_ring_free">Semana sem anel pulada</string>
     <string name="cycles_special_wear_longer_days">Anel usado por mais tempo (+%1$d dias)</string>
     <string name="cycles_title_seamless_ring_change">Troca contínua do anel</string>

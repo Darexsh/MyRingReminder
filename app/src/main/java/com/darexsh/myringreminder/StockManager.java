@@ -181,7 +181,6 @@ final class StockManager {
         }
         showNotification(
                 context,
-                STOCK_NOTIFICATION_ID,
                 context.getString(R.string.stock_notification_title),
                 context.getResources().getQuantityString(
                         R.plurals.stock_notification_message,
@@ -252,7 +251,7 @@ final class StockManager {
         pendingIntent.cancel();
     }
 
-    private static void showNotification(Context context, int notificationId, String title, String message) {
+    private static void showNotification(Context context, String title, String message) {
         ensureReminderChannel(context);
 
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU
@@ -265,7 +264,7 @@ final class StockManager {
         openIntent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TOP);
         PendingIntent contentIntent = PendingIntent.getActivity(
                 context,
-                notificationId,
+                STOCK_NOTIFICATION_ID,
                 openIntent,
                 PendingIntent.FLAG_UPDATE_CURRENT | PendingIntent.FLAG_IMMUTABLE
         );
@@ -280,7 +279,7 @@ final class StockManager {
                 .setAutoCancel(true)
                 .setDefaults(NotificationCompat.DEFAULT_SOUND | NotificationCompat.DEFAULT_VIBRATE);
 
-        NotificationManagerCompat.from(context).notify(notificationId, builder.build());
+        NotificationManagerCompat.from(context).notify(STOCK_NOTIFICATION_ID, builder.build());
     }
 
     private static boolean canScheduleExactAlarms(AlarmManager alarmManager) {
@@ -291,9 +290,6 @@ final class StockManager {
     }
 
     private static void ensureReminderChannel(Context context) {
-        if (Build.VERSION.SDK_INT < Build.VERSION_CODES.O) {
-            return;
-        }
         NotificationManager notificationManager = context.getSystemService(NotificationManager.class);
         if (notificationManager == null) {
             return;

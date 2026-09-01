@@ -2,21 +2,21 @@ package com.darexsh.myringreminder;
 
 public class PeriodDayEntry {
 
-    private String dateKey;
-    private boolean periodDay;
-    private BleedingIntensity intensity;
+    private final String dateKey;
+    private final boolean periodDay;
+    private final BleedingIntensity intensity;
     // Legacy flags kept for backward-compatibility with older stored entries.
-    private boolean pain;
-    private boolean illness;
-    private PainSeverity painSeverity;
-    private boolean symptomIllness;
-    private boolean symptomNausea;
-    private boolean symptomFatigue;
-    private boolean symptomDizziness;
-    private boolean symptomDiarrhea;
-    private boolean start;
-    private boolean end;
-    private long updatedAt;
+    private final boolean pain;
+    private final boolean illness;
+    private final PainSeverity painSeverity;
+    private final boolean symptomIllness;
+    private final boolean symptomNausea;
+    private final boolean symptomFatigue;
+    private final boolean symptomDizziness;
+    private final boolean symptomDiarrhea;
+    private final boolean start;
+    private final boolean end;
+    private final long updatedAt;
 
     public PeriodDayEntry(String dateKey,
                           boolean periodDay,

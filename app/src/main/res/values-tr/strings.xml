@@ -106,7 +106,6 @@
     <string name="settings_background_tools_hint_pick">Uygulama için bir arka plan resmi seçin.</string>
     <string name="settings_background_tools_hint_all_screens">Arka planı tüm ekranlarda açın veya kapatın.</string>
     <string name="settings_background_tools_remove_label">Arka planı sıfırla</string>
-    <string name="settings_background_tools_hint_remove">Şu anda kayıtlı olan arka plan resmini kaldırın ve varsayılan arka plana dönün.</string>
     <string name="settings_background_tools_hint_dim">Daha iyi okunabilirlik için karartmayı ayarlayın.</string>
     <string name="settings_background_tools_hint_blur">Panel ve diğer ekranlar için bulanıklığı ayarlayın.</string>
     <string name="settings_background_blur_unavailable_toast">Yalnızca Android 12 ve üzeri sürümlerde kullanılabilir</string>
@@ -154,6 +153,7 @@
     <string name="settings_calendar_range_back">Geri</string>
     <string name="settings_calendar_range_button">Takvim aralığı:\n%1$d %2$s geri, %3$d %4$s ileri</string>
     <string name="settings_calendar_range_forward">İleri</string>
+    <string name="settings_calendar_range_value">%1$d %2$s / %3$d %4$s</string>
     <string name="settings_calendar_range_message">Takvimin ne kadar ileriyi/geriyi göstereceğini seçin.</string>
     <string name="settings_calendar_range_title">Takvim aralığını ayarla</string>
     <string name="settings_calendar_removal_color_custom_title">Özel çıkarma rengi</string>
@@ -342,6 +342,7 @@
     <string name="period_details_filter_pain">Ağrı</string>
     <string name="period_details_filter_start">Başlangıç</string>
     <string name="period_details_filter_end">Bitiş</string>
+    <string name="period_details_label_value">%1$s: %2$s</string>
     <string name="period_details_empty">Bu aralıkta adet kaydı yok.</string>
     <string name="period_details_empty_filtered">Geçerli arama veya filtreyle eşleşen adet kaydı yok.</string>
     <string name="period_modal_title_for_date">Adet kaydı: %1$s</string>
@@ -404,8 +405,6 @@
     <string name="cycles_badge_wear_phase">Kullanım fazı</string>
     <string name="cycles_badge_pause">Ara</string>
     <string name="cycles_badge_direct_switch">Doğrudan değişim</string>
-    <string name="cycles_special_case_single">Özel durum:</string>
-    <string name="cycles_special_case_multiple">Özel durumlar:</string>
     <string name="cycles_special_skip_ring_free">Halkasız hafta atlandı</string>
     <string name="cycles_special_wear_longer_days">Halka daha uzun süre takıldı (+%1$d gün)</string>
     <string name="cycles_title_seamless_ring_change">Kesintisiz halka değişimi</string>

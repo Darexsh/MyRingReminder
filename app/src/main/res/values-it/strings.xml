@@ -106,7 +106,6 @@
     <string name="settings_background_tools_hint_pick">Scegli un\'immagine di sfondo per l\'app.</string>
     <string name="settings_background_tools_hint_all_screens">Attiva o disattiva lo sfondo su tutte le schermate.</string>
     <string name="settings_background_tools_remove_label">Reimposta sfondo</string>
-    <string name="settings_background_tools_hint_remove">Rimuovi l\'immagine di sfondo attualmente salvata e torna allo sfondo predefinito.</string>
     <string name="settings_background_tools_hint_dim">Regola l\'oscuramento dello sfondo per una migliore leggibilità.</string>
     <string name="settings_background_tools_hint_blur">Regola la sfocatura per dashboard e altre schermate.</string>
     <string name="settings_background_blur_unavailable_toast">Disponibile solo da Android 12</string>
@@ -154,6 +153,7 @@
     <string name="settings_calendar_range_back">Indietro</string>
     <string name="settings_calendar_range_button">Intervallo calendario:\n%1$d %2$s indietro, %3$d %4$s avanti</string>
     <string name="settings_calendar_range_forward">Avanti</string>
+    <string name="settings_calendar_range_value">%1$d %2$s / %3$d %4$s</string>
     <string name="settings_calendar_range_message">Scegli quanto mostrare nel calendario.</string>
     <string name="settings_calendar_range_title">Imposta intervallo calendario</string>
     <string name="settings_calendar_removal_color_custom_title">Colore rimozione personalizzato</string>
@@ -342,6 +342,7 @@
     <string name="period_details_filter_pain">Dolore</string>
     <string name="period_details_filter_start">Inizio</string>
     <string name="period_details_filter_end">Fine</string>
+    <string name="period_details_label_value">%1$s: %2$s</string>
     <string name="period_details_empty">Nessun inserimento del ciclo in questo intervallo.</string>
     <string name="period_details_empty_filtered">Nessuna voce corrisponde alla ricerca o al filtro attuale.</string>
     <string name="period_modal_title_for_date">Registrazione ciclo: %1$s</string>
@@ -404,8 +405,6 @@
     <string name="cycles_badge_wear_phase">Fase d\'uso</string>
     <string name="cycles_badge_pause">Pausa</string>
     <string name="cycles_badge_direct_switch">Cambio diretto</string>
-    <string name="cycles_special_case_single">Caso speciale:</string>
-    <string name="cycles_special_case_multiple">Casi speciali:</string>
     <string name="cycles_special_skip_ring_free">Settimana senza anello saltata</string>
     <string name="cycles_special_wear_longer_days">Anello indossato più a lungo (+%1$d giorni)</string>
     <string name="cycles_title_seamless_ring_change">Cambio anello senza pausa</string>

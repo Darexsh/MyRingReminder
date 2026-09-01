@@ -1282,16 +1282,16 @@ public class CalendarFragment extends Fragment {
                 || targetViewId == R.id.btn_period_save;
     }
 
-    public boolean ensurePeriodDialogVisibleForTour(int targetViewId) {
+    public void ensurePeriodDialogVisibleForTour(int targetViewId) {
         if (!isAdded()) {
-            return false;
+            return;
         }
         if (!isPeriodDialogTourTarget(targetViewId)) {
             dismissPeriodDialogForTour();
-            return false;
+            return;
         }
         if (activePeriodEntryDialog != null && activePeriodEntryDialog.isShowing()) {
-            return true;
+            return;
         }
         CalendarDay targetDay = null;
         CalendarDay current = calendarView != null ? calendarView.getCurrentDate() : null;
@@ -1301,26 +1301,9 @@ public class CalendarFragment extends Fragment {
             targetDay = currentPeriodEntryAllowedDays.iterator().next();
         }
         if (targetDay == null) {
-            return false;
+            return;
         }
         showPeriodEntryDialog(targetDay);
-        return true;
-    }
-
-    public boolean syncPeriodDialogForTour(int targetViewId) {
-        boolean dialogTarget = isPeriodDialogTourTarget(targetViewId);
-        boolean isShowing = activePeriodEntryDialog != null && activePeriodEntryDialog.isShowing();
-        if (dialogTarget) {
-            if (isShowing) {
-                return false;
-            }
-            return ensurePeriodDialogVisibleForTour(targetViewId);
-        }
-        if (isShowing) {
-            dismissPeriodDialogForTour();
-            return true;
-        }
-        return false;
     }
 
     public void dismissPeriodDialogForTour() {

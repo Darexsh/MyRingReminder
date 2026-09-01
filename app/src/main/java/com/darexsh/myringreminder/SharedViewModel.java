@@ -161,16 +161,8 @@ public class SharedViewModel extends ViewModel {
         return ringStockCount;
     }
 
-    public LiveData<Integer> getLowStockThreshold() {
-        return lowStockThreshold;
-    }
-
     public LiveData<Boolean> getLowStockReminderEnabled() {
         return lowStockReminderEnabled;
-    }
-
-    public LiveData<Integer> getStockRecipeCheckDelayDays() {
-        return stockRecipeCheckDelayDays;
     }
 
     public SettingsRepository getRepository() {

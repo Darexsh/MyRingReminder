@@ -226,7 +226,10 @@ public class CyclesFragment extends Fragment {
             if (CycleType.REMOVAL != cycle.getType()) {
                 continue;
             }
-            long sourceCycleStartMillis = cycleStartByRemovalMillis.getOrDefault(cycle.getDateMillis(), 0L);
+            Long sourceCycleStartMillisValue = cycleStartByRemovalMillis.get(cycle.getDateMillis());
+            long sourceCycleStartMillis = sourceCycleStartMillisValue != null
+                    ? sourceCycleStartMillisValue
+                    : 0L;
             if (sourceCycleStartMillis > 0
                     && viewModel.getRepository().getRingFreeDaysForCycle(sourceCycleStartMillis) == 0
                     && cycle.getEndDateMillis() > 0) {
@@ -361,7 +364,8 @@ public class CyclesFragment extends Fragment {
         if (CycleType.INSERTION == cycle.getType()) {
             cycleStartMillis = cycle.getDateMillis();
         } else if (CycleType.REMOVAL == cycle.getType()) {
-            cycleStartMillis = cycleStartByRemovalMillis.getOrDefault(cycle.getDateMillis(), 0L);
+            Long cycleStartMillisValue = cycleStartByRemovalMillis.get(cycle.getDateMillis());
+            cycleStartMillis = cycleStartMillisValue != null ? cycleStartMillisValue : 0L;
         } else {
             cycleStartMillis = 0L;
         }
@@ -391,9 +395,6 @@ public class CyclesFragment extends Fragment {
             detailColor = lightenColor(specialColor, 0.28f);
             badgeText = getString(R.string.cycles_badge_direct_switch);
             detailText = getString(R.string.cycles_special_skip_ring_free);
-            statusTopPaddingDp = 6;
-            detailTopPaddingDp = 6;
-
             if (seamlessInsertion || isSameDay(cycle.getDateMillis(), cycle.getEndDateMillis())) {
                 titleText = getString(R.string.cycles_title_seamless_ring_change);
                 String dateText = new SimpleDateFormat("dd.MM.yyyy", Locale.getDefault())
@@ -511,7 +512,15 @@ public class CyclesFragment extends Fragment {
 
     @NonNull
     private GradientDrawable createTintedShape(int drawableRes, int fillColor, int strokeColor, int strokeWidthPx) {
-        GradientDrawable drawable = (GradientDrawable) ContextCompat.getDrawable(requireContext(), drawableRes).mutate();
+        android.graphics.drawable.Drawable baseDrawable =
+                ContextCompat.getDrawable(requireContext(), drawableRes);
+        GradientDrawable drawable;
+        if (baseDrawable instanceof GradientDrawable) {
+            drawable = (GradientDrawable) baseDrawable.mutate();
+        } else {
+            drawable = new GradientDrawable();
+            drawable.setShape(GradientDrawable.RECTANGLE);
+        }
         drawable.setColor(fillColor);
         if (strokeWidthPx > 0) {
             drawable.setStroke(strokeWidthPx, strokeColor);

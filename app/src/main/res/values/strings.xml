@@ -106,7 +106,6 @@
     <string name="settings_background_tools_hint_pick">Choose a background image for your app.</string>
     <string name="settings_background_tools_hint_all_screens">Enable or disable your background image on all screens.</string>
     <string name="settings_background_tools_remove_label">Reset background</string>
-    <string name="settings_background_tools_hint_remove">Remove the currently saved background image and return to the default background.</string>
     <string name="settings_background_tools_hint_dim">Adjust background dimming for better readability.</string>
     <string name="settings_background_tools_hint_blur">Adjust blur intensity for dashboard and other screens.</string>
     <string name="settings_background_blur_unavailable_toast">Available from Android 12 only</string>
@@ -154,6 +153,7 @@
     <string name="settings_calendar_range_back">Back</string>
     <string name="settings_calendar_range_button">Calendar range:\n%1$d %2$s back, %3$d %4$s ahead</string>
     <string name="settings_calendar_range_forward">Ahead</string>
+    <string name="settings_calendar_range_value">%1$d %2$s / %3$d %4$s</string>
     <string name="settings_calendar_range_message">Choose how far the calendar is displayed.</string>
     <string name="settings_calendar_range_title">Set calendar range</string>
     <string name="settings_calendar_removal_color_custom_title">Custom removal color</string>
@@ -345,6 +345,7 @@
     <string name="period_details_filter_pain">Pain</string>
     <string name="period_details_filter_start">Start</string>
     <string name="period_details_filter_end">End</string>
+    <string name="period_details_label_value">%1$s: %2$s</string>
     <string name="period_details_empty">No period entries in this range.</string>
     <string name="period_details_empty_filtered">No period entries match the current search or filter.</string>
     <string name="period_modal_title_for_date">Period entry: %1$s</string>
@@ -407,8 +408,6 @@
     <string name="cycles_badge_wear_phase">Wear phase</string>
     <string name="cycles_badge_pause">Pause</string>
     <string name="cycles_badge_direct_switch">Direct switch</string>
-    <string name="cycles_special_case_single">Special case:</string>
-    <string name="cycles_special_case_multiple">Special cases:</string>
     <string name="cycles_special_skip_ring_free">Ring-free week skipped</string>
     <string name="cycles_special_wear_longer_days">Ring worn longer (+%1$d days)</string>
     <string name="cycles_title_seamless_ring_change">Seamless ring change</string>

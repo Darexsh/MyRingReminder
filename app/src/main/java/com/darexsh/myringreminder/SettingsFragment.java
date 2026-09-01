@@ -7,7 +7,6 @@ import android.app.TimePickerDialog;
 import android.app.AlarmManager;
 import android.app.NotificationChannel;
 import android.app.NotificationManager;
-import android.app.PendingIntent;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
@@ -55,7 +54,6 @@ import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatDelegate;
 import androidx.core.content.ContextCompat;
 import androidx.core.content.FileProvider;
-import androidx.core.graphics.ColorUtils;
 import androidx.core.os.LocaleListCompat;
 import androidx.core.app.NotificationManagerCompat;
 import androidx.biometric.BiometricManager;
@@ -619,9 +617,13 @@ public class SettingsFragment extends Fragment {
         if (pastAmount == null || pastUnit == null || futureAmount == null || futureUnit == null) {
             return;
         }
-        String past = pastAmount + " " + unitLabel(pastUnit);
-        String future = futureAmount + " " + unitLabel(futureUnit);
-        tvSetCalendarRangeValue.setText(past + " / " + future);
+        tvSetCalendarRangeValue.setText(getString(
+                R.string.settings_calendar_range_value,
+                pastAmount,
+                unitLabel(pastUnit),
+                futureAmount,
+                unitLabel(futureUnit)
+        ));
     }
 
     private void updateNotificationGroupButtonText() {
@@ -634,7 +636,11 @@ public class SettingsFragment extends Fragment {
             tvNotificationGroupValue.setText("--");
             return;
         }
-        tvNotificationGroupValue.setText(removalHours + " h / " + insertionHours + " h");
+        tvNotificationGroupValue.setText(getString(
+                R.string.notification_times_value_label,
+                removalHours,
+                insertionHours
+        ));
     }
 
     // Show a TimePickerDialog to select the time
@@ -1599,7 +1605,10 @@ public class SettingsFragment extends Fragment {
                     File file = new File(parsed.getPath());
                     if (file.exists()) {
                         // Best effort cleanup for the copied app background image.
-                        file.delete();
+                        boolean deleted = file.delete();
+                        if (!deleted) {
+                            Log.w("SettingsFragment", "Failed to delete background file: " + file.getAbsolutePath());
+                        }
                     }
                 }
             } catch (Exception ignored) {

@@ -1,11 +1,8 @@
 package com.darexsh.myringreminder;
 
 import android.Manifest;
-import android.app.AlarmManager;
 import android.app.NotificationChannel;
 import android.app.NotificationManager;
-import android.app.PendingIntent;
-import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.UriPermission;
@@ -1297,18 +1294,16 @@ public class MainActivity extends AppCompatActivity {
         }
         manager.createNotificationChannel(channel);
 
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-            NotificationChannel created = manager.getNotificationChannel(Constants.REMINDER_CHANNEL_ID);
-            if (created != null) {
-                long[] pattern = created.getVibrationPattern();
-                Log.d(
-                        NOTIFICATION_TAG,
-                        "Channel ready id=" + created.getId()
-                                + ", importance=" + created.getImportance()
-                                + ", shouldVibrate=" + created.shouldVibrate()
-                                + ", patternLength=" + (pattern != null ? pattern.length : 0)
-                );
-            }
+        NotificationChannel created = manager.getNotificationChannel(Constants.REMINDER_CHANNEL_ID);
+        if (created != null) {
+            long[] pattern = created.getVibrationPattern();
+            Log.d(
+                    NOTIFICATION_TAG,
+                    "Channel ready id=" + created.getId()
+                            + ", importance=" + created.getImportance()
+                            + ", shouldVibrate=" + created.shouldVibrate()
+                            + ", patternLength=" + (pattern != null ? pattern.length : 0)
+            );
         }
     }
 

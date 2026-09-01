@@ -106,7 +106,6 @@
     <string name="settings_background_tools_hint_pick">Wybierz obraz tła dla aplikacji.</string>
     <string name="settings_background_tools_hint_all_screens">Włącz lub wyłącz obraz tła na wszystkich ekranach.</string>
     <string name="settings_background_tools_remove_label">Resetuj tło</string>
-    <string name="settings_background_tools_hint_remove">Usuń aktualnie zapisany obraz tła i wróć do domyślnego tła.</string>
     <string name="settings_background_tools_hint_dim">Dostosuj przyciemnienie tła dla lepszej czytelności.</string>
     <string name="settings_background_tools_hint_blur">Dostosuj rozmycie dla pulpitu i pozostałych ekranów.</string>
     <string name="settings_background_blur_unavailable_toast">Dostępne tylko od systemu Android 12</string>
@@ -154,6 +153,7 @@
     <string name="settings_calendar_range_back">Wstecz</string>
     <string name="settings_calendar_range_button">Zakres kalendarza:\n%1$d %2$s wstecz, %3$d %4$s w przód</string>
     <string name="settings_calendar_range_forward">W przód</string>
+    <string name="settings_calendar_range_value">%1$d %2$s / %3$d %4$s</string>
     <string name="settings_calendar_range_message">Wybierz, jak daleko ma być wyświetlany kalendarz.</string>
     <string name="settings_calendar_range_title">Ustaw zakres kalendarza</string>
     <string name="settings_calendar_removal_color_custom_title">Własny kolor zdjęcia</string>
@@ -342,6 +342,7 @@
     <string name="period_details_filter_pain">Ból</string>
     <string name="period_details_filter_start">Początek</string>
     <string name="period_details_filter_end">Koniec</string>
+    <string name="period_details_label_value">%1$s: %2$s</string>
     <string name="period_details_empty">Brak wpisów okresu w tym zakresie.</string>
     <string name="period_details_empty_filtered">Brak wpisów pasujących do bieżącego wyszukiwania lub filtra.</string>
     <string name="period_modal_title_for_date">Wpis okresu: %1$s</string>
@@ -404,8 +405,6 @@
     <string name="cycles_badge_wear_phase">Faza noszenia</string>
     <string name="cycles_badge_pause">Przerwa</string>
     <string name="cycles_badge_direct_switch">Bezpośrednia zmiana</string>
-    <string name="cycles_special_case_single">Przypadek specjalny:</string>
-    <string name="cycles_special_case_multiple">Przypadki specjalne:</string>
     <string name="cycles_special_skip_ring_free">Pominięto tydzień bez pierścienia</string>
     <string name="cycles_special_wear_longer_days">Pierścień noszony dłużej (+%1$d dni)</string>
     <string name="cycles_title_seamless_ring_change">Płynna zmiana pierścienia</string>

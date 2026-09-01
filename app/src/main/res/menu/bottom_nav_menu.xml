@@ -9,7 +9,7 @@
         android:title="@string/nav_calendar" />
     <item
         android:id="@+id/nav_cycles"
-        android:icon="@drawable/ic_nav_cycles_filled"
+        android:icon="@drawable/ic_nav_cycles_outline"
         android:title="@string/nav_cycles" />
     <item
         android:id="@+id/nav_settings"
