@@ -7,7 +7,7 @@
 
 ![Projekt-Status](https://img.shields.io/badge/Status-Aktiv-brightgreen)
 ![License](https://img.shields.io/badge/License-NonCommercial-blue)
-![Version](https://img.shields.io/badge/Version-1.3.6.2-orange)
+![Version](https://img.shields.io/badge/Version-1.3.7-orange)
 
 [![Telegram Bot](https://img.shields.io/badge/Telegram-Bot-2AABEE?logo=telegram&logoColor=white)](https://t.me/darexsh_bot)
 [![Buy Me a Coffee](https://img.shields.io/badge/Buy%20Me%20a%20Coffee-yellow?logo=buy-me-a-coffee)](https://buymeacoffee.com/darexsh)
