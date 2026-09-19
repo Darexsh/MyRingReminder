@@ -142,6 +142,31 @@
 
     </LinearLayout>
 
+    <TextView
+        android:id="@+id/tv_stock_status"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="bottom|center_horizontal"
+        android:layout_marginBottom="68dp"
+        android:background="@drawable/bg_stock_status_pill"
+        android:clickable="true"
+        android:focusable="true"
+        android:foreground="?attr/selectableItemBackgroundBorderless"
+        android:gravity="center"
+        android:maxLines="1"
+        android:minHeight="34dp"
+        android:paddingStart="14dp"
+        android:paddingTop="7dp"
+        android:paddingEnd="14dp"
+        android:paddingBottom="7dp"
+        android:shadowColor="#66000000"
+        android:shadowDx="0"
+        android:shadowDy="1"
+        android:shadowRadius="3"
+        android:textColor="#F2FFFFFF"
+        android:textSize="13sp"
+        android:visibility="gone" />
+
     <LinearLayout
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -149,30 +174,6 @@
         android:layout_marginBottom="18dp"
         android:gravity="center_horizontal"
         android:orientation="vertical">
-
-        <TextView
-            android:id="@+id/tv_stock_status"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginBottom="8dp"
-            android:background="@drawable/bg_stock_status_pill"
-            android:clickable="true"
-            android:focusable="true"
-            android:gravity="center"
-            android:maxLines="1"
-            android:minHeight="34dp"
-            android:paddingStart="14dp"
-            android:paddingTop="7dp"
-            android:paddingEnd="14dp"
-            android:paddingBottom="7dp"
-            android:foreground="?attr/selectableItemBackgroundBorderless"
-            android:shadowColor="#66000000"
-            android:shadowDx="0"
-            android:shadowDy="1"
-            android:shadowRadius="3"
-            android:textColor="#F2FFFFFF"
-            android:textSize="13sp"
-            android:visibility="gone" />
 
         <LinearLayout
             android:id="@+id/home_delay_row"

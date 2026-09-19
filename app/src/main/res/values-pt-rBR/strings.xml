@@ -136,17 +136,13 @@
     <string name="settings_stock_tracker_hint">O estoque conta apenas o uso futuro de anéis. O anel atualmente em uso é tratado como já utilizado.</string>
     <string name="settings_stock_tracker_label">Estoque de anéis</string>
     <string name="settings_stock_tracker_off">Desativado</string>
-    <string name="settings_stock_tracker_value">%1$d restantes, alerta em %2$d</string>
     <string name="settings_stock_count_label">Anéis restantes</string>
-    <string name="settings_low_stock_threshold_label">Limite de alerta de estoque baixo</string>
-    <string name="settings_low_stock_reminder_label">Ativar alerta de estoque baixo</string>
     <string name="settings_stock_reminder_label">Notificações de estoque</string>
     <string name="settings_stock_recipe_delay_label">Acompanhamento do último anel</string>
     <string name="settings_stock_reminder_enable_message">Envie uma notificação sempre que um anel recém-inserido reduzir o estoque restante.</string>
     <string name="settings_stock_reminder_disable_message">Pare de enviar notificações do estoque de anéis até que você as ative novamente.</string>
     <string name="settings_stock_tools_hint_enable">Ative ou desative o controle do estoque de anéis.</string>
     <string name="settings_stock_tools_hint_count">Defina quantos anéis você ainda tem disponíveis.</string>
-    <string name="settings_stock_tools_hint_threshold">Escolha quando o alerta de estoque baixo deve aparecer.</string>
     <string name="settings_stock_tools_hint_reminder">Decida se o app deve enviar notificações sobre o estoque de anéis.</string>
     <string name="settings_stock_tools_hint_recipe_delay">Escolha após quantos dias o app deve perguntar sobre uma nova receita quando restar apenas 1 anel.</string>
     <string name="settings_label_time">Hora de inserção</string>
@@ -711,18 +707,11 @@
     <string name="period_details_pdf_notification_title">PDF salvo</string>
     <string name="period_details_pdf_notification_text">Toque para abrir o PDF exportado com os detalhes do período.</string>
     <string name="period_details_pdf_open_action">Abrir PDF</string>
-    <string name="stock_adjust_minus">-1</string>
-    <string name="stock_adjust_plus">+1</string>
-    <string name="stock_adjust_reset">Redefinir</string>
     <plurals name="home_stock_status">
         <item quantity="one">Estoque de anéis: %d anel</item>
         <item quantity="other">Estoque de anéis: %d anéis</item>
     </plurals>
     <plurals name="settings_stock_count_value">
-        <item quantity="one">%d anel</item>
-        <item quantity="other">%d anéis</item>
-    </plurals>
-    <plurals name="settings_stock_threshold_value">
         <item quantity="one">%d anel</item>
         <item quantity="other">%d anéis</item>
     </plurals>

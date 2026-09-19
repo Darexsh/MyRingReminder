@@ -136,17 +136,13 @@
     <string name="settings_stock_tracker_hint">Запас учитывает только будущее использование колец. Кольцо, которое используется сейчас, считается уже израсходованным.</string>
     <string name="settings_stock_tracker_label">Запас колец</string>
     <string name="settings_stock_tracker_off">Выключено</string>
-    <string name="settings_stock_tracker_value">Осталось %1$d, предупреждение при %2$d</string>
     <string name="settings_stock_count_label">Оставшиеся кольца</string>
-    <string name="settings_low_stock_threshold_label">Порог предупреждения о низком запасе</string>
-    <string name="settings_low_stock_reminder_label">Включить предупреждение о низком запасе</string>
     <string name="settings_stock_reminder_label">Уведомления о запасе</string>
     <string name="settings_stock_recipe_delay_label">Проверка последнего кольца</string>
     <string name="settings_stock_reminder_enable_message">Отправляйте уведомление каждый раз, когда новое установленное кольцо уменьшает оставшийся запас.</string>
     <string name="settings_stock_reminder_disable_message">Не отправляйте уведомления о запасе колец, пока вы снова их не включите.</string>
     <string name="settings_stock_tools_hint_enable">Включите или выключите учет запаса колец.</string>
     <string name="settings_stock_tools_hint_count">Укажите, сколько колец у вас еще доступно.</string>
-    <string name="settings_stock_tools_hint_threshold">Выберите, когда должно появляться предупреждение о низком запасе.</string>
     <string name="settings_stock_tools_hint_reminder">Решите, должно ли приложение отправлять уведомления о запасе колец.</string>
     <string name="settings_stock_tools_hint_recipe_delay">Выберите, через сколько дней приложение должно спросить о новом рецепте, когда останется только 1 кольцо.</string>
     <string name="settings_label_time">Время вставки</string>
@@ -711,9 +707,6 @@
     <string name="period_details_pdf_notification_title">PDF сохранен</string>
     <string name="period_details_pdf_notification_text">Нажмите, чтобы открыть экспортированный PDF с деталями менструации.</string>
     <string name="period_details_pdf_open_action">Открыть PDF</string>
-    <string name="stock_adjust_minus">-1</string>
-    <string name="stock_adjust_plus">+1</string>
-    <string name="stock_adjust_reset">Сбросить</string>
     <plurals name="home_stock_status">
         <item quantity="one">Запас колец: %d кольцо</item>
         <item quantity="few">Запас колец: %d кольца</item>
@@ -721,12 +714,6 @@
         <item quantity="other">Запас колец: %d кольца</item>
     </plurals>
     <plurals name="settings_stock_count_value">
-        <item quantity="one">%d кольцо</item>
-        <item quantity="few">%d кольца</item>
-        <item quantity="many">%d колец</item>
-        <item quantity="other">%d кольца</item>
-    </plurals>
-    <plurals name="settings_stock_threshold_value">
         <item quantity="one">%d кольцо</item>
         <item quantity="few">%d кольца</item>
         <item quantity="many">%d колец</item>

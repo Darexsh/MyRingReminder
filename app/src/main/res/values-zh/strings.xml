@@ -136,17 +136,13 @@
     <string name="settings_stock_tracker_hint">库存只统计未来要使用的避孕环。当前正在使用的避孕环视为已经使用。</string>
     <string name="settings_stock_tracker_label">避孕环库存</string>
     <string name="settings_stock_tracker_off">关闭</string>
-    <string name="settings_stock_tracker_value">剩余 %1$d，提醒阈值 %2$d</string>
     <string name="settings_stock_count_label">剩余避孕环</string>
-    <string name="settings_low_stock_threshold_label">低库存提醒阈值</string>
-    <string name="settings_low_stock_reminder_label">启用低库存提醒</string>
     <string name="settings_stock_reminder_label">库存通知</string>
     <string name="settings_stock_recipe_delay_label">最后一个避孕环跟进</string>
     <string name="settings_stock_reminder_enable_message">每当新置入的避孕环使剩余库存减少时发送通知。</string>
     <string name="settings_stock_reminder_disable_message">在你再次开启之前，不再发送避孕环库存通知。</string>
     <string name="settings_stock_tools_hint_enable">开启或关闭避孕环库存跟踪。</string>
     <string name="settings_stock_tools_hint_count">设置你目前还剩多少个避孕环可用。</string>
-    <string name="settings_stock_tools_hint_threshold">选择何时显示低库存提醒。</string>
     <string name="settings_stock_tools_hint_reminder">决定应用是否应发送避孕环库存通知。</string>
     <string name="settings_stock_tools_hint_recipe_delay">选择当只剩 1 个避孕环时，应用应在几天后询问是否拿到了新处方。</string>
     <string name="settings_label_time">置入时间</string>
@@ -711,16 +707,10 @@
     <string name="period_details_pdf_notification_title">PDF 已保存</string>
     <string name="period_details_pdf_notification_text">点击以打开导出的经期详情 PDF。</string>
     <string name="period_details_pdf_open_action">打开 PDF</string>
-    <string name="stock_adjust_minus">-1</string>
-    <string name="stock_adjust_plus">+1</string>
-    <string name="stock_adjust_reset">重置</string>
     <plurals name="home_stock_status">
         <item quantity="other">避孕环库存：%d 个</item>
     </plurals>
     <plurals name="settings_stock_count_value">
-        <item quantity="other">%d 个</item>
-    </plurals>
-    <plurals name="settings_stock_threshold_value">
         <item quantity="other">%d 个</item>
     </plurals>
     <plurals name="settings_stock_recipe_delay_value">

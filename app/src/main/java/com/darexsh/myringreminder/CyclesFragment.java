@@ -216,31 +216,26 @@ public class CyclesFragment extends Fragment {
         updateSummary(validCycles);
 
         Map<Long, Long> cycleStartByRemovalMillis = new HashMap<>();
-        Set<Long> seamlessInsertionStarts = new HashSet<>();
         for (Cycle cycle : validCycles) {
             if (CycleType.INSERTION == cycle.getType() && cycle.getEndDateMillis() > 0) {
                 cycleStartByRemovalMillis.put(cycle.getEndDateMillis(), cycle.getDateMillis());
             }
         }
-        for (Cycle cycle : validCycles) {
-            if (CycleType.REMOVAL != cycle.getType()) {
-                continue;
-            }
-            Long sourceCycleStartMillisValue = cycleStartByRemovalMillis.get(cycle.getDateMillis());
-            long sourceCycleStartMillis = sourceCycleStartMillisValue != null
-                    ? sourceCycleStartMillisValue
-                    : 0L;
-            if (sourceCycleStartMillis > 0
-                    && viewModel.getRepository().getRingFreeDaysForCycle(sourceCycleStartMillis) == 0
-                    && cycle.getEndDateMillis() > 0) {
-                seamlessInsertionStarts.add(cycle.getEndDateMillis());
-            }
-        }
 
         // Sort cycles by date in descending order (newest first)
-        validCycles.sort((c1, c2) -> sortNewestFirst
-                ? Long.compare(c2.getDateMillis(), c1.getDateMillis())
-                : Long.compare(c1.getDateMillis(), c2.getDateMillis()));
+        validCycles.sort((c1, c2) -> {
+            int dateCompare = sortNewestFirst
+                    ? Long.compare(c2.getDateMillis(), c1.getDateMillis())
+                    : Long.compare(c1.getDateMillis(), c2.getDateMillis());
+            if (dateCompare != 0) {
+                return dateCompare;
+            }
+            if (c1.getType() == c2.getType()) {
+                return 0;
+            }
+            boolean c1Insertion = CycleType.INSERTION == c1.getType();
+            return c1Insertion == sortNewestFirst ? -1 : 1;
+        });
 
         if (validCycles.isEmpty()) {
             if (emptyView != null) {
@@ -290,7 +285,6 @@ public class CyclesFragment extends Fragment {
             CycleCardPresentation presentation = buildCyclePresentation(
                     cycle,
                     cycleStartByRemovalMillis,
-                    seamlessInsertionStarts,
                     dateFormat
             );
             cardShell.setBackground(createHistoryCardBackground(presentation.accentColor));
@@ -353,7 +347,6 @@ public class CyclesFragment extends Fragment {
     @NonNull
     private CycleCardPresentation buildCyclePresentation(@NonNull Cycle cycle,
                                                          @NonNull Map<Long, Long> cycleStartByRemovalMillis,
-                                                         @NonNull Set<Long> seamlessInsertionStarts,
                                                          @NonNull SimpleDateFormat dateFormat) {
         SettingsRepository repository = viewModel.getRepository();
         int wearColor = getWearPhaseColor();
@@ -376,8 +369,6 @@ public class CyclesFragment extends Fragment {
         boolean wornLonger = CycleType.INSERTION == cycle.getType()
                 && cycleStartMillis > 0
                 && repository.getCycleDelayDays(cycleStartMillis) > 0;
-        boolean seamlessInsertion = CycleType.INSERTION == cycle.getType()
-                && seamlessInsertionStarts.contains(cycle.getDateMillis());
 
         String titleText = formatCycleTitle(cycle, dateFormat);
         String statusText;
@@ -389,13 +380,13 @@ public class CyclesFragment extends Fragment {
         int statusTopPaddingDp = 6;
         int detailTopPaddingDp = 6;
 
-        if (skippedRingFree || seamlessInsertion) {
+        if (skippedRingFree) {
             accentColor = specialColor;
             statusColor = specialColor;
             detailColor = lightenColor(specialColor, 0.28f);
             badgeText = getString(R.string.cycles_badge_direct_switch);
             detailText = getString(R.string.cycles_special_skip_ring_free);
-            if (seamlessInsertion || isSameDay(cycle.getDateMillis(), cycle.getEndDateMillis())) {
+            if (isSameDay(cycle.getDateMillis(), cycle.getEndDateMillis())) {
                 titleText = getString(R.string.cycles_title_seamless_ring_change);
                 String dateText = new SimpleDateFormat("dd.MM.yyyy", Locale.getDefault())
                         .format(cycle.getDateMillis());
@@ -585,7 +576,21 @@ public class CyclesFragment extends Fragment {
             return;
         }
 
-        int trackedCycles = cycles.size() / 2;
+        Set<Long> removalStarts = new HashSet<>();
+        for (Cycle cycle : cycles) {
+            if (CycleType.REMOVAL == cycle.getType()) {
+                removalStarts.add(cycle.getDateMillis());
+            }
+        }
+
+        int trackedCycles = 0;
+        for (Cycle cycle : cycles) {
+            if (CycleType.INSERTION == cycle.getType()
+                    && cycle.getEndDateMillis() > 0
+                    && removalStarts.contains(cycle.getEndDateMillis())) {
+                trackedCycles++;
+            }
+        }
         summaryCountView.setText(getString(R.string.cycles_summary_count, trackedCycles));
     }
 

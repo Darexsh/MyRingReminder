@@ -136,17 +136,13 @@
     <string name="settings_stock_tracker_hint">Stok yalnızca gelecekte kullanılacak halkaları sayar. Şu anda kullanılan halka zaten kullanılmış kabul edilir.</string>
     <string name="settings_stock_tracker_label">Halka stoğu</string>
     <string name="settings_stock_tracker_off">Kapalı</string>
-    <string name="settings_stock_tracker_value">%1$d kaldı, uyarı eşiği %2$d</string>
     <string name="settings_stock_count_label">Kalan halkalar</string>
-    <string name="settings_low_stock_threshold_label">Düşük stok uyarı eşiği</string>
-    <string name="settings_low_stock_reminder_label">Düşük stok uyarısını etkinleştir</string>
     <string name="settings_stock_reminder_label">Stok bildirimleri</string>
     <string name="settings_stock_recipe_delay_label">Son halka takibi</string>
     <string name="settings_stock_reminder_enable_message">Yeni takılan bir halka kalan stoğu azalttığında bildirim gönder.</string>
     <string name="settings_stock_reminder_disable_message">Yeniden açana kadar halka stoğu bildirimleri gönderme.</string>
     <string name="settings_stock_tools_hint_enable">Halka stok takibini aç veya kapat.</string>
     <string name="settings_stock_tools_hint_count">Hala kaç halkanın mevcut olduğunu ayarla.</string>
-    <string name="settings_stock_tools_hint_threshold">Düşük stok uyarısının ne zaman görünmesi gerektiğini seç.</string>
     <string name="settings_stock_tools_hint_reminder">Uygulamanın halka stoğu hakkında bildirim gönderip göndermeyeceğini belirle.</string>
     <string name="settings_stock_tools_hint_recipe_delay">Yalnızca 1 halka kaldığında uygulamanın yeni reçeteyi kaç gün sonra sorması gerektiğini seç.</string>
     <string name="settings_label_time">Yerleştirme saati</string>
@@ -711,18 +707,11 @@
     <string name="period_details_pdf_notification_title">PDF kaydedildi</string>
     <string name="period_details_pdf_notification_text">Dışa aktarılan dönem detayları PDF\'sini açmak için dokun.</string>
     <string name="period_details_pdf_open_action">PDF\'yi aç</string>
-    <string name="stock_adjust_minus">-1</string>
-    <string name="stock_adjust_plus">+1</string>
-    <string name="stock_adjust_reset">Sıfırla</string>
     <plurals name="home_stock_status">
         <item quantity="one">Halka stoğu: %d halka</item>
         <item quantity="other">Halka stoğu: %d halka</item>
     </plurals>
     <plurals name="settings_stock_count_value">
-        <item quantity="one">%d halka</item>
-        <item quantity="other">%d halka</item>
-    </plurals>
-    <plurals name="settings_stock_threshold_value">
         <item quantity="one">%d halka</item>
         <item quantity="other">%d halka</item>
     </plurals>

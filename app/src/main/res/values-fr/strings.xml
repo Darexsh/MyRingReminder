@@ -136,17 +136,13 @@
     <string name="settings_stock_tracker_hint">Le stock ne compte que l\'utilisation future des anneaux. L\'anneau actuellement porté est considéré comme déjà utilisé.</string>
     <string name="settings_stock_tracker_label">Stock d\'anneaux</string>
     <string name="settings_stock_tracker_off">Désactivé</string>
-    <string name="settings_stock_tracker_value">%1$d restants, alerte à %2$d</string>
     <string name="settings_stock_count_label">Anneaux restants</string>
-    <string name="settings_low_stock_threshold_label">Seuil d\'alerte stock faible</string>
-    <string name="settings_low_stock_reminder_label">Activer l\'alerte stock faible</string>
     <string name="settings_stock_reminder_label">Notifications de stock</string>
     <string name="settings_stock_recipe_delay_label">Suivi du dernier anneau</string>
     <string name="settings_stock_reminder_enable_message">Envoie une notification chaque fois qu\'une nouvelle insertion réduit le stock restant d\'anneaux.</string>
     <string name="settings_stock_reminder_disable_message">N\'envoie plus de notifications de stock d\'anneaux jusqu\'à la prochaine activation.</string>
     <string name="settings_stock_tools_hint_enable">Active ou désactive le suivi du stock d\'anneaux.</string>
     <string name="settings_stock_tools_hint_count">Définis combien d\'anneaux sont encore disponibles.</string>
-    <string name="settings_stock_tools_hint_threshold">Choisis quand l\'alerte de stock faible doit apparaître.</string>
     <string name="settings_stock_tools_hint_reminder">Décide si l\'application doit envoyer des notifications sur le stock d\'anneaux.</string>
     <string name="settings_stock_tools_hint_recipe_delay">Choisis après combien de jours l\'application doit demander si une nouvelle ordonnance a été obtenue quand il ne reste qu\'1 anneau.</string>
     <string name="settings_label_time">Heure d\'insertion</string>
@@ -712,18 +708,11 @@
     <string name="period_details_pdf_notification_title">PDF enregistré</string>
     <string name="period_details_pdf_notification_text">Appuyez pour ouvrir le PDF exporté des détails de période.</string>
     <string name="period_details_pdf_open_action">Ouvrir le PDF</string>
-    <string name="stock_adjust_minus">-1</string>
-    <string name="stock_adjust_plus">+1</string>
-    <string name="stock_adjust_reset">Réinitialiser</string>
     <plurals name="home_stock_status">
         <item quantity="one">Stock d\'anneaux : %d anneau</item>
         <item quantity="other">Stock d\'anneaux : %d anneaux</item>
     </plurals>
     <plurals name="settings_stock_count_value">
-        <item quantity="one">%d anneau</item>
-        <item quantity="other">%d anneaux</item>
-    </plurals>
-    <plurals name="settings_stock_threshold_value">
         <item quantity="one">%d anneau</item>
         <item quantity="other">%d anneaux</item>
     </plurals>
