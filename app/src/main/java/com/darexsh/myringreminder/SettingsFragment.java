@@ -2176,12 +2176,13 @@ public class SettingsFragment extends Fragment {
                     return;
                 }
                 String currentVersion = getCurrentVersionName();
-                int compare = compareVersions(currentVersion, releaseInfo.versionName);
-                if (compare >= 0) {
+                releaseInfo = appendReleaseNotesSinceCurrentVersion(releaseInfo, currentVersion);
+                int realCompare = compareVersions(currentVersion, releaseInfo.versionName);
+                if (realCompare >= 0) {
                     showToast(R.string.update_latest_toast);
                     return;
                 }
-                showUpdateConfirmDialog(releaseInfo);
+                showUpdateConfirmDialog(releaseInfo, realCompare < 0);
             } catch (Exception e) {
                 showToast(R.string.update_failed_toast);
             }
@@ -2233,19 +2234,26 @@ public class SettingsFragment extends Fragment {
         applyDialogButtonColors(dialog);
     }
 
-    private void showUpdateConfirmDialog(ReleaseInfo releaseInfo) {
+    private void showUpdateConfirmDialog(ReleaseInfo releaseInfo, boolean allowInstall) {
         if (!isAdded()) {
             return;
         }
         requireActivity().runOnUiThread(() -> {
             String version = releaseInfo.versionName != null ? releaseInfo.versionName : "";
             String message = getString(R.string.update_available_message, version);
-            AlertDialog dialog = new AlertDialog.Builder(requireContext())
+            if (releaseInfo.releaseNotes != null && !releaseInfo.releaseNotes.trim().isEmpty()) {
+                message = message + "\n\n" + releaseInfo.releaseNotes.trim();
+            }
+            AlertDialog.Builder builder = new AlertDialog.Builder(requireContext())
                     .setTitle(R.string.update_available_title)
-                    .setMessage(message)
-                    .setPositiveButton(R.string.update_install, (dlg, which) -> downloadAndInstall(releaseInfo))
-                    .setNegativeButton(R.string.update_later, null)
-                    .show();
+                    .setMessage(message);
+            if (allowInstall) {
+                builder.setPositiveButton(R.string.update_install, (dlg, which) -> downloadAndInstall(releaseInfo))
+                        .setNegativeButton(R.string.update_later, null);
+            } else {
+                builder.setPositiveButton(R.string.dialog_ok, null);
+            }
+            AlertDialog dialog = builder.show();
             applyDialogButtonColors(dialog);
         });
     }
@@ -2363,9 +2371,12 @@ public class SettingsFragment extends Fragment {
                         ? release.get("tag_name").getAsString()
                         : null;
                 String versionName = normalizeVersion(tag);
+                String releaseNotes = release.has("body") && !release.get("body").isJsonNull()
+                        ? release.get("body").getAsString()
+                        : null;
                 JsonArray assets = release.getAsJsonArray("assets");
                 String downloadUrl = findApkAssetUrl(assets);
-                return new ReleaseInfo(versionName, downloadUrl);
+                return new ReleaseInfo(versionName, downloadUrl, releaseNotes);
             }
         } finally {
             if (connection != null) {
@@ -2373,6 +2384,105 @@ public class SettingsFragment extends Fragment {
             }
         }
         return null;
+    }
+
+    private ReleaseInfo appendReleaseNotesSinceCurrentVersion(@Nullable ReleaseInfo latestRelease,
+                                                              @Nullable String currentVersion) throws IOException {
+        if (latestRelease == null
+                || currentVersion == null
+                || compareVersions(currentVersion, latestRelease.versionName) >= 0) {
+            return latestRelease;
+        }
+
+        HttpURLConnection connection = null;
+        try {
+            URL url = new URL(RELEASES_URL);
+            connection = (HttpURLConnection) url.openConnection();
+            connection.setConnectTimeout(10000);
+            connection.setReadTimeout(15000);
+            connection.setRequestProperty("Accept", "application/vnd.github+json");
+            connection.setRequestProperty("User-Agent", "MyRingReminder-App");
+            int status = connection.getResponseCode();
+            if (status != HttpURLConnection.HTTP_OK) {
+                return latestRelease;
+            }
+
+            StringBuilder body = new StringBuilder();
+            try (BufferedReader reader = new BufferedReader(
+                    new InputStreamReader(connection.getInputStream(), StandardCharsets.UTF_8))) {
+                String line;
+                while ((line = reader.readLine()) != null) {
+                    body.append(line);
+                }
+            }
+
+            JsonArray releases = JsonParser.parseString(body.toString()).getAsJsonArray();
+            StringBuilder combinedNotes = new StringBuilder();
+            for (JsonElement element : releases) {
+                JsonObject release = element.getAsJsonObject();
+                boolean isDraft = release.get("draft").getAsBoolean();
+                boolean isPrerelease = release.get("prerelease").getAsBoolean();
+                if (isDraft || isPrerelease) {
+                    continue;
+                }
+
+                String tag = release.has("tag_name") && !release.get("tag_name").isJsonNull()
+                        ? release.get("tag_name").getAsString()
+                        : null;
+                String versionName = normalizeVersion(tag);
+                if (compareVersions(currentVersion, versionName) >= 0
+                        || compareVersions(versionName, latestRelease.versionName) > 0) {
+                    continue;
+                }
+
+                String releaseNotes = release.has("body") && !release.get("body").isJsonNull()
+                        ? release.get("body").getAsString()
+                        : null;
+                if (releaseNotes == null || releaseNotes.trim().isEmpty()) {
+                    continue;
+                }
+                if (combinedNotes.length() > 0) {
+                    combinedNotes.append("\n\n");
+                }
+                combinedNotes.append(formatReleaseNotesForCombinedChangelog(versionName, releaseNotes));
+            }
+
+            if (combinedNotes.length() == 0) {
+                return latestRelease;
+            }
+            return new ReleaseInfo(latestRelease.versionName, latestRelease.downloadUrl, combinedNotes.toString());
+        } finally {
+            if (connection != null) {
+                connection.disconnect();
+            }
+        }
+    }
+
+    private String formatReleaseNotesForCombinedChangelog(@Nullable String versionName, @NonNull String releaseNotes) {
+        String versionLabel = versionName != null ? "v" + versionName : getString(R.string.update_hero_details_changelog);
+        StringBuilder formatted = new StringBuilder();
+        boolean hasSectionHeading = false;
+        for (String rawLine : releaseNotes.trim().split("\\r?\\n")) {
+            String line = rawLine.trim();
+            if (line.startsWith("##")) {
+                String title = line.replaceFirst("^##+\\s*", "").trim();
+                if (title.isEmpty()) {
+                    title = getString(R.string.update_hero_details_changelog);
+                }
+                formatted.append("## ")
+                        .append(title)
+                        .append(" • ")
+                        .append(versionLabel)
+                        .append("\n");
+                hasSectionHeading = true;
+            } else {
+                formatted.append(rawLine).append("\n");
+            }
+        }
+        if (!hasSectionHeading) {
+            return "## " + versionLabel + "\n" + releaseNotes.trim();
+        }
+        return formatted.toString().trim();
     }
 
     private String findApkAssetUrl(JsonArray assets) {
@@ -2512,10 +2622,16 @@ public class SettingsFragment extends Fragment {
     private static class ReleaseInfo {
         final String versionName;
         final String downloadUrl;
+        final String releaseNotes;
 
         ReleaseInfo(String versionName, String downloadUrl) {
+            this(versionName, downloadUrl, null);
+        }
+
+        ReleaseInfo(String versionName, String downloadUrl, String releaseNotes) {
             this.versionName = versionName;
             this.downloadUrl = downloadUrl;
+            this.releaseNotes = releaseNotes;
         }
     }
 

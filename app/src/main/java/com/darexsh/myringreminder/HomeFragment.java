@@ -75,8 +75,6 @@ public class HomeFragment extends Fragment {
     private static final long UPDATE_HERO_AUTO_HIDE_MS = 3000L;
     private static final long UPDATE_HERO_MIN_CHECK_MS = 1000L;
     private static final String RELEASES_URL = "https://api.github.com/repos/Darexsh/MyRingReminder/releases";
-    // Temporary UI test switch: force "update available" state even when versions match.
-    private static final boolean FORCE_UPDATE_AVAILABLE_FOR_TEST = false;
     private final Handler uiHandler = new Handler(Looper.getMainLooper());
     @Nullable
     private Runnable specialActionsAutoHideRunnable;
@@ -533,15 +531,14 @@ public class HomeFragment extends Fragment {
                 if (waitRemaining > 0L) {
                     Thread.sleep(waitRemaining);
                 }
-                lastReleaseInfo = releaseInfo;
                 if (releaseInfo == null || releaseInfo.downloadUrl == null) {
                     showUpdateHeroStatusAndHide(container, titleBadge, statusLottie, orbitIcon, statusText, R.string.update_startup_failed, "!");
                     return;
                 }
                 String currentVersion = getCurrentVersionName();
-                int compare = FORCE_UPDATE_AVAILABLE_FOR_TEST
-                        ? -1
-                        : compareVersions(currentVersion, releaseInfo.versionName);
+                releaseInfo = appendReleaseNotesSinceCurrentVersion(releaseInfo, currentVersion);
+                lastReleaseInfo = releaseInfo;
+                int compare = compareVersions(currentVersion, releaseInfo.versionName);
                 if (compare >= 0) {
                     showUpdateHeroStatusAndHide(container, titleBadge, statusLottie, orbitIcon, statusText, R.string.update_startup_latest, "✓");
                     return;
@@ -778,8 +775,10 @@ public class HomeFragment extends Fragment {
         String latest = (lastReleaseInfo != null && lastReleaseInfo.versionName != null)
                 ? getString(R.string.update_hero_version_name_only_format, lastReleaseInfo.versionName)
                 : "—";
+        boolean hasRealUpdateAvailable = false;
         if (lastReleaseInfo != null && lastReleaseInfo.versionName != null) {
-            hasUpdateAvailable = compareVersions(getCurrentVersionName(), lastReleaseInfo.versionName) < 0;
+            hasRealUpdateAvailable = compareVersions(getCurrentVersionName(), lastReleaseInfo.versionName) < 0;
+            hasUpdateAvailable = hasRealUpdateAvailable;
         }
 
         View content = buildUpdateHeroDetailsContent(
@@ -794,7 +793,7 @@ public class HomeFragment extends Fragment {
                 .setView(content)
                 .setPositiveButton(R.string.dialog_ok, null);
 
-        if (hasUpdateAvailable
+        if (hasRealUpdateAvailable
                 && lastReleaseInfo != null
                 && lastReleaseInfo.downloadUrl != null
                 && lastReleaseInfo.versionName != null) {
@@ -1144,6 +1143,107 @@ public class HomeFragment extends Fragment {
                 connection.disconnect();
             }
         }
+    }
+
+    private ReleaseInfo appendReleaseNotesSinceCurrentVersion(@Nullable ReleaseInfo latestRelease,
+                                                              @Nullable String currentVersion) throws IOException {
+        if (latestRelease == null
+                || currentVersion == null
+                || compareVersions(currentVersion, latestRelease.versionName) >= 0) {
+            return latestRelease;
+        }
+
+        HttpURLConnection connection = null;
+        try {
+            URL url = new URL(RELEASES_URL);
+            connection = (HttpURLConnection) url.openConnection();
+            connection.setConnectTimeout(10000);
+            connection.setReadTimeout(15000);
+            connection.setRequestProperty("Accept", "application/vnd.github+json");
+            connection.setRequestProperty("User-Agent", "MyRingReminder-App");
+            int status = connection.getResponseCode();
+            if (status != HttpURLConnection.HTTP_OK) {
+                return latestRelease;
+            }
+
+            StringBuilder body = new StringBuilder();
+            try (BufferedReader reader = new BufferedReader(
+                    new InputStreamReader(connection.getInputStream(), StandardCharsets.UTF_8))) {
+                String line;
+                while ((line = reader.readLine()) != null) {
+                    body.append(line);
+                }
+            }
+
+            JsonArray releases = JsonParser.parseString(body.toString()).getAsJsonArray();
+            StringBuilder combinedNotes = new StringBuilder();
+            for (JsonElement element : releases) {
+                JsonObject release = element.getAsJsonObject();
+                boolean isDraft = release.get("draft").getAsBoolean();
+                boolean isPrerelease = release.get("prerelease").getAsBoolean();
+                if (isDraft || isPrerelease) {
+                    continue;
+                }
+
+                String tag = release.has("tag_name") && !release.get("tag_name").isJsonNull()
+                        ? release.get("tag_name").getAsString()
+                        : null;
+                String versionName = normalizeVersion(tag);
+                if (compareVersions(currentVersion, versionName) >= 0
+                        || compareVersions(versionName, latestRelease.versionName) > 0) {
+                    continue;
+                }
+
+                String releaseNotes = release.has("body") && !release.get("body").isJsonNull()
+                        ? release.get("body").getAsString()
+                        : null;
+                if (releaseNotes == null || releaseNotes.trim().isEmpty()) {
+                    continue;
+                }
+                if (combinedNotes.length() > 0) {
+                    combinedNotes.append("\n\n");
+                }
+                combinedNotes.append(formatReleaseNotesForCombinedChangelog(versionName, releaseNotes));
+            }
+
+            if (combinedNotes.length() == 0) {
+                return latestRelease;
+            }
+            return new ReleaseInfo(latestRelease.versionName, latestRelease.downloadUrl, combinedNotes.toString());
+        } finally {
+            if (connection != null) {
+                connection.disconnect();
+            }
+        }
+    }
+
+    private String formatReleaseNotesForCombinedChangelog(@Nullable String versionName, @NonNull String releaseNotes) {
+        String versionLabel = versionName != null
+                ? getString(R.string.update_hero_version_name_only_format, versionName)
+                : getString(R.string.update_hero_details_changelog);
+        StringBuilder formatted = new StringBuilder();
+        boolean hasSectionHeading = false;
+        for (String rawLine : releaseNotes.trim().split("\\r?\\n")) {
+            String line = rawLine.trim();
+            if (line.startsWith("##")) {
+                String title = line.replaceFirst("^##+\\s*", "").trim();
+                if (title.isEmpty()) {
+                    title = getString(R.string.update_hero_details_changelog);
+                }
+                formatted.append("## ")
+                        .append(title)
+                        .append(" • ")
+                        .append(versionLabel)
+                        .append("\n");
+                hasSectionHeading = true;
+            } else {
+                formatted.append(rawLine).append("\n");
+            }
+        }
+        if (!hasSectionHeading) {
+            return "## " + versionLabel + "\n" + releaseNotes.trim();
+        }
+        return formatted.toString().trim();
     }
 
     private String findApkAssetUrl(JsonArray assets) {
