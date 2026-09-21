@@ -359,6 +359,8 @@
     <string name="period_modal_symptom_fatigue">Yorgunluk</string>
     <string name="period_modal_symptom_dizziness">Baş dönmesi</string>
     <string name="period_modal_symptom_diarrhea">İshal</string>
+    <string name="period_modal_symptom_lower_abdominal_pain">Alt karın ağrısı</string>
+    <string name="period_modal_symptom_headache">Baş ağrısı</string>
     <string name="period_modal_start_marker">Adet başlangıcı</string>
     <string name="period_modal_end_marker">Adet sonu</string>
     <string name="period_modal_clear">Kaydı sil</string>

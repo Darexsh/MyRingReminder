@@ -1073,6 +1073,8 @@ public class CalendarFragment extends Fragment {
         Chip fatigueChip = layout.findViewById(R.id.chip_symptom_fatigue);
         Chip dizzinessChip = layout.findViewById(R.id.chip_symptom_dizziness);
         Chip diarrheaChip = layout.findViewById(R.id.chip_symptom_diarrhea);
+        Chip lowerAbdominalPainChip = layout.findViewById(R.id.chip_symptom_lower_abdominal_pain);
+        Chip headacheChip = layout.findViewById(R.id.chip_symptom_headache);
         Chip startChip = layout.findViewById(R.id.chip_start);
         Chip endChip = layout.findViewById(R.id.chip_end);
         MaterialButton btnDelete = layout.findViewById(R.id.btn_period_delete);
@@ -1099,6 +1101,8 @@ public class CalendarFragment extends Fragment {
             fatigueChip.setChecked(existing.isSymptomFatigue());
             dizzinessChip.setChecked(existing.isSymptomDizziness());
             diarrheaChip.setChecked(existing.isSymptomDiarrhea());
+            lowerAbdominalPainChip.setChecked(existing.isSymptomLowerAbdominalPain());
+            headacheChip.setChecked(existing.isSymptomHeadache());
             startChip.setChecked(existing.isStart());
             endChip.setChecked(existing.isEnd());
             if (existing.getIntensity() == BleedingIntensity.LIGHT) {
@@ -1127,6 +1131,8 @@ public class CalendarFragment extends Fragment {
             fatigueChip.setEnabled(enabled);
             dizzinessChip.setEnabled(enabled);
             diarrheaChip.setEnabled(enabled);
+            lowerAbdominalPainChip.setEnabled(enabled);
+            headacheChip.setEnabled(enabled);
             startChip.setEnabled(enabled);
             endChip.setEnabled(enabled);
             if (!enabled) {
@@ -1137,6 +1143,8 @@ public class CalendarFragment extends Fragment {
                 fatigueChip.setChecked(false);
                 dizzinessChip.setChecked(false);
                 diarrheaChip.setChecked(false);
+                lowerAbdominalPainChip.setChecked(false);
+                headacheChip.setChecked(false);
                 startChip.setChecked(false);
                 endChip.setChecked(false);
                 startChip.setEnabled(false);
@@ -1213,6 +1221,8 @@ public class CalendarFragment extends Fragment {
                     fatigueChip.isChecked(),
                     dizzinessChip.isChecked(),
                     diarrheaChip.isChecked(),
+                    lowerAbdominalPainChip.isChecked(),
+                    headacheChip.isChecked(),
                     startChip.isChecked(),
                     endChip.isChecked()
             );

@@ -359,6 +359,8 @@
     <string name="period_modal_symptom_fatigue">Müdigkeit</string>
     <string name="period_modal_symptom_dizziness">Schwindel</string>
     <string name="period_modal_symptom_diarrhea">Durchfall</string>
+    <string name="period_modal_symptom_lower_abdominal_pain">Unterleibschmerzen</string>
+    <string name="period_modal_symptom_headache">Kopfschmerzen</string>
     <string name="period_modal_start_marker">Periodenbeginn</string>
     <string name="period_modal_end_marker">Periodenende</string>
     <string name="period_modal_clear">Eintrag löschen</string>

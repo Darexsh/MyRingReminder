@@ -359,6 +359,8 @@
     <string name="period_modal_symptom_fatigue">Fatiga</string>
     <string name="period_modal_symptom_dizziness">Mareo</string>
     <string name="period_modal_symptom_diarrhea">Diarrea</string>
+    <string name="period_modal_symptom_lower_abdominal_pain">Dolor bajo abdominal</string>
+    <string name="period_modal_symptom_headache">Dolor de cabeza</string>
     <string name="period_modal_start_marker">Inicio del período</string>
     <string name="period_modal_end_marker">Fin del período</string>
     <string name="period_modal_clear">Eliminar registro</string>

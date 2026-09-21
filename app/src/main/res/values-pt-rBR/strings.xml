@@ -359,6 +359,8 @@
     <string name="period_modal_symptom_fatigue">Fadiga</string>
     <string name="period_modal_symptom_dizziness">Tontura</string>
     <string name="period_modal_symptom_diarrhea">Diarreia</string>
+    <string name="period_modal_symptom_lower_abdominal_pain">Dor no baixo ventre</string>
+    <string name="period_modal_symptom_headache">Dor de cabeça</string>
     <string name="period_modal_start_marker">Início da menstruação</string>
     <string name="period_modal_end_marker">Fim da menstruação</string>
     <string name="period_modal_clear">Excluir registro</string>

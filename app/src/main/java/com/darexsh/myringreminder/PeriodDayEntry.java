@@ -14,6 +14,8 @@ public class PeriodDayEntry {
     private final boolean symptomFatigue;
     private final boolean symptomDizziness;
     private final boolean symptomDiarrhea;
+    private final boolean symptomLowerAbdominalPain;
+    private final boolean symptomHeadache;
     private final boolean start;
     private final boolean end;
     private final long updatedAt;
@@ -27,6 +29,8 @@ public class PeriodDayEntry {
                           boolean symptomFatigue,
                           boolean symptomDizziness,
                           boolean symptomDiarrhea,
+                          boolean symptomLowerAbdominalPain,
+                          boolean symptomHeadache,
                           boolean start,
                           boolean end,
                           long updatedAt) {
@@ -39,6 +43,8 @@ public class PeriodDayEntry {
         this.symptomFatigue = symptomFatigue;
         this.symptomDizziness = symptomDizziness;
         this.symptomDiarrhea = symptomDiarrhea;
+        this.symptomLowerAbdominalPain = symptomLowerAbdominalPain;
+        this.symptomHeadache = symptomHeadache;
         this.pain = painSeverity != null && painSeverity != PainSeverity.NONE;
         this.illness = symptomIllness;
         this.start = start;
@@ -90,8 +96,22 @@ public class PeriodDayEntry {
         return symptomDiarrhea;
     }
 
+    public boolean isSymptomLowerAbdominalPain() {
+        return symptomLowerAbdominalPain;
+    }
+
+    public boolean isSymptomHeadache() {
+        return symptomHeadache;
+    }
+
     public boolean hasAnyAdditionalSymptoms() {
-        return symptomIllness || symptomNausea || symptomFatigue || symptomDizziness || symptomDiarrhea;
+        return symptomIllness
+                || symptomNausea
+                || symptomFatigue
+                || symptomDizziness
+                || symptomDiarrhea
+                || symptomLowerAbdominalPain
+                || symptomHeadache;
     }
 
     public boolean isStart() {

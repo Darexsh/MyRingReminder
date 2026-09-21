@@ -654,6 +654,8 @@ public class SettingsRepository {
                                       boolean symptomFatigue,
                                       boolean symptomDizziness,
                                       boolean symptomDiarrhea,
+                                      boolean symptomLowerAbdominalPain,
+                                      boolean symptomHeadache,
                                       boolean start,
                                       boolean end) {
         String dateKey = buildPeriodDateKey(day);
@@ -667,6 +669,8 @@ public class SettingsRepository {
                 symptomFatigue,
                 symptomDizziness,
                 symptomDiarrhea,
+                symptomLowerAbdominalPain,
+                symptomHeadache,
                 start,
                 end,
                 System.currentTimeMillis()
@@ -711,6 +715,8 @@ public class SettingsRepository {
         boolean symptomFatigue = raw.isSymptomFatigue();
         boolean symptomDizziness = raw.isSymptomDizziness();
         boolean symptomDiarrhea = raw.isSymptomDiarrhea();
+        boolean symptomLowerAbdominalPain = raw.isSymptomLowerAbdominalPain();
+        boolean symptomHeadache = raw.isSymptomHeadache();
         boolean start = raw.isStart();
         boolean end = raw.isEnd();
 
@@ -722,6 +728,8 @@ public class SettingsRepository {
             symptomFatigue = false;
             symptomDizziness = false;
             symptomDiarrhea = false;
+            symptomLowerAbdominalPain = false;
+            symptomHeadache = false;
             start = false;
             end = false;
         } else if (intensity == null) {
@@ -743,6 +751,8 @@ public class SettingsRepository {
                 symptomFatigue,
                 symptomDizziness,
                 symptomDiarrhea,
+                symptomLowerAbdominalPain,
+                symptomHeadache,
                 start,
                 end,
                 updatedAt

@@ -1215,6 +1215,12 @@ public class PeriodDetailsFragment extends Fragment {
         if (entry.isSymptomDiarrhea()) {
             labels.add(getString(R.string.period_modal_symptom_diarrhea));
         }
+        if (entry.isSymptomLowerAbdominalPain()) {
+            labels.add(getString(R.string.period_modal_symptom_lower_abdominal_pain));
+        }
+        if (entry.isSymptomHeadache()) {
+            labels.add(getString(R.string.period_modal_symptom_headache));
+        }
         if (labels.isEmpty()) {
             return "-";
         }

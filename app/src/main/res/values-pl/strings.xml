@@ -359,6 +359,8 @@
     <string name="period_modal_symptom_fatigue">Zmęczenie</string>
     <string name="period_modal_symptom_dizziness">Zawroty głowy</string>
     <string name="period_modal_symptom_diarrhea">Biegunka</string>
+    <string name="period_modal_symptom_lower_abdominal_pain">Ból podbrzusza</string>
+    <string name="period_modal_symptom_headache">Ból głowy</string>
     <string name="period_modal_start_marker">Początek okresu</string>
     <string name="period_modal_end_marker">Koniec okresu</string>
     <string name="period_modal_clear">Usuń wpis</string>

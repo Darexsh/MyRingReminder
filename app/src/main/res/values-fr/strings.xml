@@ -359,6 +359,8 @@
     <string name="period_modal_symptom_fatigue">Fatigue</string>
     <string name="period_modal_symptom_dizziness">Vertiges</string>
     <string name="period_modal_symptom_diarrhea">Diarrhée</string>
+    <string name="period_modal_symptom_lower_abdominal_pain">Douleurs au bas-ventre</string>
+    <string name="period_modal_symptom_headache">Maux de tête</string>
     <string name="period_modal_start_marker">Début des règles</string>
     <string name="period_modal_end_marker">Fin des règles</string>
     <string name="period_modal_clear">Supprimer l\'entrée</string>
