@@ -3,11 +3,13 @@
 <div align="center">
 
 <img src="https://capsule-render.vercel.app/api?type=waving&height=220&text=MyRingReminder&fontAlign=50&fontAlignY=50&color=0:1f4037,50:2e7d32,100:7cb342&fontColor=ffffff" width="100%" /><br>
-<a href="https://git.io/typing-svg"><img src="https://readme-typing-svg.demolab.com/?lines=Gentle+cycle+tracking+for+everyday+clarity;Thoughtful+reminders+that+stay+out+of+the+way;Private+period+tracking+during+the+ring-free+days;A+calm+place+for+notes%2C+history%2C+and+overview;Made+to+feel+clear%2C+personal%2C+and+reliable&center=true&width=760&color=2E7D32&pause=1000" alt="Typing SVG" /></a>
+<a href="https://git.io/typing-svg">
+  <img src="https://readme-typing-svg.demolab.com/?lines=Your+ring+cycle%2C+always+in+view.;Smart+reminders.+Perfect+timing.;Track+your+cycle%2C+period%2C+and+history.;Your+routine.+Your+preferences.+Your+control.;Private+by+design.+Simple+by+nature.&center=true&width=760&color=2E7D32&pause=1200&duration=3500&size=20" alt="MyRingReminder Features" />
+</a>
 
 ![Projekt-Status](https://img.shields.io/badge/Status-Aktiv-brightgreen)
 ![License](https://img.shields.io/badge/License-NonCommercial-blue)
-![Version](https://img.shields.io/badge/Version-1.3.7-orange)
+![Version](https://img.shields.io/badge/Version-1.3.8-orange)
 
 [![Telegram Bot](https://img.shields.io/badge/Telegram-Bot-2AABEE?logo=telegram&logoColor=white)](https://t.me/darexsh_bot)
 [![Buy Me a Coffee](https://img.shields.io/badge/Buy%20Me%20a%20Coffee-yellow?logo=buy-me-a-coffee)](https://buymeacoffee.com/darexsh)
