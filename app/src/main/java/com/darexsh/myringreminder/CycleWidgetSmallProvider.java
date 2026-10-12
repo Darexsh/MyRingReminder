@@ -6,6 +6,8 @@ import android.appwidget.AppWidgetProvider;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.TypedValue;
+import android.view.View;
 import android.widget.RemoteViews;
 
 public class CycleWidgetSmallProvider extends AppWidgetProvider {
@@ -46,7 +48,13 @@ public class CycleWidgetSmallProvider extends AppWidgetProvider {
         views.setInt(R.id.widget_bg_image, "setColorFilter", repository.getButtonColor());
 
         views.setTextViewText(R.id.tv_widget_days_number, String.valueOf(state.daysLeft));
+        views.setViewVisibility(R.id.tv_widget_days_number, state.paused ? View.GONE : View.VISIBLE);
         views.setTextViewText(R.id.tv_widget_days_label, state.label);
+        views.setTextViewTextSize(
+                R.id.tv_widget_days_label,
+                TypedValue.COMPLEX_UNIT_SP,
+                state.paused ? (useTallLayout ? 15f : 16f) : 12f
+        );
         if (useTallLayout) {
             views.setTextViewText(R.id.tv_widget_removal, state.removalText);
             views.setTextViewText(R.id.tv_widget_insertion, state.insertionText);

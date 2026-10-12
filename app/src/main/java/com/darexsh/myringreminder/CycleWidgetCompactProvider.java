@@ -6,6 +6,8 @@ import android.appwidget.AppWidgetProvider;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.TypedValue;
+import android.view.View;
 import android.widget.RemoteViews;
 
 public class CycleWidgetCompactProvider extends AppWidgetProvider {
@@ -48,6 +50,12 @@ public class CycleWidgetCompactProvider extends AppWidgetProvider {
         views.setTextViewText(R.id.tv_widget_compact_app_name, context.getString(R.string.app_name));
         views.setTextViewText(R.id.tv_widget_compact_status_label, state.label);
         views.setTextViewText(R.id.tv_widget_compact_days_number, String.valueOf(state.daysLeft));
+        views.setViewVisibility(R.id.tv_widget_compact_days_number, state.paused ? View.GONE : View.VISIBLE);
+        views.setTextViewTextSize(
+                R.id.tv_widget_compact_status_label,
+                TypedValue.COMPLEX_UNIT_SP,
+                state.paused ? (useTallLayout ? 15f : 13f) : (useTallLayout ? 11f : 10f)
+        );
         views.setTextViewText(R.id.tv_widget_compact_removal, state.removalText);
         views.setTextViewText(R.id.tv_widget_compact_insertion, state.insertionText);
         views.setTextViewText(R.id.tv_widget_compact_stock, state.stockText);

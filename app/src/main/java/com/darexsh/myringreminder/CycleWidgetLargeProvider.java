@@ -5,6 +5,8 @@ import android.appwidget.AppWidgetManager;
 import android.appwidget.AppWidgetProvider;
 import android.content.Context;
 import android.content.Intent;
+import android.util.TypedValue;
+import android.view.View;
 import android.widget.RemoteViews;
 
 public class CycleWidgetLargeProvider extends AppWidgetProvider {
@@ -41,9 +43,18 @@ public class CycleWidgetLargeProvider extends AppWidgetProvider {
         views.setInt(R.id.widget_bg_image, "setColorFilter", repository.getButtonColor());
 
         views.setTextViewText(R.id.tv_widget_title, context.getString(R.string.app_name));
-        views.setTextViewText(R.id.tv_widget_subtitle, context.getString(R.string.widget_title));
+        views.setTextViewText(
+                R.id.tv_widget_subtitle,
+                state.paused ? context.getString(R.string.home_ring_pause_phase) : context.getString(R.string.widget_title)
+        );
         views.setTextViewText(R.id.tv_widget_days_number, String.valueOf(state.daysLeft));
+        views.setViewVisibility(R.id.tv_widget_days_number, state.paused ? View.GONE : View.VISIBLE);
         views.setTextViewText(R.id.tv_widget_days_label, state.label);
+        views.setTextViewTextSize(
+                R.id.tv_widget_days_label,
+                TypedValue.COMPLEX_UNIT_SP,
+                state.paused ? 16f : 12f
+        );
         views.setTextViewText(R.id.tv_widget_removal, state.removalText);
         views.setTextViewText(R.id.tv_widget_insertion, state.insertionText);
         views.setTextViewText(R.id.tv_widget_stock, state.stockText);

@@ -62,6 +62,7 @@ It combines cycle timing, reminders, period tracking during the ring-free window
 
 * **Wear Ring Longer**: Extend the current cycle by extra days, with built-in information guidance.
 * **Skip Ring-Free Week**: Skip the current ring-free week for immediate reinsertion, then continue with normal cycle behavior afterward.
+* **Pause Ring Use**: Set planned ring use to inactive for longer breaks, such as family planning, while keeping history, notes, period entries, settings, and backups intact.
 * **Special Cases Menu (Home)**: Access “Wear ring longer” and “Skip ring-free week” quickly from a compact, auto-hiding Home action menu.
 * **Ring Supply Tracker**: Keep track of how many future rings are still available, show the current supply directly on the Home screen, decrease stock automatically when a new ring is inserted, and optionally receive a supply update notification after each counted insertion plus a one-week prescription follow-up when only one ring remains.
 
@@ -200,19 +201,25 @@ An overview of the current visual experience across the app:
 * Use **Skip ring-free week** to set immediate reinsertion for the current cycle.
 * Tap the **info** icon next to **Wear ring longer** or **Skip ring-free week** for additional guidance.
 
-### 10. Track ring supply
+### 10. Pause ring use for longer breaks
+
+* Use **Settings → Pause ring** when planned ring use should become inactive, for example during family planning or another longer break.
+* Choose the date from which the pause starts. Future ring predictions and reminders are disabled, while previous history, notes, period entries, settings, and backups are kept.
+* When ring use starts again, open the same setting and choose the next insertion date and time to begin a fresh cycle.
+
+### 11. Track ring supply
 
 * Enable **Ring supply** in **Settings** if you want the app to track how many future rings are still available.
 * Adjust the saved ring count directly in the stock dialog.
 * The Home screen shows the current saved supply in a small status pill and lets you jump straight into the stock settings.
 * Automatic stock reduction applies only when a new ring insertion is actually counted, such as after a skipped ring-free week or when the next cycle starts normally.
 
-### 11. Keep the app up to date
+### 12. Keep the app up to date
 
 * Use the update entry in **Settings → Advanced** or the update card on the Home screen to check for newer app versions.
 * If an update is available, the app can download the APK and prompt installation directly.
 
-### 12. Enable optional security
+### 13. Enable optional security
 
 * Open **Settings → Advanced → App lock**.
 * In the popup, enable or disable app lock and set the auto-lock delay.

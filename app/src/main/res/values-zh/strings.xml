@@ -1,7 +1,7 @@
 <resources>
     <!-- App -->
     <string name="app_info_actions_title">操作</string>
-    <string name="app_info_description">MyRingReminder 是一款用于管理和跟踪避孕环周期的 Android 应用程序。该应用提供带颜色标记的日历，用于显示放置日、取出日和无环日，并提供可自定义提醒、避孕环库存跟踪、笔记、小组件以及备份/恢复功能。此外，它还包含欢迎引导、周期历史记录、周期延长说明（"延长佩戴避孕环"）、无环周期间的经期追踪，以及带范围筛选和格式化 PDF 导出的经期详情页面。背景图片和颜色设置等个性化选项可实现自定义设置。\n\n重要说明：本应用仅用于个人组织和跟踪避孕环周期。它不是医疗产品，不能替代医疗建议，也不基于医学评估或诊断。如果您对使用方法或健康问题有疑问，请咨询医疗专业人员。\n\n所有数据仅存储在此设备本地。</string>
+    <string name="app_info_description">MyRingReminder 是一款用于管理和跟踪避孕环周期的 Android 应用程序。该应用提供带颜色标记的日历，用于显示放置日、取出日和无环日，并提供可自定义提醒、避孕环库存跟踪、笔记、小组件以及备份/恢复功能。此外，它还包含欢迎引导、周期历史记录、周期延长说明（"延长佩戴避孕环"）、可在较长间歇期间暂停计划中的圆环使用并稍后从新的置入日期重新开始、无环周期间的经期追踪，以及带范围筛选和格式化 PDF 导出的经期详情页面。背景图片和颜色设置等个性化选项可实现自定义设置。\n\n重要说明：本应用仅用于个人组织和跟踪避孕环周期。它不是医疗产品，不能替代医疗建议，也不基于医学评估或诊断。如果您对使用方法或健康问题有疑问，请咨询医疗专业人员。\n\n所有数据仅存储在此设备本地。</string>
     <string name="app_info_developer">开发者：%1$s</string>
     <string name="app_info_developer_label">开发者：</string>
     <string name="app_info_developer_name">Daniel Sichler 创作的 Darexsh</string>
@@ -127,6 +127,18 @@
     <string name="settings_label_calendar_range">日历范围</string>
     <string name="settings_label_cycle_length">周期长度</string>
     <string name="settings_label_start_date">置入日期</string>
+    <string name="settings_ring_use_label">暂停圆环</string>
+    <string name="settings_ring_use_status_active">使用中</string>
+    <string name="settings_ring_use_status_paused">未启用</string>
+    <string name="settings_ring_pause_title">暂停圆环？</string>
+    <string name="settings_ring_pause_message">计划中的圆环使用将从 %1$s 起暂停。\n\n未来的圆环预测和提醒将被停用。之前的历史、笔记、经期记录和设置会保留。</string>
+    <string name="settings_ring_pause_choose_date">选择日期</string>
+    <string name="settings_ring_pause_confirm">暂停</string>
+    <string name="settings_ring_pause_done">圆环使用未启用</string>
+    <string name="settings_ring_resume_title">重新开始圆环使用？</string>
+    <string name="settings_ring_resume_message">圆环使用自 %1$s 起未启用。请选择下一次置入日期和时间，以开始新的周期。</string>
+    <string name="settings_ring_resume_confirm">恢复</string>
+    <string name="settings_ring_resume_done">圆环使用已重新启用</string>
     <string name="settings_stock_tracker_dialog_title">库存跟踪</string>
     <string name="settings_stock_tracker_enable">启用</string>
     <string name="settings_stock_tracker_enable_label">启用库存跟踪</string>
@@ -265,6 +277,10 @@
     <string name="home_days_until_insertion">距离置入天数</string>
     <string name="home_phase_active_cycle">当前周期</string>
     <string name="home_phase_ring_free_phase">无环阶段</string>
+    <string name="home_ring_pause_phase">暂停模式</string>
+    <string name="home_ring_pause_label">圆环未启用</string>
+    <string name="home_ring_pause_since">自 %1$s 起未启用</string>
+    <string name="home_ring_pause_resume_hint">再次使用圆环时，请在设置中重新开始圆环使用。</string>
     <string name="home_delay_confirm">更新</string>
     <string name="home_delay_info_desc">关于延长佩戴圆环的信息</string>
     <string name="home_delay_info_message"><![CDATA[
@@ -402,9 +418,13 @@
     <string name="cycles_status_new_wear_phase_started">新的佩戴阶段已开始</string>
     <string name="cycles_badge_wear_phase">佩戴期</string>
     <string name="cycles_badge_pause">暂停</string>
+    <string name="cycles_badge_ring_pause">圆环暂停</string>
     <string name="cycles_badge_direct_switch">直接更换</string>
+    <string name="cycles_status_ring_pause_days">未启用 %1$d 天</string>
     <string name="cycles_special_skip_ring_free">已跳过无环周</string>
     <string name="cycles_special_wear_longer_days">圆环延长佩戴（+%1$d 天）</string>
+    <string name="cycles_title_ring_pause_since">圆环自 %1$s 起暂停</string>
+    <string name="cycles_title_ring_pause_range">%1$s - %2$s</string>
     <string name="cycles_title_seamless_ring_change">无缝更换圆环</string>
     <string name="cycles_title">周期历史</string>
 
@@ -491,6 +511,9 @@
     <string name="backup_field_notification_hashes_format">通知设置快照：%1$d 条</string>
     <string name="backup_field_period_tracking">经期追踪</string>
     <string name="backup_field_period_tracking_entries_format">%1$d 天记录</string>
+    <string name="backup_field_ring_use_paused">圆环使用未启用</string>
+    <string name="backup_field_ring_use_pause_start">圆环暂停开始</string>
+    <string name="backup_field_ring_use_last_resume">上次重新开始圆环使用</string>
     <string name="backup_field_reminder_insertion">置入前提醒</string>
     <string name="backup_field_reminder_removal">取出前提醒</string>
     <string name="backup_field_skip_ring_free_entries_format">跳过停用周记录：%1$d</string>

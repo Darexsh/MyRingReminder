@@ -230,6 +230,8 @@ public class CalendarFragment extends Fragment {
     private void setupObservers() {
         viewModel.getCycleLength().observe(getViewLifecycleOwner(), value -> requestCalendarUpdate());
         viewModel.getStartDate().observe(getViewLifecycleOwner(), value -> requestCalendarUpdate());
+        viewModel.getRingUsePaused().observe(getViewLifecycleOwner(), value -> requestCalendarUpdate());
+        viewModel.getRingUsePauseStartMillis().observe(getViewLifecycleOwner(), value -> requestCalendarUpdate());
         viewModel.getCalendarPastAmount().observe(getViewLifecycleOwner(), value -> requestCalendarUpdate());
         viewModel.getCalendarPastUnit().observe(getViewLifecycleOwner(), value -> requestCalendarUpdate());
         viewModel.getCalendarFutureAmount().observe(getViewLifecycleOwner(), value -> requestCalendarUpdate());
@@ -337,21 +339,59 @@ public class CalendarFragment extends Fragment {
         int removalColor = ColorUtils.setAlphaComponent(getCalendarRemovalColor(), CALENDAR_ALPHA);
         int insertionColor = ColorUtils.setAlphaComponent(getCalendarInsertionColor(), CALENDAR_ALPHA);
 
-        if (!snapshot.wearDays.isEmpty()) {
-            calendarView.addDecorator(new SetDayDecorator(wearColor, snapshot.wearDays));
+        Set<CalendarDay> wearDays = snapshot.wearDays;
+        Set<CalendarDay> ringFreeDays = snapshot.ringFreeDays;
+        Set<CalendarDay> removalDays = snapshot.removalDays;
+        Set<CalendarDay> insertionDays = snapshot.insertionDays;
+        if (viewModel.getRepository().isRingUsePaused()) {
+            long pauseStartMillis = viewModel.getRepository().getRingUsePauseStartMillis();
+            wearDays = filterDaysBeforePause(wearDays, pauseStartMillis);
+            ringFreeDays = filterDaysBeforePause(ringFreeDays, pauseStartMillis);
+            removalDays = filterDaysBeforePause(removalDays, pauseStartMillis);
+            insertionDays = filterDaysBeforePause(insertionDays, pauseStartMillis);
         }
-        if (!snapshot.ringFreeDays.isEmpty()) {
-            calendarView.addDecorator(new SetDayDecorator(ringFreeColor, snapshot.ringFreeDays));
+
+        if (!wearDays.isEmpty()) {
+            calendarView.addDecorator(new SetDayDecorator(wearColor, wearDays));
         }
-        if (!snapshot.removalDays.isEmpty()) {
-            calendarView.addDecorator(new SetDayDecorator(removalColor, snapshot.removalDays));
+        if (!ringFreeDays.isEmpty()) {
+            calendarView.addDecorator(new SetDayDecorator(ringFreeColor, ringFreeDays));
         }
-        if (!snapshot.insertionDays.isEmpty()) {
-            calendarView.addDecorator(new SetDayDecorator(insertionColor, snapshot.insertionDays));
+        if (!removalDays.isEmpty()) {
+            calendarView.addDecorator(new SetDayDecorator(removalColor, removalDays));
+        }
+        if (!insertionDays.isEmpty()) {
+            calendarView.addDecorator(new SetDayDecorator(insertionColor, insertionDays));
         }
         applyPeriodTrackingDecorators();
-        currentRingFreeWindows = buildRingFreeWindows(snapshot.ringFreeDays);
+        currentRingFreeWindows = buildRingFreeWindows(ringFreeDays);
         currentPeriodEntryAllowedDays = buildAllowedPeriodEntryDays(currentRingFreeWindows);
+    }
+
+    private Set<CalendarDay> filterDaysBeforePause(Set<CalendarDay> source, long pauseStartMillis) {
+        if (pauseStartMillis <= 0L || source == null || source.isEmpty()) {
+            return source != null ? source : new HashSet<>();
+        }
+        Calendar pauseDay = Calendar.getInstance();
+        pauseDay.setTimeInMillis(pauseStartMillis);
+        startOfDay(pauseDay);
+        Set<CalendarDay> filtered = new HashSet<>();
+        for (CalendarDay day : source) {
+            Calendar cal = Calendar.getInstance();
+            cal.set(day.getYear(), day.getMonth() - 1, day.getDay(), 0, 0, 0);
+            cal.set(Calendar.MILLISECOND, 0);
+            if (cal.before(pauseDay)) {
+                filtered.add(day);
+            }
+        }
+        return filtered;
+    }
+
+    private void startOfDay(Calendar calendar) {
+        calendar.set(Calendar.HOUR_OF_DAY, 0);
+        calendar.set(Calendar.MINUTE, 0);
+        calendar.set(Calendar.SECOND, 0);
+        calendar.set(Calendar.MILLISECOND, 0);
     }
 
     private void applyPeriodTrackingDecorators() {

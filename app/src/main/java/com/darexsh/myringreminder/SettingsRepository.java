@@ -25,6 +25,9 @@ public class SettingsRepository {
     private static final String KEY_SET_TIME_HOUR = "set_time_hour";
     private static final String KEY_SET_TIME_MINUTE = "set_time_minute";
     private static final String KEY_CYCLE_LENGTH = "cycle_length";
+    private static final String KEY_RING_USE_PAUSED = "ring_use_paused";
+    private static final String KEY_RING_USE_PAUSE_START_MILLIS = "ring_use_pause_start_millis";
+    private static final String KEY_RING_USE_LAST_RESUME_MILLIS = "ring_use_last_resume_millis";
     private static final String KEY_BACKGROUND_IMAGE_URI = "background_image_uri";
     private static final String KEY_BACKGROUND_ALL_SCREENS = "background_all_screens";
     private static final String KEY_BACKGROUND_DIM_PERCENT = "background_dim_percent";
@@ -112,6 +115,38 @@ public class SettingsRepository {
 
     public void saveCycleLength(int length) {
         sharedPreferences.edit().putInt(KEY_CYCLE_LENGTH, length).apply();
+    }
+
+    public boolean isRingUsePaused() {
+        return sharedPreferences.getBoolean(KEY_RING_USE_PAUSED, false);
+    }
+
+    public long getRingUsePauseStartMillis() {
+        return sharedPreferences.getLong(KEY_RING_USE_PAUSE_START_MILLIS, 0L);
+    }
+
+    public long getRingUseLastResumeMillis() {
+        return sharedPreferences.getLong(KEY_RING_USE_LAST_RESUME_MILLIS, 0L);
+    }
+
+    public void pauseRingUse(long pauseStartMillis) {
+        long normalizedPauseStart = Math.max(0L, pauseStartMillis);
+        sharedPreferences.edit()
+                .putBoolean(KEY_RING_USE_PAUSED, true)
+                .putLong(KEY_RING_USE_PAUSE_START_MILLIS, normalizedPauseStart)
+                .apply();
+        saveOpenRingUsePauseHistory(normalizedPauseStart);
+        CalendarRenderCache.clear();
+    }
+
+    public void resumeRingUse(long resumeMillis) {
+        long normalizedResume = Math.max(0L, resumeMillis);
+        closeOpenRingUsePauseHistory(normalizedResume);
+        sharedPreferences.edit()
+                .putBoolean(KEY_RING_USE_PAUSED, false)
+                .putLong(KEY_RING_USE_LAST_RESUME_MILLIS, normalizedResume)
+                .apply();
+        CalendarRenderCache.clear();
     }
 
     public String getBackgroundImageUri() {
@@ -256,6 +291,61 @@ public class SettingsRepository {
         }
         if (kept.size() != cycleHistory.size()) {
             saveCycleHistory(kept);
+        }
+    }
+
+    private void saveOpenRingUsePauseHistory(long pauseStartMillis) {
+        if (pauseStartMillis <= 0L) {
+            return;
+        }
+        List<Cycle> cycleHistory = getCycleHistory();
+        boolean changed = false;
+        boolean exists = false;
+        List<Cycle> updated = new ArrayList<>();
+        for (Cycle cycle : cycleHistory) {
+            if (CycleType.PAUSE == cycle.getType() && cycle.getEndDateMillis() <= 0L) {
+                if (!exists) {
+                    updated.add(new Cycle(pauseStartMillis, 0L, CycleType.PAUSE));
+                    exists = true;
+                    changed = changed || cycle.getDateMillis() != pauseStartMillis;
+                } else {
+                    changed = true;
+                }
+            } else {
+                updated.add(cycle);
+            }
+        }
+        if (!exists) {
+            updated.add(new Cycle(pauseStartMillis, 0L, CycleType.PAUSE));
+            changed = true;
+        }
+        if (changed) {
+            saveCycleHistory(updated);
+            setCycleHistoryCleared(false);
+        }
+    }
+
+    private void closeOpenRingUsePauseHistory(long resumeMillis) {
+        if (resumeMillis <= 0L) {
+            return;
+        }
+        List<Cycle> cycleHistory = getCycleHistory();
+        if (cycleHistory.isEmpty()) {
+            return;
+        }
+        boolean changed = false;
+        List<Cycle> updated = new ArrayList<>();
+        for (Cycle cycle : cycleHistory) {
+            if (CycleType.PAUSE == cycle.getType() && cycle.getEndDateMillis() <= 0L) {
+                long startMillis = cycle.getDateMillis();
+                updated.add(new Cycle(startMillis, Math.max(startMillis, resumeMillis), CycleType.PAUSE));
+                changed = true;
+            } else {
+                updated.add(cycle);
+            }
+        }
+        if (changed) {
+            saveCycleHistory(updated);
         }
     }
 

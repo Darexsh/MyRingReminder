@@ -62,6 +62,7 @@ import java.util.List;
 import java.util.Locale;
 import java.util.Objects;
 import android.util.Log;
+import android.util.TypedValue;
 import android.view.animation.LinearInterpolator;
 
 // HomeFragment displays the current cycle status and allows users to manage their cycle settings
@@ -287,6 +288,46 @@ public class HomeFragment extends Fragment {
                 return;
             }
 
+            if (viewModel.getRepository().isRingUsePaused()) {
+                long pauseStartMillis = viewModel.getRepository().getRingUsePauseStartMillis();
+                String pauseDate = pauseStartMillis > 0L
+                        ? new java.text.SimpleDateFormat("dd.MM.yyyy", Locale.getDefault())
+                        .format(new java.util.Date(pauseStartMillis))
+                        : new java.text.SimpleDateFormat("dd.MM.yyyy", Locale.getDefault())
+                        .format(Calendar.getInstance().getTime());
+                circularProgress.setMax(1);
+                circularProgress.setProgress(0);
+                circularProgress.setPeriodActive(false);
+                circularProgress.setPauseMode(true);
+                if (tvCyclePhaseLabel != null) {
+                    tvCyclePhaseLabel.setText(R.string.home_ring_pause_phase);
+                    tvCyclePhaseLabel.setTextSize(TypedValue.COMPLEX_UNIT_SP, 13f);
+                }
+                tvDaysNumber.setVisibility(View.GONE);
+                tvDaysLabel.setText(R.string.home_ring_pause_label);
+                tvDaysLabel.setTextSize(TypedValue.COMPLEX_UNIT_SP, 21f);
+                tvRemovalDate.setText(getString(R.string.home_ring_pause_since, pauseDate));
+                tvSecondaryDate.setText(R.string.home_ring_pause_resume_hint);
+                btnDelayCycle.setEnabled(false);
+                btnSkipRingFree.setEnabled(false);
+                btnSpecialActionsToggle.setEnabled(false);
+                btnSpecialActionsToggle.setAlpha(0.5f);
+                hideSpecialActionsPanel(specialActionsPanel, btnSpecialActionsToggle, specialActionsExpanded);
+                updateStockStatus(tvStockStatus);
+                return;
+            }
+
+            btnDelayCycle.setEnabled(true);
+            btnSkipRingFree.setEnabled(true);
+            btnSpecialActionsToggle.setEnabled(true);
+            btnSpecialActionsToggle.setAlpha(1f);
+            circularProgress.setPauseMode(false);
+            if (tvCyclePhaseLabel != null) {
+                tvCyclePhaseLabel.setTextSize(TypedValue.COMPLEX_UNIT_SP, 11f);
+            }
+            tvDaysNumber.setVisibility(View.VISIBLE);
+            tvDaysLabel.setTextSize(TypedValue.COMPLEX_UNIT_SP, 16f);
+
             // Initialize calendar instances for cycle calculations
             Calendar displayNow = DebugTimeProvider.now(viewModel.getRepository());
             Calendar systemNow = Calendar.getInstance();
@@ -473,6 +514,8 @@ public class HomeFragment extends Fragment {
         // Observe changes in the ViewModel and update the UI
         viewModel.getStartDate().observe(getViewLifecycleOwner(), val -> updateUi.run());
         viewModel.getCycleLength().observe(getViewLifecycleOwner(), val -> updateUi.run());
+        viewModel.getRingUsePaused().observe(getViewLifecycleOwner(), val -> updateUi.run());
+        viewModel.getRingUsePauseStartMillis().observe(getViewLifecycleOwner(), val -> updateUi.run());
         viewModel.getRemovalReminderHours().observe(getViewLifecycleOwner(), val -> updateUi.run());
         viewModel.getInsertionReminderHours().observe(getViewLifecycleOwner(), val -> updateUi.run());
 

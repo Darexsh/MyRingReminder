@@ -13,6 +13,8 @@ public class SharedViewModel extends ViewModel {
     // LiveData objects to hold the state of the cycle length, start date, and time
     private final MutableLiveData<Integer> cycleLength = new MutableLiveData<>();
     private final MutableLiveData<Calendar> startDate = new MutableLiveData<>();
+    private final MutableLiveData<Boolean> ringUsePaused = new MutableLiveData<>();
+    private final MutableLiveData<Long> ringUsePauseStartMillis = new MutableLiveData<>();
     private final MutableLiveData<String> backgroundImageUri = new MutableLiveData<>();
     private final MutableLiveData<Boolean> backgroundAllScreensEnabled = new MutableLiveData<>();
     private final MutableLiveData<Integer> backgroundDimPercent = new MutableLiveData<>();
@@ -42,6 +44,8 @@ public class SharedViewModel extends ViewModel {
         this.repository = repository;
         cycleLength.setValue(repository.getCycleLength());
         startDate.setValue(repository.getStartDate());
+        ringUsePaused.setValue(repository.isRingUsePaused());
+        ringUsePauseStartMillis.setValue(repository.getRingUsePauseStartMillis());
         backgroundImageUri.setValue(repository.getBackgroundImageUri());
         backgroundAllScreensEnabled.setValue(repository.isBackgroundAllScreensEnabled());
         backgroundDimPercent.setValue(repository.getBackgroundDimPercent());
@@ -75,6 +79,14 @@ public class SharedViewModel extends ViewModel {
 
     public LiveData<Calendar> getStartDate() {
         return startDate;
+    }
+
+    public LiveData<Boolean> getRingUsePaused() {
+        return ringUsePaused;
+    }
+
+    public LiveData<Long> getRingUsePauseStartMillis() {
+        return ringUsePauseStartMillis;
     }
 
     public LiveData<String> getBackgroundImageUri() {
@@ -178,6 +190,20 @@ public class SharedViewModel extends ViewModel {
     public void setStartDate(Calendar date) {
         repository.saveStartDate(date);
         startDate.setValue(date);
+    }
+
+    public void pauseRingUse(long pauseStartMillis) {
+        repository.pauseRingUse(pauseStartMillis);
+        ringUsePaused.setValue(true);
+        ringUsePauseStartMillis.setValue(repository.getRingUsePauseStartMillis());
+    }
+
+    public void resumeRingUse(Calendar resumeDate) {
+        repository.resumeRingUse(resumeDate.getTimeInMillis());
+        repository.saveStartDate(resumeDate);
+        ringUsePaused.setValue(false);
+        ringUsePauseStartMillis.setValue(repository.getRingUsePauseStartMillis());
+        startDate.setValue(resumeDate);
     }
 
     public void setBackgroundImageUri(String uri) {

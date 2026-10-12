@@ -136,6 +136,7 @@ public class SettingsFragment extends Fragment {
     private TextView tvSetTimeValue;
     private TextView tvSetStartDateValue;
     private TextView tvSetCycleLengthValue;
+    private TextView tvRingUsePauseValue;
     private TextView tvSetCalendarRangeValue;
     private TextView tvNotificationGroupValue;
     private TextView tvBackgroundToolsValue;
@@ -250,6 +251,7 @@ public class SettingsFragment extends Fragment {
         View btnSetTime = view.findViewById(R.id.btn_set_time);
         View btnSetStartDate = view.findViewById(R.id.btn_set_start_date);
         View btnSetCycleLength = view.findViewById(R.id.btn_set_cycle_length);
+        View btnRingUsePause = view.findViewById(R.id.btn_ring_use_pause);
         View btnStockTracker = view.findViewById(R.id.btn_stock_tracker);
         btnBackgroundTools = view.findViewById(R.id.btn_background_tools);
         View btnSetCalendarRange = view.findViewById(R.id.btn_set_calendar_range);
@@ -271,6 +273,7 @@ public class SettingsFragment extends Fragment {
         tvSetStartDateValue = view.findViewById(R.id.tv_set_start_date_value);
         tvSetTimeValue = view.findViewById(R.id.tv_set_time_value);
         tvSetCycleLengthValue = view.findViewById(R.id.tv_set_cycle_length_value);
+        tvRingUsePauseValue = view.findViewById(R.id.tv_ring_use_pause_value);
         tvSetCalendarRangeValue = view.findViewById(R.id.tv_set_calendar_range_value);
         tvNotificationGroupValue = view.findViewById(R.id.tv_notification_group_value);
         tvBackgroundToolsValue = view.findViewById(R.id.tv_background_tools_value);
@@ -307,6 +310,7 @@ public class SettingsFragment extends Fragment {
                 tvSetStartDateValue,
                 tvSetTimeValue,
                 tvSetCycleLengthValue,
+                tvRingUsePauseValue,
                 tvStockTrackerValue,
                 tvSetCalendarRangeValue,
                 tvNotificationGroupValue,
@@ -320,6 +324,7 @@ public class SettingsFragment extends Fragment {
                 view.findViewById(R.id.tv_set_start_date_chevron),
                 view.findViewById(R.id.tv_set_time_chevron),
                 view.findViewById(R.id.tv_set_cycle_length_chevron),
+                view.findViewById(R.id.tv_ring_use_pause_chevron),
                 view.findViewById(R.id.tv_stock_tracker_chevron),
                 view.findViewById(R.id.tv_set_calendar_range_chevron),
                 view.findViewById(R.id.tv_notification_group_chevron),
@@ -354,6 +359,8 @@ public class SettingsFragment extends Fragment {
                 updateCycleLengthButtonText(length);
             }
         });
+        viewModel.getRingUsePaused().observe(getViewLifecycleOwner(), value -> updateRingUsePauseButtonText());
+        viewModel.getRingUsePauseStartMillis().observe(getViewLifecycleOwner(), value -> updateRingUsePauseButtonText());
         viewModel.getStockTrackingEnabled().observe(getViewLifecycleOwner(), value -> updateStockTrackerButtonText());
         viewModel.getRingStockCount().observe(getViewLifecycleOwner(), value -> updateStockTrackerButtonText());
         viewModel.getLowStockReminderEnabled().observe(getViewLifecycleOwner(), value -> updateStockTrackerButtonText());
@@ -435,6 +442,7 @@ public class SettingsFragment extends Fragment {
         btnSetTime.setOnClickListener(v -> showTimePicker());
         btnSetStartDate.setOnClickListener(v -> showDatePicker());
         btnSetCycleLength.setOnClickListener(v -> showCycleLengthDialog());
+        btnRingUsePause.setOnClickListener(v -> showRingUsePauseDialog());
         btnStockTracker.setOnClickListener(v -> showStockTrackerDialog());
         btnBackgroundTools.setOnClickListener(v -> showBackgroundToolsDialog());
         btnSetCalendarRange.setOnClickListener(v -> showCalendarRangeDialog());
@@ -603,6 +611,134 @@ public class SettingsFragment extends Fragment {
 
     private void updateCycleLengthButtonText(int cycleLength) {
         tvSetCycleLengthValue.setText(getString(R.string.settings_cycle_length_value, cycleLength));
+    }
+
+    private void updateRingUsePauseButtonText() {
+        if (tvRingUsePauseValue == null || viewModel == null) {
+            return;
+        }
+        boolean paused = Boolean.TRUE.equals(viewModel.getRingUsePaused().getValue());
+        tvRingUsePauseValue.setText(paused
+                ? R.string.settings_ring_use_status_active
+                : R.string.settings_ring_use_status_paused);
+    }
+
+    private void showRingUsePauseDialog() {
+        boolean paused = viewModel.getRepository().isRingUsePaused();
+        if (paused) {
+            showResumeRingUseDialog();
+            return;
+        }
+        Long pauseStart = viewModel.getRingUsePauseStartMillis().getValue();
+        Calendar defaultPauseStart = Calendar.getInstance();
+        if (pauseStart != null && pauseStart > 0L) {
+            defaultPauseStart.setTimeInMillis(pauseStart);
+        }
+        String dateText = formatDate(defaultPauseStart.getTimeInMillis());
+        AlertDialog dialog = new AlertDialog.Builder(requireContext())
+                .setTitle(R.string.settings_ring_pause_title)
+                .setMessage(getString(R.string.settings_ring_pause_message, dateText))
+                .setPositiveButton(R.string.settings_ring_pause_confirm, (dlg, which) ->
+                        applyRingUsePause(defaultPauseStart.getTimeInMillis()))
+                .setNeutralButton(R.string.settings_ring_pause_choose_date, (dlg, which) ->
+                        showPauseStartDatePicker(defaultPauseStart))
+                .setNegativeButton(R.string.dialog_cancel, null)
+                .show();
+        applyDialogButtonColors(dialog);
+    }
+
+    private void showPauseStartDatePicker(Calendar initialDate) {
+        Calendar selected = (Calendar) initialDate.clone();
+        DatePickerDialog dialog = new DatePickerDialog(requireContext(),
+                (DatePicker view, int year, int month, int dayOfMonth) -> {
+                    selected.set(year, month, dayOfMonth);
+                    selected.set(Calendar.HOUR_OF_DAY, 0);
+                    selected.set(Calendar.MINUTE, 0);
+                    selected.set(Calendar.SECOND, 0);
+                    selected.set(Calendar.MILLISECOND, 0);
+                    applyRingUsePause(selected.getTimeInMillis());
+                },
+                selected.get(Calendar.YEAR),
+                selected.get(Calendar.MONTH),
+                selected.get(Calendar.DAY_OF_MONTH));
+        dialog.show();
+        applyDialogButtonColors(dialog);
+    }
+
+    private void applyRingUsePause(long pauseStartMillis) {
+        viewModel.pauseRingUse(pauseStartMillis);
+        ReminderScheduler.cancelAllScheduledNotifications(requireContext());
+        viewModel.getRepository().clearNotificationFlags();
+        StockManager.refreshReminderState(requireContext(), viewModel.getRepository());
+        WidgetUpdater.updateAllWidgets(requireContext());
+        updateRingUsePauseButtonText();
+        Toast.makeText(requireContext(), R.string.settings_ring_pause_done, Toast.LENGTH_SHORT).show();
+    }
+
+    private void showResumeRingUseDialog() {
+        long pauseStartMillis = viewModel.getRepository().getRingUsePauseStartMillis();
+        String pauseDate = pauseStartMillis > 0L
+                ? formatDate(pauseStartMillis)
+                : getString(R.string.backup_unknown);
+        AlertDialog dialog = new AlertDialog.Builder(requireContext())
+                .setTitle(R.string.settings_ring_resume_title)
+                .setMessage(getString(R.string.settings_ring_resume_message, pauseDate))
+                .setPositiveButton(R.string.settings_ring_resume_confirm, (dlg, which) ->
+                        showResumeInsertionDatePicker())
+                .setNegativeButton(R.string.dialog_cancel, null)
+                .show();
+        applyDialogButtonColors(dialog);
+    }
+
+    private void showResumeInsertionDatePicker() {
+        Calendar base = Calendar.getInstance();
+        Calendar currentStart = viewModel.getStartDate().getValue();
+        if (currentStart != null) {
+            base.set(Calendar.HOUR_OF_DAY, currentStart.get(Calendar.HOUR_OF_DAY));
+            base.set(Calendar.MINUTE, currentStart.get(Calendar.MINUTE));
+        }
+        DatePickerDialog datePicker = new DatePickerDialog(requireContext(),
+                (DatePicker view, int year, int month, int dayOfMonth) -> {
+                    Calendar selected = Calendar.getInstance();
+                    selected.set(Calendar.YEAR, year);
+                    selected.set(Calendar.MONTH, month);
+                    selected.set(Calendar.DAY_OF_MONTH, dayOfMonth);
+                    selected.set(Calendar.HOUR_OF_DAY, base.get(Calendar.HOUR_OF_DAY));
+                    selected.set(Calendar.MINUTE, base.get(Calendar.MINUTE));
+                    selected.set(Calendar.SECOND, 0);
+                    selected.set(Calendar.MILLISECOND, 0);
+                    TimePickerDialog timePicker = new TimePickerDialog(requireContext(),
+                            (TimePicker timeView, int hourOfDay, int minute) -> {
+                                selected.set(Calendar.HOUR_OF_DAY, hourOfDay);
+                                selected.set(Calendar.MINUTE, minute);
+                                applyRingUseResume(selected);
+                            },
+                            selected.get(Calendar.HOUR_OF_DAY),
+                            selected.get(Calendar.MINUTE),
+                            true);
+                    timePicker.show();
+                    applyDialogButtonColors(timePicker);
+                },
+                base.get(Calendar.YEAR),
+                base.get(Calendar.MONTH),
+                base.get(Calendar.DAY_OF_MONTH));
+        datePicker.show();
+        applyDialogButtonColors(datePicker);
+    }
+
+    private void applyRingUseResume(Calendar resumeDate) {
+        viewModel.resumeRingUse(resumeDate);
+        viewModel.getRepository().clearNotificationFlags();
+        StockManager.adoptCurrentCycleAsCounted(viewModel.getRepository(), resumeDate, getCurrentCycleLength());
+        StockManager.refreshReminderState(requireContext(), viewModel.getRepository());
+        ReminderScheduler.scheduleCurrentCycle(requireContext());
+        WidgetUpdater.updateAllWidgets(requireContext());
+        updateRingUsePauseButtonText();
+        Toast.makeText(requireContext(), R.string.settings_ring_resume_done, Toast.LENGTH_SHORT).show();
+    }
+
+    private String formatDate(long millis) {
+        return new SimpleDateFormat("dd.MM.yyyy", Locale.getDefault()).format(new java.util.Date(millis));
     }
 
     private void updateStockTrackerButtonText() {
@@ -2832,6 +2968,7 @@ public class SettingsFragment extends Fragment {
         viewModel.setBackgroundBlurDashboardPercent(0);
         viewModel.setBackgroundBlurOthersPercent(50);
         viewModel.setCycleLength(21);
+        viewModel.getRepository().resumeRingUse(System.currentTimeMillis());
         Calendar resetStart = Calendar.getInstance();
         resetStart.set(Calendar.HOUR_OF_DAY, 18);
         resetStart.set(Calendar.MINUTE, 0);
@@ -3122,6 +3259,12 @@ public class SettingsFragment extends Fragment {
                 return null;
             case "cycle_length":
                 return getString(R.string.backup_field_cycle_length) + ": " + prefToInt(value) + " " + getString(R.string.backup_unit_days);
+            case "ring_use_paused":
+                return getString(R.string.backup_field_ring_use_paused) + ": " + formatBoolean(value);
+            case "ring_use_pause_start_millis":
+                return getString(R.string.backup_field_ring_use_pause_start) + ": " + formatTimestamp(value);
+            case "ring_use_last_resume_millis":
+                return getString(R.string.backup_field_ring_use_last_resume) + ": " + formatTimestamp(value);
             case "stock_tracking_enabled":
                 return getString(R.string.backup_field_stock_tracking) + ": " + formatBoolean(value);
             case "ring_stock_count":
@@ -3390,7 +3533,11 @@ public class SettingsFragment extends Fragment {
         viewModel.setBackgroundBlurDashboardPercent(restoredRepository.getBackgroundBlurDashboardPercent());
         viewModel.setBackgroundBlurOthersPercent(restoredRepository.getBackgroundBlurOthersPercent());
         viewModel.setCycleLength(restoredRepository.getCycleLength());
-        viewModel.setStartDate(restoredRepository.getStartDate());
+        if (restoredRepository.isRingUsePaused()) {
+            viewModel.pauseRingUse(restoredRepository.getRingUsePauseStartMillis());
+        } else {
+            viewModel.resumeRingUse(restoredRepository.getStartDate());
+        }
         viewModel.setCalendarPastRange(restoredRepository.getCalendarPastAmount(),
                 restoredRepository.getCalendarPastUnit());
         viewModel.setCalendarFutureRange(restoredRepository.getCalendarFutureAmount(),
@@ -3411,6 +3558,10 @@ public class SettingsFragment extends Fragment {
         viewModel.setLowStockReminderEnabled(restoredRepository.isLowStockReminderEnabled());
         viewModel.setStockRecipeCheckDelayDays(restoredRepository.getStockRecipeCheckDelayDays());
 
+        if (restoredRepository.isRingUsePaused()) {
+            ReminderScheduler.cancelAllScheduledNotifications(requireContext());
+            restoredRepository.clearNotificationFlags();
+        }
         WidgetUpdater.updateAllWidgets(requireContext());
         Toast.makeText(requireContext(), R.string.backup_restored_toast, Toast.LENGTH_SHORT).show();
     }

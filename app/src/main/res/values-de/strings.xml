@@ -1,7 +1,7 @@
 <resources>
     <!-- App -->
     <string name="app_info_actions_title">Aktionen</string>
-    <string name="app_info_description">MyRingReminder ist eine Android-App zur Verwaltung und Nachverfolgung von Verhütungsring-Zyklen. Die App bietet einen farbcodierten Kalender für Einsetz-, Entfernungs- und ringfreie Tage, anpassbare Erinnerungen, Ringvorrats-Tracking, Notizen, Widgets sowie Sicherungs- und Wiederherstellungsfunktionen. Zusätzlich enthält sie eine Willkommenstour, einen Zyklusverlauf, Hinweise zum Verlängern eines Zyklus ("Ring länger tragen"), Perioden-Tracking während der ringfreien Woche sowie eine eigene Ansicht Perioden-Details mit Zeitraumfiltern und formatiertem PDF-Export. Personalisierungsoptionen wie Hintergrundbilder und Farbeinstellungen ermöglichen eine individuelle Anpassung.\n\nWichtiger Hinweis: Diese App dient ausschließlich der persönlichen Organisation und Nachverfolgung von Verhütungsring-Zyklen. Sie ist kein Medizinprodukt, ersetzt keine medizinische Beratung und basiert nicht auf medizinischer Beurteilung oder Diagnose. Bei Fragen zur Anwendung oder gesundheitlichen Beschwerden wenden Sie sich bitte an medizinisches Fachpersonal.\n\nAlle Daten werden ausschließlich lokal auf diesem Gerät gespeichert.</string>
+    <string name="app_info_description">MyRingReminder ist eine Android-App zur Verwaltung und Nachverfolgung von Verhütungsring-Zyklen. Die App bietet einen farbcodierten Kalender für Einsetz-, Entfernungs- und ringfreie Tage, anpassbare Erinnerungen, Ringvorrats-Tracking, Notizen, Widgets sowie Sicherungs- und Wiederherstellungsfunktionen. Zusätzlich enthält sie eine Willkommenstour, einen Zyklusverlauf, Hinweise zum Verlängern eines Zyklus ("Ring länger tragen"), die Möglichkeit, die geplante Ringanwendung für längere Pausen zu pausieren und später mit einem neuen Einsetzdatum wieder zu starten, Perioden-Tracking während der ringfreien Woche sowie eine eigene Ansicht Perioden-Details mit Zeitraumfiltern und formatiertem PDF-Export. Personalisierungsoptionen wie Hintergrundbilder und Farbeinstellungen ermöglichen eine individuelle Anpassung.\n\nWichtiger Hinweis: Diese App dient ausschließlich der persönlichen Organisation und Nachverfolgung von Verhütungsring-Zyklen. Sie ist kein Medizinprodukt, ersetzt keine medizinische Beratung und basiert nicht auf medizinischer Beurteilung oder Diagnose. Bei Fragen zur Anwendung oder gesundheitlichen Beschwerden wenden Sie sich bitte an medizinisches Fachpersonal.\n\nAlle Daten werden ausschließlich lokal auf diesem Gerät gespeichert.</string>
     <string name="app_info_developer">Entwickler: %1$s</string>
     <string name="app_info_developer_label">Entwickler:</string>
     <string name="app_info_developer_name">Darexsh by Daniel Sichler</string>
@@ -127,6 +127,18 @@
     <string name="settings_label_calendar_range">Kalender-Reichweite</string>
     <string name="settings_label_cycle_length">Zykluslänge</string>
     <string name="settings_label_start_date">Einsetzdatum</string>
+    <string name="settings_ring_use_label">Ring pausieren</string>
+    <string name="settings_ring_use_status_active">Aktiv</string>
+    <string name="settings_ring_use_status_paused">Inaktiv</string>
+    <string name="settings_ring_pause_title">Ring pausieren?</string>
+    <string name="settings_ring_pause_message">Die geplante Ringanwendung wird ab %1$s pausiert.\n\nZukünftige Ring-Prognosen und Erinnerungen werden deaktiviert. Der bisherige Verlauf, Notizen, Periodeneinträge und Einstellungen bleiben erhalten.</string>
+    <string name="settings_ring_pause_choose_date">Datum wählen</string>
+    <string name="settings_ring_pause_confirm">Pausieren</string>
+    <string name="settings_ring_pause_done">Ringanwendung ist inaktiv</string>
+    <string name="settings_ring_resume_title">Ring wieder starten?</string>
+    <string name="settings_ring_resume_message">Die Ringanwendung ist seit %1$s inaktiv. Wähle das nächste Einsetzdatum und die Uhrzeit, um einen neuen Zyklus zu starten.</string>
+    <string name="settings_ring_resume_confirm">Fortsetzen</string>
+    <string name="settings_ring_resume_done">Ringanwendung wieder aktiv</string>
     <string name="settings_stock_tracker_dialog_title">Vorratstracker</string>
     <string name="settings_stock_tracker_enable">Aktivieren</string>
     <string name="settings_stock_tracker_enable_label">Vorratsverfolgung aktivieren</string>
@@ -265,6 +277,10 @@
     <string name="home_days_until_insertion">Tage bis zum Einsetzen</string>
     <string name="home_phase_active_cycle">Aktiver Zyklus</string>
     <string name="home_phase_ring_free_phase">Ringfreie Phase</string>
+    <string name="home_ring_pause_phase">Pausenmodus</string>
+    <string name="home_ring_pause_label">Ring inaktiv</string>
+    <string name="home_ring_pause_since">Inaktiv seit %1$s</string>
+    <string name="home_ring_pause_resume_hint">Starte die Ringanwendung in den Einstellungen wieder, wenn der Ring erneut verwendet wird.</string>
     <string name="home_delay_confirm">Aktualisieren</string>
     <string name="home_delay_info_desc">Info zum längeren Tragen des Rings</string>
     <string name="home_delay_info_message"><![CDATA[
@@ -402,9 +418,13 @@
     <string name="cycles_status_new_wear_phase_started">Neue Tragephase gestartet</string>
     <string name="cycles_badge_wear_phase">Tragephase</string>
     <string name="cycles_badge_pause">Pause</string>
+    <string name="cycles_badge_ring_pause">Ringpause</string>
     <string name="cycles_badge_direct_switch">Direktwechsel</string>
+    <string name="cycles_status_ring_pause_days">%1$d Tage inaktiv</string>
     <string name="cycles_special_skip_ring_free">Ringfreie Woche übersprungen</string>
     <string name="cycles_special_wear_longer_days">Ring länger getragen (+%1$d Tage)</string>
+    <string name="cycles_title_ring_pause_since">Ringpause seit %1$s</string>
+    <string name="cycles_title_ring_pause_range">%1$s - %2$s</string>
     <string name="cycles_title_seamless_ring_change">Nahtloser Ringwechsel</string>
     <string name="cycles_title">Zyklus-Historie</string>
 
@@ -491,6 +511,9 @@
     <string name="backup_field_notification_hashes_format">Benachrichtigungs-Einstellungen Snapshots: %1$d Einträge</string>
     <string name="backup_field_period_tracking">Periodentracking</string>
     <string name="backup_field_period_tracking_entries_format">%1$d Tageseinträge</string>
+    <string name="backup_field_ring_use_paused">Ringanwendung inaktiv</string>
+    <string name="backup_field_ring_use_pause_start">Start der Ringpause</string>
+    <string name="backup_field_ring_use_last_resume">Letzter Neustart der Ringanwendung</string>
     <string name="backup_field_reminder_insertion">Erinnerung vor Einsetzen</string>
     <string name="backup_field_reminder_removal">Erinnerung vor Entfernen</string>
     <string name="backup_field_skip_ring_free_entries_format">Übersprungene ringfreie Wochen: %1$d</string>

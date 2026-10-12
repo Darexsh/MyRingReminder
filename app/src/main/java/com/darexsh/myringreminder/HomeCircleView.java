@@ -53,6 +53,7 @@ public class HomeCircleView extends View {
     private float animatedProgressFraction = 0f;
     private boolean hasAnimatedProgress = false;
     private boolean periodActive = false;
+    private boolean pauseMode = false;
     private long innerParticleStartTimeMs = 0L;
     @Nullable
     private ValueAnimator progressAnimator;
@@ -123,6 +124,15 @@ public class HomeCircleView extends View {
             return;
         }
         this.periodActive = periodActive;
+        innerParticleStartTimeMs = SystemClock.uptimeMillis();
+        invalidate();
+    }
+
+    public void setPauseMode(boolean pauseMode) {
+        if (this.pauseMode == pauseMode) {
+            return;
+        }
+        this.pauseMode = pauseMode;
         innerParticleStartTimeMs = SystemClock.uptimeMillis();
         invalidate();
     }
@@ -358,11 +368,38 @@ public class HomeCircleView extends View {
     }
 
     private void drawInnerParticleEffect(@NonNull Canvas canvas, float thickness) {
-        if (periodActive) {
+        if (pauseMode) {
+            drawPauseBreathingGlow(canvas, thickness);
+        } else if (periodActive) {
             drawPeriodRain(canvas, thickness);
         } else {
             drawCalmFloat(canvas, thickness);
         }
+    }
+
+    private void drawPauseBreathingGlow(@NonNull Canvas canvas, float thickness) {
+        float innerRadius = (arcRect.width() / 2f) - (thickness * 0.95f);
+        if (innerRadius <= 0f) {
+            return;
+        }
+        float centerX = arcRect.centerX();
+        float centerY = arcRect.centerY();
+        float clipRadius = innerRadius * 0.9f;
+        long elapsed = Math.max(0L, SystemClock.uptimeMillis() - innerParticleStartTimeMs);
+        float time = elapsed / 1000f;
+        float pulse = 0.5f + 0.5f * (float) Math.sin(time * 0.9f);
+        float radius = clipRadius * (0.48f + pulse * 0.06f);
+        int accentAlpha = 26 + Math.round(pulse * 24f);
+        int whiteAlpha = 18 + Math.round(pulse * 14f);
+
+        calmParticlePaint.setStyle(Paint.Style.FILL);
+        calmParticlePaint.setShadowLayer(dpToPx(18f), 0f, 0f, withAlpha(indicatorColor, 60 + Math.round(pulse * 42f)));
+        calmParticlePaint.setColor(withAlpha(indicatorColor, accentAlpha));
+        canvas.drawCircle(centerX, centerY, radius, calmParticlePaint);
+
+        calmParticlePaint.setShadowLayer(0f, 0f, 0f, Color.TRANSPARENT);
+        calmParticlePaint.setColor(withAlpha(0xFFFFFFFF, whiteAlpha));
+        canvas.drawCircle(centerX, centerY, radius * 0.68f, calmParticlePaint);
     }
 
     private void drawPeriodRain(@NonNull Canvas canvas, float thickness) {

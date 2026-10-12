@@ -24,6 +24,10 @@ final class StockManager {
     }
 
     static void syncCurrentCycle(Context context, SettingsRepository repository) {
+        if (repository.isRingUsePaused()) {
+            cancelRecipeCheckNotification(context, repository.getLastStockDecrementCycleStartMillis());
+            return;
+        }
         if (!repository.isStockTrackingEnabled()) {
             cancelRecipeCheckNotification(context, repository.getLastStockDecrementCycleStartMillis());
             return;
@@ -115,7 +119,7 @@ final class StockManager {
     }
 
     static void refreshReminderState(Context context, SettingsRepository repository) {
-        if (!repository.isStockTrackingEnabled() || !repository.isLowStockReminderEnabled()) {
+        if (repository.isRingUsePaused() || !repository.isStockTrackingEnabled() || !repository.isLowStockReminderEnabled()) {
             cancelRecipeCheckNotification(context, repository.getLastStockDecrementCycleStartMillis());
             return;
         }

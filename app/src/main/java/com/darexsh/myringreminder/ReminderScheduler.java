@@ -16,6 +16,9 @@ public final class ReminderScheduler {
         SettingsRepository repository = new SettingsRepository(context);
         cancelAllScheduledNotifications(context);
         repository.clearNotificationFlags();
+        if (repository.isRingUsePaused()) {
+            return;
+        }
 
         Calendar now = DebugTimeProvider.now(repository);
         CycleComputation.CycleWindow cycleWindow = CycleComputation.calculateCurrentCycle(

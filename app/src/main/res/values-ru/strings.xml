@@ -1,7 +1,7 @@
 <resources>
     <!-- App -->
     <string name="app_info_actions_title">Действия</string>
-    <string name="app_info_description">MyRingReminder — это приложение для Android, предназначенное для управления и отслеживания циклов использования контрацептивного кольца. Приложение предоставляет календарь с цветовой маркировкой дней установки, удаления и периода без кольца, настраиваемые напоминания, отслеживание запаса колец, заметки, виджеты, а также функции резервного копирования и восстановления. Также доступны приветственный тур, история циклов, рекомендации по продлению цикла ("носить кольцо дольше"), отслеживание менструации в неделю без кольца и отдельный экран Детали менструации с фильтрами периода и форматированным экспортом PDF. Возможности персонализации, такие как фоновые изображения и настройки цветов, позволяют настроить приложение индивидуально.\n\nВажно: это приложение предназначено исключительно для личной организации и отслеживания циклов использования контрацептивного кольца. Оно не является медицинским продуктом, не заменяет консультацию врача и не основано на медицинской оценке или диагностике. Если у вас возникли вопросы по использованию приложения или проблемы со здоровьем, обратитесь к медицинскому специалисту.\n\nВсе данные хранятся только локально на данном устройстве.</string>
+    <string name="app_info_description">MyRingReminder — это приложение для Android, предназначенное для управления и отслеживания циклов использования контрацептивного кольца. Приложение предоставляет календарь с цветовой маркировкой дней установки, удаления и периода без кольца, настраиваемые напоминания, отслеживание запаса колец, заметки, виджеты, а также функции резервного копирования и восстановления. Также доступны приветственный тур, история циклов, рекомендации по продлению цикла ("носить кольцо дольше"), возможность приостановить запланированное использование кольца на более длительные перерывы и позже запустить его снова с новой даты установки, отслеживание менструации в неделю без кольца и отдельный экран Детали менструации с фильтрами периода и форматированным экспортом PDF. Возможности персонализации, такие как фоновые изображения и настройки цветов, позволяют настроить приложение индивидуально.\n\nВажно: это приложение предназначено исключительно для личной организации и отслеживания циклов использования контрацептивного кольца. Оно не является медицинским продуктом, не заменяет консультацию врача и не основано на медицинской оценке или диагностике. Если у вас возникли вопросы по использованию приложения или проблемы со здоровьем, обратитесь к медицинскому специалисту.\n\nВсе данные хранятся только локально на данном устройстве.</string>
     <string name="app_info_developer">Разработчик: %1$s</string>
     <string name="app_info_developer_label">Разработчик:</string>
     <string name="app_info_developer_name">Darexsh (Даниэль Сихлер)</string>
@@ -127,6 +127,18 @@
     <string name="settings_label_calendar_range">Диапазон календаря</string>
     <string name="settings_label_cycle_length">Длина цикла</string>
     <string name="settings_label_start_date">Дата вставки</string>
+    <string name="settings_ring_use_label">Поставить кольцо на паузу</string>
+    <string name="settings_ring_use_status_active">Активно</string>
+    <string name="settings_ring_use_status_paused">Неактивно</string>
+    <string name="settings_ring_pause_title">Поставить кольцо на паузу?</string>
+    <string name="settings_ring_pause_message">Запланированное использование кольца будет приостановлено с %1$s.\n\nБудущие прогнозы и напоминания о кольце будут отключены. Предыдущая история, заметки, записи менструации и настройки будут сохранены.</string>
+    <string name="settings_ring_pause_choose_date">Выбрать дату</string>
+    <string name="settings_ring_pause_confirm">Приостановить</string>
+    <string name="settings_ring_pause_done">Использование кольца неактивно</string>
+    <string name="settings_ring_resume_title">Запустить использование кольца снова?</string>
+    <string name="settings_ring_resume_message">Использование кольца неактивно с %1$s. Выберите следующую дату и время вставки, чтобы начать новый цикл.</string>
+    <string name="settings_ring_resume_confirm">Возобновить</string>
+    <string name="settings_ring_resume_done">Использование кольца снова активно</string>
     <string name="settings_stock_tracker_dialog_title">Учет запаса</string>
     <string name="settings_stock_tracker_enable">Включить</string>
     <string name="settings_stock_tracker_enable_label">Включить учет запаса</string>
@@ -265,6 +277,10 @@
     <string name="home_days_until_insertion">Дней до вставки</string>
     <string name="home_phase_active_cycle">Активный цикл</string>
     <string name="home_phase_ring_free_phase">Фаза без кольца</string>
+    <string name="home_ring_pause_phase">Режим паузы</string>
+    <string name="home_ring_pause_label">Кольцо неактивно</string>
+    <string name="home_ring_pause_since">Неактивно с %1$s</string>
+    <string name="home_ring_pause_resume_hint">Запустите использование кольца снова в настройках, когда кольцо снова будет использоваться.</string>
     <string name="home_delay_confirm">Обновить</string>
     <string name="home_delay_info_desc">Информация о ношении кольца дольше положенного срока</string>
     <string name="home_delay_info_message"><![CDATA[
@@ -402,9 +418,13 @@
     <string name="cycles_status_new_wear_phase_started">Началась новая фаза ношения</string>
     <string name="cycles_badge_wear_phase">Фаза ношения</string>
     <string name="cycles_badge_pause">Пауза</string>
+    <string name="cycles_badge_ring_pause">Пауза кольца</string>
     <string name="cycles_badge_direct_switch">Прямая замена</string>
+    <string name="cycles_status_ring_pause_days">%1$d дн. неактивно</string>
     <string name="cycles_special_skip_ring_free">Пропущена неделя без кольца</string>
     <string name="cycles_special_wear_longer_days">Кольцо носилось дольше (+%1$d дн.)</string>
+    <string name="cycles_title_ring_pause_since">Пауза кольца с %1$s</string>
+    <string name="cycles_title_ring_pause_range">%1$s - %2$s</string>
     <string name="cycles_title_seamless_ring_change">Бесшовная замена кольца</string>
     <string name="cycles_title">История циклов</string>
 
@@ -491,6 +511,9 @@
     <string name="backup_field_notification_hashes_format">Снимки настроек уведомлений: %1$d записей</string>
     <string name="backup_field_period_tracking">Отслеживание менструации</string>
     <string name="backup_field_period_tracking_entries_format">%1$d записей по дням</string>
+    <string name="backup_field_ring_use_paused">Использование кольца неактивно</string>
+    <string name="backup_field_ring_use_pause_start">Начало паузы кольца</string>
+    <string name="backup_field_ring_use_last_resume">Последний перезапуск использования кольца</string>
     <string name="backup_field_reminder_insertion">Напоминание перед вставкой</string>
     <string name="backup_field_reminder_removal">Напоминание перед извлечением</string>
     <string name="backup_field_skip_ring_free_entries_format">Записи о пропущенных неделях без кольца: %1$d</string>

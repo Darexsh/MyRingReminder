@@ -25,9 +25,10 @@ public final class CycleWidgetUtils {
         public final String insertionText;
         public final boolean stockTrackingEnabled;
         public final String stockText;
+        public final boolean paused;
 
         public State(int daysLeft, int maxProgress, int currentProgress, String label, String removalText,
-                     String insertionText, boolean stockTrackingEnabled, String stockText) {
+                     String insertionText, boolean stockTrackingEnabled, String stockText, boolean paused) {
             this.daysLeft = daysLeft;
             this.maxProgress = maxProgress;
             this.currentProgress = currentProgress;
@@ -36,11 +37,36 @@ public final class CycleWidgetUtils {
             this.insertionText = insertionText;
             this.stockTrackingEnabled = stockTrackingEnabled;
             this.stockText = stockText;
+            this.paused = paused;
         }
     }
 
     public static State calculateState(Context context) {
         SettingsRepository repository = new SettingsRepository(context);
+        if (repository.isRingUsePaused()) {
+            SimpleDateFormat format = new SimpleDateFormat("dd.MM.yyyy", Locale.getDefault());
+            long pauseStartMillis = repository.getRingUsePauseStartMillis();
+            String pauseDate = pauseStartMillis > 0L
+                    ? format.format(pauseStartMillis)
+                    : format.format(Calendar.getInstance().getTime());
+            int stockCount = repository.getRingStockCount();
+            String stockText = context.getResources().getQuantityString(
+                    R.plurals.home_stock_status,
+                    stockCount,
+                    stockCount
+            );
+            return new State(
+                    0,
+                    1,
+                    0,
+                    context.getString(R.string.home_ring_pause_label),
+                    context.getString(R.string.home_ring_pause_since, pauseDate),
+                    context.getString(R.string.home_ring_pause_resume_hint),
+                    repository.isStockTrackingEnabled(),
+                    stockText,
+                    true
+            );
+        }
         Calendar now = DebugTimeProvider.now(context);
         CycleComputation.CycleWindow cycleWindow = CycleComputation.calculateCurrentCycle(
                 repository.getStartDate(),
@@ -104,7 +130,8 @@ public final class CycleWidgetUtils {
                 removalText,
                 insertionText,
                 stockTrackingEnabled,
-                stockText
+                stockText,
+                false
         );
     }
 
@@ -222,6 +249,9 @@ public final class CycleWidgetUtils {
 
     public static long calculateNextWidgetUpdateMillis(Context context) {
         SettingsRepository repository = new SettingsRepository(context);
+        if (repository.isRingUsePaused()) {
+            return 0L;
+        }
         Calendar now = DebugTimeProvider.now(context);
         long nowMillis = now.getTimeInMillis();
         CycleComputation.CycleWindow cycleWindow = CycleComputation.calculateCurrentCycle(

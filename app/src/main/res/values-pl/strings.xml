@@ -1,7 +1,7 @@
 <resources>
     <!-- App -->
     <string name="app_info_actions_title">Akcje</string>
-    <string name="app_info_description">MyRingReminder to aplikacja na Androida służąca do zarządzania i śledzenia cykli pierścienia antykoncepcyjnego. Aplikacja oferuje oznaczony kolorami kalendarz dla dni założenia, usunięcia oraz dni bez pierścienia, konfigurowalne przypomnienia, śledzenie zapasu krążków, notatki, widżety oraz funkcje tworzenia i przywracania kopii zapasowych. Zawiera również samouczek powitalny, historię cykli, wskazówki dotyczące wydłużenia cyklu ("noszenie pierścienia dłużej"), śledzenie okresu w tygodniu bez pierścienia oraz dedykowany widok Szczegóły okresu z filtrami zakresu i sformatowanym eksportem PDF. Opcje personalizacji, takie jak obrazy tła i ustawienia kolorów, umożliwiają indywidualne dostosowanie aplikacji.\n\nWażna informacja: Ta aplikacja służy wyłącznie do osobistej organizacji i śledzenia cykli pierścienia antykoncepcyjnego. Nie jest wyrobem medycznym, nie zastępuje porady lekarskiej i nie opiera się na ocenie ani diagnozie medycznej. W przypadku pytań dotyczących użytkowania lub problemów zdrowotnych należy skonsultować się z lekarzem lub specjalistą medycznym.\n\nWszystkie dane są przechowywane wyłącznie lokalnie na tym urządzeniu.</string>
+    <string name="app_info_description">MyRingReminder to aplikacja na Androida służąca do zarządzania i śledzenia cykli pierścienia antykoncepcyjnego. Aplikacja oferuje oznaczony kolorami kalendarz dla dni założenia, usunięcia oraz dni bez pierścienia, konfigurowalne przypomnienia, śledzenie zapasu krążków, notatki, widżety oraz funkcje tworzenia i przywracania kopii zapasowych. Zawiera również samouczek powitalny, historię cykli, wskazówki dotyczące wydłużenia cyklu ("noszenie pierścienia dłużej"), możliwość wstrzymania planowanego używania krążka na dłuższe przerwy i późniejszego ponownego uruchomienia od nowej daty założenia, śledzenie okresu w tygodniu bez pierścienia oraz dedykowany widok Szczegóły okresu z filtrami zakresu i sformatowanym eksportem PDF. Opcje personalizacji, takie jak obrazy tła i ustawienia kolorów, umożliwiają indywidualne dostosowanie aplikacji.\n\nWażna informacja: Ta aplikacja służy wyłącznie do osobistej organizacji i śledzenia cykli pierścienia antykoncepcyjnego. Nie jest wyrobem medycznym, nie zastępuje porady lekarskiej i nie opiera się na ocenie ani diagnozie medycznej. W przypadku pytań dotyczących użytkowania lub problemów zdrowotnych należy skonsultować się z lekarzem lub specjalistą medycznym.\n\nWszystkie dane są przechowywane wyłącznie lokalnie na tym urządzeniu.</string>
     <string name="app_info_developer">Programista: %1$s</string>
     <string name="app_info_developer_label">Programista:</string>
     <string name="app_info_developer_name">Darexsh autorstwa Daniela Sichlera</string>
@@ -127,6 +127,18 @@
     <string name="settings_label_calendar_range">Zakres kalendarza</string>
     <string name="settings_label_cycle_length">Długość cyklu</string>
     <string name="settings_label_start_date">Data założenia</string>
+    <string name="settings_ring_use_label">Wstrzymaj krążek</string>
+    <string name="settings_ring_use_status_active">Aktywne</string>
+    <string name="settings_ring_use_status_paused">Nieaktywne</string>
+    <string name="settings_ring_pause_title">Wstrzymać krążek?</string>
+    <string name="settings_ring_pause_message">Planowane używanie krążka zostanie wstrzymane od %1$s.\n\nPrzyszłe prognozy i przypomnienia dotyczące krążka zostaną wyłączone. Dotychczasowa historia, notatki, wpisy okresu i ustawienia zostaną zachowane.</string>
+    <string name="settings_ring_pause_choose_date">Wybierz datę</string>
+    <string name="settings_ring_pause_confirm">Wstrzymaj</string>
+    <string name="settings_ring_pause_done">Używanie krążka nieaktywne</string>
+    <string name="settings_ring_resume_title">Uruchomić używanie krążka ponownie?</string>
+    <string name="settings_ring_resume_message">Używanie krążka jest nieaktywne od %1$s. Wybierz następną datę i godzinę założenia, aby rozpocząć nowy cykl.</string>
+    <string name="settings_ring_resume_confirm">Wznów</string>
+    <string name="settings_ring_resume_done">Używanie krążka znów aktywne</string>
     <string name="settings_stock_tracker_dialog_title">Kontrola zapasu</string>
     <string name="settings_stock_tracker_enable">Włącz</string>
     <string name="settings_stock_tracker_enable_label">Włącz śledzenie zapasu</string>
@@ -265,6 +277,10 @@
     <string name="home_days_until_insertion">Dni do założenia</string>
     <string name="home_phase_active_cycle">Aktywny cykl</string>
     <string name="home_phase_ring_free_phase">Faza bez krążka</string>
+    <string name="home_ring_pause_phase">Tryb przerwy</string>
+    <string name="home_ring_pause_label">Krążek nieaktywny</string>
+    <string name="home_ring_pause_since">Nieaktywne od %1$s</string>
+    <string name="home_ring_pause_resume_hint">Uruchom używanie krążka ponownie w Ustawieniach, gdy krążek będzie znów używany.</string>
     <string name="home_delay_confirm">Aktualizuj</string>
     <string name="home_delay_info_desc">Informacje o dłuższym noszeniu pierścienia</string>
     <string name="home_delay_info_message"><![CDATA[
@@ -402,9 +418,13 @@
     <string name="cycles_status_new_wear_phase_started">Rozpoczęto nową fazę noszenia</string>
     <string name="cycles_badge_wear_phase">Faza noszenia</string>
     <string name="cycles_badge_pause">Przerwa</string>
+    <string name="cycles_badge_ring_pause">Przerwa w używaniu krążka</string>
     <string name="cycles_badge_direct_switch">Bezpośrednia zmiana</string>
+    <string name="cycles_status_ring_pause_days">%1$d dni nieaktywne</string>
     <string name="cycles_special_skip_ring_free">Pominięto tydzień bez pierścienia</string>
     <string name="cycles_special_wear_longer_days">Pierścień noszony dłużej (+%1$d dni)</string>
+    <string name="cycles_title_ring_pause_since">Przerwa w używaniu krążka od %1$s</string>
+    <string name="cycles_title_ring_pause_range">%1$s - %2$s</string>
     <string name="cycles_title_seamless_ring_change">Płynna zmiana pierścienia</string>
     <string name="cycles_title">Historia cykli</string>
 
@@ -491,6 +511,9 @@
     <string name="backup_field_notification_hashes_format">Migawki ustawień powiadomień: %1$d wpisów</string>
     <string name="backup_field_period_tracking">Śledzenie okresu</string>
     <string name="backup_field_period_tracking_entries_format">%1$d wpisów dni</string>
+    <string name="backup_field_ring_use_paused">Używanie krążka nieaktywne</string>
+    <string name="backup_field_ring_use_pause_start">Początek przerwy w używaniu krążka</string>
+    <string name="backup_field_ring_use_last_resume">Ostatnie ponowne uruchomienie używania krążka</string>
     <string name="backup_field_reminder_insertion">Przypomnienie przed założeniem</string>
     <string name="backup_field_reminder_removal">Przypomnienie przed zdjęciem</string>
     <string name="backup_field_skip_ring_free_entries_format">Wpisy pominiętych tygodni bez pierścienia: %1$d</string>

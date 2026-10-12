@@ -65,6 +65,7 @@ public final class WidgetUpdater {
 
         long nextAt = CycleWidgetUtils.calculateNextWidgetUpdateMillis(localized);
         if (nextAt <= 0L) {
+            cancelScheduledUpdate(localized);
             return;
         }
         AlarmManager alarmManager = (AlarmManager) localized.getSystemService(Context.ALARM_SERVICE);

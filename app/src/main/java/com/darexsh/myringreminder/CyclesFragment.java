@@ -148,6 +148,11 @@ public class CyclesFragment extends Fragment {
         Calendar now = DebugTimeProvider.now(repository);
 
         List<Cycle> rebuilt = new ArrayList<>();
+        for (Cycle cycle : repository.getCycleHistory()) {
+            if (CycleType.PAUSE == cycle.getType()) {
+                rebuilt.add(cycle);
+            }
+        }
         Calendar cycleStart = (Calendar) startDate.clone();
         int maxCycles = 240;
         int count = 0;
@@ -225,8 +230,8 @@ public class CyclesFragment extends Fragment {
         // Sort cycles by date in descending order (newest first)
         validCycles.sort((c1, c2) -> {
             int dateCompare = sortNewestFirst
-                    ? Long.compare(c2.getDateMillis(), c1.getDateMillis())
-                    : Long.compare(c1.getDateMillis(), c2.getDateMillis());
+                    ? Long.compare(getHistoryTimelineMillis(c2), getHistoryTimelineMillis(c1))
+                    : Long.compare(getHistoryTimelineMillis(c1), getHistoryTimelineMillis(c2));
             if (dateCompare != 0) {
                 return dateCompare;
             }
@@ -234,6 +239,9 @@ public class CyclesFragment extends Fragment {
                 return 0;
             }
             boolean c1Insertion = CycleType.INSERTION == c1.getType();
+            if (CycleType.PAUSE == c1.getType() || CycleType.PAUSE == c2.getType()) {
+                return CycleType.PAUSE == c1.getType() ? -1 : 1;
+            }
             return c1Insertion == sortNewestFirst ? -1 : 1;
         });
 
@@ -250,7 +258,7 @@ public class CyclesFragment extends Fragment {
         String lastMonthHeader = null;
         for (Cycle cycle : validCycles) {
             Calendar cycleDay = Calendar.getInstance();
-            cycleDay.setTimeInMillis(cycle.getDateMillis());
+            cycleDay.setTimeInMillis(getHistoryTimelineMillis(cycle));
             String currentMonthHeader = monthHeaderFormat.format(cycleDay.getTime());
             if (!currentMonthHeader.equals(lastMonthHeader)) {
                 cycleContainer.addView(createMonthHeaderView(currentMonthHeader));
@@ -321,12 +329,14 @@ public class CyclesFragment extends Fragment {
             headerRow.addView(badgeView);
             textColumn.addView(headerRow);
 
-            TextView statusTextView = new TextView(requireContext());
-            statusTextView.setTextSize(14);
-            statusTextView.setPadding(0, dpToPx(presentation.statusTopPaddingDp), 0, 0);
-            statusTextView.setText(presentation.statusText);
-            statusTextView.setTextColor(presentation.statusColor);
-            textColumn.addView(statusTextView);
+            if (presentation.statusText != null) {
+                TextView statusTextView = new TextView(requireContext());
+                statusTextView.setTextSize(14);
+                statusTextView.setPadding(0, dpToPx(presentation.statusTopPaddingDp), 0, 0);
+                statusTextView.setText(presentation.statusText);
+                statusTextView.setTextColor(presentation.statusColor);
+                textColumn.addView(statusTextView);
+            }
 
             String specialCaseText = presentation.detailText;
             if (specialCaseText != null) {
@@ -344,6 +354,13 @@ public class CyclesFragment extends Fragment {
         }
     }
 
+    private long getHistoryTimelineMillis(@NonNull Cycle cycle) {
+        if (CycleType.PAUSE == cycle.getType() && cycle.getEndDateMillis() > 0L) {
+            return cycle.getEndDateMillis();
+        }
+        return cycle.getDateMillis();
+    }
+
     @NonNull
     private CycleCardPresentation buildCyclePresentation(@NonNull Cycle cycle,
                                                          @NonNull Map<Long, Long> cycleStartByRemovalMillis,
@@ -351,6 +368,7 @@ public class CyclesFragment extends Fragment {
         SettingsRepository repository = viewModel.getRepository();
         int wearColor = getWearPhaseColor();
         int pauseColor = getPausePhaseColor();
+        int ringPauseColor = getRingPauseHistoryColor();
         int specialColor = getSpecialPhaseColor();
 
         long cycleStartMillis;
@@ -363,6 +381,7 @@ public class CyclesFragment extends Fragment {
             cycleStartMillis = 0L;
         }
 
+        boolean ringUsePause = CycleType.PAUSE == cycle.getType();
         boolean skippedRingFree = CycleType.REMOVAL == cycle.getType()
                 && cycleStartMillis > 0
                 && repository.getRingFreeDaysForCycle(cycleStartMillis) == 0;
@@ -380,7 +399,20 @@ public class CyclesFragment extends Fragment {
         int statusTopPaddingDp = 6;
         int detailTopPaddingDp = 6;
 
-        if (skippedRingFree) {
+        if (ringUsePause) {
+            accentColor = ringPauseColor;
+            statusColor = ringPauseColor;
+            detailColor = lightenColor(ringPauseColor, 0.28f);
+            badgeText = getString(R.string.cycles_badge_ring_pause);
+            titleText = formatRingPauseTitle(cycle, dateFormat);
+            if (cycle.getEndDateMillis() > 0) {
+                statusText = null;
+                detailText = getString(R.string.cycles_status_ring_pause_days,
+                        Math.max(1, daysBetweenDays(cycle.getDateMillis(), cycle.getEndDateMillis())));
+            } else {
+                statusText = null;
+            }
+        } else if (skippedRingFree) {
             accentColor = specialColor;
             statusColor = specialColor;
             detailColor = lightenColor(specialColor, 0.28f);
@@ -417,6 +449,22 @@ public class CyclesFragment extends Fragment {
     }
 
     @NonNull
+    private String formatRingPauseTitle(@NonNull Cycle cycle, @NonNull SimpleDateFormat dateFormat) {
+        if (cycle.getEndDateMillis() > 0) {
+            return getString(R.string.cycles_title_ring_pause_range,
+                    formatMillis(dateFormat, cycle.getDateMillis()),
+                    formatMillis(dateFormat, cycle.getEndDateMillis()));
+        }
+        return getString(R.string.cycles_title_ring_pause_since,
+                formatMillis(dateFormat, cycle.getDateMillis()));
+    }
+
+    @NonNull
+    private String formatMillis(@NonNull SimpleDateFormat dateFormat, long millis) {
+        return dateFormat.format(new java.util.Date(millis));
+    }
+
+    @NonNull
     private String formatCycleTitle(@NonNull Cycle cycle, @NonNull SimpleDateFormat dateFormat) {
         Calendar cal = Calendar.getInstance();
         cal.setTimeInMillis(cycle.getDateMillis());
@@ -445,6 +493,30 @@ public class CyclesFragment extends Fragment {
                 && first.get(Calendar.DAY_OF_YEAR) == second.get(Calendar.DAY_OF_YEAR);
     }
 
+    private int daysBetweenDays(long startMillis, long endMillis) {
+        if (startMillis <= 0 || endMillis <= 0 || endMillis <= startMillis) {
+            return 0;
+        }
+        Calendar start = Calendar.getInstance();
+        start.setTimeInMillis(startMillis);
+        Calendar end = Calendar.getInstance();
+        end.setTimeInMillis(endMillis);
+        start.set(Calendar.HOUR_OF_DAY, 0);
+        start.set(Calendar.MINUTE, 0);
+        start.set(Calendar.SECOND, 0);
+        start.set(Calendar.MILLISECOND, 0);
+        end.set(Calendar.HOUR_OF_DAY, 0);
+        end.set(Calendar.MINUTE, 0);
+        end.set(Calendar.SECOND, 0);
+        end.set(Calendar.MILLISECOND, 0);
+        int days = 0;
+        while (start.before(end)) {
+            start.add(Calendar.DAY_OF_MONTH, 1);
+            days++;
+        }
+        return days;
+    }
+
     private int getWearPhaseColor() {
         Integer color = viewModel.getCalendarWearColor().getValue();
         return color != null ? color : viewModel.getRepository().getCalendarWearColor();
@@ -457,6 +529,10 @@ public class CyclesFragment extends Fragment {
 
     private int getSpecialPhaseColor() {
         return ContextCompat.getColor(requireContext(), R.color.purple_200);
+    }
+
+    private int getRingPauseHistoryColor() {
+        return ColorUtils.setAlphaComponent(0xFF8A8F98, 255);
     }
 
     @NonNull
@@ -601,7 +677,7 @@ public class CyclesFragment extends Fragment {
 
     private static final class CycleCardPresentation {
         final String titleText;
-        final String statusText;
+        @Nullable final String statusText;
         final String badgeText;
         @Nullable final String detailText;
         final int accentColor;
@@ -611,7 +687,7 @@ public class CyclesFragment extends Fragment {
         final int detailTopPaddingDp;
 
         CycleCardPresentation(@NonNull String titleText,
-                              @NonNull String statusText,
+                              @Nullable String statusText,
                               @NonNull String badgeText,
                               @Nullable String detailText,
                               int accentColor,

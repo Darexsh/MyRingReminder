@@ -1,7 +1,7 @@
 <resources>
     <!-- App -->
     <string name="app_info_actions_title">Azioni</string>
-    <string name="app_info_description">MyRingReminder è un\'app Android per la gestione e il monitoraggio dei cicli dell\'anello contraccettivo. L\'app offre un calendario con codifica a colori per i giorni di inserimento, rimozione e pausa senza anello, promemoria personalizzabili, monitoraggio della scorta anelli, note, widget e funzioni di backup/ripristino. Include inoltre un tour di benvenuto, uno storico dei cicli, indicazioni per prolungare un ciclo (\"indossare l\'anello più a lungo\"), il monitoraggio mestruale durante la settimana senza anello e una vista dedicata Dettagli ciclo con filtri periodo ed esportazione PDF formattata. Le opzioni di personalizzazione, come immagini di sfondo e impostazioni dei colori, consentono una configurazione personalizzata.\n\nNota importante: questa app è destinata esclusivamente all\'organizzazione personale e al monitoraggio dei cicli dell\'anello contraccettivo. Non è un dispositivo medico, non sostituisce il parere medico e non si basa su valutazioni o diagnosi mediche. In caso di domande sull\'utilizzo o di problemi di salute, consultare un professionista sanitario.\n\nTutti i dati vengono memorizzati esclusivamente in locale su questo dispositivo.</string>
+    <string name="app_info_description">MyRingReminder è un\'app Android per la gestione e il monitoraggio dei cicli dell\'anello contraccettivo. L\'app offre un calendario con codifica a colori per i giorni di inserimento, rimozione e pausa senza anello, promemoria personalizzabili, monitoraggio della scorta anelli, note, widget e funzioni di backup/ripristino. Include inoltre un tour di benvenuto, uno storico dei cicli, indicazioni per prolungare un ciclo (\"indossare l\'anello più a lungo\"), la possibilità di mettere in pausa l\'uso pianificato dell\'anello per interruzioni più lunghe e riavviarlo in seguito da una nuova data di inserimento, il monitoraggio mestruale durante la settimana senza anello e una vista dedicata Dettagli ciclo con filtri periodo ed esportazione PDF formattata. Le opzioni di personalizzazione, come immagini di sfondo e impostazioni dei colori, consentono una configurazione personalizzata.\n\nNota importante: questa app è destinata esclusivamente all\'organizzazione personale e al monitoraggio dei cicli dell\'anello contraccettivo. Non è un dispositivo medico, non sostituisce il parere medico e non si basa su valutazioni o diagnosi mediche. In caso di domande sull\'utilizzo o di problemi di salute, consultare un professionista sanitario.\n\nTutti i dati vengono memorizzati esclusivamente in locale su questo dispositivo.</string>
     <string name="app_info_developer">Sviluppatore: %1$s</string>
     <string name="app_info_developer_label">Sviluppatore:</string>
     <string name="app_info_developer_name">Darexsh di Daniel Sichler</string>
@@ -127,6 +127,18 @@
     <string name="settings_label_calendar_range">Intervallo calendario</string>
     <string name="settings_label_cycle_length">Durata ciclo</string>
     <string name="settings_label_start_date">Data inserimento</string>
+    <string name="settings_ring_use_label">Metti in pausa l\'anello</string>
+    <string name="settings_ring_use_status_active">Attivo</string>
+    <string name="settings_ring_use_status_paused">Inattivo</string>
+    <string name="settings_ring_pause_title">Mettere in pausa l\'anello?</string>
+    <string name="settings_ring_pause_message">L\'uso pianificato dell\'anello verrà messo in pausa dal %1$s.\n\nLe previsioni e i promemoria futuri dell\'anello verranno disattivati. Cronologia precedente, note, registrazioni del ciclo mestruale e impostazioni verranno mantenute.</string>
+    <string name="settings_ring_pause_choose_date">Scegli data</string>
+    <string name="settings_ring_pause_confirm">Pausa</string>
+    <string name="settings_ring_pause_done">Uso dell\'anello inattivo</string>
+    <string name="settings_ring_resume_title">Riavviare l\'uso dell\'anello?</string>
+    <string name="settings_ring_resume_message">L\'uso dell\'anello è inattivo dal %1$s. Scegli la prossima data e ora di inserimento per avviare un nuovo ciclo.</string>
+    <string name="settings_ring_resume_confirm">Riprendi</string>
+    <string name="settings_ring_resume_done">Uso dell\'anello di nuovo attivo</string>
     <string name="settings_stock_tracker_dialog_title">Gestione scorte</string>
     <string name="settings_stock_tracker_enable">Attiva</string>
     <string name="settings_stock_tracker_enable_label">Attiva monitoraggio scorte</string>
@@ -265,6 +277,10 @@
     <string name="home_days_until_insertion">Giorni all\'inserimento</string>
     <string name="home_phase_active_cycle">Ciclo attivo</string>
     <string name="home_phase_ring_free_phase">Fase senza anello</string>
+    <string name="home_ring_pause_phase">Modalità pausa</string>
+    <string name="home_ring_pause_label">Anello inattivo</string>
+    <string name="home_ring_pause_since">Inattivo dal %1$s</string>
+    <string name="home_ring_pause_resume_hint">Riavvia l\'uso dell\'anello dalle Impostazioni quando l\'anello viene usato di nuovo.</string>
     <string name="home_delay_confirm">Aggiorna</string>
     <string name="home_delay_info_desc">Info sull\'uso prolungato dell\'anello</string>
     <string name="home_delay_info_message"><![CDATA[
@@ -402,9 +418,13 @@
     <string name="cycles_status_new_wear_phase_started">Nuova fase d\'uso iniziata</string>
     <string name="cycles_badge_wear_phase">Fase d\'uso</string>
     <string name="cycles_badge_pause">Pausa</string>
+    <string name="cycles_badge_ring_pause">Pausa dell\'anello</string>
     <string name="cycles_badge_direct_switch">Cambio diretto</string>
+    <string name="cycles_status_ring_pause_days">%1$d giorni inattivo</string>
     <string name="cycles_special_skip_ring_free">Settimana senza anello saltata</string>
     <string name="cycles_special_wear_longer_days">Anello indossato più a lungo (+%1$d giorni)</string>
+    <string name="cycles_title_ring_pause_since">Pausa dell\'anello dal %1$s</string>
+    <string name="cycles_title_ring_pause_range">%1$s - %2$s</string>
     <string name="cycles_title_seamless_ring_change">Cambio anello senza pausa</string>
     <string name="cycles_title">Cronologia cicli</string>
 
@@ -491,6 +511,9 @@
     <string name="backup_field_notification_hashes_format">Istantanee impostazioni notifiche: %1$d voci</string>
     <string name="backup_field_period_tracking">Monitoraggio del ciclo mestruale</string>
     <string name="backup_field_period_tracking_entries_format">%1$d voci giornaliere</string>
+    <string name="backup_field_ring_use_paused">Uso dell\'anello inattivo</string>
+    <string name="backup_field_ring_use_pause_start">Inizio pausa dell\'anello</string>
+    <string name="backup_field_ring_use_last_resume">Ultimo riavvio dell\'uso dell\'anello</string>
     <string name="backup_field_reminder_insertion">Promemoria prima dell\'inserimento</string>
     <string name="backup_field_reminder_removal">Promemoria prima della rimozione</string>
     <string name="backup_field_skip_ring_free_entries_format">Voci settimane senza anello saltate: %1$d</string>

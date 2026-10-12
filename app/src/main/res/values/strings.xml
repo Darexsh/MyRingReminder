@@ -1,7 +1,7 @@
 <resources>
     <!-- App -->
     <string name="app_info_actions_title">Actions</string>
-    <string name="app_info_description">MyRingReminder is an Android app for managing and tracking contraceptive ring cycles. The app provides a color-coded calendar for insertion, removal, and ring-free days, customizable reminders, ring supply tracking, notes, widgets, and backup/restore features. It also includes a welcome tour, cycle history, guidance for extending a cycle ("wear ring longer"), period tracking during the ring-free week, and a dedicated Period Details view with range filters and formatted PDF export. Personalization options such as background images and color settings allow individual customization.\n\nImportant note: This app is intended solely for personal organization and tracking of contraceptive ring cycles. It is not a medical product, does not replace medical advice, and is not based on medical evaluation or diagnosis. If you have questions about usage or health concerns, please seek medical advice.\n\nAll data is stored locally on this device only.</string>
+    <string name="app_info_description">MyRingReminder is an Android app for managing and tracking contraceptive ring cycles. The app provides a color-coded calendar for insertion, removal, and ring-free days, customizable reminders, ring supply tracking, notes, widgets, and backup/restore features. It also includes a welcome tour, cycle history, guidance for extending a cycle ("wear ring longer"), the option to pause planned ring use for longer breaks and restart from a new insertion date later, period tracking during the ring-free week, and a dedicated Period Details view with range filters and formatted PDF export. Personalization options such as background images and color settings allow individual customization.\n\nImportant note: This app is intended solely for personal organization and tracking of contraceptive ring cycles. It is not a medical product, does not replace medical advice, and is not based on medical evaluation or diagnosis. If you have questions about usage or health concerns, please seek medical advice.\n\nAll data is stored locally on this device only.</string>
     <string name="app_info_developer">Developer: %1$s</string>
     <string name="app_info_developer_label">Developer:</string>
     <string name="app_info_developer_name">Darexsh by Daniel Sichler</string>
@@ -127,6 +127,18 @@
     <string name="settings_label_calendar_range">Calendar range</string>
     <string name="settings_label_cycle_length">Cycle length</string>
     <string name="settings_label_start_date">Insertion date</string>
+    <string name="settings_ring_use_label">Pause ring</string>
+    <string name="settings_ring_use_status_active">Active</string>
+    <string name="settings_ring_use_status_paused">Inactive</string>
+    <string name="settings_ring_pause_title">Pause ring use?</string>
+    <string name="settings_ring_pause_message">Planned ring use will be paused from %1$s.\n\nFuture ring predictions and reminders will be disabled. Previous history, notes, period entries, and settings will be kept.</string>
+    <string name="settings_ring_pause_choose_date">Choose date</string>
+    <string name="settings_ring_pause_confirm">Pause</string>
+    <string name="settings_ring_pause_done">Ring use is inactive</string>
+    <string name="settings_ring_resume_title">Start ring use again?</string>
+    <string name="settings_ring_resume_message">Ring use has been inactive since %1$s. Choose the next insertion date and time to start a fresh cycle.</string>
+    <string name="settings_ring_resume_confirm">Resume</string>
+    <string name="settings_ring_resume_done">Ring use active again</string>
     <string name="settings_stock_tracker_dialog_title">Supply tracker</string>
     <string name="settings_stock_tracker_enable">Enable</string>
     <string name="settings_stock_tracker_enable_label">Enable supply tracking</string>
@@ -262,6 +274,10 @@
     <string name="home_days_until_insertion">Days until insertion</string>
     <string name="home_phase_active_cycle">Active cycle</string>
     <string name="home_phase_ring_free_phase">Ring-free phase</string>
+    <string name="home_ring_pause_phase">Break mode</string>
+    <string name="home_ring_pause_label">Ring inactive</string>
+    <string name="home_ring_pause_since">Inactive since %1$s</string>
+    <string name="home_ring_pause_resume_hint">Start ring use again in Settings when the ring is used again.</string>
     <string name="home_delay_confirm">Update</string>
     <string name="home_delay_info_desc">Info about wearing the ring longer</string>
     <string name="home_delay_info_message"><![CDATA[
@@ -402,9 +418,13 @@
     <string name="cycles_status_new_wear_phase_started">New wear phase started</string>
     <string name="cycles_badge_wear_phase">Wear phase</string>
     <string name="cycles_badge_pause">Pause</string>
+    <string name="cycles_badge_ring_pause">Ring pause</string>
     <string name="cycles_badge_direct_switch">Direct switch</string>
+    <string name="cycles_status_ring_pause_days">%1$d days inactive</string>
     <string name="cycles_special_skip_ring_free">Ring-free week skipped</string>
     <string name="cycles_special_wear_longer_days">Ring worn longer (+%1$d days)</string>
+    <string name="cycles_title_ring_pause_since">Ring pause since %1$s</string>
+    <string name="cycles_title_ring_pause_range">%1$s - %2$s</string>
     <string name="cycles_title_seamless_ring_change">Seamless ring change</string>
     <string name="cycles_title">Cycle history</string>
 
@@ -491,6 +511,9 @@
     <string name="backup_field_notification_hashes_format">Notification settings snapshots: %1$d entries</string>
     <string name="backup_field_period_tracking">Period tracking</string>
     <string name="backup_field_period_tracking_entries_format">%1$d day entries</string>
+    <string name="backup_field_ring_use_paused">Ring use inactive</string>
+    <string name="backup_field_ring_use_pause_start">Ring pause start</string>
+    <string name="backup_field_ring_use_last_resume">Last ring use restart</string>
     <string name="backup_field_reminder_insertion">Reminder before insertion</string>
     <string name="backup_field_reminder_removal">Reminder before removal</string>
     <string name="backup_field_skip_ring_free_entries_format">Skipped ring-free week entries: %1$d</string>

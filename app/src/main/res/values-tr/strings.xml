@@ -1,7 +1,7 @@
 <resources>
     <!-- App -->
     <string name="app_info_actions_title">Eylemler</string>
-    <string name="app_info_description">MyRingReminder, doğum kontrol halkası döngülerini yönetmek ve takip etmek için geliştirilmiş bir Android uygulamasıdır. Uygulama; takma, çıkarma ve halkasız günler için renk kodlu bir takvim, özelleştirilebilir hatırlatıcılar, halka stoğu takibi, notlar, widget\'lar ve yedekleme/geri yükleme özellikleri sunar. Ayrıca bir hoş geldiniz turu, döngü geçmişi, döngünün uzatılması için rehberlik (\"halkayı daha uzun süre kullan\"), halkasız hafta sırasında adet takibi ve aralık filtreleri ile biçimlendirilmiş PDF dışa aktarma sunan özel bir Adet Detayları görünümü içerir. Arka plan görselleri ve renk ayarları gibi kişiselleştirme seçenekleri, uygulamayı isteğe göre özelleştirmeyi sağlar.\n\nÖnemli not: Bu uygulama yalnızca doğum kontrol halkası döngülerinin kişisel organizasyonu ve takibi amacıyla tasarlanmıştır. Tıbbi bir ürün değildir, tıbbi tavsiyenin yerine geçmez ve tıbbi değerlendirme veya teşhise dayanmaz. Kullanım hakkında sorularınız veya sağlıkla ilgili endişeleriniz varsa bir sağlık uzmanına danışın.\n\nTüm veriler yalnızca bu cihazda yerel olarak saklanır.</string>
+    <string name="app_info_description">MyRingReminder, doğum kontrol halkası döngülerini yönetmek ve takip etmek için geliştirilmiş bir Android uygulamasıdır. Uygulama; takma, çıkarma ve halkasız günler için renk kodlu bir takvim, özelleştirilebilir hatırlatıcılar, halka stoğu takibi, notlar, widget\'lar ve yedekleme/geri yükleme özellikleri sunar. Ayrıca bir hoş geldiniz turu, döngü geçmişi, döngünün uzatılması için rehberlik (\"halkayı daha uzun süre kullan\"), daha uzun aralar için planlanan halka kullanımını duraklatma ve daha sonra yeni bir yerleştirme tarihinden yeniden başlatma seçeneği, halkasız hafta sırasında adet takibi ve aralık filtreleri ile biçimlendirilmiş PDF dışa aktarma sunan özel bir Adet Detayları görünümü içerir. Arka plan görselleri ve renk ayarları gibi kişiselleştirme seçenekleri, uygulamayı isteğe göre özelleştirmeyi sağlar.\n\nÖnemli not: Bu uygulama yalnızca doğum kontrol halkası döngülerinin kişisel organizasyonu ve takibi amacıyla tasarlanmıştır. Tıbbi bir ürün değildir, tıbbi tavsiyenin yerine geçmez ve tıbbi değerlendirme veya teşhise dayanmaz. Kullanım hakkında sorularınız veya sağlıkla ilgili endişeleriniz varsa bir sağlık uzmanına danışın.\n\nTüm veriler yalnızca bu cihazda yerel olarak saklanır.</string>
     <string name="app_info_developer">Geliştirici: %1$s</string>
     <string name="app_info_developer_label">Geliştirici:</string>
     <string name="app_info_developer_name">Daniel Sichler tarafından Darexsh</string>
@@ -127,6 +127,18 @@
     <string name="settings_label_calendar_range">Takvim aralığı</string>
     <string name="settings_label_cycle_length">Döngü süresi</string>
     <string name="settings_label_start_date">Yerleştirme tarihi</string>
+    <string name="settings_ring_use_label">Halkayı duraklat</string>
+    <string name="settings_ring_use_status_active">Aktif</string>
+    <string name="settings_ring_use_status_paused">Pasif</string>
+    <string name="settings_ring_pause_title">Halka duraklatılsın mı?</string>
+    <string name="settings_ring_pause_message">Planlanan halka kullanımı %1$s tarihinden itibaren duraklatılacak.\n\nGelecekteki halka tahminleri ve hatırlatıcıları devre dışı bırakılacak. Önceki geçmiş, notlar, adet kayıtları ve ayarlar korunacak.</string>
+    <string name="settings_ring_pause_choose_date">Tarih seç</string>
+    <string name="settings_ring_pause_confirm">Duraklat</string>
+    <string name="settings_ring_pause_done">Halka kullanımı pasif</string>
+    <string name="settings_ring_resume_title">Halka kullanımı yeniden başlatılsın mı?</string>
+    <string name="settings_ring_resume_message">Halka kullanımı %1$s tarihinden beri pasif. Yeni bir döngü başlatmak için sonraki yerleştirme tarihini ve saatini seç.</string>
+    <string name="settings_ring_resume_confirm">Sürdür</string>
+    <string name="settings_ring_resume_done">Halka kullanımı yeniden aktif</string>
     <string name="settings_stock_tracker_dialog_title">Stok takibi</string>
     <string name="settings_stock_tracker_enable">Etkinleştir</string>
     <string name="settings_stock_tracker_enable_label">Stok takibini etkinleştir</string>
@@ -265,6 +277,10 @@
     <string name="home_days_until_insertion">Yerleştirmeye kalan gün</string>
     <string name="home_phase_active_cycle">Aktif döngü</string>
     <string name="home_phase_ring_free_phase">Halkasız dönem</string>
+    <string name="home_ring_pause_phase">Duraklatma modu</string>
+    <string name="home_ring_pause_label">Halka pasif</string>
+    <string name="home_ring_pause_since">%1$s tarihinden beri pasif</string>
+    <string name="home_ring_pause_resume_hint">Halka tekrar kullanılmaya başladığında Ayarlar\'dan halka kullanımını yeniden başlat.</string>
     <string name="home_delay_confirm">Güncelle</string>
     <string name="home_delay_info_desc">Halkayı daha uzun süre kullanma hakkında bilgi</string>
     <string name="home_delay_info_message"><![CDATA[
@@ -402,9 +418,13 @@
     <string name="cycles_status_new_wear_phase_started">Yeni kullanım fazı başladı</string>
     <string name="cycles_badge_wear_phase">Kullanım fazı</string>
     <string name="cycles_badge_pause">Ara</string>
+    <string name="cycles_badge_ring_pause">Halka arası</string>
     <string name="cycles_badge_direct_switch">Doğrudan değişim</string>
+    <string name="cycles_status_ring_pause_days">%1$d gün pasif</string>
     <string name="cycles_special_skip_ring_free">Halkasız hafta atlandı</string>
     <string name="cycles_special_wear_longer_days">Halka daha uzun süre takıldı (+%1$d gün)</string>
+    <string name="cycles_title_ring_pause_since">%1$s tarihinden beri halka arası</string>
+    <string name="cycles_title_ring_pause_range">%1$s - %2$s</string>
     <string name="cycles_title_seamless_ring_change">Kesintisiz halka değişimi</string>
     <string name="cycles_title">Döngü geçmişi</string>
 
@@ -491,6 +511,9 @@
     <string name="backup_field_notification_hashes_format">Bildirim ayarları anlık görüntüleri: %1$d giriş</string>
     <string name="backup_field_period_tracking">Adet takibi</string>
     <string name="backup_field_period_tracking_entries_format">%1$d günlük giriş</string>
+    <string name="backup_field_ring_use_paused">Halka kullanımı pasif</string>
+    <string name="backup_field_ring_use_pause_start">Halka molası başlangıcı</string>
+    <string name="backup_field_ring_use_last_resume">Son halka kullanımı yeniden başlatma</string>
     <string name="backup_field_reminder_insertion">Yerleştirme öncesi hatırlatıcı</string>
     <string name="backup_field_reminder_removal">Çıkarma öncesi hatırlatıcı</string>
     <string name="backup_field_skip_ring_free_entries_format">Atlanan halkasız hafta girişleri: %1$d</string>
