@@ -414,13 +414,12 @@ public class HomeCircleView extends View {
     }
 
     private void drawPeriodRain(@NonNull Canvas canvas, float thickness) {
-        float innerRadius = (arcRect.width() / 2f) - (thickness * 0.95f);
-        if (innerRadius <= 0f) {
+        float clipRadius = getParticleClipRadius(thickness);
+        if (clipRadius <= 0f) {
             return;
         }
         float centerX = arcRect.centerX();
         float centerY = arcRect.centerY();
-        float clipRadius = innerRadius * 0.9f;
         long elapsed = Math.max(0L, SystemClock.uptimeMillis() - innerParticleStartTimeMs);
         int saveCount = canvas.save();
         innerRainClipPath.reset();
@@ -448,13 +447,12 @@ public class HomeCircleView extends View {
     }
 
     private void drawCalmFloat(@NonNull Canvas canvas, float thickness) {
-        float innerRadius = (arcRect.width() / 2f) - (thickness * 0.95f);
-        if (innerRadius <= 0f) {
+        float clipRadius = getParticleClipRadius(thickness);
+        if (clipRadius <= 0f) {
             return;
         }
         float centerX = arcRect.centerX();
         float centerY = arcRect.centerY();
-        float clipRadius = innerRadius * 0.9f;
         long elapsed = Math.max(0L, SystemClock.uptimeMillis() - innerParticleStartTimeMs);
         int saveCount = canvas.save();
         innerRainClipPath.reset();
@@ -485,6 +483,11 @@ public class HomeCircleView extends View {
         }
 
         canvas.restoreToCount(saveCount);
+    }
+
+    private float getParticleClipRadius(float thickness) {
+        // arcRect radius is the ring centerline; subtract half the stroke to reach its inner edge.
+        return Math.max(0f, (arcRect.width() / 2f) - (thickness / 2f));
     }
 
     private void animateProgress(float startFraction, float targetFraction) {
