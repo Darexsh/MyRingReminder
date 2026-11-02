@@ -83,6 +83,10 @@ public class SettingsRepository {
     public static final int DEFAULT_NAVIGATION_ANIMATION_STYLE = NAV_ANIM_SLIDE;
 
     private final SharedPreferences sharedPreferences;
+    private List<Cycle> cycleHistoryCache;
+    private String cycleHistoryCacheJson;
+    private Map<String, PeriodDayEntry> periodDayEntriesCache;
+    private String periodDayEntriesCacheJson;
 
     public SettingsRepository(Context context) {
         sharedPreferences = context.getSharedPreferences(PREFS_NAME, Context.MODE_PRIVATE);
@@ -250,17 +254,24 @@ public class SettingsRepository {
                 .apply();
     }
 
-    public List<Cycle> getCycleHistory() {
-        Gson gson = new Gson();
+    public synchronized List<Cycle> getCycleHistory() {
         String json = sharedPreferences.getString(KEY_CYCLE_HISTORY, null);
+        if (cycleHistoryCache != null && java.util.Objects.equals(json, cycleHistoryCacheJson)) {
+            return new ArrayList<>(cycleHistoryCache);
+        }
+        Gson gson = new Gson();
         Type type = new TypeToken<ArrayList<Cycle>>() {}.getType();
         List<Cycle> cycleHistory = gson.fromJson(json, type);
-        return cycleHistory != null ? cycleHistory : new ArrayList<>();
+        cycleHistoryCache = cycleHistory != null ? cycleHistory : new ArrayList<>();
+        cycleHistoryCacheJson = json;
+        return new ArrayList<>(cycleHistoryCache);
     }
 
-    public void saveCycleHistory(List<Cycle> cycleHistory) {
+    public synchronized void saveCycleHistory(List<Cycle> cycleHistory) {
         Gson gson = new Gson();
-        String json = gson.toJson(cycleHistory);
+        cycleHistoryCache = cycleHistory != null ? new ArrayList<>(cycleHistory) : new ArrayList<>();
+        String json = gson.toJson(cycleHistoryCache);
+        cycleHistoryCacheJson = json;
         sharedPreferences.edit().putString(KEY_CYCLE_HISTORY, json).apply();
     }
 
@@ -682,14 +693,19 @@ public class SettingsRepository {
         return "skip_ring_free_" + year + "_" + month + "_" + day;
     }
 
-    public Map<String, PeriodDayEntry> getAllPeriodDayEntries() {
-        Gson gson = new Gson();
+    public synchronized Map<String, PeriodDayEntry> getAllPeriodDayEntries() {
         String json = sharedPreferences.getString(KEY_PERIOD_DAY_ENTRIES, null);
+        if (periodDayEntriesCache != null && java.util.Objects.equals(json, periodDayEntriesCacheJson)) {
+            return new HashMap<>(periodDayEntriesCache);
+        }
+        Gson gson = new Gson();
         Type type = new TypeToken<Map<String, PeriodDayEntry>>() {}.getType();
         Map<String, PeriodDayEntry> fromPrefs = gson.fromJson(json, type);
         Map<String, PeriodDayEntry> result = new HashMap<>();
         if (fromPrefs == null || fromPrefs.isEmpty()) {
-            return result;
+            periodDayEntriesCache = result;
+            periodDayEntriesCacheJson = json;
+            return new HashMap<>(result);
         }
         boolean needsRewrite = false;
         for (Map.Entry<String, PeriodDayEntry> entry : fromPrefs.entrySet()) {
@@ -706,8 +722,11 @@ public class SettingsRepository {
         }
         if (needsRewrite) {
             persistPeriodDayEntries(result);
+        } else {
+            periodDayEntriesCache = result;
+            periodDayEntriesCacheJson = json;
         }
-        return result;
+        return new HashMap<>(result);
     }
 
     public PeriodDayEntry getPeriodDayEntry(String dateKey) {
@@ -849,9 +868,12 @@ public class SettingsRepository {
         );
     }
 
-    private void persistPeriodDayEntries(Map<String, PeriodDayEntry> entries) {
+    private synchronized void persistPeriodDayEntries(Map<String, PeriodDayEntry> entries) {
         Gson gson = new Gson();
-        String json = gson.toJson(entries != null ? entries : new HashMap<>());
+        Map<String, PeriodDayEntry> persisted = entries != null ? new HashMap<>(entries) : new HashMap<>();
+        periodDayEntriesCache = persisted;
+        String json = gson.toJson(persisted);
+        periodDayEntriesCacheJson = json;
         sharedPreferences.edit().putString(KEY_PERIOD_DAY_ENTRIES, json).apply();
     }
 }

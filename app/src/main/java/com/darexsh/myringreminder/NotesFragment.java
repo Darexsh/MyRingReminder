@@ -42,6 +42,7 @@ public class NotesFragment extends Fragment {
 
     private final Handler autoSaveHandler = new Handler(Looper.getMainLooper());
     private Runnable autoSaveRunnable;
+    private Runnable dateHeaderStyleRunnable;
     private boolean isProgrammaticNoteUpdate = false;
     private static final Pattern DATE_HEADER_LINE_PATTERN = Pattern.compile("(?m)^(?:\\d{2}\\.\\d{2}\\.\\d{4}|\\p{L}+,\\s\\d{2}\\.\\d{2}\\.\\d{4})$");
 
@@ -94,7 +95,7 @@ public class NotesFragment extends Fragment {
                 if (isProgrammaticNoteUpdate) {
                     return;
                 }
-                applyDateHeaderStyling(s);
+                scheduleDateHeaderStyling();
                 updateCharCount(s.length());
                 scheduleAutoSave();
             }
@@ -138,6 +139,8 @@ public class NotesFragment extends Fragment {
     public void onDestroyView() {
         super.onDestroyView();
         autoSaveHandler.removeCallbacksAndMessages(null);
+        dateHeaderStyleRunnable = null;
+        editTextNotes = null;
     }
 
     @Override
@@ -191,6 +194,18 @@ public class NotesFragment extends Fragment {
     private void scheduleAutoSave() {
         autoSaveHandler.removeCallbacks(autoSaveRunnable);
         autoSaveHandler.postDelayed(autoSaveRunnable, AUTOSAVE_DELAY_MS);
+    }
+
+    private void scheduleDateHeaderStyling() {
+        if (dateHeaderStyleRunnable != null) {
+            autoSaveHandler.removeCallbacks(dateHeaderStyleRunnable);
+        }
+        dateHeaderStyleRunnable = () -> {
+            if (editTextNotes != null) {
+                applyDateHeaderStyling(editTextNotes.getText());
+            }
+        };
+        autoSaveHandler.postDelayed(dateHeaderStyleRunnable, 180L);
     }
 
     private void updateCharCount(int count) {

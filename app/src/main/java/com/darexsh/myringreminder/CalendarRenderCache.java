@@ -1,6 +1,8 @@
 package com.darexsh.myringreminder;
 
 import com.prolificinteractive.materialcalendarview.CalendarDay;
+import android.os.Handler;
+import android.os.Looper;
 import java.util.Calendar;
 import java.util.HashSet;
 import java.util.Set;
@@ -8,6 +10,10 @@ import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
 public final class CalendarRenderCache {
+
+    public interface SnapshotCallback {
+        void onSnapshotReady(Snapshot snapshot);
+    }
 
     public static final class Snapshot {
         public final long startMillis;
@@ -60,8 +66,35 @@ public final class CalendarRenderCache {
         int pastMonths = toMonths(repository.getCalendarPastAmount(), repository.getCalendarPastUnit());
         int futureMonths = toMonths(repository.getCalendarFutureAmount(), repository.getCalendarFutureUnit());
         EXECUTOR.execute(() -> {
+            repository.getAllPeriodDayEntries();
+            if (getSnapshotIfMatches(startDate, cycleLength, pastMonths, futureMonths) != null) {
+                return;
+            }
             Snapshot snapshot = computeSnapshot(repository, startDate, cycleLength, pastMonths, futureMonths);
             setSnapshot(snapshot);
+        });
+    }
+
+    public static void computeAsync(SettingsRepository repository,
+                                    Calendar startDate,
+                                    int cycleLength,
+                                    int pastMonths,
+                                    int futureMonths,
+                                    SnapshotCallback callback) {
+        if (repository == null || startDate == null || callback == null) {
+            return;
+        }
+        Calendar startDateCopy = (Calendar) startDate.clone();
+        EXECUTOR.execute(() -> {
+            Snapshot snapshot = getSnapshotIfMatches(startDateCopy,
+                    cycleLength, pastMonths, futureMonths);
+            if (snapshot == null) {
+                snapshot = computeSnapshot(repository, startDateCopy,
+                        cycleLength, pastMonths, futureMonths);
+                setSnapshot(snapshot);
+            }
+            Snapshot readySnapshot = snapshot;
+            new Handler(Looper.getMainLooper()).post(() -> callback.onSnapshotReady(readySnapshot));
         });
     }
 

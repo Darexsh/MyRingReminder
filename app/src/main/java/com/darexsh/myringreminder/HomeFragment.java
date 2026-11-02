@@ -7,7 +7,6 @@ import android.app.AlertDialog;
 import android.app.PendingIntent;
 import android.content.Context;
 import android.content.Intent;
-import android.content.UriPermission;
 import android.content.pm.PackageInfo;
 import android.content.res.ColorStateList;
 import android.graphics.Color;
@@ -15,7 +14,6 @@ import android.graphics.RenderEffect;
 import android.graphics.Shader;
 import android.graphics.Typeface;
 import android.graphics.drawable.GradientDrawable;
-import android.graphics.drawable.Drawable;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.Build;
@@ -48,8 +46,6 @@ import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
 import java.io.BufferedReader;
-import java.io.File;
-import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
@@ -84,9 +80,13 @@ public class HomeFragment extends Fragment {
     @Nullable
     private ObjectAnimator updateOrbitAnimator;
     @Nullable
+    private HomeCircleView pulseView;
+    @Nullable
     private ReleaseInfo lastReleaseInfo;
     @Nullable
     private String currentVersionLabel;
+    @Nullable
+    private String lastHomeBackgroundUri;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -189,6 +189,8 @@ public class HomeFragment extends Fragment {
         Runnable loadBackgroundImage = () -> {
             boolean useGlobalBackground = Boolean.TRUE.equals(viewModel.getBackgroundAllScreensEnabled().getValue());
             if (useGlobalBackground) {
+                BackgroundImageLoader.cancel(backgroundImageView);
+                lastHomeBackgroundUri = null;
                 backgroundImageView.setVisibility(View.GONE);
                 backgroundDimOverlay.setVisibility(View.GONE);
                 backgroundDimOverlay.setAlpha(0f);
@@ -196,50 +198,23 @@ public class HomeFragment extends Fragment {
             }
             backgroundImageView.setVisibility(View.VISIBLE);
             String uriStr = viewModel.getBackgroundImageUri().getValue();
-
-            if (uriStr != null) {
-                try {
-                    Uri uri = Uri.parse(uriStr);
-                    String scheme = uri.getScheme();
-                    if ("file".equalsIgnoreCase(scheme)) {
-                        File file = new File(Objects.requireNonNull(uri.getPath()));
-                        if (file.exists()) {
-                            try (InputStream inputStream = new FileInputStream(file)) {
-                                Drawable drawable = Drawable.createFromStream(inputStream, uri.toString());
-                                backgroundImageView.setImageDrawable(drawable);
-                            }
-                        } else {
-                            backgroundImageView.setImageResource(R.drawable.default_bg);
-                            viewModel.setBackgroundImageUri(null);
-                        }
-                    } else {
-                        boolean hasPermission = false;
-                        for (UriPermission perm : requireContext().getContentResolver().getPersistedUriPermissions()) {
-                            if (perm.getUri().equals(uri) && perm.isReadPermission()) {
-                                hasPermission = true;
-                                break;
-                            }
-                        }
-
-                        if (hasPermission) {
-                            try (InputStream inputStream = requireContext().getContentResolver().openInputStream(uri)) {
-                                Drawable drawable = Drawable.createFromStream(inputStream, uri.toString());
-                                backgroundImageView.setImageDrawable(drawable);
-                            }
-                        } else {
-                            backgroundImageView.setImageResource(R.drawable.default_bg);
-                            viewModel.setBackgroundImageUri(null);
-                        }
-                    }
-
-                } catch (SecurityException | IOException e) {
-                    Log.e("HomeFragment", "Failed to load background image", e);
+            if (Objects.equals(lastHomeBackgroundUri, uriStr)) {
+                return;
+            }
+            lastHomeBackgroundUri = uriStr;
+            if (uriStr == null || uriStr.trim().isEmpty()) {
+                BackgroundImageLoader.cancel(backgroundImageView);
+                backgroundImageView.setImageResource(R.drawable.default_bg);
+                return;
+            }
+            BackgroundImageLoader.load(requireContext(), Uri.parse(uriStr), backgroundImageView, bitmap -> {
+                if (bitmap == null) {
                     backgroundImageView.setImageResource(R.drawable.default_bg);
                     viewModel.setBackgroundImageUri(null);
+                } else {
+                    backgroundImageView.setImageBitmap(bitmap);
                 }
-            } else {
-                backgroundImageView.setImageResource(R.drawable.default_bg);
-            }
+            });
         };
 
         // Observe changes in the ViewModel
@@ -1503,6 +1478,11 @@ public class HomeFragment extends Fragment {
             updateHeroAutoHideRunnable = null;
         }
         stopOrbitAnimation(null);
+        stopPulse();
+        View currentView = getView();
+        if (currentView != null) {
+            BackgroundImageLoader.cancel(currentView.findViewById(R.id.background_image));
+        }
         super.onDestroyView();
     }
 
@@ -1892,13 +1872,15 @@ public class HomeFragment extends Fragment {
     }
 
     private void startPulse(HomeCircleView progress) {
-        progress.removeCallbacks(pulseRunnable);
+        stopPulse();
+        pulseView = progress;
         progress.post(pulseRunnable);
     }
 
     private void stopPulse() {
-        if (getView() != null) {
-            getView().removeCallbacks(pulseRunnable);
+        if (pulseView != null) {
+            pulseView.removeCallbacks(pulseRunnable);
+            pulseView = null;
         }
     }
 
@@ -1918,7 +1900,7 @@ public class HomeFragment extends Fragment {
                 pulsePhase = 0f;
                 pulseUp = true;
             }
-            HomeCircleView circle = getView() != null ? getView().findViewById(R.id.circularProgress) : null;
+            HomeCircleView circle = pulseView;
             if (circle != null) {
                 circle.setPulsePhase(pulsePhase);
                 circle.postDelayed(this, 40);

@@ -1,6 +1,5 @@
 package com.darexsh.myringreminder;
 
-import android.annotation.SuppressLint;
 import android.animation.ValueAnimator;
 import android.content.Context;
 import android.graphics.Canvas;
@@ -35,6 +34,7 @@ public class HomeCircleView extends View {
     private final Paint trackPaint = new Paint(Paint.ANTI_ALIAS_FLAG);
     private final Paint progressPaint = new Paint(Paint.ANTI_ALIAS_FLAG);
     private final Paint markerPaint = new Paint(Paint.ANTI_ALIAS_FLAG);
+    private final Paint markerRingPaint = new Paint(Paint.ANTI_ALIAS_FLAG);
     private final Paint edgeGlowPaint = new Paint(Paint.ANTI_ALIAS_FLAG);
     private final Paint edgeCorePaint = new Paint(Paint.ANTI_ALIAS_FLAG);
     private final Paint edgeParticlePaint = new Paint(Paint.ANTI_ALIAS_FLAG);
@@ -43,6 +43,13 @@ public class HomeCircleView extends View {
     private final Path innerRainClipPath = new Path();
     private final RectF arcRect = new RectF();
     private final Matrix gradientMatrix = new Matrix();
+    @Nullable
+    private SweepGradient gradientShader;
+    @Nullable
+    private SweepGradient gradientGlowShader;
+    private int gradientShaderColor = Integer.MIN_VALUE;
+    private int gradientShaderWidth = -1;
+    private int gradientShaderHeight = -1;
 
     private int style = STYLE_CLASSIC;
     private int indicatorColor = SettingsRepository.DEFAULT_HOME_CIRCLE_COLOR;
@@ -77,6 +84,8 @@ public class HomeCircleView extends View {
         trackPaint.setStyle(Paint.Style.STROKE);
         progressPaint.setStyle(Paint.Style.STROKE);
         markerPaint.setStyle(Paint.Style.FILL);
+        markerRingPaint.setStyle(Paint.Style.FILL);
+        markerRingPaint.setColor(Color.WHITE);
         edgeGlowPaint.setStyle(Paint.Style.FILL);
         edgeCorePaint.setStyle(Paint.Style.FILL);
         edgeParticlePaint.setStyle(Paint.Style.FILL);
@@ -178,7 +187,7 @@ public class HomeCircleView extends View {
                 drawSegmentedLeadingEdgeHighlight(canvas, thickness, progressFraction);
             }
             drawInnerParticleEffect(canvas, thickness);
-            postInvalidateOnAnimation();
+            postInvalidateDelayed(33L);
             return;
         }
 
@@ -190,14 +199,8 @@ public class HomeCircleView extends View {
                 trackPaint.setColor(withAlpha(indicatorColor, 70));
                 break;
             case STYLE_GRADIENT:
-                @SuppressLint("DrawAllocation") SweepGradient gradient = new SweepGradient(
-                        getWidth() / 2f,
-                        getHeight() / 2f,
-                        new int[]{withAlpha(indicatorColor, 60), indicatorColor, withAlpha(indicatorColor, 60)},
-                        new float[]{0f, 0.7f, 1f});
-                gradientMatrix.setRotate(-90, getWidth() / 2f, getHeight() / 2f);
-                gradient.setLocalMatrix(gradientMatrix);
-                progressPaint.setShader(gradient);
+                ensureGradientShaders();
+                progressPaint.setShader(gradientShader);
                 break;
             case STYLE_ARC:
                 trackPaint.setColor(Color.TRANSPARENT);
@@ -206,14 +209,8 @@ public class HomeCircleView extends View {
                 progressPaint.setShadowLayer(dpToPx(10), 0f, 0f, withAlpha(indicatorColor, 220));
                 break;
             case STYLE_GRADIENT_GLOW:
-                @SuppressLint("DrawAllocation") SweepGradient gradientGlow = new SweepGradient(
-                        getWidth() / 2f,
-                        getHeight() / 2f,
-                        new int[]{withAlpha(indicatorColor, 50), indicatorColor, withAlpha(indicatorColor, 50)},
-                        new float[]{0f, 0.7f, 1f});
-                gradientMatrix.setRotate(-90, getWidth() / 2f, getHeight() / 2f);
-                gradientGlow.setLocalMatrix(gradientMatrix);
-                progressPaint.setShader(gradientGlow);
+                ensureGradientShaders();
+                progressPaint.setShader(gradientGlowShader);
                 progressPaint.setShadowLayer(dpToPx(10), 0f, 0f, withAlpha(indicatorColor, 220));
                 break;
             case STYLE_PULSE_LIGHT:
@@ -252,7 +249,9 @@ public class HomeCircleView extends View {
         }
 
         drawInnerParticleEffect(canvas, thickness);
-        postInvalidateOnAnimation();
+        // The ambient particles move continuously; 30 fps keeps them smooth while
+        // avoiding a full software-canvas redraw on every display refresh.
+        postInvalidateDelayed(33L);
 
         if (style == STYLE_MARKER) {
             float angle = (float) Math.toRadians(-90 + sweep);
@@ -263,10 +262,7 @@ public class HomeCircleView extends View {
             float markerRadius = arcRect.width() / 2f;
             float x = cx + (float) Math.cos(angle) * markerRadius;
             float y = cy + (float) Math.sin(angle) * markerRadius;
-            @SuppressLint("DrawAllocation") Paint ring = new Paint(Paint.ANTI_ALIAS_FLAG);
-            ring.setStyle(Paint.Style.FILL);
-            ring.setColor(Color.WHITE);
-            canvas.drawCircle(x, y, outer, ring);
+            canvas.drawCircle(x, y, outer, markerRingPaint);
             canvas.drawCircle(x, y, inner, markerPaint);
         }
     }
@@ -495,6 +491,31 @@ public class HomeCircleView extends View {
             invalidate();
         });
         progressAnimator.start();
+    }
+
+    private void ensureGradientShaders() {
+        int width = getWidth();
+        int height = getHeight();
+        if (gradientShader != null && gradientGlowShader != null
+                && gradientShaderColor == indicatorColor
+                && gradientShaderWidth == width
+                && gradientShaderHeight == height) {
+            return;
+        }
+        float centerX = width / 2f;
+        float centerY = height / 2f;
+        gradientMatrix.setRotate(-90f, centerX, centerY);
+        gradientShader = new SweepGradient(centerX, centerY,
+                new int[]{withAlpha(indicatorColor, 60), indicatorColor, withAlpha(indicatorColor, 60)},
+                new float[]{0f, 0.7f, 1f});
+        gradientGlowShader = new SweepGradient(centerX, centerY,
+                new int[]{withAlpha(indicatorColor, 50), indicatorColor, withAlpha(indicatorColor, 50)},
+                new float[]{0f, 0.7f, 1f});
+        gradientShader.setLocalMatrix(gradientMatrix);
+        gradientGlowShader.setLocalMatrix(gradientMatrix);
+        gradientShaderColor = indicatorColor;
+        gradientShaderWidth = width;
+        gradientShaderHeight = height;
     }
 
     private float clampProgressFraction(int value) {

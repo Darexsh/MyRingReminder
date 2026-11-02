@@ -66,6 +66,8 @@ public class CalendarFragment extends Fragment {
     private int[] colorValues;
     private String[] colorLabels;
     private boolean calendarUpdateScheduled = false;
+    private boolean calendarSnapshotPending = false;
+    private boolean calendarReady = false;
     private Set<CalendarDay> currentPeriodEntryAllowedDays = new HashSet<>();
     private List<RingFreeWindow> currentRingFreeWindows = new ArrayList<>();
     private static final int PERIOD_ENTRY_TOLERANCE_DAYS = 4;
@@ -84,6 +86,13 @@ public class CalendarFragment extends Fragment {
 
     private interface ColorConsumer {
         void accept(int color);
+    }
+
+    @Override
+    public void onDestroyView() {
+        calendarReady = false;
+        calendarView = null;
+        super.onDestroyView();
     }
 
     @Nullable
@@ -222,6 +231,7 @@ public class CalendarFragment extends Fragment {
         // Set up calendar view properties
         setupObservers();
         updateCalendar();
+        calendarReady = true;
 
         return view;
     }
@@ -256,7 +266,7 @@ public class CalendarFragment extends Fragment {
     }
 
     private void requestCalendarUpdate() {
-        if (calendarView == null || calendarUpdateScheduled) {
+        if (!calendarReady || calendarView == null || calendarUpdateScheduled) {
             return;
         }
         calendarUpdateScheduled = true;
@@ -324,14 +334,18 @@ public class CalendarFragment extends Fragment {
         CalendarRenderCache.Snapshot snapshot =
                 CalendarRenderCache.getSnapshotIfMatches(startDate, cycleLength, pastMonths, futureMonths);
         if (snapshot == null) {
-            snapshot = CalendarRenderCache.computeSnapshot(
-                    viewModel.getRepository(),
-                    startDate,
-                    cycleLength,
-                    pastMonths,
-                    futureMonths
-            );
-            CalendarRenderCache.setSnapshot(snapshot);
+            if (!calendarSnapshotPending) {
+                calendarSnapshotPending = true;
+                CalendarRenderCache.computeAsync(
+                        viewModel.getRepository(), startDate, cycleLength, pastMonths, futureMonths,
+                        ignored -> {
+                            calendarSnapshotPending = false;
+                            if (isAdded() && calendarView != null) {
+                                requestCalendarUpdate();
+                            }
+                        });
+            }
+            return;
         }
 
         int wearColor = ColorUtils.setAlphaComponent(getCalendarWearColor(), CALENDAR_ALPHA);
@@ -375,12 +389,16 @@ public class CalendarFragment extends Fragment {
         Calendar pauseDay = Calendar.getInstance();
         pauseDay.setTimeInMillis(pauseStartMillis);
         startOfDay(pauseDay);
+        int pauseYear = pauseDay.get(Calendar.YEAR);
+        int pauseMonth = pauseDay.get(Calendar.MONTH) + 1;
+        int pauseDate = pauseDay.get(Calendar.DAY_OF_MONTH);
         Set<CalendarDay> filtered = new HashSet<>();
         for (CalendarDay day : source) {
-            Calendar cal = Calendar.getInstance();
-            cal.set(day.getYear(), day.getMonth() - 1, day.getDay(), 0, 0, 0);
-            cal.set(Calendar.MILLISECOND, 0);
-            if (cal.before(pauseDay)) {
+            boolean beforePause = day.getYear() < pauseYear
+                    || (day.getYear() == pauseYear && day.getMonth() < pauseMonth)
+                    || (day.getYear() == pauseYear && day.getMonth() == pauseMonth
+                    && day.getDay() < pauseDate);
+            if (beforePause) {
                 filtered.add(day);
             }
         }
@@ -1487,13 +1505,17 @@ public class CalendarFragment extends Fragment {
             return new ArrayList<>();
         }
         List<CalendarDay> sorted = new ArrayList<>(ringFreeDays);
-        sorted.sort(Comparator.comparingLong(this::toDayMillis));
+        Map<CalendarDay, Long> dayMillis = new java.util.HashMap<>(sorted.size());
+        for (CalendarDay day : sorted) {
+            dayMillis.put(day, toDayMillis(day));
+        }
+        sorted.sort(Comparator.comparingLong(dayMillis::get));
         List<RingFreeWindow> windows = new ArrayList<>();
         CalendarDay runStart = sorted.get(0);
         CalendarDay runEnd = sorted.get(0);
         for (int i = 1; i < sorted.size(); i++) {
             CalendarDay current = sorted.get(i);
-            long diffDays = (toDayMillis(current) - toDayMillis(runEnd)) / (24L * 60L * 60L * 1000L);
+            long diffDays = (dayMillis.get(current) - dayMillis.get(runEnd)) / (24L * 60L * 60L * 1000L);
             if (diffDays != 1L) {
                 windows.add(new RingFreeWindow(runStart, runEnd));
                 runStart = current;

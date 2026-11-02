@@ -5,7 +5,6 @@ import android.app.NotificationChannel;
 import android.app.NotificationManager;
 import android.content.Intent;
 import android.content.SharedPreferences;
-import android.content.UriPermission;
 import android.content.pm.PackageManager;
 import android.content.res.ColorStateList;
 import android.graphics.Color;
@@ -42,12 +41,8 @@ import android.widget.ImageView;
 import android.widget.ImageButton;
 import android.widget.ScrollView;
 import com.google.android.material.button.MaterialButton;
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Objects;
 import android.util.Log;
 import java.util.concurrent.Executor;
 
@@ -269,69 +264,35 @@ public class MainActivity extends AppCompatActivity {
         boolean enabled = Boolean.TRUE.equals(viewModel.getBackgroundAllScreensEnabled().getValue());
         String uriStr = viewModel.getBackgroundImageUri().getValue();
         if (!enabled) {
+            BackgroundImageLoader.cancel(globalBackgroundImage);
             globalBackgroundImage.setImageDrawable(null);
             globalBackgroundImage.setVisibility(View.GONE);
             refreshGlobalBackgroundBlur();
             return;
         }
         if (uriStr == null || uriStr.trim().isEmpty()) {
+            BackgroundImageLoader.cancel(globalBackgroundImage);
             globalBackgroundImage.setImageResource(R.drawable.default_bg);
             globalBackgroundImage.setVisibility(View.VISIBLE);
             refreshGlobalBackgroundBlur();
             return;
         }
 
-        try {
-            Uri uri = Uri.parse(uriStr);
-            String scheme = uri.getScheme();
-            Drawable drawable;
-            if ("file".equalsIgnoreCase(scheme)) {
-                File file = new File(Objects.requireNonNull(uri.getPath()));
-                if (!file.exists()) {
-                    viewModel.setBackgroundImageUri(null);
-                    globalBackgroundImage.setImageResource(R.drawable.default_bg);
-                    globalBackgroundImage.setVisibility(View.VISIBLE);
-                    refreshGlobalBackgroundBlur();
-                    return;
-                }
-                try (InputStream inputStream = new FileInputStream(file)) {
-                    drawable = Drawable.createFromStream(inputStream, uri.toString());
-                }
-            } else {
-                boolean hasPermission = false;
-                for (UriPermission permission : getContentResolver().getPersistedUriPermissions()) {
-                    if (permission.getUri().equals(uri) && permission.isReadPermission()) {
-                        hasPermission = true;
-                        break;
-                    }
-                }
-                if (!hasPermission) {
-                    viewModel.setBackgroundImageUri(null);
-                    globalBackgroundImage.setImageResource(R.drawable.default_bg);
-                    globalBackgroundImage.setVisibility(View.VISIBLE);
-                    refreshGlobalBackgroundBlur();
-                    return;
-                }
-                try (InputStream inputStream = getContentResolver().openInputStream(uri)) {
-                    drawable = Drawable.createFromStream(inputStream, uri.toString());
-                }
-            }
-            if (drawable == null) {
-                globalBackgroundImage.setImageResource(R.drawable.default_bg);
-                globalBackgroundImage.setVisibility(View.VISIBLE);
-                refreshGlobalBackgroundBlur();
+        Uri uri = Uri.parse(uriStr);
+        globalBackgroundImage.setVisibility(View.VISIBLE);
+        BackgroundImageLoader.load(this, uri, globalBackgroundImage, bitmap -> {
+            if (globalBackgroundImage == null) {
                 return;
             }
-            globalBackgroundImage.setImageDrawable(drawable);
+            if (bitmap == null) {
+                viewModel.setBackgroundImageUri(null);
+                globalBackgroundImage.setImageResource(R.drawable.default_bg);
+            } else {
+                globalBackgroundImage.setImageBitmap(bitmap);
+            }
             globalBackgroundImage.setVisibility(View.VISIBLE);
             refreshGlobalBackgroundBlur();
-        } catch (Exception e) {
-            Log.e(TAG, "Failed to load global background image", e);
-            viewModel.setBackgroundImageUri(null);
-            globalBackgroundImage.setImageResource(R.drawable.default_bg);
-            globalBackgroundImage.setVisibility(View.VISIBLE);
-            refreshGlobalBackgroundBlur();
-        }
+        });
     }
 
     private void refreshGlobalBackgroundDim() {
@@ -519,6 +480,9 @@ public class MainActivity extends AppCompatActivity {
 
     @Override
     protected void onDestroy() {
+        if (globalBackgroundImage != null) {
+            BackgroundImageLoader.cancel(globalBackgroundImage);
+        }
         super.onDestroy();
     }
 
