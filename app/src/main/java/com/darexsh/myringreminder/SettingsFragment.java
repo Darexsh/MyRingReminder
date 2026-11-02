@@ -130,6 +130,7 @@ public class SettingsFragment extends Fragment {
     private View backgroundToolsDialogView;
     private AlertDialog stockToolsDialog;
     private View stockToolsDialogView;
+    private AlertDialog ringUsePauseDialog;
     private final List<ValueAnimator> notificationWarningAnimators = new ArrayList<>();
     private final List<TextView> settingsAccentTextViews = new ArrayList<>();
     private boolean continueUpdateInstallAfterBackup = false;
@@ -644,6 +645,8 @@ public class SettingsFragment extends Fragment {
                         showPauseStartDatePicker(defaultPauseStart))
                 .setNegativeButton(R.string.dialog_cancel, null)
                 .show();
+        ringUsePauseDialog = dialog;
+        dialog.setOnDismissListener(d -> ringUsePauseDialog = null);
         applyDialogButtonColors(dialog);
     }
 
@@ -687,6 +690,8 @@ public class SettingsFragment extends Fragment {
                         showResumeInsertionDatePicker())
                 .setNegativeButton(R.string.dialog_cancel, null)
                 .show();
+        ringUsePauseDialog = dialog;
+        dialog.setOnDismissListener(d -> ringUsePauseDialog = null);
         applyDialogButtonColors(dialog);
     }
 
@@ -1839,6 +1844,40 @@ public class SettingsFragment extends Fragment {
                 || targetViewId == R.id.btn_stock_tools_recipe_delay;
     }
 
+    private boolean isRingUsePauseDialogTarget(int targetViewId) {
+        return targetViewId == android.R.id.button1
+                || targetViewId == android.R.id.button2
+                || targetViewId == android.R.id.button3;
+    }
+
+    public void ensureRingUsePauseDialogVisibleForTour(int targetViewId) {
+        if (!isRingUsePauseDialogTarget(targetViewId)) {
+            if (ringUsePauseDialog != null && ringUsePauseDialog.isShowing()) {
+                ringUsePauseDialog.dismiss();
+            }
+            return;
+        }
+        if (ringUsePauseDialog == null || !ringUsePauseDialog.isShowing()) {
+            showRingUsePauseDialog();
+        }
+    }
+
+    public boolean isRingUsePauseDialogTourTarget(int targetViewId) {
+        return isRingUsePauseDialogTarget(targetViewId);
+    }
+
+    @Nullable
+    public ViewGroup getRingUsePauseDialogTourHost(int targetViewId) {
+        if (!isRingUsePauseDialogTarget(targetViewId)
+                || ringUsePauseDialog == null
+                || !ringUsePauseDialog.isShowing()
+                || ringUsePauseDialog.getWindow() == null) {
+            return null;
+        }
+        ViewGroup decor = (ViewGroup) ringUsePauseDialog.getWindow().getDecorView();
+        return decor;
+    }
+
     public void ensureStockToolsDialogVisibleForTour(int targetViewId) {
         if (!isStockToolsDialogTarget(targetViewId)) {
             if (stockToolsDialog != null && stockToolsDialog.isShowing()) {
@@ -1874,6 +1913,19 @@ public class SettingsFragment extends Fragment {
 
     @Nullable
     public View findTourTargetView(int targetViewId) {
+        if (isRingUsePauseDialogTarget(targetViewId)
+                && ringUsePauseDialog != null
+                && ringUsePauseDialog.isShowing()) {
+            int buttonId = targetViewId == android.R.id.button1
+                    ? AlertDialog.BUTTON_POSITIVE
+                    : targetViewId == android.R.id.button2
+                    ? AlertDialog.BUTTON_NEGATIVE
+                    : AlertDialog.BUTTON_NEUTRAL;
+            View button = ringUsePauseDialog.getButton(buttonId);
+            if (button != null) {
+                return button;
+            }
+        }
         if (notificationToolsDialogView != null) {
             View inNotificationDialog = notificationToolsDialogView.findViewById(targetViewId);
             if (inNotificationDialog != null) {

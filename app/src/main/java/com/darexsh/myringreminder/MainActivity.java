@@ -939,6 +939,7 @@ public class MainActivity extends AppCompatActivity {
             settingsFragment.ensureNotificationToolsDialogVisibleForTour(step.targetViewId);
             settingsFragment.ensureBackgroundToolsDialogVisibleForTour(step.targetViewId);
             settingsFragment.ensureStockToolsDialogVisibleForTour(step.targetViewId);
+            settingsFragment.ensureRingUsePauseDialogVisibleForTour(step.targetViewId);
         }
         ViewGroup host = findViewById(android.R.id.content);
         if (calendarFragment != null && calendarFragment.isPeriodDialogTourTarget(step.targetViewId)) {
@@ -958,6 +959,11 @@ public class MainActivity extends AppCompatActivity {
             }
         } else if (settingsFragment != null && settingsFragment.isStockToolsDialogTourTarget(step.targetViewId)) {
             ViewGroup dialogHost = settingsFragment.getStockToolsDialogTourHost(step.targetViewId);
+            if (dialogHost != null) {
+                host = dialogHost;
+            }
+        } else if (settingsFragment != null && settingsFragment.isRingUsePauseDialogTourTarget(step.targetViewId)) {
+            ViewGroup dialogHost = settingsFragment.getRingUsePauseDialogTourHost(step.targetViewId);
             if (dialogHost != null) {
                 host = dialogHost;
             }
@@ -1237,6 +1243,27 @@ public class MainActivity extends AppCompatActivity {
         steps.add(new TourStep(R.id.nav_settings, R.id.btn_stock_tools_recipe_delay,
                 R.string.settings_stock_recipe_delay_label, R.string.settings_stock_tools_hint_recipe_delay,
                 0, false));
+        steps.add(new TourStep(R.id.nav_settings, R.id.btn_ring_use_pause,
+                R.string.tour_title_settings_ring_pause, R.string.tour_body_settings_ring_pause,
+                R.id.settings_scroll, false));
+        if (viewModel != null && viewModel.getRepository().isRingUsePaused()) {
+            steps.add(new TourStep(R.id.nav_settings, android.R.id.button1,
+                    R.string.tour_title_ring_resume_button, R.string.tour_body_ring_resume_button,
+                    0, false));
+            steps.add(new TourStep(R.id.nav_settings, android.R.id.button2,
+                    R.string.tour_title_ring_pause_cancel_button, R.string.tour_body_ring_pause_cancel_button,
+                    0, false));
+        } else {
+            steps.add(new TourStep(R.id.nav_settings, android.R.id.button1,
+                    R.string.tour_title_ring_pause_confirm_button, R.string.tour_body_ring_pause_confirm_button,
+                    0, false));
+            steps.add(new TourStep(R.id.nav_settings, android.R.id.button3,
+                    R.string.tour_title_ring_pause_choose_date_button, R.string.tour_body_ring_pause_choose_date_button,
+                    0, false));
+            steps.add(new TourStep(R.id.nav_settings, android.R.id.button2,
+                    R.string.tour_title_ring_pause_cancel_button, R.string.tour_body_ring_pause_cancel_button,
+                    0, false));
+        }
         steps.add(new TourStep(R.id.nav_settings, R.id.btn_set_calendar_range,
                 R.string.tour_title_settings_calendar, R.string.tour_body_settings_calendar,
                 R.id.settings_scroll, false));

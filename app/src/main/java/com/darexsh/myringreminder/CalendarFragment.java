@@ -111,7 +111,7 @@ public class CalendarFragment extends Fragment {
             updateLegendModeForCurrentMonth();
         });
         calendarView.setOnDateChangedListener((widget, date, selected) -> {
-            if (currentPeriodEntryAllowedDays.contains(date)) {
+            if (isPeriodEntryAllowed(date)) {
                 showPeriodEntryDialog(date);
             } else {
                 android.widget.Toast.makeText(
@@ -1345,10 +1345,14 @@ public class CalendarFragment extends Fragment {
         }
         CalendarDay targetDay = null;
         CalendarDay current = calendarView != null ? calendarView.getCurrentDate() : null;
-        if (current != null && currentPeriodEntryAllowedDays.contains(current)) {
+        if (current != null && isPeriodEntryAllowed(current)) {
             targetDay = current;
         } else if (!currentPeriodEntryAllowedDays.isEmpty()) {
             targetDay = currentPeriodEntryAllowedDays.iterator().next();
+        } else if (viewModel.getRepository().isRingUsePaused()) {
+            Calendar pauseStart = Calendar.getInstance();
+            pauseStart.setTimeInMillis(viewModel.getRepository().getRingUsePauseStartMillis());
+            targetDay = toCalendarDay(pauseStart);
         }
         if (targetDay == null) {
             return;
@@ -1506,6 +1510,24 @@ public class CalendarFragment extends Fragment {
             allowed.addAll(daysForWindowWithTolerance(window));
         }
         return allowed;
+    }
+
+    private boolean isPeriodEntryAllowed(@NonNull CalendarDay day) {
+        if (currentPeriodEntryAllowedDays.contains(day)) {
+            return true;
+        }
+        SettingsRepository repository = viewModel.getRepository();
+        if (!repository.isRingUsePaused()) {
+            return false;
+        }
+        long pauseStartMillis = repository.getRingUsePauseStartMillis();
+        if (pauseStartMillis <= 0L) {
+            return false;
+        }
+        Calendar pauseStart = Calendar.getInstance();
+        pauseStart.setTimeInMillis(pauseStartMillis);
+        startOfDay(pauseStart);
+        return toDayMillis(day) >= pauseStart.getTimeInMillis();
     }
 
     private Set<CalendarDay> daysForWindowWithTolerance(RingFreeWindow window) {
