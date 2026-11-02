@@ -279,7 +279,7 @@ public class PeriodDetailsFragment extends Fragment {
 
     private void closeToCalendar() {
         FragmentManager fragmentManager = requireActivity().getSupportFragmentManager();
-        fragmentManager.popBackStack(null, FragmentManager.POP_BACK_STACK_INCLUSIVE);
+        fragmentManager.popBackStackImmediate(null, FragmentManager.POP_BACK_STACK_INCLUSIVE);
         BottomNavigationView bottomNavigationView = requireActivity().findViewById(R.id.bottom_navigation);
         if (bottomNavigationView != null) {
             bottomNavigationView.setSelectedItemId(R.id.nav_calendar);

@@ -144,6 +144,20 @@ public class NotesFragment extends Fragment {
     }
 
     @Override
+    public void onPause() {
+        if (autoSaveRunnable != null) {
+            autoSaveHandler.removeCallbacks(autoSaveRunnable);
+        }
+        if (dateHeaderStyleRunnable != null) {
+            autoSaveHandler.removeCallbacks(dateHeaderStyleRunnable);
+        }
+        if (editTextNotes != null) {
+            saveNotes(false);
+        }
+        super.onPause();
+    }
+
+    @Override
     public void onResume() {
         super.onResume();
         updateNoteDate();

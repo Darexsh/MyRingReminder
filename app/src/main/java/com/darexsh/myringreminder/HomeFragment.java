@@ -1468,6 +1468,36 @@ public class HomeFragment extends Fragment {
     }
 
     @Override
+    public void onPause() {
+        stopPulse();
+        View currentView = getView();
+        if (currentView != null) {
+            HomeCircleView circle = currentView.findViewById(R.id.circularProgress);
+            if (circle != null) {
+                circle.setAnimationEnabled(false);
+            }
+        }
+        super.onPause();
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        View currentView = getView();
+        if (currentView == null) {
+            return;
+        }
+        HomeCircleView circle = currentView.findViewById(R.id.circularProgress);
+        if (circle == null) {
+            return;
+        }
+        circle.setAnimationEnabled(true);
+        if (isPulseStyle(currentCircleStyle)) {
+            startPulse(circle);
+        }
+    }
+
+    @Override
     public void onDestroyView() {
         if (specialActionsAutoHideRunnable != null) {
             uiHandler.removeCallbacks(specialActionsAutoHideRunnable);
@@ -1862,13 +1892,17 @@ public class HomeFragment extends Fragment {
         }
         progress.setStyle(style);
         progress.setIndicatorColor(color);
-        if (style == HomeCircleView.STYLE_PULSE_LIGHT
-                || style == HomeCircleView.STYLE_PULSE_MEDIUM
-                || style == HomeCircleView.STYLE_PULSE_STRONG) {
+        if (isPulseStyle(style)) {
             startPulse(progress);
         } else {
             stopPulse();
         }
+    }
+
+    private boolean isPulseStyle(int style) {
+        return style == HomeCircleView.STYLE_PULSE_LIGHT
+                || style == HomeCircleView.STYLE_PULSE_MEDIUM
+                || style == HomeCircleView.STYLE_PULSE_STRONG;
     }
 
     private void startPulse(HomeCircleView progress) {

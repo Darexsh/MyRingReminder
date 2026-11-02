@@ -2,15 +2,11 @@
 <set xmlns:android="http://schemas.android.com/apk/res/android"
     android:interpolator="@android:interpolator/linear_out_slow_in">
     <scale
-        android:duration="210"
+        android:duration="140"
         android:fromXScale="0.97"
         android:fromYScale="0.97"
         android:pivotX="50%"
         android:pivotY="50%"
         android:toXScale="1.0"
         android:toYScale="1.0" />
-    <alpha
-        android:duration="210"
-        android:fromAlpha="0.9"
-        android:toAlpha="1.0" />
 </set>

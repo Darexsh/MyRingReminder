@@ -6,6 +6,7 @@ import android.graphics.BitmapFactory;
 import android.net.Uri;
 import android.os.Handler;
 import android.os.Looper;
+import android.os.Process;
 import android.util.LruCache;
 import android.view.View;
 import android.widget.ImageView;
@@ -25,7 +26,14 @@ final class BackgroundImageLoader {
         void onLoaded(@Nullable Bitmap bitmap);
     }
 
-    private static final ExecutorService EXECUTOR = Executors.newSingleThreadExecutor();
+    private static final ExecutorService EXECUTOR = Executors.newSingleThreadExecutor(task -> {
+        Thread thread = new Thread(() -> {
+            Process.setThreadPriority(Process.THREAD_PRIORITY_BACKGROUND);
+            task.run();
+        }, "BackgroundImageLoader");
+        thread.setDaemon(true);
+        return thread;
+    });
     private static final Handler MAIN_HANDLER = new Handler(Looper.getMainLooper());
     private static final int CACHE_SIZE_KB = (int) Math.max(1024L,
             Runtime.getRuntime().maxMemory() / 1024L / 8L);

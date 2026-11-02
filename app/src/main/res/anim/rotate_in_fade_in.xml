@@ -2,13 +2,9 @@
 <set xmlns:android="http://schemas.android.com/apk/res/android"
     android:interpolator="@android:interpolator/linear_out_slow_in">
     <rotate
-        android:duration="210"
-        android:fromDegrees="-2"
+        android:duration="140"
+        android:fromDegrees="-1.5"
         android:pivotX="50%"
         android:pivotY="50%"
         android:toDegrees="0" />
-    <alpha
-        android:duration="210"
-        android:fromAlpha="0.9"
-        android:toAlpha="1.0" />
 </set>

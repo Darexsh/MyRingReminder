@@ -2,11 +2,7 @@
 <set xmlns:android="http://schemas.android.com/apk/res/android"
     android:interpolator="@android:interpolator/linear_out_slow_in">
     <translate
-        android:duration="210"
-        android:fromYDelta="-10%"
+        android:duration="140"
+        android:fromYDelta="-7%"
         android:toYDelta="0%" />
-    <alpha
-        android:duration="210"
-        android:fromAlpha="0.92"
-        android:toAlpha="1.0" />
 </set>

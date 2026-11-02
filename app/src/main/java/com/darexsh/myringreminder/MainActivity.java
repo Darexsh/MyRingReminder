@@ -22,6 +22,7 @@ import android.os.Bundle;
 import android.widget.Toast;
 import androidx.activity.OnBackPressedCallback;
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.app.AppCompatDelegate;
@@ -32,6 +33,7 @@ import androidx.biometric.BiometricPrompt;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
+import androidx.lifecycle.Lifecycle;
 import androidx.lifecycle.ViewModelProvider;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.jakewharton.threetenabp.AndroidThreeTen;
@@ -112,6 +114,19 @@ public class MainActivity extends AppCompatActivity {
         }
 
         fragmentManager = getSupportFragmentManager();
+        fragmentManager.registerFragmentLifecycleCallbacks(
+                new FragmentManager.FragmentLifecycleCallbacks() {
+                    @Override
+                    public void onFragmentResumed(@NonNull FragmentManager fm,
+                                                  @NonNull Fragment fragment) {
+                        if (fragment.getId() == R.id.fragment_container) {
+                            clearFragmentTransitionState(fragment);
+                            updateNotesButtonVisibility();
+                        }
+                    }
+                },
+                true
+        );
         btnNotes = findViewById(R.id.btn_notes);
         globalBackgroundImage = findViewById(R.id.global_background_image);
         globalBackgroundDimOverlay = findViewById(R.id.global_background_dim_overlay);
@@ -172,7 +187,7 @@ public class MainActivity extends AppCompatActivity {
         }
 
         btnNotes.setOnClickListener(v -> {
-            loadFragment(new NotesFragment(), true);
+            loadFragment(new NotesFragment(), false);
             btnNotes.setVisibility(View.GONE);
         });
 
@@ -210,7 +225,7 @@ public class MainActivity extends AppCompatActivity {
             }
 
             if (selectedFragment != null) {
-                loadFragment(selectedFragment, true);
+                loadFragment(selectedFragment, false);
                 return true;
             }
 
@@ -225,9 +240,9 @@ public class MainActivity extends AppCompatActivity {
         getOnBackPressedDispatcher().addCallback(this, new OnBackPressedCallback(true) {
             @Override
             public void handleOnBackPressed() {
-                Fragment currentFragment = fragmentManager.findFragmentById(R.id.fragment_container);
+                Fragment currentFragment = getVisibleFragment();
                 if (!(currentFragment instanceof HomeFragment)) {
-                    fragmentManager.popBackStack(null, FragmentManager.POP_BACK_STACK_INCLUSIVE);
+                    fragmentManager.popBackStackImmediate(null, FragmentManager.POP_BACK_STACK_INCLUSIVE);
                     loadFragment(new HomeFragment(), false);
                     bottomNavigationView.setSelectedItemId(R.id.nav_home);
                     btnNotes.setVisibility(View.VISIBLE);
@@ -417,7 +432,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void openHomeFromExternalTrigger() {
-        fragmentManager.popBackStack(null, FragmentManager.POP_BACK_STACK_INCLUSIVE);
+        fragmentManager.popBackStackImmediate(null, FragmentManager.POP_BACK_STACK_INCLUSIVE);
         loadFragment(new HomeFragment(), false);
         if (bottomNavigationView != null) {
             bottomNavigationView.setSelectedItemId(R.id.nav_home);
@@ -426,7 +441,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void navigateToPrimaryDestination(int navItemId) {
-        fragmentManager.popBackStack(null, FragmentManager.POP_BACK_STACK_INCLUSIVE);
+        fragmentManager.popBackStackImmediate(null, FragmentManager.POP_BACK_STACK_INCLUSIVE);
         if (bottomNavigationView != null && bottomNavigationView.getSelectedItemId() != navItemId) {
             bottomNavigationView.setSelectedItemId(navItemId);
             return;
@@ -443,7 +458,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void openNotesShortcut() {
-        fragmentManager.popBackStack(null, FragmentManager.POP_BACK_STACK_INCLUSIVE);
+        fragmentManager.popBackStackImmediate(null, FragmentManager.POP_BACK_STACK_INCLUSIVE);
         loadFragment(new NotesFragment(), false);
         if (bottomNavigationView != null) {
             bottomNavigationView.getMenu().setGroupCheckable(0, true, true);
@@ -487,7 +502,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void updateNotesButtonVisibility() {
-        Fragment currentFragment = fragmentManager.findFragmentById(R.id.fragment_container);
+        Fragment currentFragment = getVisibleFragment();
         if (currentFragment instanceof HomeFragment) {
             btnNotes.setVisibility(View.VISIBLE);
         } else {
@@ -497,7 +512,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private boolean isHomeFragmentVisible() {
-        Fragment currentFragment = fragmentManager.findFragmentById(R.id.fragment_container);
+        Fragment currentFragment = getVisibleFragment();
         return currentFragment instanceof HomeFragment;
     }
 
@@ -511,7 +526,7 @@ public class MainActivity extends AppCompatActivity {
 
     public void openStockTrackerSettings() {
         openStockTrackerOnNextSettings = true;
-        fragmentManager.popBackStack(null, FragmentManager.POP_BACK_STACK_INCLUSIVE);
+        fragmentManager.popBackStackImmediate(null, FragmentManager.POP_BACK_STACK_INCLUSIVE);
         if (bottomNavigationView != null && bottomNavigationView.getSelectedItemId() != R.id.nav_settings) {
             bottomNavigationView.setSelectedItemId(R.id.nav_settings);
         } else {
@@ -530,6 +545,10 @@ public class MainActivity extends AppCompatActivity {
         if (bottomNavigationView != null) {
             bottomNavigationView.setSelectedItemId(R.id.nav_settings);
         }
+    }
+
+    public void openPeriodDetails(int year, int month) {
+        loadFragment(PeriodDetailsFragment.newInstance(year, month), true);
     }
 
     private void maybeRequestAppUnlock() {
@@ -641,9 +660,56 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void loadFragment(Fragment fragment, boolean addToBackStack) {
+        // Resolve the previous navigation before choosing which fragment to hide.
+        // This also keeps rapid tab taps and launch shortcuts from leaving two tabs visible.
+        fragmentManager.executePendingTransactions();
+        String reusableTag = getReusableFragmentTag(fragment);
+        Fragment targetFragment = reusableTag != null
+                ? fragmentManager.findFragmentByTag(reusableTag)
+                : null;
+        if (targetFragment == null) {
+            targetFragment = fragment;
+        }
+        Fragment currentFragment = getVisibleFragment();
+        if (targetFragment == currentFragment) {
+            return;
+        }
+
+        clearFragmentTransitionState(currentFragment);
+        clearFragmentTransitionState(targetFragment);
+
         FragmentTransaction transaction = fragmentManager.beginTransaction();
-        applyFragmentAnimation(transaction, fragment);
-        transaction.replace(R.id.fragment_container, fragment);
+        applyFragmentAnimation(transaction, targetFragment);
+        if (currentFragment != null) {
+            if (!addToBackStack
+                    && currentFragment instanceof SettingsFragment
+                    && getReusableFragmentTag(currentFragment) == null) {
+                transaction.remove(currentFragment);
+            } else {
+                transaction.hide(currentFragment);
+                // STARTED keeps the fragment's view alive while pausing interaction.
+                transaction.setMaxLifecycle(currentFragment, Lifecycle.State.STARTED);
+            }
+        }
+        for (Fragment existingFragment : fragmentManager.getFragments()) {
+            if (existingFragment != null
+                    && existingFragment != currentFragment
+                    && existingFragment != targetFragment
+                    && existingFragment instanceof SettingsFragment
+                    && getReusableFragmentTag(existingFragment) == null) {
+                transaction.remove(existingFragment);
+            }
+        }
+        if (targetFragment.isAdded()) {
+            transaction.show(targetFragment);
+        } else {
+            String tag = reusableTag != null
+                    ? reusableTag
+                    : targetFragment.getClass().getName() + ":"
+                    + Integer.toHexString(System.identityHashCode(targetFragment));
+            transaction.add(R.id.fragment_container, targetFragment, tag);
+        }
+        transaction.setMaxLifecycle(targetFragment, Lifecycle.State.RESUMED);
         if (addToBackStack) {
             transaction.addToBackStack(null);
         }
@@ -651,10 +717,59 @@ public class MainActivity extends AppCompatActivity {
         transaction.commit();
     }
 
+    private void clearFragmentTransitionState(@Nullable Fragment fragment) {
+        if (fragment == null || fragment.getView() == null) {
+            return;
+        }
+        View view = fragment.getView();
+        view.clearAnimation();
+        view.setAlpha(1f);
+        view.setTranslationX(0f);
+        view.setTranslationY(0f);
+        view.setScaleX(1f);
+        view.setScaleY(1f);
+        view.setRotation(0f);
+    }
+
+    @Nullable
+    private String getReusableFragmentTag(@NonNull Fragment fragment) {
+        if (fragment instanceof HomeFragment) {
+            return "primary:home";
+        }
+        if (fragment instanceof CalendarFragment) {
+            return "primary:calendar";
+        }
+        if (fragment instanceof CyclesFragment) {
+            return "primary:cycles";
+        }
+        if (fragment instanceof NotesFragment) {
+            return "secondary:notes";
+        }
+        if (fragment instanceof SettingsFragment) {
+            Bundle arguments = fragment.getArguments();
+            if (arguments == null || arguments.isEmpty()) {
+                return "primary:settings";
+            }
+        }
+        return null;
+    }
+
+    @Nullable
+    private Fragment getVisibleFragment() {
+        List<Fragment> fragments = fragmentManager.getFragments();
+        for (int i = fragments.size() - 1; i >= 0; i--) {
+            Fragment fragment = fragments.get(i);
+            if (fragment != null && fragment.isAdded() && !fragment.isHidden()) {
+                return fragment;
+            }
+        }
+        return null;
+    }
+
     private void applyFragmentAnimation(FragmentTransaction transaction, Fragment targetFragment) {
-        Fragment currentFragment = fragmentManager.findFragmentById(R.id.fragment_container);
+        Fragment currentFragment = getVisibleFragment();
         if (currentFragment == null) {
-            transaction.setCustomAnimations(android.R.anim.fade_in, android.R.anim.fade_out);
+            transaction.setCustomAnimations(R.anim.fade_in_fast, 0);
             return;
         }
 
@@ -664,9 +779,9 @@ public class MainActivity extends AppCompatActivity {
         }
         if (navigationAnimationStyle == SettingsRepository.NAV_ANIM_FADE) {
             transaction.setCustomAnimations(
-                    android.R.anim.fade_in,
+                    R.anim.fade_in_fast,
                     0,
-                    android.R.anim.fade_in,
+                    R.anim.fade_in_fast,
                     0
             );
             return;
@@ -712,8 +827,8 @@ public class MainActivity extends AppCompatActivity {
         int targetOrder = getFragmentOrder(targetFragment);
 
         if (targetOrder == currentOrder) {
-            transaction.setCustomAnimations(android.R.anim.fade_in, 0,
-                    android.R.anim.fade_in, 0);
+            transaction.setCustomAnimations(R.anim.fade_in_fast, 0,
+                    R.anim.fade_in_fast, 0);
             return;
         }
 
@@ -889,7 +1004,7 @@ public class MainActivity extends AppCompatActivity {
             bottomNavigationView.setSelectedItemId(step.navItemId);
         }
 
-        Fragment currentFragment = fragmentManager.findFragmentById(R.id.fragment_container);
+        Fragment currentFragment = getVisibleFragment();
         CalendarFragment calendarFragment = currentFragment instanceof CalendarFragment
                 ? (CalendarFragment) currentFragment
                 : null;
@@ -1073,7 +1188,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private boolean setAdvancedExpanded(boolean expanded) {
-        Fragment currentFragment = fragmentManager.findFragmentById(R.id.fragment_container);
+        Fragment currentFragment = getVisibleFragment();
         View fragmentView = currentFragment != null ? currentFragment.getView() : null;
         if (fragmentView == null) {
             return false;
@@ -1093,13 +1208,13 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private boolean setNotesOpen(boolean open) {
-        Fragment currentFragment = fragmentManager.findFragmentById(R.id.fragment_container);
+        Fragment currentFragment = getVisibleFragment();
         boolean isNotes = currentFragment instanceof NotesFragment;
         if (open) {
             if (isNotes) {
                 return false;
             }
-            loadFragment(new NotesFragment(), true);
+            loadFragment(new NotesFragment(), false);
             btnNotes.setVisibility(View.GONE);
             return true;
         }
@@ -1111,7 +1226,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void openHomeFragment() {
-        fragmentManager.popBackStack(null, FragmentManager.POP_BACK_STACK_INCLUSIVE);
+        fragmentManager.popBackStackImmediate(null, FragmentManager.POP_BACK_STACK_INCLUSIVE);
         loadFragment(new HomeFragment(), false);
         bottomNavigationView.setSelectedItemId(R.id.nav_home);
         btnNotes.setVisibility(View.VISIBLE);

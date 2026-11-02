@@ -68,6 +68,10 @@ public class CalendarFragment extends Fragment {
     private boolean calendarUpdateScheduled = false;
     private boolean calendarSnapshotPending = false;
     private boolean calendarReady = false;
+    @Nullable
+    private String lastRenderedCalendarSignature;
+    @Nullable
+    private String lastRequestedCalendarSignature;
     private Set<CalendarDay> currentPeriodEntryAllowedDays = new HashSet<>();
     private List<RingFreeWindow> currentRingFreeWindows = new ArrayList<>();
     private static final int PERIOD_ENTRY_TOLERANCE_DAYS = 4;
@@ -91,8 +95,19 @@ public class CalendarFragment extends Fragment {
     @Override
     public void onDestroyView() {
         calendarReady = false;
+        calendarUpdateScheduled = false;
+        lastRenderedCalendarSignature = null;
+        lastRequestedCalendarSignature = null;
         calendarView = null;
         super.onDestroyView();
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        // The calendar view stays alive while another tab or Period Details is open.
+        // Check its inputs on return and only rebuild decorators if the data changed.
+        requestCalendarUpdate();
     }
 
     @Nullable
@@ -269,6 +284,12 @@ public class CalendarFragment extends Fragment {
         if (!calendarReady || calendarView == null || calendarUpdateScheduled) {
             return;
         }
+        String signature = buildCalendarRenderSignature();
+        if (signature.equals(lastRenderedCalendarSignature)
+                || signature.equals(lastRequestedCalendarSignature)) {
+            return;
+        }
+        lastRequestedCalendarSignature = signature;
         calendarUpdateScheduled = true;
         calendarView.post(() -> {
             calendarUpdateScheduled = false;
@@ -281,18 +302,46 @@ public class CalendarFragment extends Fragment {
 
     // Refresh calendar with updated cycle data
     private void updateCalendar() {
+        String signature = buildCalendarRenderSignature();
+        if (signature.equals(lastRenderedCalendarSignature)) {
+            return;
+        }
+        lastRequestedCalendarSignature = signature;
         Calendar startDate = getStartDate();
         int cycleLength = getCycleLength();
         int pastMonths = getCalendarPastMonths();
         int futureMonths = getCalendarFutureMonths();
         calendarView.removeDecorators();
-        setupCalendarDecorators(startDate, cycleLength, pastMonths, futureMonths);
+        boolean snapshotReady = setupCalendarDecorators(startDate, cycleLength, pastMonths, futureMonths);
         calendarView.addDecorator(new TodayBorderDecorator()); // Add today border decorator
         updateLegendColors();
         updateMonthSelectorText();
         updateTodayButtonVisibility();
         updatePeriodDetailsButtonVisibility();
         updateLegendModeForCurrentMonth();
+        if (snapshotReady) {
+            lastRenderedCalendarSignature = signature;
+        }
+    }
+
+    private String buildCalendarRenderSignature() {
+        Calendar startDate = getStartDate();
+        CalendarDay today = CalendarDay.today();
+        SettingsRepository repository = viewModel.getRepository();
+        int periodEntryHash = repository.getAllPeriodDayEntries().hashCode();
+        return today.getYear() + "-" + today.getMonth() + "-" + today.getDay()
+                + ":" + startDate.getTimeInMillis()
+                + ":" + getCycleLength()
+                + ":" + getCalendarPastMonths()
+                + ":" + getCalendarFutureMonths()
+                + ":" + repository.isRingUsePaused()
+                + ":" + repository.getRingUsePauseStartMillis()
+                + ":" + getCalendarWearColor()
+                + ":" + getCalendarRingFreeColor()
+                + ":" + getCalendarRemovalColor()
+                + ":" + getCalendarInsertionColor()
+                + ":" + periodEntryHash
+                + ":" + CalendarRenderCache.getRevision();
     }
 
     // Retrieve start date
@@ -330,7 +379,7 @@ public class CalendarFragment extends Fragment {
     }
 
     // Setup calendar decorators
-    private void setupCalendarDecorators(Calendar startDate, int cycleLength, int pastMonths, int futureMonths) {
+    private boolean setupCalendarDecorators(Calendar startDate, int cycleLength, int pastMonths, int futureMonths) {
         CalendarRenderCache.Snapshot snapshot =
                 CalendarRenderCache.getSnapshotIfMatches(startDate, cycleLength, pastMonths, futureMonths);
         if (snapshot == null) {
@@ -345,7 +394,7 @@ public class CalendarFragment extends Fragment {
                             }
                         });
             }
-            return;
+            return false;
         }
 
         int wearColor = ColorUtils.setAlphaComponent(getCalendarWearColor(), CALENDAR_ALPHA);
@@ -380,6 +429,7 @@ public class CalendarFragment extends Fragment {
         applyPeriodTrackingDecorators();
         currentRingFreeWindows = buildRingFreeWindows(ringFreeDays);
         currentPeriodEntryAllowedDays = buildAllowedPeriodEntryDays(currentRingFreeWindows);
+        return true;
     }
 
     private Set<CalendarDay> filterDaysBeforePause(Set<CalendarDay> source, long pauseStartMillis) {
@@ -1048,12 +1098,10 @@ public class CalendarFragment extends Fragment {
         if (currentDay == null) {
             return;
         }
-        requireActivity()
-                .getSupportFragmentManager()
-                .beginTransaction()
-                .replace(R.id.fragment_container, PeriodDetailsFragment.newInstance(currentDay.getYear(), currentDay.getMonth()))
-                .addToBackStack(null)
-                .commit();
+        if (requireActivity() instanceof MainActivity) {
+            ((MainActivity) requireActivity()).openPeriodDetails(
+                    currentDay.getYear(), currentDay.getMonth());
+        }
     }
 
     private void updateLegendModeForCurrentMonth() {

@@ -17,6 +17,7 @@ import android.graphics.Shader;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Looper;
+import android.os.Process;
 import android.view.View;
 import android.view.WindowManager;
 import android.view.animation.DecelerateInterpolator;
@@ -26,7 +27,14 @@ import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
 public class MyRingSplashActivity extends Activity {
-    private static final ExecutorService IMAGE_EXECUTOR = Executors.newSingleThreadExecutor();
+    private static final ExecutorService IMAGE_EXECUTOR = Executors.newSingleThreadExecutor(task -> {
+        Thread thread = new Thread(() -> {
+            Process.setThreadPriority(Process.THREAD_PRIORITY_BACKGROUND);
+            task.run();
+        }, "SplashImageLoader");
+        thread.setDaemon(true);
+        return thread;
+    });
     private final Handler mainHandler = new Handler(Looper.getMainLooper());
     private ValueAnimator animator;
 
@@ -35,6 +43,7 @@ public class MyRingSplashActivity extends Activity {
         getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,
                 WindowManager.LayoutParams.FLAG_FULLSCREEN);
         getWindow().setNavigationBarColor(Color.rgb(47, 11, 73));
+        CalendarRenderCache.warmAsync(new SettingsRepository(getApplicationContext()));
         SplashView splash = new SplashView();
         setContentView(splash);
         animator = ValueAnimator.ofFloat(0f, 1f);

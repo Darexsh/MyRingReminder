@@ -3,6 +3,7 @@ package com.darexsh.myringreminder;
 import com.prolificinteractive.materialcalendarview.CalendarDay;
 import android.os.Handler;
 import android.os.Looper;
+import android.os.Process;
 import java.util.Calendar;
 import java.util.HashSet;
 import java.util.Set;
@@ -51,8 +52,16 @@ public final class CalendarRenderCache {
         }
     }
 
-    private static final ExecutorService EXECUTOR = Executors.newSingleThreadExecutor();
+    private static final ExecutorService EXECUTOR = Executors.newSingleThreadExecutor(task -> {
+        Thread thread = new Thread(() -> {
+            Process.setThreadPriority(Process.THREAD_PRIORITY_BACKGROUND);
+            task.run();
+        }, "CalendarSnapshot");
+        thread.setDaemon(true);
+        return thread;
+    });
     private static volatile Snapshot cachedSnapshot;
+    private static volatile long cacheRevision;
 
     private CalendarRenderCache() {
     }
@@ -66,12 +75,13 @@ public final class CalendarRenderCache {
         int pastMonths = toMonths(repository.getCalendarPastAmount(), repository.getCalendarPastUnit());
         int futureMonths = toMonths(repository.getCalendarFutureAmount(), repository.getCalendarFutureUnit());
         EXECUTOR.execute(() -> {
+            long sourceRevision = cacheRevision;
             repository.getAllPeriodDayEntries();
             if (getSnapshotIfMatches(startDate, cycleLength, pastMonths, futureMonths) != null) {
                 return;
             }
             Snapshot snapshot = computeSnapshot(repository, startDate, cycleLength, pastMonths, futureMonths);
-            setSnapshot(snapshot);
+            publishSnapshotIfCurrent(snapshot, sourceRevision);
         });
     }
 
@@ -86,12 +96,13 @@ public final class CalendarRenderCache {
         }
         Calendar startDateCopy = (Calendar) startDate.clone();
         EXECUTOR.execute(() -> {
+            long sourceRevision = cacheRevision;
             Snapshot snapshot = getSnapshotIfMatches(startDateCopy,
                     cycleLength, pastMonths, futureMonths);
             if (snapshot == null) {
                 snapshot = computeSnapshot(repository, startDateCopy,
                         cycleLength, pastMonths, futureMonths);
-                setSnapshot(snapshot);
+                publishSnapshotIfCurrent(snapshot, sourceRevision);
             }
             Snapshot readySnapshot = snapshot;
             new Handler(Looper.getMainLooper()).post(() -> callback.onSnapshotReady(readySnapshot));
@@ -107,12 +118,22 @@ public final class CalendarRenderCache {
         return snapshot.matches(normalizedStart, cycleLength, pastMonths, futureMonths) ? snapshot : null;
     }
 
-    public static void setSnapshot(Snapshot snapshot) {
+    private static synchronized boolean publishSnapshotIfCurrent(Snapshot snapshot, long sourceRevision) {
+        if (cacheRevision != sourceRevision) {
+            return false;
+        }
         cachedSnapshot = snapshot;
+        cacheRevision++;
+        return true;
     }
 
-    public static void clear() {
+    public static synchronized void clear() {
         cachedSnapshot = null;
+        cacheRevision++;
+    }
+
+    public static long getRevision() {
+        return cacheRevision;
     }
 
     public static Snapshot computeSnapshot(SettingsRepository repository,

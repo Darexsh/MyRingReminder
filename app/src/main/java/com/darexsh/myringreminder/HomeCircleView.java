@@ -61,6 +61,7 @@ public class HomeCircleView extends View {
     private boolean hasAnimatedProgress = false;
     private boolean periodActive = false;
     private boolean pauseMode = false;
+    private boolean animationEnabled = true;
     private long innerParticleStartTimeMs = 0L;
     @Nullable
     private ValueAnimator progressAnimator;
@@ -128,6 +129,17 @@ public class HomeCircleView extends View {
         invalidate();
     }
 
+    public void setAnimationEnabled(boolean enabled) {
+        if (animationEnabled == enabled) {
+            return;
+        }
+        animationEnabled = enabled;
+        if (enabled) {
+            innerParticleStartTimeMs = SystemClock.uptimeMillis();
+            invalidate();
+        }
+    }
+
     public void setPeriodActive(boolean periodActive) {
         if (this.periodActive == periodActive) {
             return;
@@ -186,8 +198,10 @@ public class HomeCircleView extends View {
             if (progressFraction > 0f) {
                 drawSegmentedLeadingEdgeHighlight(canvas, thickness, progressFraction);
             }
-            drawInnerParticleEffect(canvas, thickness);
-            postInvalidateDelayed(33L);
+            if (animationEnabled) {
+                drawInnerParticleEffect(canvas, thickness);
+                postInvalidateDelayed(33L);
+            }
             return;
         }
 
@@ -248,10 +262,11 @@ public class HomeCircleView extends View {
             drawLeadingEdgeHighlight(canvas, thickness, progressFraction);
         }
 
-        drawInnerParticleEffect(canvas, thickness);
-        // The ambient particles move continuously; 30 fps keeps them smooth while
-        // avoiding a full software-canvas redraw on every display refresh.
-        postInvalidateDelayed(33L);
+        if (animationEnabled) {
+            drawInnerParticleEffect(canvas, thickness);
+            // Keep ambient particles smooth without redrawing on every display refresh.
+            postInvalidateDelayed(33L);
+        }
 
         if (style == STYLE_MARKER) {
             float angle = (float) Math.toRadians(-90 + sweep);
