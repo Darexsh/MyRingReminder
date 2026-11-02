@@ -131,7 +131,7 @@
     <string name="settings_ring_use_status_active">Aktif</string>
     <string name="settings_ring_use_status_paused">Pasif</string>
     <string name="settings_ring_pause_title">Halka duraklatılsın mı?</string>
-    <string name="settings_ring_pause_message">Planlanan halka kullanımı %1$s tarihinden itibaren duraklatılacak.\n\nGelecekteki halka tahminleri ve hatırlatıcıları devre dışı bırakılacak. Önceki geçmiş, notlar, adet kayıtları ve ayarlar korunacak.</string>
+    <string name="settings_ring_pause_message">Planlanan halka kullanımı %1$s tarihinden itibaren duraklatılacak.\n\nGelecekteki halka tahminleri ve hatırlatıcıları devre dışı bırakılacak.\n\nAdet takibi kullanılmaya devam edecek; duraklama sırasında adet kayıtları ekleyebilir veya düzenleyebilirsiniz.\n\nÖnceki geçmiş, notlar, adet kayıtları ve ayarlar korunacak.</string>
     <string name="settings_ring_pause_choose_date">Tarih seç</string>
     <string name="settings_ring_pause_confirm">Duraklat</string>
     <string name="settings_ring_pause_done">Halka kullanımı pasif</string>

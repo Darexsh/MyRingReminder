@@ -131,7 +131,7 @@
     <string name="settings_ring_use_status_active">Active</string>
     <string name="settings_ring_use_status_paused">Inactive</string>
     <string name="settings_ring_pause_title">Pause ring use?</string>
-    <string name="settings_ring_pause_message">Planned ring use will be paused from %1$s.\n\nFuture ring predictions and reminders will be disabled. Previous history, notes, period entries, and settings will be kept.</string>
+    <string name="settings_ring_pause_message">Planned ring use will be paused from %1$s.\n\nFuture ring predictions and reminders will be disabled.\n\nPeriod tracking remains available, so you can still add or edit period entries during the pause.\n\nPrevious history, notes, period entries, and settings will be kept.</string>
     <string name="settings_ring_pause_choose_date">Choose date</string>
     <string name="settings_ring_pause_confirm">Pause</string>
     <string name="settings_ring_pause_done">Ring use is inactive</string>

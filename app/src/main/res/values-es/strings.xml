@@ -131,7 +131,7 @@
     <string name="settings_ring_use_status_active">Activo</string>
     <string name="settings_ring_use_status_paused">Inactivo</string>
     <string name="settings_ring_pause_title">¿Pausar el anillo?</string>
-    <string name="settings_ring_pause_message">El uso planificado del anillo se pausará desde el %1$s.\n\nLas predicciones y los recordatorios futuros del anillo se desactivarán. Se conservarán el historial anterior, las notas, los registros del período y los ajustes.</string>
+    <string name="settings_ring_pause_message">El uso planificado del anillo se pausará desde el %1$s.\n\nLas predicciones y los recordatorios futuros del anillo se desactivarán.\n\nEl seguimiento del período seguirá disponible, así que podrás añadir o editar registros durante la pausa.\n\nSe conservarán el historial anterior, las notas, los registros del período y los ajustes.</string>
     <string name="settings_ring_pause_choose_date">Elegir fecha</string>
     <string name="settings_ring_pause_confirm">Pausar</string>
     <string name="settings_ring_pause_done">Uso del anillo inactivo</string>

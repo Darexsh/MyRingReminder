@@ -131,7 +131,7 @@
     <string name="settings_ring_use_status_active">Active</string>
     <string name="settings_ring_use_status_paused">Inactif</string>
     <string name="settings_ring_pause_title">Mettre l\'anneau en pause ?</string>
-    <string name="settings_ring_pause_message">L\'utilisation prévue de l\'anneau sera mise en pause à partir du %1$s.\n\nLes prévisions et rappels futurs de l\'anneau seront désactivés. L\'historique précédent, les notes, les entrées de règles et les réglages seront conservés.</string>
+    <string name="settings_ring_pause_message">L\'utilisation prévue de l\'anneau sera mise en pause à partir du %1$s.\n\nLes prévisions et rappels futurs de l\'anneau seront désactivés.\n\nLe suivi des règles reste disponible : vous pouvez toujours ajouter ou modifier des entrées pendant la pause.\n\nL\'historique précédent, les notes, les entrées de règles et les réglages seront conservés.</string>
     <string name="settings_ring_pause_choose_date">Choisir une date</string>
     <string name="settings_ring_pause_confirm">Mettre en pause</string>
     <string name="settings_ring_pause_done">Utilisation de l\'anneau inactive</string>

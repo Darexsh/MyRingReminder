@@ -131,7 +131,7 @@
     <string name="settings_ring_use_status_active">Активно</string>
     <string name="settings_ring_use_status_paused">Неактивно</string>
     <string name="settings_ring_pause_title">Поставить кольцо на паузу?</string>
-    <string name="settings_ring_pause_message">Запланированное использование кольца будет приостановлено с %1$s.\n\nБудущие прогнозы и напоминания о кольце будут отключены. Предыдущая история, заметки, записи менструации и настройки будут сохранены.</string>
+    <string name="settings_ring_pause_message">Запланированное использование кольца будет приостановлено с %1$s.\n\nБудущие прогнозы и напоминания о кольце будут отключены.\n\nОтслеживание менструации останется доступным: во время паузы вы по-прежнему сможете добавлять и редактировать записи.\n\nПредыдущая история, заметки, записи менструации и настройки будут сохранены.</string>
     <string name="settings_ring_pause_choose_date">Выбрать дату</string>
     <string name="settings_ring_pause_confirm">Приостановить</string>
     <string name="settings_ring_pause_done">Использование кольца неактивно</string>

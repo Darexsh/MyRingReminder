@@ -131,7 +131,7 @@
     <string name="settings_ring_use_status_active">Attivo</string>
     <string name="settings_ring_use_status_paused">Inattivo</string>
     <string name="settings_ring_pause_title">Mettere in pausa l\'anello?</string>
-    <string name="settings_ring_pause_message">L\'uso pianificato dell\'anello verrà messo in pausa dal %1$s.\n\nLe previsioni e i promemoria futuri dell\'anello verranno disattivati. Cronologia precedente, note, registrazioni del ciclo mestruale e impostazioni verranno mantenute.</string>
+    <string name="settings_ring_pause_message">L\'uso pianificato dell\'anello verrà messo in pausa dal %1$s.\n\nLe previsioni e i promemoria futuri dell\'anello verranno disattivati.\n\nIl monitoraggio del ciclo mestruale resta disponibile: durante la pausa puoi continuare ad aggiungere o modificare le registrazioni.\n\nCronologia precedente, note, registrazioni del ciclo mestruale e impostazioni verranno mantenute.</string>
     <string name="settings_ring_pause_choose_date">Scegli data</string>
     <string name="settings_ring_pause_confirm">Pausa</string>
     <string name="settings_ring_pause_done">Uso dell\'anello inattivo</string>

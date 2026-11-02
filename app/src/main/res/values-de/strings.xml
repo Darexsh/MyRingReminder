@@ -131,7 +131,7 @@
     <string name="settings_ring_use_status_active">Aktiv</string>
     <string name="settings_ring_use_status_paused">Inaktiv</string>
     <string name="settings_ring_pause_title">Ring pausieren?</string>
-    <string name="settings_ring_pause_message">Die geplante Ringanwendung wird ab %1$s pausiert.\n\nZukünftige Ring-Prognosen und Erinnerungen werden deaktiviert. Der bisherige Verlauf, Notizen, Periodeneinträge und Einstellungen bleiben erhalten.</string>
+    <string name="settings_ring_pause_message">Die geplante Ringanwendung wird ab %1$s pausiert.\n\nZukünftige Ring-Prognosen und Erinnerungen werden deaktiviert.\n\nDie Periodenerfassung bleibt verfügbar; während der Pause können weiterhin Periodeneinträge hinzugefügt oder bearbeitet werden.\n\nDer bisherige Verlauf, Notizen, Periodeneinträge und Einstellungen bleiben erhalten.</string>
     <string name="settings_ring_pause_choose_date">Datum wählen</string>
     <string name="settings_ring_pause_confirm">Pausieren</string>
     <string name="settings_ring_pause_done">Ringanwendung ist inaktiv</string>

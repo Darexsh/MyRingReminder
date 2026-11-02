@@ -131,7 +131,7 @@
     <string name="settings_ring_use_status_active">使用中</string>
     <string name="settings_ring_use_status_paused">未启用</string>
     <string name="settings_ring_pause_title">暂停圆环？</string>
-    <string name="settings_ring_pause_message">计划中的圆环使用将从 %1$s 起暂停。\n\n未来的圆环预测和提醒将被停用。之前的历史、笔记、经期记录和设置会保留。</string>
+    <string name="settings_ring_pause_message">计划中的圆环使用将从 %1$s 起暂停。\n\n未来的圆环预测和提醒将被停用。\n\n暂停期间仍可使用经期记录功能，继续添加或编辑经期记录。\n\n之前的历史、笔记、经期记录和设置会保留。</string>
     <string name="settings_ring_pause_choose_date">选择日期</string>
     <string name="settings_ring_pause_confirm">暂停</string>
     <string name="settings_ring_pause_done">圆环使用未启用</string>

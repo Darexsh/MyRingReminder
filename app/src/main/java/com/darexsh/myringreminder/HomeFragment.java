@@ -27,6 +27,7 @@ import androidx.dynamicanimation.animation.DynamicAnimation;
 import androidx.dynamicanimation.animation.SpringAnimation;
 import androidx.dynamicanimation.animation.SpringForce;
 import android.view.LayoutInflater;
+import android.view.HapticFeedbackConstants;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
@@ -82,6 +83,8 @@ public class HomeFragment extends Fragment {
     @Nullable
     private HomeCircleView pulseView;
     @Nullable
+    private RocketEasterEggView rocketEasterEggView;
+    @Nullable
     private ReleaseInfo lastReleaseInfo;
     @Nullable
     private String currentVersionLabel;
@@ -116,6 +119,8 @@ public class HomeFragment extends Fragment {
         final View updateHeroOrbitIcon = view.findViewById(R.id.update_hero_orbit_icon);
         final TextView tvUpdateHeroStatus = view.findViewById(R.id.tv_update_hero_status);
         final boolean[] specialActionsExpanded = new boolean[]{false};
+
+        tvDaysNumber.setOnLongClickListener(this::launchRocketEasterEgg);
 
         SharedViewModelFactory factory = new SharedViewModelFactory(requireActivity().getApplication());
         viewModel = new ViewModelProvider(requireActivity(), factory).get(SharedViewModel.class);
@@ -1469,6 +1474,10 @@ public class HomeFragment extends Fragment {
 
     @Override
     public void onPause() {
+        if (rocketEasterEggView != null) {
+            rocketEasterEggView.cancel();
+            rocketEasterEggView = null;
+        }
         stopPulse();
         View currentView = getView();
         if (currentView != null) {
@@ -1499,6 +1508,10 @@ public class HomeFragment extends Fragment {
 
     @Override
     public void onDestroyView() {
+        if (rocketEasterEggView != null) {
+            rocketEasterEggView.cancel();
+            rocketEasterEggView = null;
+        }
         if (specialActionsAutoHideRunnable != null) {
             uiHandler.removeCallbacks(specialActionsAutoHideRunnable);
             specialActionsAutoHideRunnable = null;
@@ -1514,6 +1527,35 @@ public class HomeFragment extends Fragment {
             BackgroundImageLoader.cancel(currentView.findViewById(R.id.background_image));
         }
         super.onDestroyView();
+    }
+
+    private boolean launchRocketEasterEgg(@NonNull View source) {
+        if (rocketEasterEggView != null || !isAdded()) {
+            return true;
+        }
+        ViewGroup overlayHost = requireActivity().findViewById(android.R.id.content);
+        if (overlayHost == null) {
+            return true;
+        }
+
+        int[] sourceLocation = new int[2];
+        int[] hostLocation = new int[2];
+        source.getLocationOnScreen(sourceLocation);
+        overlayHost.getLocationOnScreen(hostLocation);
+        float launchX = sourceLocation[0] - hostLocation[0] + source.getWidth() / 2f;
+        float launchY = sourceLocation[1] - hostLocation[1] + source.getHeight() / 2f;
+
+        rocketEasterEggView = new RocketEasterEggView(
+                requireContext(), launchX, launchY, currentCircleColor,
+                () -> rocketEasterEggView = null
+        );
+        overlayHost.addView(rocketEasterEggView, new ViewGroup.LayoutParams(
+                ViewGroup.LayoutParams.MATCH_PARENT,
+                ViewGroup.LayoutParams.MATCH_PARENT
+        ));
+        rocketEasterEggView.start();
+        source.performHapticFeedback(HapticFeedbackConstants.LONG_PRESS);
+        return true;
     }
 
     // Save a cycle event to the history
