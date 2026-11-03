@@ -4,7 +4,9 @@ import android.animation.Animator;
 import android.animation.AnimatorListenerAdapter;
 import android.animation.ValueAnimator;
 import android.app.Activity;
+import android.content.Context;
 import android.content.Intent;
+import android.content.res.Configuration;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Canvas;
@@ -14,6 +16,7 @@ import android.graphics.Paint;
 import android.graphics.RadialGradient;
 import android.graphics.RectF;
 import android.graphics.Shader;
+import android.graphics.Typeface;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Looper;
@@ -21,8 +24,11 @@ import android.os.Process;
 import android.view.View;
 import android.view.WindowManager;
 import android.view.animation.DecelerateInterpolator;
+import androidx.appcompat.app.AppCompatDelegate;
+import androidx.core.os.LocaleListCompat;
 import java.io.IOException;
 import java.io.InputStream;
+import java.util.Locale;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
@@ -72,16 +78,22 @@ public class MyRingSplashActivity extends Activity {
 
     private final class SplashView extends View {
         final Paint paint = new Paint(Paint.ANTI_ALIAS_FLAG | Paint.FILTER_BITMAP_FLAG);
+        final Paint taglinePaint = new Paint(Paint.ANTI_ALIAS_FLAG | Paint.SUBPIXEL_TEXT_FLAG);
         final RectF artworkRect = new RectF();
+        final String tagline;
         Bitmap artwork;
         final Matrix sparkleMatrix = new Matrix();
         RadialGradient sparkleShader;
         float progress;
         SplashView() {
             super(MyRingSplashActivity.this);
+            tagline = getLocalizedSplashTagline();
+            taglinePaint.setColor(Color.rgb(222, 185, 255));
+            taglinePaint.setTypeface(Typeface.create("sans-serif-light", Typeface.NORMAL));
+            taglinePaint.setTextAlign(Paint.Align.CENTER);
             IMAGE_EXECUTOR.execute(() -> {
                 Bitmap loaded = null;
-                try (InputStream input = getAssets().open("myring_splash_art.jpg")) {
+                try (InputStream input = getAssets().open("myring_splash_art_localized.png")) {
                     loaded = BitmapFactory.decodeStream(input);
                 } catch (IOException ignored) { }
                 Bitmap result = loaded;
@@ -117,6 +129,8 @@ public class MyRingSplashActivity extends Activity {
             paint.setShader(null);
             paint.setColor(Color.WHITE);
             canvas.drawBitmap(artwork, null, artworkRect, paint);
+            taglinePaint.setTextSize(42f * s);
+            canvas.drawText(tagline, left + artwork.getWidth() * s / 2f, top + 1177f * s, taglinePaint);
             // Orbit sparkle around the artwork's circular halo.
             float theta = (float) (-Math.PI / 3 + Math.PI * 2 * progress);
             float x = left + (450f + 315f * (float) Math.cos(theta)) * s;
@@ -131,5 +145,22 @@ public class MyRingSplashActivity extends Activity {
             paint.setColor(Color.WHITE);
             canvas.drawCircle(x, y, 2f * unit, paint);
         }
+    }
+
+    private String getLocalizedSplashTagline() {
+        LocaleListCompat appLocales = AppCompatDelegate.getApplicationLocales();
+        if (appLocales.isEmpty()) {
+            return getString(R.string.splash_tagline);
+        }
+
+        Locale appLocale = appLocales.get(0);
+        if (appLocale == null) {
+            return getString(R.string.splash_tagline);
+        }
+
+        Configuration localizedConfiguration = new Configuration(getResources().getConfiguration());
+        localizedConfiguration.setLocale(appLocale);
+        Context localizedContext = createConfigurationContext(localizedConfiguration);
+        return localizedContext.getString(R.string.splash_tagline);
     }
 }

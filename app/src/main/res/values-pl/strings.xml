@@ -31,6 +31,7 @@
     <string name="app_lock_tools_toggle_off">Blokada: Wyłączona</string>
     <string name="app_lock_tools_toggle_on">Blokada: Włączona</string>
     <string name="app_name">MyRingReminder</string>
+    <string name="splash_tagline">Twój cykl. Twój rytm.</string>
 
     <!-- Section Headers -->
     <string name="section_advanced">Zaawansowane</string>

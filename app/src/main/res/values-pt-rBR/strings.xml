@@ -31,6 +31,7 @@
     <string name="app_lock_tools_toggle_off">Bloqueio do app: Desativado</string>
     <string name="app_lock_tools_toggle_on">Bloqueio do app: Ativado</string>
     <string name="app_name">MyRingReminder</string>
+    <string name="splash_tagline">Seu ciclo. Seu ritmo.</string>
 
     <!-- Section Headers -->
     <string name="section_advanced">Avançado</string>

@@ -31,6 +31,7 @@
     <string name="app_lock_tools_toggle_off">App-Sperre: Aus</string>
     <string name="app_lock_tools_toggle_on">App-Sperre: Ein</string>
     <string name="app_name">MyRingReminder</string>
+    <string name="splash_tagline">Dein Zyklus. Dein Rhythmus.</string>
 
     <!-- Section Headers -->
     <string name="section_advanced">Erweitert</string>

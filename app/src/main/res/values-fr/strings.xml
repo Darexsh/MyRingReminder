@@ -31,6 +31,7 @@
     <string name="app_lock_tools_toggle_off">Verrouillage : Désactivé</string>
     <string name="app_lock_tools_toggle_on">Verrouillage : Activé</string>
     <string name="app_name">MyRingReminder</string>
+    <string name="splash_tagline">Votre cycle. Votre rythme.</string>
 
     <!-- Section Headers -->
     <string name="section_advanced">Avancé</string>

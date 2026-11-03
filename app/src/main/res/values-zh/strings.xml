@@ -31,6 +31,7 @@
     <string name="app_lock_tools_toggle_off">应用锁：关闭</string>
     <string name="app_lock_tools_toggle_on">应用锁：开启</string>
     <string name="app_name">MyRingReminder</string>
+    <string name="splash_tagline">你的周期，你的节奏。</string>
 
     <!-- Section Headers -->
     <string name="section_advanced">高级</string>

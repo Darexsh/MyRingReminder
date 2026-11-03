@@ -31,6 +31,7 @@
     <string name="app_lock_tools_toggle_off">Защита: Выкл</string>
     <string name="app_lock_tools_toggle_on">Защита: Вкл</string>
     <string name="app_name">MyRingReminder</string>
+    <string name="splash_tagline">Твой цикл. Твой ритм.</string>
 
     <!-- Section Headers -->
     <string name="section_advanced">Дополнительно</string>

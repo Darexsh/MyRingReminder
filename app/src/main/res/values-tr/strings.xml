@@ -31,6 +31,7 @@
     <string name="app_lock_tools_toggle_off">Uygulama kilidi: Kapalı</string>
     <string name="app_lock_tools_toggle_on">Uygulama kilidi: Açık</string>
     <string name="app_name">MyRingReminder</string>
+    <string name="splash_tagline">Döngün. Ritmin.</string>
 
     <!-- Section Headers -->
     <string name="section_advanced">Gelişmiş</string>
