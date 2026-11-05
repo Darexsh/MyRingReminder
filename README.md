@@ -9,7 +9,7 @@
 
 ![Projekt-Status](https://img.shields.io/badge/Status-Aktiv-brightgreen)
 ![License](https://img.shields.io/badge/License-NonCommercial-blue)
-![Version](https://img.shields.io/badge/Version-1.3.8-orange)
+![Version](https://img.shields.io/badge/Version-1.3.8.3-orange)
 
 [![Telegram Bot](https://img.shields.io/badge/Telegram-Bot-2AABEE?logo=telegram&logoColor=white)](https://t.me/darexsh_bot)
 [![Buy Me a Coffee](https://img.shields.io/badge/Buy%20Me%20a%20Coffee-yellow?logo=buy-me-a-coffee)](https://buymeacoffee.com/darexsh)
@@ -52,11 +52,11 @@ It combines cycle timing, reminders, period tracking during the ring-free window
 * **Cycle Tracking**: Visualize insertion, removal, ring-free, and active days with color-coded calendar highlights, plus quick legend recoloring.
 * **Reminders**: Set custom lead times for insertion and removal reminders, with automatic rescheduling and vibrating notifications.
 * **Cycle History**: Review recorded cycles with month grouping, newest/oldest sorting, a tracked-cycle subtitle, clear/recreate controls, and rebuild support that respects saved special cases.
-* **Notes**: Keep private notebook-style notes with autosave, character counter, and quick delete.
+* **Notes**: Keep private notebook-style notes featuring a realistic lined paper look, autosave, character counter, timestamp tracking, and quick delete.
 
 ### Period Tracking
 
-* **Period Tracking (Ring-Free Window)**: Add or edit period entries during the ring-free week and ±4 days, including bleeding intensity, pain level, symptoms, and optional start/end markers.
+* **Period Tracking (Ring-Free Window)**: Add or edit period entries during the ring-free week and ±4 days, including bleeding intensity, pain level, symptoms, and optional start (`S`) / end (`E`) markers displayed directly in the calendar alongside color-coded dot indicators.
 * **Period Details & PDF Export**: Open a dedicated details view for months with entries, switch between 3/6/12-month or full-history ranges, and export a polished PDF report with summary cards, highlights, a 3-column daily overview, and an extended notes area.
 * **Search / Filter in Period Details**: Narrow entries live by text and quick filters such as symptoms, pain, and start/end markers across the currently selected range, including full-history view.
 
@@ -67,13 +67,17 @@ It combines cycle timing, reminders, period tracking during the ring-free window
 * **Pause Ring Use**: Set planned ring use to inactive for longer breaks, such as family planning, while keeping history, notes, period entries, settings, and backups intact.
 * **Special Cases Menu (Home)**: Access “Wear ring longer” and “Skip ring-free week” quickly from a compact, auto-hiding Home action menu.
 * **Ring Supply Tracker**: Keep track of how many future rings are still available, show the current supply directly on the Home screen, decrease stock automatically when a new ring is inserted, and optionally receive a supply update notification after each counted insertion plus a one-week prescription follow-up when only one ring remains.
+* **Rocket Easter Egg**: Long-press the day counter on the Home screen to launch a short rocket and fireworks animation.
 
 ### Convenience & Personalization
 
 * **Backup / Restore**: Export and import local app data including settings, notes, cycle history, period tracking, and saved special cases, with validation and a readable restore preview.
 * **Home Screen Widgets**: Choose between a small `2x1` widget, a compact `3x1` status widget, and a larger detailed widget for quick at-a-glance status, all color-synced with app settings. When Ring Supply tracking is enabled, the compact and large widgets also show the current saved supply.
+* **Launcher Shortcuts**: On supported launchers, long-press the app icon to open Calendar, Cycles, Ring supply settings, or Notes directly.
 * **Refined Home Status View**: See a clearer main status ring with subtle phase labeling, improved event hierarchy, cleaner spacing, and conditional inner particle effects that adapt to the current cycle phase.
-* **Customization**: Adjust cycle settings, reminder times, language, background image, calendar range, and accent colors through a grouped settings layout with modern list-style cards, including matching notification and background tools, plus widget, home ring, and calendar personalization.
+* **Home Particle Animation**: Choose **Automatic**, **Reduced**, or **Off** in Settings. Reduced shows fewer particles while keeping the device's automatic frame pacing.
+* **Animated Splash Screen**: See a short branded animation when opening the app.
+* **Customization**: Adjust cycle settings, reminder times, language, background image, calendar range, and custom accent colors (such as dynamic green, purple, or blue tones) through a grouped settings layout with modern list-style cards, including matching notification and background tools, plus widget, home ring, and calendar personalization.
 * **Enhanced Calendar Navigation**: Move through months with arrows, jump directly by tapping the month header, and browse without a fixed scrolling limit.
 * **Language Mode**: Choose between multiple app languages or **System Default**, with English fallback if the device language is unsupported.
 * **App Lock**: Optional biometric or device-credential protection with configurable auto-lock delay.
@@ -149,7 +153,7 @@ An overview of the current visual experience across the app:
 ### 1. Set up the basics
 
 * Open **Settings** and use the grouped cards to choose the insertion date, insertion time, cycle length, and reminder lead times.
-* Optionally adjust language, background image, colors, calendar range, and other personalization options.
+* Optionally adjust language, background image, colors, calendar range, particle animation mode, and other personalization options.
 * If needed, restart the welcome tour from **Settings → Advanced**.
 
 ### 2. Use the calendar as your main view
@@ -226,6 +230,11 @@ An overview of the current visual experience across the app:
 * Open **Settings → Advanced → App lock**.
 * In the popup, enable or disable app lock and set the auto-lock delay.
 * Unlock uses biometric authentication or device PIN/pattern/password.
+
+### Quick access and easter egg
+
+* On supported launchers, long-press the MyRingReminder app icon to open Calendar, Cycles, Ring supply settings, or Notes directly.
+* On the Home screen, long-press the day counter to trigger the rocket and fireworks easter egg.
 
 * * *
 
