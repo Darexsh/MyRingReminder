@@ -33,6 +33,16 @@ import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
 public class MyRingSplashActivity extends Activity {
+    private static final float ORBIT_CENTER_X = 450f;
+    private static final float ORBIT_CENTER_Y = 720f;
+    private static final float ORIGINAL_SPARKLE_X = 668f;
+    private static final float ORIGINAL_SPARKLE_Y = 492f;
+    private static final float ORBIT_RADIUS = (float) Math.hypot(
+            ORIGINAL_SPARKLE_X - ORBIT_CENTER_X,
+            ORIGINAL_SPARKLE_Y - ORBIT_CENTER_Y);
+    private static final float ORBIT_START_ANGLE = (float) Math.atan2(
+            ORIGINAL_SPARKLE_Y - ORBIT_CENTER_Y,
+            ORIGINAL_SPARKLE_X - ORBIT_CENTER_X);
     private static final ExecutorService IMAGE_EXECUTOR = Executors.newSingleThreadExecutor(task -> {
         Thread thread = new Thread(() -> {
             Process.setThreadPriority(Process.THREAD_PRIORITY_BACKGROUND);
@@ -132,9 +142,9 @@ public class MyRingSplashActivity extends Activity {
             taglinePaint.setTextSize(42f * s);
             canvas.drawText(tagline, left + artwork.getWidth() * s / 2f, top + 1177f * s, taglinePaint);
             // Orbit sparkle around the artwork's circular halo.
-            float theta = (float) (-Math.PI / 3 + Math.PI * 2 * progress);
-            float x = left + (450f + 315f * (float) Math.cos(theta)) * s;
-            float y = top + (720f + 315f * (float) Math.sin(theta)) * s;
+            float theta = (float) (ORBIT_START_ANGLE + Math.PI * 2 * progress);
+            float x = left + (ORBIT_CENTER_X + ORBIT_RADIUS * (float) Math.cos(theta)) * s;
+            float y = top + (ORBIT_CENTER_Y + ORBIT_RADIUS * (float) Math.sin(theta)) * s;
             float unit = Math.min(w / 360f, h / 640f);
             float radius = 19f * unit;
             sparkleMatrix.setTranslate(x, y);
