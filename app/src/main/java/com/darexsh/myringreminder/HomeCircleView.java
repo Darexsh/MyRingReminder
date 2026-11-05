@@ -9,6 +9,7 @@ import android.graphics.Path;
 import android.graphics.Paint;
 import android.graphics.RectF;
 import android.graphics.SweepGradient;
+import android.os.Build;
 import android.os.SystemClock;
 import android.util.AttributeSet;
 import android.view.View;
@@ -18,6 +19,9 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 
 public class HomeCircleView extends View {
+    private static final int CALM_PARTICLE_COUNT = 16;
+    private static final int PERIOD_PARTICLE_COUNT = 18;
+
     public static final int STYLE_CLASSIC = 0;
     public static final int STYLE_THIN = 1;
     public static final int STYLE_SEGMENTED = 2;
@@ -38,8 +42,22 @@ public class HomeCircleView extends View {
     private final Paint edgeGlowPaint = new Paint(Paint.ANTI_ALIAS_FLAG);
     private final Paint edgeCorePaint = new Paint(Paint.ANTI_ALIAS_FLAG);
     private final Paint edgeParticlePaint = new Paint(Paint.ANTI_ALIAS_FLAG);
+    private final Paint progressGlowPaint = new Paint(Paint.ANTI_ALIAS_FLAG);
     private final Paint periodDropPaint = new Paint(Paint.ANTI_ALIAS_FLAG);
     private final Paint calmParticlePaint = new Paint(Paint.ANTI_ALIAS_FLAG);
+    private final float[] calmLaneSeeds = new float[CALM_PARTICLE_COUNT];
+    private final float[] calmSpeeds = new float[CALM_PARTICLE_COUNT];
+    private final float[] calmOffsets = new float[CALM_PARTICLE_COUNT];
+    private final float[] calmSwayFactors = new float[CALM_PARTICLE_COUNT];
+    private final float[] calmRadii = new float[CALM_PARTICLE_COUNT];
+    private final int[] calmGlowAlphas = new int[CALM_PARTICLE_COUNT];
+    private final int[] calmCoreAlphas = new int[CALM_PARTICLE_COUNT];
+    private final float[] periodLaneSeeds = new float[PERIOD_PARTICLE_COUNT];
+    private final float[] periodSpeeds = new float[PERIOD_PARTICLE_COUNT];
+    private final float[] periodOffsets = new float[PERIOD_PARTICLE_COUNT];
+    private final float[] periodDriftFactors = new float[PERIOD_PARTICLE_COUNT];
+    private final float[] periodDropHeights = new float[PERIOD_PARTICLE_COUNT];
+    private final int[] periodAlphas = new int[PERIOD_PARTICLE_COUNT];
     private final Path innerRainClipPath = new Path();
     private final RectF arcRect = new RectF();
     private final Matrix gradientMatrix = new Matrix();
@@ -90,9 +108,32 @@ public class HomeCircleView extends View {
         edgeGlowPaint.setStyle(Paint.Style.FILL);
         edgeCorePaint.setStyle(Paint.Style.FILL);
         edgeParticlePaint.setStyle(Paint.Style.FILL);
+        progressGlowPaint.setStyle(Paint.Style.STROKE);
+        progressGlowPaint.setStrokeCap(Paint.Cap.ROUND);
         periodDropPaint.setStyle(Paint.Style.FILL);
         calmParticlePaint.setStyle(Paint.Style.FILL);
-        setLayerType(LAYER_TYPE_SOFTWARE, null);
+        initializeParticleMotion();
+    }
+
+    private void initializeParticleMotion() {
+        for (int i = 0; i < CALM_PARTICLE_COUNT; i++) {
+            calmLaneSeeds[i] = (i + 0.5f) / CALM_PARTICLE_COUNT;
+            calmSpeeds[i] = 0.08f + (pseudoRandomUnit(i * 41 + 9) * 0.08f);
+            calmOffsets[i] = pseudoRandomUnit(i * 67 + 15);
+            calmSwayFactors[i] = (pseudoRandomUnit(i * 23 + 4) - 0.5f) * 0.2f;
+            calmRadii[i] = dpToPx(2.4f) + (pseudoRandomUnit(i * 31 + 6) * dpToPx(1.8f));
+            calmGlowAlphas[i] = 44 + Math.round(pseudoRandomUnit(i * 79 + 12) * 42f);
+            calmCoreAlphas[i] = 72 + Math.round(pseudoRandomUnit(i * 91 + 3) * 56f);
+        }
+
+        for (int i = 0; i < PERIOD_PARTICLE_COUNT; i++) {
+            periodLaneSeeds[i] = (i + 0.5f) / PERIOD_PARTICLE_COUNT;
+            periodSpeeds[i] = 0.18f + (pseudoRandomUnit(i * 53 + 7) * 0.16f);
+            periodOffsets[i] = pseudoRandomUnit(i * 71 + 19);
+            periodDriftFactors[i] = (pseudoRandomUnit(i * 29 + 5) - 0.5f) * 0.16f;
+            periodDropHeights[i] = dpToPx(7.5f) + (pseudoRandomUnit(i * 17 + 3) * dpToPx(4.5f));
+            periodAlphas[i] = 108 + Math.round(pseudoRandomUnit(i * 97 + 13) * 82f);
+        }
     }
 
     public void setStyle(int style) {
@@ -191,6 +232,8 @@ public class HomeCircleView extends View {
         float progressFraction = hasAnimatedProgress
                 ? animatedProgressFraction
                 : clampProgressFraction(progress);
+        boolean useManualGlow = Build.VERSION.SDK_INT < Build.VERSION_CODES.P
+                && canvas.isHardwareAccelerated();
         if (style == STYLE_SEGMENTED) {
             trackPaint.setStrokeWidth(thickness);
             progressPaint.setStrokeWidth(thickness);
@@ -200,7 +243,7 @@ public class HomeCircleView extends View {
             }
             if (animationEnabled) {
                 drawInnerParticleEffect(canvas, thickness);
-                postInvalidateDelayed(33L);
+                scheduleParticleFrame(canvas);
             }
             return;
         }
@@ -220,24 +263,34 @@ public class HomeCircleView extends View {
                 trackPaint.setColor(Color.TRANSPARENT);
                 break;
             case STYLE_GLOW:
-                progressPaint.setShadowLayer(dpToPx(10), 0f, 0f, withAlpha(indicatorColor, 220));
+                if (!useManualGlow) {
+                    progressPaint.setShadowLayer(dpToPx(10), 0f, 0f, withAlpha(indicatorColor, 220));
+                }
                 break;
             case STYLE_GRADIENT_GLOW:
                 ensureGradientShaders();
                 progressPaint.setShader(gradientGlowShader);
-                progressPaint.setShadowLayer(dpToPx(10), 0f, 0f, withAlpha(indicatorColor, 220));
+                if (!useManualGlow) {
+                    progressPaint.setShadowLayer(dpToPx(10), 0f, 0f, withAlpha(indicatorColor, 220));
+                }
                 break;
             case STYLE_PULSE_LIGHT:
-                progressPaint.setShadowLayer(dpToPx(8 + 6 * pulsePhase), 0f, 0f,
-                        withAlpha(indicatorColor, 120 + Math.round(70 * pulsePhase)));
+                if (!useManualGlow) {
+                    progressPaint.setShadowLayer(dpToPx(8 + 6 * pulsePhase), 0f, 0f,
+                            withAlpha(indicatorColor, 120 + Math.round(70 * pulsePhase)));
+                }
                 break;
             case STYLE_PULSE_MEDIUM:
-                progressPaint.setShadowLayer(dpToPx(12 + 10 * pulsePhase), 0f, 0f,
-                        withAlpha(indicatorColor, 160 + Math.round(90 * pulsePhase)));
+                if (!useManualGlow) {
+                    progressPaint.setShadowLayer(dpToPx(12 + 10 * pulsePhase), 0f, 0f,
+                            withAlpha(indicatorColor, 160 + Math.round(90 * pulsePhase)));
+                }
                 break;
             case STYLE_PULSE_STRONG:
-                progressPaint.setShadowLayer(dpToPx(18 + 14 * pulsePhase), 0f, 0f,
-                        withAlpha(indicatorColor, 190 + Math.round(110 * pulsePhase)));
+                if (!useManualGlow) {
+                    progressPaint.setShadowLayer(dpToPx(18 + 14 * pulsePhase), 0f, 0f,
+                            withAlpha(indicatorColor, 190 + Math.round(110 * pulsePhase)));
+                }
                 break;
             case STYLE_CLASSIC:
             default:
@@ -258,14 +311,16 @@ public class HomeCircleView extends View {
             canvas.drawArc(arcRect, 0f, 360f, false, trackPaint);
         }
         if (sweep > 0f) {
+            if (useManualGlow) {
+                drawProgressGlowFallback(canvas, thickness, sweep);
+            }
             canvas.drawArc(arcRect, -90f, sweep, false, progressPaint);
             drawLeadingEdgeHighlight(canvas, thickness, progressFraction);
         }
 
         if (animationEnabled) {
             drawInnerParticleEffect(canvas, thickness);
-            // Keep ambient particles smooth without redrawing on every display refresh.
-            postInvalidateDelayed(33L);
+            scheduleParticleFrame(canvas);
         }
 
         if (style == STYLE_MARKER) {
@@ -362,20 +417,56 @@ public class HomeCircleView extends View {
         float tangentX = (float) -Math.sin(angle);
         float tangentY = (float) Math.cos(angle);
 
+        // Layer a few translucent circles instead of blurring a software shadow each frame.
+        edgeGlowPaint.setColor(withAlpha(indicatorColor, 22));
+        canvas.drawCircle(x, y, glowRadius * 1.75f, edgeGlowPaint);
+        edgeGlowPaint.setColor(withAlpha(indicatorColor, 42));
+        canvas.drawCircle(x, y, glowRadius * 1.35f, edgeGlowPaint);
         edgeGlowPaint.setColor(withAlpha(indicatorColor, 150));
-        edgeGlowPaint.setShadowLayer(thickness * 0.75f, 0f, 0f, withAlpha(indicatorColor, 210));
         canvas.drawCircle(x, y, glowRadius, edgeGlowPaint);
 
-        edgeCorePaint.setShadowLayer(0f, 0f, 0f, Color.TRANSPARENT);
         edgeCorePaint.setColor(Color.WHITE);
         canvas.drawCircle(x, y, coreRadius, edgeCorePaint);
 
-        edgeParticlePaint.setShadowLayer(0f, 0f, 0f, Color.TRANSPARENT);
         edgeParticlePaint.setColor(withAlpha(indicatorColor, 210));
         canvas.drawCircle(x - tangentX * (thickness * 0.58f), y - tangentY * (thickness * 0.58f),
                 particleRadius * 1.45f, edgeParticlePaint);
         canvas.drawCircle(x - tangentX * (thickness * 1.02f), y - tangentY * (thickness * 1.02f),
                 particleRadius, edgeParticlePaint);
+    }
+
+    private void drawProgressGlowFallback(@NonNull Canvas canvas, float thickness, float sweep) {
+        float spread;
+        int shadowAlpha;
+        switch (style) {
+            case STYLE_GLOW:
+            case STYLE_GRADIENT_GLOW:
+                spread = dpToPx(10f);
+                shadowAlpha = 220;
+                break;
+            case STYLE_PULSE_LIGHT:
+                spread = dpToPx(8f + 6f * pulsePhase);
+                shadowAlpha = 120 + Math.round(70f * pulsePhase);
+                break;
+            case STYLE_PULSE_MEDIUM:
+                spread = dpToPx(12f + 10f * pulsePhase);
+                shadowAlpha = 160 + Math.round(90f * pulsePhase);
+                break;
+            case STYLE_PULSE_STRONG:
+                spread = dpToPx(18f + 14f * pulsePhase);
+                shadowAlpha = 190 + Math.round(110f * pulsePhase);
+                break;
+            default:
+                return;
+        }
+
+        progressGlowPaint.setShader(null);
+        progressGlowPaint.setColor(withAlpha(indicatorColor, Math.max(12, shadowAlpha / 8)));
+        progressGlowPaint.setStrokeWidth(thickness + spread * 2f);
+        canvas.drawArc(arcRect, -90f, sweep, false, progressGlowPaint);
+        progressGlowPaint.setColor(withAlpha(indicatorColor, Math.max(20, shadowAlpha / 4)));
+        progressGlowPaint.setStrokeWidth(thickness + spread);
+        canvas.drawArc(arcRect, -90f, sweep, false, progressGlowPaint);
     }
 
     private void drawInnerParticleEffect(@NonNull Canvas canvas, float thickness) {
@@ -404,11 +495,11 @@ public class HomeCircleView extends View {
         int whiteAlpha = 18 + Math.round(pulse * 14f);
 
         calmParticlePaint.setStyle(Paint.Style.FILL);
-        calmParticlePaint.setShadowLayer(dpToPx(18f), 0f, 0f, withAlpha(indicatorColor, 60 + Math.round(pulse * 42f)));
+        calmParticlePaint.setColor(withAlpha(indicatorColor, 12 + Math.round(pulse * 16f)));
+        canvas.drawCircle(centerX, centerY, radius * 1.65f, calmParticlePaint);
         calmParticlePaint.setColor(withAlpha(indicatorColor, accentAlpha));
         canvas.drawCircle(centerX, centerY, radius, calmParticlePaint);
 
-        calmParticlePaint.setShadowLayer(0f, 0f, 0f, Color.TRANSPARENT);
         calmParticlePaint.setColor(withAlpha(0xFFFFFFFF, whiteAlpha));
         canvas.drawCircle(centerX, centerY, radius * 0.68f, calmParticlePaint);
     }
@@ -426,18 +517,14 @@ public class HomeCircleView extends View {
         innerRainClipPath.addCircle(centerX, centerY, clipRadius, Path.Direction.CW);
         canvas.clipPath(innerRainClipPath);
 
-        final int particleCount = 11;
-        for (int i = 0; i < particleCount; i++) {
-            float laneSeed = (i + 0.5f) / particleCount;
-            float speed = 0.18f + (pseudoRandomUnit(i * 53 + 7) * 0.16f);
-            float offset = pseudoRandomUnit(i * 71 + 19);
-            float drift = (pseudoRandomUnit(i * 29 + 5) - 0.5f) * clipRadius * 0.16f;
-            float progress = (offset + ((elapsed / 1000f) * speed)) % 1f;
-            float x = centerX - clipRadius + (laneSeed * clipRadius * 2f) + drift;
+        for (int i = 0; i < PERIOD_PARTICLE_COUNT; i++) {
+            float progress = (periodOffsets[i] + ((elapsed / 1000f) * periodSpeeds[i])) % 1f;
+            float x = centerX - clipRadius + (periodLaneSeeds[i] * clipRadius * 2f)
+                    + periodDriftFactors[i] * clipRadius;
             float y = centerY - clipRadius + (progress * clipRadius * 2f);
-            float dropHeight = dpToPx(7.5f) + (pseudoRandomUnit(i * 17 + 3) * dpToPx(4.5f));
+            float dropHeight = periodDropHeights[i];
             float dropWidth = dropHeight * 0.68f;
-            int alpha = 108 + Math.round(pseudoRandomUnit(i * 97 + 13) * 82f);
+            int alpha = periodAlphas[i];
             periodDropPaint.setColor(withAlpha(0xFF7A1026, alpha));
             canvas.drawOval(x - dropWidth / 2f, y - dropHeight / 2f, x + dropWidth / 2f, y + dropHeight / 2f, periodDropPaint);
             periodDropPaint.setColor(withAlpha(0xFFB3203E, Math.min(255, alpha + 26)));
@@ -459,30 +546,30 @@ public class HomeCircleView extends View {
         innerRainClipPath.addCircle(centerX, centerY, clipRadius, Path.Direction.CW);
         canvas.clipPath(innerRainClipPath);
 
-        final int particleCount = 10;
-        for (int i = 0; i < particleCount; i++) {
-            float laneSeed = (i + 0.5f) / particleCount;
-            float speed = 0.08f + (pseudoRandomUnit(i * 41 + 9) * 0.08f);
-            float offset = pseudoRandomUnit(i * 67 + 15);
-            float sway = (pseudoRandomUnit(i * 23 + 4) - 0.5f) * clipRadius * 0.2f;
-            float progress = (offset + ((elapsed / 1000f) * speed)) % 1f;
-            float x = centerX - clipRadius + (laneSeed * clipRadius * 2f)
+        for (int i = 0; i < CALM_PARTICLE_COUNT; i++) {
+            float progress = (calmOffsets[i] + ((elapsed / 1000f) * calmSpeeds[i])) % 1f;
+            float sway = calmSwayFactors[i] * clipRadius;
+            float x = centerX - clipRadius + (calmLaneSeeds[i] * clipRadius * 2f)
                     + (float) Math.sin((elapsed / 700f) + i) * sway;
             float y = centerY + clipRadius - (progress * clipRadius * 2f);
-            float particleRadius = dpToPx(2.4f) + (pseudoRandomUnit(i * 31 + 6) * dpToPx(1.8f));
-            int glowAlpha = 44 + Math.round(pseudoRandomUnit(i * 79 + 12) * 42f);
-            int coreAlpha = 72 + Math.round(pseudoRandomUnit(i * 91 + 3) * 56f);
+            float particleRadius = calmRadii[i];
 
-            calmParticlePaint.setColor(withAlpha(indicatorColor, glowAlpha));
-            calmParticlePaint.setShadowLayer(dpToPx(6f), 0f, 0f, withAlpha(indicatorColor, 90));
+            calmParticlePaint.setColor(withAlpha(indicatorColor, calmGlowAlphas[i]));
             canvas.drawCircle(x, y, particleRadius * 1.6f, calmParticlePaint);
 
-            calmParticlePaint.setShadowLayer(0f, 0f, 0f, Color.TRANSPARENT);
-            calmParticlePaint.setColor(withAlpha(0xFFFFFFFF, coreAlpha));
+            calmParticlePaint.setColor(withAlpha(0xFFFFFFFF, calmCoreAlphas[i]));
             canvas.drawCircle(x, y, particleRadius, calmParticlePaint);
         }
 
         canvas.restoreToCount(saveCount);
+    }
+
+    private void scheduleParticleFrame(@NonNull Canvas canvas) {
+        if (canvas.isHardwareAccelerated()) {
+            postInvalidateOnAnimation();
+        } else {
+            postInvalidateDelayed(33L);
+        }
     }
 
     private float getParticleClipRadius(float thickness) {

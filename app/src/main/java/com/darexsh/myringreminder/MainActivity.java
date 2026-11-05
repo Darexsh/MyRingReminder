@@ -38,7 +38,9 @@ import androidx.lifecycle.ViewModelProvider;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.jakewharton.threetenabp.AndroidThreeTen;
 import android.view.View;
+import android.view.ViewPropertyAnimator;
 import android.view.ViewGroup;
+import android.view.animation.PathInterpolator;
 import android.widget.ImageView;
 import android.widget.ImageButton;
 import android.widget.ScrollView;
@@ -65,6 +67,7 @@ public class MainActivity extends AppCompatActivity {
     private static final String KEY_WELCOME_SHOWN = "welcome_shown";
     private static final String KEY_APP_LOCK_LAST_BACKGROUND_AT = "app_lock_last_background_at";
     private static final long BACK_PRESS_WINDOW_MS = 2000;
+    private static final long NAVIGATION_ANIMATION_DURATION_MS = 200L;
     private static final String TAG = "MainActivity";
     private static final String NOTIFICATION_TAG = "ReminderChannel";
     private FragmentManager fragmentManager;
@@ -120,7 +123,6 @@ public class MainActivity extends AppCompatActivity {
                     public void onFragmentResumed(@NonNull FragmentManager fm,
                                                   @NonNull Fragment fragment) {
                         if (fragment.getId() == R.id.fragment_container) {
-                            clearFragmentTransitionState(fragment);
                             updateNotesButtonVisibility();
                         }
                     }
@@ -679,7 +681,14 @@ public class MainActivity extends AppCompatActivity {
         clearFragmentTransitionState(targetFragment);
 
         FragmentTransaction transaction = fragmentManager.beginTransaction();
-        applyFragmentAnimation(transaction, targetFragment);
+        int deferredEnterAnimation = addToBackStack
+                ? 0
+                : resolveFragmentEnterAnimation(currentFragment, targetFragment);
+        if (addToBackStack) {
+            applyFragmentAnimation(transaction, targetFragment);
+        } else {
+            transaction.setCustomAnimations(0, 0, 0, 0);
+        }
         if (currentFragment != null) {
             if (!addToBackStack
                     && currentFragment instanceof SettingsFragment
@@ -712,9 +721,68 @@ public class MainActivity extends AppCompatActivity {
         transaction.setMaxLifecycle(targetFragment, Lifecycle.State.RESUMED);
         if (addToBackStack) {
             transaction.addToBackStack(null);
+        } else if (deferredEnterAnimation != 0) {
+            Fragment enteringFragment = targetFragment;
+            int enterAnimation = deferredEnterAnimation;
+            transaction.runOnCommit(() -> startFragmentEnterAnimation(enteringFragment, enterAnimation));
         }
         transaction.setReorderingAllowed(true);
         transaction.commit();
+    }
+
+    private void startFragmentEnterAnimation(@NonNull Fragment fragment, int animationResource) {
+        View enteringView = fragment.getView();
+        if (enteringView == null || !fragment.isAdded() || fragment.isHidden()) {
+            return;
+        }
+        clearFragmentTransitionState(fragment);
+
+        int width = enteringView.getWidth();
+        int height = enteringView.getHeight();
+        if (enteringView.getParent() instanceof View) {
+            View parent = (View) enteringView.getParent();
+            if (width <= 0) {
+                width = parent.getWidth();
+            }
+            if (height <= 0) {
+                height = parent.getHeight();
+            }
+        }
+        if (width <= 0) {
+            width = getResources().getDisplayMetrics().widthPixels;
+        }
+        if (height <= 0) {
+            height = getResources().getDisplayMetrics().heightPixels;
+        }
+
+        ViewPropertyAnimator animator = enteringView.animate()
+                .setDuration(NAVIGATION_ANIMATION_DURATION_MS)
+                .setInterpolator(new PathInterpolator(0.4f, 0f, 0.2f, 1f));
+        if (animationResource == R.anim.slide_in_right) {
+            enteringView.setTranslationX(width * 0.08f);
+            animator.translationX(0f);
+        } else if (animationResource == R.anim.slide_in_left) {
+            enteringView.setTranslationX(-width * 0.08f);
+            animator.translationX(0f);
+        } else if (animationResource == R.anim.slide_in_up) {
+            enteringView.setTranslationY(height * 0.07f);
+            animator.translationY(0f);
+        } else if (animationResource == R.anim.zoom_in_fade_in) {
+            enteringView.setScaleX(0.97f);
+            enteringView.setScaleY(0.97f);
+            enteringView.setAlpha(0f);
+            animator.scaleX(1f).scaleY(1f).alpha(1f);
+        } else if (animationResource == R.anim.pop_in) {
+            enteringView.setScaleX(0.97f);
+            enteringView.setScaleY(0.97f);
+            animator.scaleX(1f).scaleY(1f);
+        } else if (animationResource == R.anim.rotate_in_fade_in) {
+            enteringView.setRotation(-1.5f);
+            animator.rotation(0f);
+        } else if (animationResource == R.anim.fade_in_fast) {
+            enteringView.setAlpha(0f);
+            animator.alpha(1f);
+        }
     }
 
     private void clearFragmentTransitionState(@Nullable Fragment fragment) {
@@ -722,6 +790,7 @@ public class MainActivity extends AppCompatActivity {
             return;
         }
         View view = fragment.getView();
+        view.animate().cancel();
         view.clearAnimation();
         view.setAlpha(1f);
         view.setTranslationX(0f);
@@ -847,6 +916,38 @@ public class MainActivity extends AppCompatActivity {
                     0
             );
         }
+    }
+
+    private int resolveFragmentEnterAnimation(@Nullable Fragment currentFragment,
+                                             @NonNull Fragment targetFragment) {
+        if (currentFragment == null) {
+            return R.anim.fade_in_fast;
+        }
+        if (navigationAnimationStyle == SettingsRepository.NAV_ANIM_NONE) {
+            return 0;
+        }
+        if (navigationAnimationStyle == SettingsRepository.NAV_ANIM_FADE) {
+            return R.anim.fade_in_fast;
+        }
+        if (navigationAnimationStyle == SettingsRepository.NAV_ANIM_ZOOM) {
+            return R.anim.zoom_in_fade_in;
+        }
+        if (navigationAnimationStyle == SettingsRepository.NAV_ANIM_SLIDE_UP) {
+            return R.anim.slide_in_up;
+        }
+        if (navigationAnimationStyle == SettingsRepository.NAV_ANIM_ROTATE) {
+            return R.anim.rotate_in_fade_in;
+        }
+        if (navigationAnimationStyle == SettingsRepository.NAV_ANIM_POP) {
+            return R.anim.pop_in;
+        }
+
+        int currentOrder = getFragmentOrder(currentFragment);
+        int targetOrder = getFragmentOrder(targetFragment);
+        if (targetOrder == currentOrder) {
+            return R.anim.fade_in_fast;
+        }
+        return targetOrder > currentOrder ? R.anim.slide_in_right : R.anim.slide_in_left;
     }
 
     private int getFragmentOrder(Fragment fragment) {
