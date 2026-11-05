@@ -102,6 +102,7 @@ public class SettingsFragment extends Fragment {
     private TextView tvDebugTimeStatus;
     private SwitchMaterial switchDebugTime;
     private View advancedContent;
+    private ScrollView settingsScroll;
     private android.widget.ImageButton btnAdvancedToggle;
     private TextView btnSettingsInfo;
     private SharedViewModel viewModel;
@@ -262,6 +263,7 @@ public class SettingsFragment extends Fragment {
         View btnUpdateApp = view.findViewById(R.id.btn_update_app);
         View btnAppLock = view.findViewById(R.id.btn_app_lock);
         View btnWelcomeTour = view.findViewById(R.id.btn_welcome_tour);
+        settingsScroll = view.findViewById(R.id.settings_scroll);
         advancedContent = view.findViewById(R.id.advanced_content);
         View advancedHeader = view.findViewById(R.id.advanced_header);
         btnAdvancedToggle = view.findViewById(R.id.btn_advanced_toggle);
@@ -1429,6 +1431,10 @@ public class SettingsFragment extends Fragment {
             advancedContent.setVisibility(View.VISIBLE);
             advancedContent.setAlpha(0f);
             advancedContent.setTranslationY(-offset);
+            if (settingsScroll != null) {
+                settingsScroll.post(() -> settingsScroll.smoothScrollTo(
+                        0, settingsScroll.getChildAt(0).getHeight()));
+            }
             advancedContent.animate()
                     .alpha(1f)
                     .translationY(0f)

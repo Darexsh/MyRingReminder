@@ -50,7 +50,7 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_below="@id/tv_settings_subtitle"
-        android:layout_above="@id/advanced_container"
+        android:layout_alignParentBottom="true"
         android:layout_marginTop="14dp"
         android:layout_marginBottom="12dp">
 
@@ -1123,278 +1123,278 @@
                     </LinearLayout>
                 </com.google.android.material.card.MaterialCardView>
             </LinearLayout>
+            <LinearLayout
+                android:id="@+id/advanced_container"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+
+                <com.google.android.material.card.MaterialCardView
+                    android:id="@+id/advanced_header"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="8dp"
+                    android:layout_marginBottom="8dp"
+                    app:cardBackgroundColor="#B3181B20"
+                    app:strokeColor="#24FFFFFF"
+                    app:strokeWidth="1dp"
+                    app:cardElevation="0dp"
+                    app:cardCornerRadius="18dp">
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:background="?attr/selectableItemBackground"
+                        android:clickable="false"
+                        android:focusable="false"
+                        android:gravity="center_vertical"
+                        android:minHeight="56dp"
+                        android:orientation="horizontal"
+                        android:paddingStart="16dp"
+                        android:paddingTop="14dp"
+                        android:paddingEnd="16dp"
+                        android:paddingBottom="14dp">
+
+                        <TextView
+                            android:id="@+id/tv_settings_advanced"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:text="@string/section_advanced"
+                            android:textSize="15sp"
+                            android:textStyle="bold"
+                            android:textColor="#FFFFFF" />
+
+                        <ImageButton
+                            android:id="@+id/btn_advanced_toggle"
+                            android:layout_width="32dp"
+                            android:layout_height="32dp"
+                            android:background="@null"
+                            android:contentDescription="@string/settings_advanced_toggle_desc"
+                            android:src="@drawable/ic_triangle_down"
+                            app:tint="#FFFFFF" />
+                    </LinearLayout>
+                </com.google.android.material.card.MaterialCardView>
+
+                <com.google.android.material.card.MaterialCardView
+                    android:id="@+id/advanced_content"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:visibility="gone"
+                    android:layout_marginTop="2dp"
+                    app:cardBackgroundColor="#B3181B20"
+                    app:strokeColor="#24FFFFFF"
+                    app:strokeWidth="1dp"
+                    app:cardElevation="0dp"
+                    app:cardCornerRadius="18dp">
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:orientation="vertical">
+
+                            <LinearLayout
+                                android:id="@+id/btn_update_app"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:background="?attr/selectableItemBackground"
+                                android:clickable="true"
+                                android:focusable="true"
+                                android:gravity="center_vertical"
+                                android:minHeight="56dp"
+                                android:orientation="horizontal"
+                                android:paddingStart="16dp"
+                                android:paddingTop="12dp"
+                                android:paddingEnd="16dp"
+                                android:paddingBottom="12dp">
+
+                                <TextView
+                                    android:layout_width="0dp"
+                                    android:layout_height="wrap_content"
+                                    android:layout_weight="1"
+                                    android:text="@string/btn_update_app"
+                                    android:textColor="?attr/colorOnBackground"
+                                    android:textSize="15sp" />
+
+                                <TextView
+                                    android:id="@+id/tv_update_app_chevron"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:layout_marginStart="12dp"
+                                    android:text=">"
+                                    android:textColor="?attr/colorOnBackground"
+                                    android:textSize="15sp" />
+                            </LinearLayout>
+
+                            <View
+                                android:layout_width="match_parent"
+                                android:layout_height="1dp"
+                                android:layout_marginStart="16dp"
+                                android:layout_marginEnd="16dp"
+                                android:background="#20FFFFFF" />
+
+                            <LinearLayout
+                                android:id="@+id/btn_backup_manage"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:background="?attr/selectableItemBackground"
+                                android:clickable="true"
+                                android:focusable="true"
+                                android:gravity="center_vertical"
+                                android:minHeight="56dp"
+                                android:orientation="horizontal"
+                                android:paddingStart="16dp"
+                                android:paddingTop="14dp"
+                                android:paddingEnd="16dp"
+                                android:paddingBottom="14dp">
+
+                                <TextView
+                                    android:layout_width="0dp"
+                                    android:layout_height="wrap_content"
+                                    android:layout_weight="1"
+                                    android:text="@string/btn_backup"
+                                    android:textColor="?attr/colorOnBackground"
+                                    android:textSize="15sp" />
+
+                                <TextView
+                                    android:id="@+id/tv_backup_manage_chevron"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:layout_marginStart="12dp"
+                                    android:text=">"
+                                    android:textColor="?attr/colorOnBackground"
+                                    android:textSize="15sp" />
+                            </LinearLayout>
+
+                            <View
+                                android:layout_width="match_parent"
+                                android:layout_height="1dp"
+                                android:layout_marginStart="16dp"
+                                android:layout_marginEnd="16dp"
+                                android:background="#20FFFFFF" />
+
+                            <LinearLayout
+                                android:id="@+id/btn_app_lock"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:background="?attr/selectableItemBackground"
+                                android:clickable="true"
+                                android:focusable="true"
+                                android:gravity="center_vertical"
+                                android:minHeight="56dp"
+                                android:orientation="horizontal"
+                                android:paddingStart="16dp"
+                                android:paddingTop="14dp"
+                                android:paddingEnd="16dp"
+                                android:paddingBottom="14dp">
+
+                                <TextView
+                                    android:layout_width="0dp"
+                                    android:layout_height="wrap_content"
+                                    android:layout_weight="1"
+                                    android:text="@string/settings_app_lock_label"
+                                    android:textColor="?attr/colorOnBackground"
+                                    android:textSize="15sp" />
+
+                                <TextView
+                                    android:id="@+id/tv_app_lock_value"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:layout_marginStart="12dp"
+                                    android:ellipsize="end"
+                                    android:maxWidth="120dp"
+                                    android:singleLine="true"
+                                    android:textColor="?attr/colorOnBackground"
+                                    android:textSize="14sp" />
+
+                                <TextView
+                                    android:id="@+id/tv_app_lock_chevron"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:layout_marginStart="12dp"
+                                    android:text=">"
+                                    android:textColor="?attr/colorOnBackground"
+                                    android:textSize="15sp" />
+                            </LinearLayout>
+
+                            <View
+                                android:layout_width="match_parent"
+                                android:layout_height="1dp"
+                                android:layout_marginStart="16dp"
+                                android:layout_marginEnd="16dp"
+                                android:background="#20FFFFFF" />
+
+                            <LinearLayout
+                                android:id="@+id/btn_welcome_tour"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:background="?attr/selectableItemBackground"
+                                android:clickable="true"
+                                android:focusable="true"
+                                android:gravity="center_vertical"
+                                android:minHeight="56dp"
+                                android:orientation="horizontal"
+                                android:paddingStart="16dp"
+                                android:paddingTop="14dp"
+                                android:paddingEnd="16dp"
+                                android:paddingBottom="14dp">
+
+                                <TextView
+                                    android:layout_width="0dp"
+                                    android:layout_height="wrap_content"
+                                    android:layout_weight="1"
+                                    android:text="@string/btn_welcome_tour"
+                                    android:textColor="?attr/colorOnBackground"
+                                    android:textSize="15sp" />
+
+                                <TextView
+                                    android:id="@+id/tv_welcome_tour_chevron"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:layout_marginStart="12dp"
+                                    android:text=">"
+                                    android:textColor="?attr/colorOnBackground"
+                                    android:textSize="15sp" />
+                            </LinearLayout>
+
+                            <View
+                                android:layout_width="match_parent"
+                                android:layout_height="1dp"
+                                android:layout_marginStart="16dp"
+                                android:layout_marginEnd="16dp"
+                                android:background="#20FFFFFF" />
+
+                            <LinearLayout
+                                android:id="@+id/btn_reset_app"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:background="?attr/selectableItemBackground"
+                                android:clickable="true"
+                                android:focusable="true"
+                                android:gravity="center"
+                                android:minHeight="56dp"
+                                android:orientation="horizontal"
+                                android:paddingStart="16dp"
+                                android:paddingTop="14dp"
+                                android:paddingEnd="16dp"
+                                android:paddingBottom="14dp">
+
+                                <TextView
+                                    android:id="@+id/tv_reset_app"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:gravity="center"
+                                    android:text="@string/btn_reset_app"
+                                    android:textColor="#D32F2F"
+                                    android:textSize="15sp"
+                                    android:textStyle="bold" />
+                            </LinearLayout>
+                        </LinearLayout>
+                </com.google.android.material.card.MaterialCardView>
+            </LinearLayout>
+
         </LinearLayout>
     </ScrollView>
 
-    <LinearLayout
-        android:id="@+id/advanced_container"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_alignParentBottom="true"
-        android:orientation="vertical">
-
-        <com.google.android.material.card.MaterialCardView
-            android:id="@+id/advanced_header"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="8dp"
-            android:layout_marginBottom="8dp"
-            app:cardBackgroundColor="#B3181B20"
-            app:strokeColor="#24FFFFFF"
-            app:strokeWidth="1dp"
-            app:cardElevation="0dp"
-            app:cardCornerRadius="18dp">
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:background="?attr/selectableItemBackground"
-                android:clickable="false"
-                android:focusable="false"
-                android:gravity="center_vertical"
-                android:minHeight="56dp"
-                android:orientation="horizontal"
-                android:paddingStart="16dp"
-                android:paddingTop="14dp"
-                android:paddingEnd="16dp"
-                android:paddingBottom="14dp">
-
-                <TextView
-                    android:id="@+id/tv_settings_advanced"
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:text="@string/section_advanced"
-                    android:textSize="15sp"
-                    android:textStyle="bold"
-                    android:textColor="#FFFFFF" />
-
-                <ImageButton
-                    android:id="@+id/btn_advanced_toggle"
-                    android:layout_width="32dp"
-                    android:layout_height="32dp"
-                    android:background="@null"
-                    android:contentDescription="@string/settings_advanced_toggle_desc"
-                    android:src="@drawable/ic_triangle_down"
-                    app:tint="#FFFFFF" />
-            </LinearLayout>
-        </com.google.android.material.card.MaterialCardView>
-
-        <com.google.android.material.card.MaterialCardView
-            android:id="@+id/advanced_content"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:visibility="gone"
-            android:layout_marginTop="2dp"
-            app:cardBackgroundColor="#B3181B20"
-            app:strokeColor="#24FFFFFF"
-            app:strokeWidth="1dp"
-            app:cardElevation="0dp"
-            app:cardCornerRadius="18dp">
-
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:orientation="vertical">
-
-                    <LinearLayout
-                        android:id="@+id/btn_update_app"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:background="?attr/selectableItemBackground"
-                        android:clickable="true"
-                        android:focusable="true"
-                        android:gravity="center_vertical"
-                        android:minHeight="56dp"
-                        android:orientation="horizontal"
-                        android:paddingStart="16dp"
-                        android:paddingTop="12dp"
-                        android:paddingEnd="16dp"
-                        android:paddingBottom="12dp">
-
-                        <TextView
-                            android:layout_width="0dp"
-                            android:layout_height="wrap_content"
-                            android:layout_weight="1"
-                            android:text="@string/btn_update_app"
-                            android:textColor="?attr/colorOnBackground"
-                            android:textSize="15sp" />
-
-                        <TextView
-                            android:id="@+id/tv_update_app_chevron"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_marginStart="12dp"
-                            android:text=">"
-                            android:textColor="?attr/colorOnBackground"
-                            android:textSize="15sp" />
-                    </LinearLayout>
-
-                    <View
-                        android:layout_width="match_parent"
-                        android:layout_height="1dp"
-                        android:layout_marginStart="16dp"
-                        android:layout_marginEnd="16dp"
-                        android:background="#20FFFFFF" />
-
-                    <LinearLayout
-                        android:id="@+id/btn_backup_manage"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:background="?attr/selectableItemBackground"
-                        android:clickable="true"
-                        android:focusable="true"
-                        android:gravity="center_vertical"
-                        android:minHeight="56dp"
-                        android:orientation="horizontal"
-                        android:paddingStart="16dp"
-                        android:paddingTop="14dp"
-                        android:paddingEnd="16dp"
-                        android:paddingBottom="14dp">
-
-                        <TextView
-                            android:layout_width="0dp"
-                            android:layout_height="wrap_content"
-                            android:layout_weight="1"
-                            android:text="@string/btn_backup"
-                            android:textColor="?attr/colorOnBackground"
-                            android:textSize="15sp" />
-
-                        <TextView
-                            android:id="@+id/tv_backup_manage_chevron"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_marginStart="12dp"
-                            android:text=">"
-                            android:textColor="?attr/colorOnBackground"
-                            android:textSize="15sp" />
-                    </LinearLayout>
-
-                    <View
-                        android:layout_width="match_parent"
-                        android:layout_height="1dp"
-                        android:layout_marginStart="16dp"
-                        android:layout_marginEnd="16dp"
-                        android:background="#20FFFFFF" />
-
-                    <LinearLayout
-                        android:id="@+id/btn_app_lock"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:background="?attr/selectableItemBackground"
-                        android:clickable="true"
-                        android:focusable="true"
-                        android:gravity="center_vertical"
-                        android:minHeight="56dp"
-                        android:orientation="horizontal"
-                        android:paddingStart="16dp"
-                        android:paddingTop="14dp"
-                        android:paddingEnd="16dp"
-                        android:paddingBottom="14dp">
-
-                        <TextView
-                            android:layout_width="0dp"
-                            android:layout_height="wrap_content"
-                            android:layout_weight="1"
-                            android:text="@string/settings_app_lock_label"
-                            android:textColor="?attr/colorOnBackground"
-                            android:textSize="15sp" />
-
-                        <TextView
-                            android:id="@+id/tv_app_lock_value"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_marginStart="12dp"
-                            android:ellipsize="end"
-                            android:maxWidth="120dp"
-                            android:singleLine="true"
-                            android:textColor="?attr/colorOnBackground"
-                            android:textSize="14sp" />
-
-                        <TextView
-                            android:id="@+id/tv_app_lock_chevron"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_marginStart="12dp"
-                            android:text=">"
-                            android:textColor="?attr/colorOnBackground"
-                            android:textSize="15sp" />
-                    </LinearLayout>
-
-                    <View
-                        android:layout_width="match_parent"
-                        android:layout_height="1dp"
-                        android:layout_marginStart="16dp"
-                        android:layout_marginEnd="16dp"
-                        android:background="#20FFFFFF" />
-
-                    <LinearLayout
-                        android:id="@+id/btn_welcome_tour"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:background="?attr/selectableItemBackground"
-                        android:clickable="true"
-                        android:focusable="true"
-                        android:gravity="center_vertical"
-                        android:minHeight="56dp"
-                        android:orientation="horizontal"
-                        android:paddingStart="16dp"
-                        android:paddingTop="14dp"
-                        android:paddingEnd="16dp"
-                        android:paddingBottom="14dp">
-
-                        <TextView
-                            android:layout_width="0dp"
-                            android:layout_height="wrap_content"
-                            android:layout_weight="1"
-                            android:text="@string/btn_welcome_tour"
-                            android:textColor="?attr/colorOnBackground"
-                            android:textSize="15sp" />
-
-                        <TextView
-                            android:id="@+id/tv_welcome_tour_chevron"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_marginStart="12dp"
-                            android:text=">"
-                            android:textColor="?attr/colorOnBackground"
-                            android:textSize="15sp" />
-                    </LinearLayout>
-
-                    <View
-                        android:layout_width="match_parent"
-                        android:layout_height="1dp"
-                        android:layout_marginStart="16dp"
-                        android:layout_marginEnd="16dp"
-                        android:background="#20FFFFFF" />
-
-                    <LinearLayout
-                        android:id="@+id/btn_reset_app"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:background="?attr/selectableItemBackground"
-                        android:clickable="true"
-                        android:focusable="true"
-                        android:gravity="center"
-                        android:minHeight="56dp"
-                        android:orientation="horizontal"
-                        android:paddingStart="16dp"
-                        android:paddingTop="14dp"
-                        android:paddingEnd="16dp"
-                        android:paddingBottom="14dp">
-
-                        <TextView
-                            android:id="@+id/tv_reset_app"
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:gravity="center"
-                            android:text="@string/btn_reset_app"
-                            android:textColor="#D32F2F"
-                            android:textSize="15sp"
-                            android:textStyle="bold" />
-                    </LinearLayout>
-                </LinearLayout>
-        </com.google.android.material.card.MaterialCardView>
-    </LinearLayout>
 
 </RelativeLayout>
