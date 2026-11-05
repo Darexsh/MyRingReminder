@@ -1,7 +1,7 @@
 <resources>
     <!-- App -->
     <string name="app_info_actions_title">Aktionen</string>
-    <string name="app_info_description">MyRingReminder ist eine Android-App zur Verwaltung und Nachverfolgung von Verhütungsring-Zyklen. Die App bietet einen farbcodierten Kalender für Einsetz-, Entfernungs- und ringfreie Tage, anpassbare Erinnerungen, Ringvorrats-Tracking, Notizen, Widgets sowie Sicherungs- und Wiederherstellungsfunktionen. Zusätzlich enthält sie eine Willkommenstour, einen Zyklusverlauf, Hinweise zum Verlängern eines Zyklus ("Ring länger tragen"), die Möglichkeit, die geplante Ringanwendung für längere Pausen zu pausieren und später mit einem neuen Einsetzdatum wieder zu starten, Perioden-Tracking während der ringfreien Woche sowie eine eigene Ansicht Perioden-Details mit Zeitraumfiltern und formatiertem PDF-Export. Personalisierungsoptionen wie Hintergrundbilder und Farbeinstellungen ermöglichen eine individuelle Anpassung.\n\nWichtiger Hinweis: Diese App dient ausschließlich der persönlichen Organisation und Nachverfolgung von Verhütungsring-Zyklen. Sie ist kein Medizinprodukt, ersetzt keine medizinische Beratung und basiert nicht auf medizinischer Beurteilung oder Diagnose. Bei Fragen zur Anwendung oder gesundheitlichen Beschwerden wenden Sie sich bitte an medizinisches Fachpersonal.\n\nAlle Daten werden ausschließlich lokal auf diesem Gerät gespeichert.</string>
+    <string name="app_info_description">MyRingReminder unterstützt dich bei der einfachen und übersichtlichen Verwaltung deines Verhütungsring-Zyklus. Ein farbcodierter Kalender, individuelle Erinnerungen und eine Zyklusübersicht helfen dir, Einsetz-, Entfernungs- und ringfreie Tage im Blick zu behalten. Zusätzlich bietet die App Perioden-Tracking, Ringvorratsverwaltung, Notizen, Widgets, flexible Zyklusplanung sowie Backup- und Exportfunktionen. Verschiedene Designs ermöglichen eine persönliche Gestaltung.\n\nWichtiger Hinweis: Diese App dient ausschließlich der persönlichen Organisation und Nachverfolgung von Verhütungsring-Zyklen. Sie ist kein Medizinprodukt, ersetzt keine medizinische Beratung und basiert nicht auf medizinischer Beurteilung oder Diagnose. Bei Fragen zur Anwendung oder gesundheitlichen Beschwerden wenden Sie sich bitte an medizinisches Fachpersonal.\n\nAlle Daten werden ausschließlich lokal auf diesem Gerät gespeichert.</string>
     <string name="app_info_developer">Entwickler: %1$s</string>
     <string name="app_info_developer_label">Entwickler:</string>
     <string name="app_info_developer_name">Darexsh by Daniel Sichler</string>
@@ -10,6 +10,12 @@
     <string name="app_info_name">MyRingReminder</string>
     <string name="app_info_open_coffee">Entwicklung unterstützen</string>
     <string name="app_info_open_privacy">Datenschutz</string>
+    <string name="app_info_privacy_language_note">Diese Datenschutzerklärung ist derzeit auf Englisch verfügbar.</string>
+    <string name="app_info_privacy_last_updated">Zuletzt aktualisiert: %1$s</string>
+    <string name="app_info_privacy_loading">Datenschutzerklärung wird geladen…</string>
+    <string name="app_info_privacy_load_failed">Die Datenschutzerklärung konnte nicht geladen werden. Prüfe deine Internetverbindung und versuche es erneut.</string>
+    <string name="app_info_privacy_cached">Die Datenschutzerklärung konnte nicht aktualisiert werden. Die zuletzt gespeicherte Version wird angezeigt.</string>
+    <string name="app_info_privacy_retry">Erneut versuchen</string>
     <string name="app_info_open_email">E-Mail schreiben</string>
     <string name="app_info_open_github">Social Media öffnen</string>
     <string name="app_info_open_github_profile">GitHub-Profil</string>

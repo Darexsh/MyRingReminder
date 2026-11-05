@@ -1,7 +1,7 @@
 <resources>
     <!-- App -->
     <string name="app_info_actions_title">操作</string>
-    <string name="app_info_description">MyRingReminder 是一款用于管理和跟踪避孕环周期的 Android 应用程序。该应用提供带颜色标记的日历，用于显示放置日、取出日和无环日，并提供可自定义提醒、避孕环库存跟踪、笔记、小组件以及备份/恢复功能。此外，它还包含欢迎引导、周期历史记录、周期延长说明（"延长佩戴避孕环"）、可在较长间歇期间暂停计划中的圆环使用并稍后从新的置入日期重新开始、无环周期间的经期追踪，以及带范围筛选和格式化 PDF 导出的经期详情页面。背景图片和颜色设置等个性化选项可实现自定义设置。\n\n重要说明：本应用仅用于个人组织和跟踪避孕环周期。它不是医疗产品，不能替代医疗建议，也不基于医学评估或诊断。如果您对使用方法或健康问题有疑问，请咨询医疗专业人员。\n\n所有数据仅存储在此设备本地。</string>
+    <string name="app_info_description">MyRingReminder 帮助您轻松管理和追踪避孕环使用周期。通过颜色标记的日历、可自定义的提醒和周期概览，您可以清楚掌握避孕环的放置日、取出日及停用期。应用还提供经期追踪、避孕环库存管理、笔记、桌面小组件、灵活的周期规划以及备份和导出功能。多种主题可供选择，让您自由定制应用外观。\n\n重要提示：本应用仅用于个人管理和追踪避孕环使用周期，并非医疗器械，不能替代专业医疗建议，也不基于医学评估或诊断。如果您对使用方法有疑问或出现健康问题，请咨询专业医护人员。\n\n所有数据仅存储在此设备的本地存储空间中。</string>
     <string name="app_info_developer">开发者：%1$s</string>
     <string name="app_info_developer_label">开发者：</string>
     <string name="app_info_developer_name">Daniel Sichler 创作的 Darexsh</string>
@@ -10,6 +10,12 @@
     <string name="app_info_name">MyRingReminder</string>
     <string name="app_info_open_coffee">支持开发</string>
     <string name="app_info_open_privacy">隐私政策</string>
+    <string name="app_info_privacy_language_note">此隐私政策目前仅提供英文版本。</string>
+    <string name="app_info_privacy_last_updated">最后更新：%1$s</string>
+    <string name="app_info_privacy_loading">正在加载隐私政策…</string>
+    <string name="app_info_privacy_load_failed">无法加载隐私政策。请检查网络连接后重试。</string>
+    <string name="app_info_privacy_cached">无法更新隐私政策，现显示上次保存的版本。</string>
+    <string name="app_info_privacy_retry">重试</string>
     <string name="app_info_open_email">撰写邮件</string>
     <string name="app_info_open_github">打开社交媒体</string>
     <string name="app_info_open_github_profile">GitHub 个人主页</string>

@@ -30,10 +30,14 @@ import android.graphics.Shader;
 import android.graphics.SweepGradient;
 import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.Drawable;
+import android.graphics.drawable.GradientDrawable;
 import android.graphics.Typeface;
 import android.animation.ValueAnimator;
 import android.text.SpannableString;
 import android.text.Spanned;
+import android.text.Html;
+import android.text.method.LinkMovementMethod;
+import android.text.util.Linkify;
 import android.text.style.ForegroundColorSpan;
 import android.text.style.StyleSpan;
 import android.net.Uri;
@@ -56,6 +60,7 @@ import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatDelegate;
 import androidx.core.content.ContextCompat;
 import androidx.core.content.FileProvider;
+import androidx.core.graphics.ColorUtils;
 import androidx.core.os.LocaleListCompat;
 import androidx.core.app.NotificationManagerCompat;
 import androidx.biometric.BiometricManager;
@@ -69,6 +74,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.view.Gravity;
 import com.google.android.material.button.MaterialButton;
+import com.google.android.material.card.MaterialCardView;
 import com.google.android.material.color.MaterialColors;
 import android.content.res.ColorStateList;
 import java.util.Calendar;
@@ -130,6 +136,9 @@ public class SettingsFragment extends Fragment {
     private int[] appLockTimeoutValues;
     private Drawable[] circleStylePreviews;
     private static final String RELEASES_URL = "https://api.github.com/repos/Darexsh/MyRingReminder/releases";
+    private static final String PRIVACY_POLICY_URL = "https://raw.githubusercontent.com/Darexsh/MyRingReminder/main/PRIVACY_POLICY.md";
+    private static final String PRIVACY_POLICY_PREFS = "privacy_policy_cache";
+    private static final String PRIVACY_POLICY_CACHE_KEY = "markdown";
     private File pendingApkFile;
     private AlertDialog downloadDialog;
     private ProgressBar downloadProgressBar;
@@ -142,8 +151,10 @@ public class SettingsFragment extends Fragment {
     private View stockToolsDialogView;
     private AlertDialog ringUsePauseDialog;
     private AlertDialog packageLeafletLoadingDialog;
+    private AlertDialog privacyPolicyLoadingDialog;
     private boolean isLoadingPackageLeaflets;
     private int packageLeafletRequestId;
+    private int privacyPolicyRequestId;
     private final List<ValueAnimator> notificationWarningAnimators = new ArrayList<>();
     private final List<TextView> settingsAccentTextViews = new ArrayList<>();
     private boolean continueUpdateInstallAfterBackup = false;
@@ -1793,6 +1804,34 @@ public class SettingsFragment extends Fragment {
             this.name = name;
             this.referenceLeafletId = referenceLeafletId;
             this.links = links;
+        }
+    }
+
+    private static final class PrivacyPolicyDocument {
+        String lastUpdated = "";
+        final List<PrivacyPolicySection> sections = new ArrayList<>();
+    }
+
+    private static final class PrivacyPolicySection {
+        final String title;
+        final List<PrivacyPolicyBlock> blocks = new ArrayList<>();
+
+        PrivacyPolicySection(@NonNull String title) {
+            this.title = title;
+        }
+    }
+
+    private static final class PrivacyPolicyBlock {
+        static final int PARAGRAPH = 0;
+        static final int BULLET = 1;
+        static final int SUBHEADING = 2;
+
+        final int type;
+        final String text;
+
+        PrivacyPolicyBlock(int type, @NonNull String text) {
+            this.type = type;
+            this.text = text;
         }
     }
 
@@ -3457,10 +3496,7 @@ public class SettingsFragment extends Fragment {
             startActivity(intent);
         });
 
-        openPrivacy.setOnClickListener(v -> {
-            Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse("https://github.com/Darexsh/MyRingReminder/blob/main/PRIVACY_POLICY.md"));
-            startActivity(intent);
-        });
+        openPrivacy.setOnClickListener(v -> loadPrivacyPolicy());
 
         openCoffee.setOnClickListener(v -> {
             Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse("https://buymeacoffee.com/darexsh"));
@@ -3476,6 +3512,372 @@ public class SettingsFragment extends Fragment {
             dialog.getWindow().setBackgroundDrawableResource(R.drawable.bg_app_info_dialog);
         }
         applyDialogButtonColors(dialog);
+    }
+
+    private void loadPrivacyPolicy() {
+        if (!isAdded() || privacyPolicyLoadingDialog != null) {
+            return;
+        }
+
+        int requestId = ++privacyPolicyRequestId;
+        showPrivacyPolicyLoadingDialog();
+        Context appContext = requireContext().getApplicationContext();
+
+        new Thread(() -> {
+            String markdown = null;
+            boolean fromCache = false;
+            try {
+                markdown = fetchPrivacyPolicy();
+                appContext.getSharedPreferences(PRIVACY_POLICY_PREFS, Context.MODE_PRIVATE)
+                        .edit()
+                        .putString(PRIVACY_POLICY_CACHE_KEY, markdown)
+                        .apply();
+            } catch (Exception networkError) {
+                markdown = appContext.getSharedPreferences(PRIVACY_POLICY_PREFS, Context.MODE_PRIVATE)
+                        .getString(PRIVACY_POLICY_CACHE_KEY, null);
+                fromCache = markdown != null;
+            }
+
+            String finalMarkdown = markdown;
+            boolean finalFromCache = fromCache;
+            MAIN_HANDLER.post(() -> {
+                if (requestId != privacyPolicyRequestId) {
+                    return;
+                }
+                dismissPrivacyPolicyLoadingDialog();
+                if (!isAdded() || getView() == null) {
+                    return;
+                }
+                if (finalMarkdown == null || finalMarkdown.trim().isEmpty()) {
+                    showPrivacyPolicyLoadError();
+                    return;
+                }
+                if (finalFromCache) {
+                    Toast.makeText(requireContext(), R.string.app_info_privacy_cached,
+                            Toast.LENGTH_LONG).show();
+                }
+                showPrivacyPolicyDialog(finalMarkdown);
+            });
+        }, "privacy-policy-fetch").start();
+    }
+
+    private String fetchPrivacyPolicy() throws IOException {
+        HttpURLConnection connection = null;
+        try {
+            connection = (HttpURLConnection) new URL(PRIVACY_POLICY_URL).openConnection();
+            connection.setConnectTimeout(10000);
+            connection.setReadTimeout(15000);
+            connection.setUseCaches(false);
+            connection.setRequestProperty("Accept", "text/markdown, text/plain;q=0.9, */*;q=0.8");
+            connection.setRequestProperty("Cache-Control", "no-cache");
+            connection.setRequestProperty("User-Agent", "MyRingReminder-App");
+            if (connection.getResponseCode() != HttpURLConnection.HTTP_OK) {
+                throw new IOException("Privacy policy request failed");
+            }
+
+            StringBuilder body = new StringBuilder();
+            try (BufferedReader reader = new BufferedReader(
+                    new InputStreamReader(connection.getInputStream(), StandardCharsets.UTF_8))) {
+                String line;
+                while ((line = reader.readLine()) != null) {
+                    body.append(line).append('\n');
+                    if (body.length() > 512_000) {
+                        throw new IOException("Privacy policy is too large");
+                    }
+                }
+            }
+            return body.toString();
+        } finally {
+            if (connection != null) {
+                connection.disconnect();
+            }
+        }
+    }
+
+    private void showPrivacyPolicyLoadingDialog() {
+        int padding = dpToPx(20);
+        LinearLayout content = new LinearLayout(requireContext());
+        content.setGravity(Gravity.CENTER_VERTICAL);
+        content.setOrientation(LinearLayout.HORIZONTAL);
+        content.setPadding(padding, padding, padding, padding);
+
+        ProgressBar progressBar = new ProgressBar(requireContext());
+        content.addView(progressBar, new LinearLayout.LayoutParams(dpToPx(32), dpToPx(32)));
+
+        TextView message = new TextView(requireContext());
+        message.setText(R.string.app_info_privacy_loading);
+        message.setPadding(dpToPx(16), 0, 0, 0);
+        content.addView(message, new LinearLayout.LayoutParams(
+                ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT));
+
+        privacyPolicyLoadingDialog = new AlertDialog.Builder(requireContext())
+                .setTitle(R.string.app_info_open_privacy)
+                .setView(content)
+                .setCancelable(false)
+                .create();
+        privacyPolicyLoadingDialog.show();
+        applyDialogButtonColors(privacyPolicyLoadingDialog);
+    }
+
+    private void dismissPrivacyPolicyLoadingDialog() {
+        if (privacyPolicyLoadingDialog != null) {
+            privacyPolicyLoadingDialog.dismiss();
+            privacyPolicyLoadingDialog = null;
+        }
+    }
+
+    private void showPrivacyPolicyLoadError() {
+        AlertDialog dialog = new AlertDialog.Builder(requireContext())
+                .setTitle(R.string.app_info_open_privacy)
+                .setMessage(R.string.app_info_privacy_load_failed)
+                .setPositiveButton(R.string.app_info_privacy_retry,
+                        (d, which) -> loadPrivacyPolicy())
+                .setNegativeButton(R.string.dialog_cancel, null)
+                .show();
+        applyDialogButtonColors(dialog);
+    }
+
+    private void showPrivacyPolicyDialog(@NonNull String markdown) {
+        View content = LayoutInflater.from(requireContext())
+                .inflate(R.layout.dialog_privacy_policy, null, false);
+        ScrollView scrollView = content.findViewById(R.id.scroll_privacy_policy);
+        TextView languageNote = content.findViewById(R.id.tv_privacy_policy_language_note);
+        TextView lastUpdated = content.findViewById(R.id.tv_privacy_policy_last_updated);
+        LinearLayout sectionsContainer = content.findViewById(R.id.ll_privacy_policy_sections);
+
+        PrivacyPolicyDocument document = parsePrivacyPolicyMarkdown(markdown);
+        Integer buttonColor = viewModel != null ? viewModel.getButtonColor().getValue() : null;
+        int accentColor = buttonColor != null
+                ? buttonColor
+                : MaterialColors.getColor(content, com.google.android.material.R.attr.colorPrimary);
+        int surfaceColor = MaterialColors.getColor(content, com.google.android.material.R.attr.colorSurface);
+        int onSurfaceColor = MaterialColors.getColor(content, com.google.android.material.R.attr.colorOnSurface);
+
+        languageNote.setText(R.string.app_info_privacy_language_note);
+        languageNote.setTextColor(accentColor);
+        if (document.lastUpdated.isEmpty()) {
+            lastUpdated.setVisibility(View.GONE);
+        } else {
+            lastUpdated.setText(getString(R.string.app_info_privacy_last_updated,
+                    document.lastUpdated));
+            lastUpdated.setTextColor(ColorUtils.setAlphaComponent(onSurfaceColor, 190));
+        }
+
+        MaterialCardView summaryCard = content.findViewById(R.id.card_privacy_policy_summary);
+        stylePrivacyPolicyCard(summaryCard, surfaceColor, onSurfaceColor);
+        for (int i = 0; i < document.sections.size(); i++) {
+            PrivacyPolicySection section = document.sections.get(i);
+            LinearLayout.LayoutParams sectionParams = new LinearLayout.LayoutParams(
+                    ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
+            sectionParams.topMargin = dpToPx(i == 0 ? 0 : 14);
+            sectionsContainer.addView(buildPrivacyPolicySectionCard(section, surfaceColor,
+                    onSurfaceColor, accentColor), sectionParams);
+        }
+
+        int maxHeight = Math.min(dpToPx(560), getResources().getDisplayMetrics().heightPixels * 3 / 5);
+        scrollView.setLayoutParams(new ViewGroup.LayoutParams(
+                ViewGroup.LayoutParams.MATCH_PARENT, maxHeight));
+
+        AlertDialog dialog = new AlertDialog.Builder(requireContext())
+                .setTitle(R.string.app_info_open_privacy)
+                .setView(content)
+                .setPositiveButton(R.string.dialog_ok, null)
+                .show();
+        if (dialog.getWindow() != null) {
+            dialog.getWindow().setBackgroundDrawableResource(R.drawable.bg_app_info_dialog);
+        }
+        applyDialogButtonColors(dialog);
+    }
+
+    private PrivacyPolicyDocument parsePrivacyPolicyMarkdown(@NonNull String markdown) {
+        PrivacyPolicyDocument document = new PrivacyPolicyDocument();
+        PrivacyPolicySection currentSection = null;
+        StringBuilder paragraph = new StringBuilder();
+        for (String rawLine : markdown.split("\\r?\\n")) {
+            String line = rawLine.trim();
+            if (line.isEmpty()) {
+                appendPrivacyParagraph(currentSection, paragraph);
+                continue;
+            }
+
+            if (line.startsWith("# ")) {
+                continue;
+            }
+            if (line.startsWith("Last updated:")) {
+                document.lastUpdated = line.substring("Last updated:".length()).trim();
+                continue;
+            }
+
+            if (line.startsWith("## ")) {
+                appendPrivacyParagraph(currentSection, paragraph);
+                String title = line.substring(3).trim().replaceFirst("^\\d+\\.\\s*", "");
+                currentSection = new PrivacyPolicySection(title);
+                document.sections.add(currentSection);
+                continue;
+            }
+
+            if (currentSection == null) {
+                currentSection = new PrivacyPolicySection(getString(R.string.app_info_open_privacy));
+                document.sections.add(currentSection);
+            }
+
+            if (line.startsWith("### ")) {
+                appendPrivacyParagraph(currentSection, paragraph);
+                currentSection.blocks.add(new PrivacyPolicyBlock(
+                        PrivacyPolicyBlock.SUBHEADING, line.substring(4).trim()));
+                continue;
+            }
+            if (line.startsWith("- ")) {
+                appendPrivacyParagraph(currentSection, paragraph);
+                currentSection.blocks.add(new PrivacyPolicyBlock(
+                        PrivacyPolicyBlock.BULLET, line.substring(2).trim()));
+                continue;
+            }
+
+            if (paragraph.length() > 0) {
+                paragraph.append(' ');
+            }
+            paragraph.append(line);
+        }
+        appendPrivacyParagraph(currentSection, paragraph);
+        return document;
+    }
+
+    private void appendPrivacyParagraph(@Nullable PrivacyPolicySection section,
+                                        @NonNull StringBuilder paragraph) {
+        if (section != null && paragraph.length() > 0) {
+            section.blocks.add(new PrivacyPolicyBlock(PrivacyPolicyBlock.PARAGRAPH,
+                    paragraph.toString().trim()));
+        }
+        paragraph.setLength(0);
+    }
+
+    private View buildPrivacyPolicySectionCard(@NonNull PrivacyPolicySection section,
+                                               int surfaceColor,
+                                               int onSurfaceColor,
+                                               int accentColor) {
+        MaterialCardView card = new MaterialCardView(requireContext());
+        stylePrivacyPolicyCard(card, surfaceColor, onSurfaceColor);
+        card.setLayoutParams(new LinearLayout.LayoutParams(
+                ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT));
+
+        LinearLayout cardContent = new LinearLayout(requireContext());
+        cardContent.setOrientation(LinearLayout.VERTICAL);
+        int horizontalPadding = dpToPx(18);
+        cardContent.setPadding(horizontalPadding, dpToPx(16), horizontalPadding, dpToPx(16));
+
+        TextView title = new TextView(requireContext());
+        title.setText(section.title);
+        title.setTextColor(accentColor);
+        title.setTextSize(16f);
+        title.setTypeface(Typeface.DEFAULT_BOLD);
+        cardContent.addView(title);
+
+        View divider = new View(requireContext());
+        LinearLayout.LayoutParams dividerParams = new LinearLayout.LayoutParams(
+                ViewGroup.LayoutParams.MATCH_PARENT, dpToPx(1));
+        dividerParams.topMargin = dpToPx(12);
+        dividerParams.bottomMargin = dpToPx(10);
+        divider.setLayoutParams(dividerParams);
+        divider.setBackgroundColor(ColorUtils.setAlphaComponent(accentColor, 56));
+        cardContent.addView(divider);
+
+        boolean hasContent = false;
+        for (PrivacyPolicyBlock block : section.blocks) {
+            if (block.type == PrivacyPolicyBlock.SUBHEADING) {
+                TextView subheading = createPrivacyPolicyText(block.text, onSurfaceColor,
+                        accentColor, true);
+                LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(
+                        ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
+                params.topMargin = dpToPx(hasContent ? 12 : 0);
+                cardContent.addView(subheading, params);
+            } else if (block.type == PrivacyPolicyBlock.BULLET) {
+                LinearLayout bulletRow = createPrivacyPolicyBullet(block.text, onSurfaceColor,
+                        accentColor, hasContent);
+                cardContent.addView(bulletRow);
+            } else {
+                TextView paragraph = createPrivacyPolicyText(block.text, onSurfaceColor,
+                        accentColor, false);
+                LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(
+                        ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
+                params.topMargin = dpToPx(hasContent ? 8 : 0);
+                cardContent.addView(paragraph, params);
+            }
+            hasContent = true;
+        }
+
+        card.addView(cardContent);
+        return card;
+    }
+
+    private void stylePrivacyPolicyCard(@NonNull MaterialCardView card,
+                                        int surfaceColor,
+                                        int onSurfaceColor) {
+        card.setCardBackgroundColor(ColorUtils.blendARGB(surfaceColor, Color.BLACK, 0.08f));
+        card.setStrokeColor(ColorStateList.valueOf(ColorUtils.setAlphaComponent(onSurfaceColor, 40)));
+        card.setStrokeWidth(dpToPx(1));
+        card.setRadius(dpToPx(22));
+        card.setCardElevation(0f);
+    }
+
+    private LinearLayout createPrivacyPolicyBullet(@NonNull String text,
+                                                   int onSurfaceColor,
+                                                   int accentColor,
+                                                   boolean addTopSpacing) {
+        LinearLayout row = new LinearLayout(requireContext());
+        row.setOrientation(LinearLayout.HORIZONTAL);
+        row.setBaselineAligned(false);
+        LinearLayout.LayoutParams rowParams = new LinearLayout.LayoutParams(
+                ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
+        if (addTopSpacing) {
+            rowParams.topMargin = dpToPx(6);
+        }
+        row.setLayoutParams(rowParams);
+
+        View dot = new View(requireContext());
+        LinearLayout.LayoutParams dotParams = new LinearLayout.LayoutParams(dpToPx(7), dpToPx(7));
+        dotParams.topMargin = dpToPx(7);
+        dotParams.rightMargin = dpToPx(12);
+        dot.setLayoutParams(dotParams);
+        GradientDrawable dotBackground = new GradientDrawable();
+        dotBackground.setShape(GradientDrawable.OVAL);
+        dotBackground.setColor(accentColor);
+        dot.setBackground(dotBackground);
+        row.addView(dot);
+
+        TextView body = createPrivacyPolicyText(text, onSurfaceColor, accentColor, false);
+        body.setLayoutParams(new LinearLayout.LayoutParams(
+                0, ViewGroup.LayoutParams.WRAP_CONTENT, 1f));
+        row.addView(body);
+        return row;
+    }
+
+    private TextView createPrivacyPolicyText(@NonNull String text,
+                                             int onSurfaceColor,
+                                             int linkColor,
+                                             boolean subheading) {
+        TextView body = new TextView(requireContext());
+        body.setText(Html.fromHtml("<html><body>" + formatPrivacyInlineMarkdown(text)
+                        + "</body></html>", Html.FROM_HTML_MODE_COMPACT));
+        body.setTextColor(subheading ? linkColor : ColorUtils.setAlphaComponent(onSurfaceColor, 232));
+        body.setTextSize(14f);
+        body.setLineSpacing(0f, 1.16f);
+        if (subheading) {
+            body.setTypeface(Typeface.DEFAULT_BOLD);
+        }
+        Linkify.addLinks(body, Linkify.WEB_URLS);
+        body.setLinkTextColor(linkColor);
+        body.setMovementMethod(LinkMovementMethod.getInstance());
+        return body;
+    }
+
+    private String formatPrivacyInlineMarkdown(@NonNull String text) {
+        String escaped = text.replace("&", "&amp;")
+                .replace("<", "&lt;")
+                .replace(">", "&gt;")
+                .replace("\"", "&quot;");
+        escaped = escaped.replaceAll("\\*\\*(.+?)\\*\\*", "<b>$1</b>");
+        return escaped.replaceAll("`([^`]+)`", "<tt>$1</tt>");
     }
 
     private void resetAppData() {
@@ -4450,6 +4852,8 @@ public class SettingsFragment extends Fragment {
         packageLeafletRequestId++;
         dismissPackageLeafletLoadingDialog();
         isLoadingPackageLeaflets = false;
+        privacyPolicyRequestId++;
+        dismissPrivacyPolicyLoadingDialog();
         super.onDestroyView();
     }
 

@@ -1,7 +1,7 @@
 <resources>
     <!-- App -->
     <string name="app_info_actions_title">Akcje</string>
-    <string name="app_info_description">MyRingReminder to aplikacja na Androida służąca do zarządzania i śledzenia cykli pierścienia antykoncepcyjnego. Aplikacja oferuje oznaczony kolorami kalendarz dla dni założenia, usunięcia oraz dni bez pierścienia, konfigurowalne przypomnienia, śledzenie zapasu krążków, notatki, widżety oraz funkcje tworzenia i przywracania kopii zapasowych. Zawiera również samouczek powitalny, historię cykli, wskazówki dotyczące wydłużenia cyklu ("noszenie pierścienia dłużej"), możliwość wstrzymania planowanego używania krążka na dłuższe przerwy i późniejszego ponownego uruchomienia od nowej daty założenia, śledzenie okresu w tygodniu bez pierścienia oraz dedykowany widok Szczegóły okresu z filtrami zakresu i sformatowanym eksportem PDF. Opcje personalizacji, takie jak obrazy tła i ustawienia kolorów, umożliwiają indywidualne dostosowanie aplikacji.\n\nWażna informacja: Ta aplikacja służy wyłącznie do osobistej organizacji i śledzenia cykli pierścienia antykoncepcyjnego. Nie jest wyrobem medycznym, nie zastępuje porady lekarskiej i nie opiera się na ocenie ani diagnozie medycznej. W przypadku pytań dotyczących użytkowania lub problemów zdrowotnych należy skonsultować się z lekarzem lub specjalistą medycznym.\n\nWszystkie dane są przechowywane wyłącznie lokalnie na tym urządzeniu.</string>
+    <string name="app_info_description">MyRingReminder pomaga w łatwym zarządzaniu cyklem stosowania krążka antykoncepcyjnego i jego monitorowaniu. Kalendarz oznaczony kolorami, konfigurowalne przypomnienia oraz przegląd cyklu ułatwiają śledzenie dni zakładania, usuwania i przerwy w stosowaniu krążka. Aplikacja oferuje również monitorowanie miesiączki, zarządzanie zapasem krążków, notatki, widżety, elastyczne planowanie cyklu oraz funkcje tworzenia kopii zapasowych i eksportu. Różne motywy umożliwiają personalizację aplikacji.\n\nWażna informacja: Ta aplikacja służy wyłącznie do osobistej organizacji i monitorowania cykli stosowania krążka antykoncepcyjnego. Nie jest wyrobem medycznym, nie zastępuje porady lekarskiej i nie opiera się na ocenie medycznej ani diagnozie. W przypadku pytań dotyczących stosowania lub problemów zdrowotnych należy skonsultować się z personelem medycznym.\n\nWszystkie dane są przechowywane wyłącznie lokalnie na tym urządzeniu.</string>
     <string name="app_info_developer">Programista: %1$s</string>
     <string name="app_info_developer_label">Programista:</string>
     <string name="app_info_developer_name">Darexsh autorstwa Daniela Sichlera</string>
@@ -10,6 +10,12 @@
     <string name="app_info_name">MyRingReminder</string>
     <string name="app_info_open_coffee">Wesprzyj rozwój</string>
     <string name="app_info_open_privacy">Polityka prywatności</string>
+    <string name="app_info_privacy_language_note">Ta polityka jest obecnie dostępna w języku angielskim.</string>
+    <string name="app_info_privacy_last_updated">Ostatnia aktualizacja: %1$s</string>
+    <string name="app_info_privacy_loading">Ładowanie polityki prywatności…</string>
+    <string name="app_info_privacy_load_failed">Nie udało się załadować polityki prywatności. Sprawdź połączenie z internetem i spróbuj ponownie.</string>
+    <string name="app_info_privacy_cached">Nie udało się zaktualizować polityki. Wyświetlana jest ostatnia zapisana kopia.</string>
+    <string name="app_info_privacy_retry">Ponów próbę</string>
     <string name="app_info_open_email">Napisz e-mail</string>
     <string name="app_info_open_github">Otwórz media społecznościowe</string>
     <string name="app_info_open_github_profile">Profil GitHub</string>

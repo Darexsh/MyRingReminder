@@ -1,7 +1,7 @@
 <resources>
     <!-- App -->
     <string name="app_info_actions_title">Actions</string>
-    <string name="app_info_description">MyRingReminder est une application Android destinée à la gestion et au suivi des cycles d\'anneaux contraceptifs. L\'application propose un calendrier avec code couleur pour les jours d\'insertion, de retrait et de pause sans anneau, des rappels personnalisables, le suivi du stock d\'anneaux, des notes, des widgets ainsi que des fonctions de sauvegarde et de restauration. Elle comprend également une visite de bienvenue, un historique des cycles, des conseils pour prolonger un cycle (\"porter l\'anneau plus longtemps\"), la possibilité de mettre l\'utilisation prévue de l\'anneau en pause pour les longues interruptions et de la redémarrer plus tard à partir d\'une nouvelle date d\'insertion, le suivi des règles pendant la semaine sans anneau, ainsi qu\'une vue dédiée Détails des règles avec filtres de période et export PDF formaté. Des options de personnalisation telles que les images de fond et les paramètres de couleur permettent une adaptation individuelle.\n\nRemarque importante : cette application est destinée uniquement à l\'organisation personnelle et au suivi des cycles d\'anneaux contraceptifs. Elle n\'est pas un dispositif médical, ne remplace pas un avis médical et ne repose sur aucune évaluation ou diagnostic médical. Si vous avez des questions concernant son utilisation ou des préoccupations liées à votre santé, veuillez consulter un professionnel de santé.\n\nToutes les données sont stockées uniquement localement sur cet appareil.</string>
+    <string name="app_info_description">MyRingReminder vous aide à gérer et à suivre facilement votre cycle d\'anneau contraceptif. Un calendrier avec des codes couleur, des rappels personnalisables et un aperçu du cycle vous permettent de suivre les jours d\'insertion, de retrait et les jours sans anneau. L\'application propose également le suivi des règles, la gestion du stock d\'anneaux, des notes, des widgets, une planification flexible du cycle ainsi que des fonctions de sauvegarde et d\'exportation. Différents thèmes permettent de personnaliser l\'application.\n\nAvis important : Cette application est exclusivement destinée à l\'organisation personnelle et au suivi des cycles d\'anneau contraceptif. Elle n\'est pas un dispositif médical, ne remplace pas un avis médical et ne repose sur aucune évaluation ni aucun diagnostic médical. Pour toute question concernant son utilisation ou en cas de problème de santé, veuillez consulter un professionnel de santé.\n\nToutes les données sont stockées exclusivement en local sur cet appareil.</string>
     <string name="app_info_developer">Développeur : %1$s</string>
     <string name="app_info_developer_label">Développeur :</string>
     <string name="app_info_developer_name">Darexsh par Daniel Sichler</string>
@@ -10,6 +10,12 @@
     <string name="app_info_name">MyRingReminder</string>
     <string name="app_info_open_coffee">Soutenir le développement</string>
     <string name="app_info_open_privacy">Politique de confidentialité</string>
+    <string name="app_info_privacy_language_note">Cette politique est actuellement disponible en anglais.</string>
+    <string name="app_info_privacy_last_updated">Dernière mise à jour : %1$s</string>
+    <string name="app_info_privacy_loading">Chargement de la politique de confidentialité…</string>
+    <string name="app_info_privacy_load_failed">Impossible de charger la politique de confidentialité. Vérifiez votre connexion Internet et réessayez.</string>
+    <string name="app_info_privacy_cached">La politique n’a pas pu être actualisée. La dernière copie enregistrée est affichée.</string>
+    <string name="app_info_privacy_retry">Réessayer</string>
     <string name="app_info_open_email">Écrire un e-mail</string>
     <string name="app_info_open_github">Ouvrir les réseaux sociaux</string>
     <string name="app_info_open_github_profile">Profil GitHub</string>

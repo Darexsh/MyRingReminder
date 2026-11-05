@@ -1,7 +1,7 @@
 <resources>
     <!-- App -->
     <string name="app_info_actions_title">Eylemler</string>
-    <string name="app_info_description">MyRingReminder, doğum kontrol halkası döngülerini yönetmek ve takip etmek için geliştirilmiş bir Android uygulamasıdır. Uygulama; takma, çıkarma ve halkasız günler için renk kodlu bir takvim, özelleştirilebilir hatırlatıcılar, halka stoğu takibi, notlar, widget\'lar ve yedekleme/geri yükleme özellikleri sunar. Ayrıca bir hoş geldiniz turu, döngü geçmişi, döngünün uzatılması için rehberlik (\"halkayı daha uzun süre kullan\"), daha uzun aralar için planlanan halka kullanımını duraklatma ve daha sonra yeni bir yerleştirme tarihinden yeniden başlatma seçeneği, halkasız hafta sırasında adet takibi ve aralık filtreleri ile biçimlendirilmiş PDF dışa aktarma sunan özel bir Adet Detayları görünümü içerir. Arka plan görselleri ve renk ayarları gibi kişiselleştirme seçenekleri, uygulamayı isteğe göre özelleştirmeyi sağlar.\n\nÖnemli not: Bu uygulama yalnızca doğum kontrol halkası döngülerinin kişisel organizasyonu ve takibi amacıyla tasarlanmıştır. Tıbbi bir ürün değildir, tıbbi tavsiyenin yerine geçmez ve tıbbi değerlendirme veya teşhise dayanmaz. Kullanım hakkında sorularınız veya sağlıkla ilgili endişeleriniz varsa bir sağlık uzmanına danışın.\n\nTüm veriler yalnızca bu cihazda yerel olarak saklanır.</string>
+    <string name="app_info_description">MyRingReminder, doğum kontrol halkası döngünüzü kolayca yönetmenize ve takip etmenize yardımcı olur. Renk kodlu takvim, özelleştirilebilir hatırlatıcılar ve döngü özeti sayesinde halkanın takıldığı, çıkarıldığı ve kullanılmadığı günleri takip edebilirsiniz. Uygulama ayrıca adet takibi, halka stok yönetimi, notlar, widget\'lar, esnek döngü planlaması ve yedekleme ile dışa aktarma özellikleri sunar. Farklı temalar uygulamayı kişiselleştirmenize olanak tanır.\n\nÖnemli uyarı: Bu uygulama yalnızca doğum kontrol halkası döngülerinin kişisel olarak düzenlenmesi ve takip edilmesi amacıyla tasarlanmıştır. Tıbbi bir cihaz değildir, tıbbi danışmanlığın yerini almaz ve tıbbi değerlendirme veya teşhise dayanmaz. Kullanımla ilgili sorularınız veya sağlık sorunlarınız varsa lütfen bir sağlık uzmanına danışın.\n\nTüm veriler yalnızca bu cihazda yerel olarak saklanır.</string>
     <string name="app_info_developer">Geliştirici: %1$s</string>
     <string name="app_info_developer_label">Geliştirici:</string>
     <string name="app_info_developer_name">Daniel Sichler tarafından Darexsh</string>
@@ -10,6 +10,12 @@
     <string name="app_info_name">MyRingReminder</string>
     <string name="app_info_open_coffee">Geliştirmeyi destekle</string>
     <string name="app_info_open_privacy">Gizlilik Politikası</string>
+    <string name="app_info_privacy_language_note">Bu politika şu anda İngilizce olarak sunulmaktadır.</string>
+    <string name="app_info_privacy_last_updated">Son güncelleme: %1$s</string>
+    <string name="app_info_privacy_loading">Gizlilik politikası yükleniyor…</string>
+    <string name="app_info_privacy_load_failed">Gizlilik politikası yüklenemedi. İnternet bağlantınızı kontrol edip tekrar deneyin.</string>
+    <string name="app_info_privacy_cached">Gizlilik politikası yenilenemedi. Son kaydedilen kopya gösteriliyor.</string>
+    <string name="app_info_privacy_retry">Tekrar dene</string>
     <string name="app_info_open_email">E-posta yaz</string>
     <string name="app_info_open_github">Sosyal medyayı aç</string>
     <string name="app_info_open_github_profile">GitHub profili</string>
