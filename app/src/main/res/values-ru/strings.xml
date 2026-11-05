@@ -194,6 +194,8 @@
     <string name="settings_navigation_animation_dialog_title">Анимация навигации</string>
     <string name="settings_navigation_animation_format">Анимация: %1$s</string>
     <string name="settings_navigation_animation_label">Анимация навигации</string>
+    <string name="settings_particle_animation_dialog_title">Анимация частиц на главном экране</string>
+    <string name="settings_particle_animation_label">Анимация частиц</string>
     <string name="settings_notification_before_insertion">Перед вставкой (часов)</string>
     <string name="settings_notification_before_removal">Перед извлечением (часов)</string>
     <string name="settings_notification_times_button">Напоминания: %1$дч до извлечения, %2$дч до вставки</string>
@@ -497,6 +499,7 @@
     <string name="backup_field_exact_alarm_prompted">Показан запрос на точный будильник</string>
     <string name="backup_field_home_circle_color">Цвет кольца на главном экране</string>
     <string name="backup_field_home_circle_style">Стиль кольца на главном экране</string>
+    <string name="backup_field_home_particle_animation">Анимация частиц на главном экране</string>
     <string name="backup_field_last_version">Код последней версии приложения</string>
     <string name="backup_field_navigation_animation">Анимация навигации</string>
     <string name="backup_field_notes_last_saved">Заметки последний раз сохранены</string>
@@ -661,6 +664,7 @@
     <string name="tour_body_settings_calendar">Выберите, насколько далеко календарь показывает прошлые и будущие циклы.</string>
     <string name="tour_body_settings_circle_color">Установите цвет кольца на главном экране.\nЭто также изменит цвет кольца в большом виджете.</string>
     <string name="tour_body_settings_circle_style">Выберите стиль кольца для главного экрана.</string>
+    <string name="tour_body_settings_particle_animation">Выберите эффект частиц кольца на главном экране: автоматический, уменьшенный или выключенный.</string>
     <string name="tour_body_settings_cycle">Установите дату, время вставки и длину цикла.</string>
     <string name="tour_body_settings_info">Показывает версию, инфо о разработчике и контакты.</string>
     <string name="tour_body_settings_language">Переключение между языками.</string>
@@ -700,6 +704,7 @@
     <string name="tour_title_settings_calendar">Диапазон календаря</string>
     <string name="tour_title_settings_circle_color">Цвет кольца</string>
     <string name="tour_title_settings_circle_style">Стиль кольца</string>
+    <string name="tour_title_settings_particle_animation">Анимация частиц</string>
     <string name="tour_title_settings_cycle">Настройки цикла</string>
     <string name="tour_title_settings_ring_pause">Приостановить использование кольца</string>
     <string name="tour_body_settings_ring_pause">Приостановите плановое использование кольца на длительный перерыв. Будущие прогнозы и напоминания остановятся, а история и отслеживание менструации останутся доступны. Возобновите использование здесь, когда будете готовы начать снова.</string>

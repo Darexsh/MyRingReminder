@@ -70,6 +70,7 @@ public class HomeCircleView extends View {
     private int gradientShaderHeight = -1;
 
     private int style = STYLE_CLASSIC;
+    private int particleAnimationMode = SettingsRepository.DEFAULT_PARTICLE_ANIMATION_MODE;
     private int indicatorColor = SettingsRepository.DEFAULT_HOME_CIRCLE_COLOR;
     private final int trackColor = Color.parseColor("#E0E0E0");
     private int max = 1;
@@ -181,6 +182,19 @@ public class HomeCircleView extends View {
         }
     }
 
+    public void setParticleAnimationMode(int mode) {
+        int safeMode = mode >= SettingsRepository.PARTICLE_ANIMATION_AUTO
+                && mode <= SettingsRepository.PARTICLE_ANIMATION_OFF
+                ? mode
+                : SettingsRepository.DEFAULT_PARTICLE_ANIMATION_MODE;
+        if (particleAnimationMode == safeMode) {
+            return;
+        }
+        particleAnimationMode = safeMode;
+        innerParticleStartTimeMs = SystemClock.uptimeMillis();
+        invalidate();
+    }
+
     public void setPeriodActive(boolean periodActive) {
         if (this.periodActive == periodActive) {
             return;
@@ -241,7 +255,7 @@ public class HomeCircleView extends View {
             if (progressFraction > 0f) {
                 drawSegmentedLeadingEdgeHighlight(canvas, thickness, progressFraction);
             }
-            if (animationEnabled) {
+            if (shouldDrawParticleAnimation()) {
                 drawInnerParticleEffect(canvas, thickness);
                 scheduleParticleFrame(canvas);
             }
@@ -318,7 +332,7 @@ public class HomeCircleView extends View {
             drawLeadingEdgeHighlight(canvas, thickness, progressFraction);
         }
 
-        if (animationEnabled) {
+        if (shouldDrawParticleAnimation()) {
             drawInnerParticleEffect(canvas, thickness);
             scheduleParticleFrame(canvas);
         }
@@ -517,7 +531,7 @@ public class HomeCircleView extends View {
         innerRainClipPath.addCircle(centerX, centerY, clipRadius, Path.Direction.CW);
         canvas.clipPath(innerRainClipPath);
 
-        for (int i = 0; i < PERIOD_PARTICLE_COUNT; i++) {
+        for (int i = 0; i < PERIOD_PARTICLE_COUNT; i += getParticleStride()) {
             float progress = (periodOffsets[i] + ((elapsed / 1000f) * periodSpeeds[i])) % 1f;
             float x = centerX - clipRadius + (periodLaneSeeds[i] * clipRadius * 2f)
                     + periodDriftFactors[i] * clipRadius;
@@ -546,7 +560,7 @@ public class HomeCircleView extends View {
         innerRainClipPath.addCircle(centerX, centerY, clipRadius, Path.Direction.CW);
         canvas.clipPath(innerRainClipPath);
 
-        for (int i = 0; i < CALM_PARTICLE_COUNT; i++) {
+        for (int i = 0; i < CALM_PARTICLE_COUNT; i += getParticleStride()) {
             float progress = (calmOffsets[i] + ((elapsed / 1000f) * calmSpeeds[i])) % 1f;
             float sway = calmSwayFactors[i] * clipRadius;
             float x = centerX - clipRadius + (calmLaneSeeds[i] * clipRadius * 2f)
@@ -570,6 +584,14 @@ public class HomeCircleView extends View {
         } else {
             postInvalidateDelayed(33L);
         }
+    }
+
+    private boolean shouldDrawParticleAnimation() {
+        return animationEnabled && particleAnimationMode != SettingsRepository.PARTICLE_ANIMATION_OFF;
+    }
+
+    private int getParticleStride() {
+        return particleAnimationMode == SettingsRepository.PARTICLE_ANIMATION_REDUCED ? 4 : 1;
     }
 
     private float getParticleClipRadius(float thickness) {

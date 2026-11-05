@@ -194,6 +194,8 @@
     <string name="settings_navigation_animation_dialog_title">Animation de navigation</string>
     <string name="settings_navigation_animation_format">Animation : %1$s</string>
     <string name="settings_navigation_animation_label">Animation de navigation</string>
+    <string name="settings_particle_animation_dialog_title">Animation des particules de l’accueil</string>
+    <string name="settings_particle_animation_label">Animation des particules</string>
     <string name="settings_notification_before_insertion">Avant l\'insertion (heures)</string>
     <string name="settings_notification_before_removal">Avant le retrait (heures)</string>
     <string name="settings_notification_times_button">Rappels : %1$dh avant retrait, %2$dh avant insertion</string>
@@ -497,6 +499,7 @@
     <string name="backup_field_exact_alarm_prompted">Invite d\'alarme exacte affichée</string>
     <string name="backup_field_home_circle_color">Couleur de l\'anneau d\'accueil</string>
     <string name="backup_field_home_circle_style">Style de l\'anneau d\'accueil</string>
+    <string name="backup_field_home_particle_animation">Animation des particules de l’accueil</string>
     <string name="backup_field_last_version">Code de la dernière version de l\'app</string>
     <string name="backup_field_navigation_animation">Animation de navigation</string>
     <string name="backup_field_notes_last_saved">Dernière sauvegarde des notes</string>
@@ -662,6 +665,7 @@
     <string name="tour_body_settings_calendar">Choisissez jusqu\'où le calendrier affiche les cycles passés et futurs.</string>
     <string name="tour_body_settings_circle_color">Réglez la couleur de l\'anneau sur l\'écran d\'accueil.\nCela modifie aussi l\'anneau sur le grand widget.</string>
     <string name="tour_body_settings_circle_style">Choisissez un style pour l\'anneau d\'accueil.</string>
+    <string name="tour_body_settings_particle_animation">Choisissez l’effet des particules de l’anneau d’accueil : automatique, réduit ou désactivé.</string>
     <string name="tour_body_settings_cycle">Réglez la date, l\'heure d\'insertion et la durée du cycle.</string>
     <string name="tour_body_settings_info">Affiche la version, les infos développeur et les liens de contact.</string>
     <string name="tour_body_settings_language">Basculez entre les différentes langues.</string>
@@ -701,6 +705,7 @@
     <string name="tour_title_settings_calendar">Plage du calendrier</string>
     <string name="tour_title_settings_circle_color">Couleur de l\'anneau</string>
     <string name="tour_title_settings_circle_style">Style de l\'anneau</string>
+    <string name="tour_title_settings_particle_animation">Animation des particules</string>
     <string name="tour_title_settings_cycle">Paramètres du cycle</string>
     <string name="tour_title_settings_ring_pause">Mettre l’utilisation de l’anneau en pause</string>
     <string name="tour_body_settings_ring_pause">Mettez l’utilisation prévue de l’anneau en pause pendant une interruption prolongée. Les prévisions et rappels futurs sont arrêtés, mais l’historique et le suivi des règles restent disponibles. Reprenez l’utilisation ici lorsque vous souhaitez recommencer.</string>

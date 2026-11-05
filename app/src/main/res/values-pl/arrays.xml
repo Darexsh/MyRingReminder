@@ -63,6 +63,17 @@
         <item>6</item>
         <item>3</item>
     </integer-array>
+    <string-array name="settings_particle_animation_labels">
+        <item>Automatyczna</item>
+        <item>Ograniczona</item>
+        <item>Wyłączona</item>
+    </string-array>
+
+    <integer-array name="settings_particle_animation_values">
+        <item>0</item>
+        <item>1</item>
+        <item>2</item>
+    </integer-array>
 
     <string-array name="settings_app_lock_timeout_labels">
         <item>Natychmiast</item>

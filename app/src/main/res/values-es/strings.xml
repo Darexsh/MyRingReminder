@@ -194,6 +194,8 @@
     <string name="settings_navigation_animation_dialog_title">Elegir animación de navegación</string>
     <string name="settings_navigation_animation_format">Animación de navegación: %1$s</string>
     <string name="settings_navigation_animation_label">Animación de navegación</string>
+    <string name="settings_particle_animation_dialog_title">Elegir animación de partículas de inicio</string>
+    <string name="settings_particle_animation_label">Animación de partículas</string>
     <string name="settings_notification_before_insertion">Antes de la inserción (horas)</string>
     <string name="settings_notification_before_removal">Antes de la eliminación (horas)</string>
     <string name="settings_notification_times_button">Recordatorios: %1$dh antes de la eliminación, %2$dh antes de la inserción</string>
@@ -497,6 +499,7 @@
     <string name="backup_field_exact_alarm_prompted">Se muestra el aviso de alarma exacto</string>
     <string name="backup_field_home_circle_color">Color del anillo de inicio</string>
     <string name="backup_field_home_circle_style">Estilo del círculo de inicio</string>
+    <string name="backup_field_home_particle_animation">Animación de partículas de inicio</string>
     <string name="backup_field_last_version">Código de la última versión de la aplicación</string>
     <string name="backup_field_navigation_animation">Animación de navegación</string>
     <string name="backup_field_notes_last_saved">Última fecha de guardado de las notas</string>
@@ -661,6 +664,7 @@
     <string name="tour_body_settings_calendar">Elige hasta qué punto del pasado y del futuro se muestran los ciclos en el calendario.</string>
     <string name="tour_body_settings_circle_color">Establece el color del anillo en la pantalla de inicio.\nEsto también cambia el color del anillo en el widget grande.</string>
     <string name="tour_body_settings_circle_style">Elige un estilo para el anillo de la pantalla de inicio.</string>
+    <string name="tour_body_settings_particle_animation">Elige el efecto de partículas del anillo de inicio: automático, reducido o desactivado.</string>
     <string name="tour_body_settings_cycle">Establece la fecha, la hora y la duración del ciclo de inserción.</string>
     <string name="tour_body_settings_info">Muestra la versión, la información del desarrollador y los enlaces de contacto.</string>
     <string name="tour_body_settings_language">Cambiar entre diferentes idiomas.</string>
@@ -700,6 +704,7 @@
     <string name="tour_title_settings_calendar">Rango del calendario</string>
     <string name="tour_title_settings_circle_color">Color del anillo de inicio</string>
     <string name="tour_title_settings_circle_style">Estilo del anillo de inicio</string>
+    <string name="tour_title_settings_particle_animation">Animación de partículas</string>
     <string name="tour_title_settings_cycle">Configuración del ciclo</string>
     <string name="tour_title_settings_ring_pause">Pausar el uso del anillo</string>
     <string name="tour_body_settings_ring_pause">Pausa el uso previsto del anillo durante un descanso prolongado. Se detienen las predicciones y los recordatorios futuros, pero el historial y el seguimiento del período siguen disponibles. Reanuda el uso del anillo aquí cuando quieras comenzar de nuevo.</string>

@@ -117,6 +117,8 @@ public class SettingsFragment extends Fragment {
     private String[] circleStyleLabels;
     private String[] navigationAnimationLabels;
     private int[] navigationAnimationValues;
+    private String[] particleAnimationLabels;
+    private int[] particleAnimationValues;
     private String[] appLockTimeoutLabels;
     private int[] appLockTimeoutValues;
     private Drawable[] circleStylePreviews;
@@ -147,6 +149,7 @@ public class SettingsFragment extends Fragment {
     private TextView tvSetCircleColorValue;
     private TextView tvSetCircleStyleValue;
     private TextView tvSetNavigationAnimationValue;
+    private TextView tvSetParticleAnimationValue;
     private TextView tvAppLockValue;
     private TextView tvStockTrackerValue;
     private ValueAnimator resetAppAnimator;
@@ -273,6 +276,7 @@ public class SettingsFragment extends Fragment {
         View btnSetCircleColor = view.findViewById(R.id.btn_set_circle_color);
         View btnSetCircleStyle = view.findViewById(R.id.btn_set_circle_style);
         View btnSetNavigationAnimation = view.findViewById(R.id.btn_set_navigation_animation);
+        View btnSetParticleAnimation = view.findViewById(R.id.btn_set_particle_animation);
         tvSetStartDateValue = view.findViewById(R.id.tv_set_start_date_value);
         tvSetTimeValue = view.findViewById(R.id.tv_set_time_value);
         tvSetCycleLengthValue = view.findViewById(R.id.tv_set_cycle_length_value);
@@ -285,6 +289,7 @@ public class SettingsFragment extends Fragment {
         tvSetCircleColorValue = view.findViewById(R.id.tv_set_circle_color_value);
         tvSetCircleStyleValue = view.findViewById(R.id.tv_set_circle_style_value);
         tvSetNavigationAnimationValue = view.findViewById(R.id.tv_set_navigation_animation_value);
+        tvSetParticleAnimationValue = view.findViewById(R.id.tv_set_particle_animation_value);
         tvAppLockValue = view.findViewById(R.id.tv_app_lock_value);
         tvStockTrackerValue = view.findViewById(R.id.tv_stock_tracker_value);
         debugSection = view.findViewById(R.id.debug_section);
@@ -323,6 +328,7 @@ public class SettingsFragment extends Fragment {
                 tvSetCircleColorValue,
                 tvSetCircleStyleValue,
                 tvSetNavigationAnimationValue,
+                tvSetParticleAnimationValue,
                 tvAppLockValue,
                 view.findViewById(R.id.tv_set_start_date_chevron),
                 view.findViewById(R.id.tv_set_time_chevron),
@@ -429,6 +435,11 @@ public class SettingsFragment extends Fragment {
                 updateNavigationAnimationButtonText(style);
             }
         });
+        viewModel.getHomeParticleAnimationMode().observe(getViewLifecycleOwner(), mode -> {
+            if (mode != null) {
+                updateParticleAnimationButtonText(mode);
+            }
+        });
         viewModel.getBackgroundAllScreensEnabled().observe(getViewLifecycleOwner(), enabled -> updateBackgroundAllScreensButtonText());
         viewModel.getBackgroundImageUri().observe(getViewLifecycleOwner(), uri -> updateBackgroundAllScreensButtonText());
         viewModel.getBackgroundDimPercent().observe(getViewLifecycleOwner(), percent -> {
@@ -458,6 +469,7 @@ public class SettingsFragment extends Fragment {
         btnSetCircleColor.setOnClickListener(v -> showCircleColorDialog());
         btnSetCircleStyle.setOnClickListener(v -> showCircleStyleDialog());
         btnSetNavigationAnimation.setOnClickListener(v -> showNavigationAnimationDialog());
+        btnSetParticleAnimation.setOnClickListener(v -> showParticleAnimationDialog());
         btnAppLock.setOnClickListener(v -> showAppLockToolsDialog());
         btnWelcomeTour.setOnClickListener(v -> {
             if (getActivity() instanceof MainActivity) {
@@ -1995,6 +2007,11 @@ public class SettingsFragment extends Fragment {
         tvSetNavigationAnimationValue.setText(navigationAnimationLabels[safeStyle]);
     }
 
+    private void updateParticleAnimationButtonText(int mode) {
+        ensureParticleAnimationOptionsLoaded();
+        tvSetParticleAnimationValue.setText(particleAnimationLabels[particleAnimationModeToIndex(mode)]);
+    }
+
     private void updateAppLockButtonText() {
         boolean enabled = viewModel != null && viewModel.getRepository().isAppLockEnabled();
         tvAppLockValue.setText(getString(enabled
@@ -2189,6 +2206,43 @@ public class SettingsFragment extends Fragment {
                 .setNegativeButton(R.string.dialog_cancel, null)
                 .show();
         applyDialogButtonColors(dialog);
+    }
+
+    private void showParticleAnimationDialog() {
+        ensureParticleAnimationOptionsLoaded();
+        Integer currentMode = viewModel.getHomeParticleAnimationMode().getValue();
+        int selected = particleAnimationModeToIndex(currentMode != null
+                ? currentMode
+                : SettingsRepository.DEFAULT_PARTICLE_ANIMATION_MODE);
+
+        AlertDialog dialog = new AlertDialog.Builder(requireContext())
+                .setTitle(R.string.settings_particle_animation_dialog_title)
+                .setSingleChoiceItems(particleAnimationLabels, selected, (dlg, which) -> {
+                    if (which >= 0 && which < particleAnimationValues.length) {
+                        viewModel.setHomeParticleAnimationMode(particleAnimationValues[which]);
+                    }
+                    dlg.dismiss();
+                })
+                .setNegativeButton(R.string.dialog_cancel, null)
+                .show();
+        applyDialogButtonColors(dialog);
+    }
+
+    private void ensureParticleAnimationOptionsLoaded() {
+        if (particleAnimationLabels == null || particleAnimationValues == null) {
+            particleAnimationLabels = getResources().getStringArray(R.array.settings_particle_animation_labels);
+            particleAnimationValues = getResources().getIntArray(R.array.settings_particle_animation_values);
+        }
+    }
+
+    private int particleAnimationModeToIndex(int mode) {
+        ensureParticleAnimationOptionsLoaded();
+        for (int i = 0; i < particleAnimationValues.length; i++) {
+            if (particleAnimationValues[i] == mode) {
+                return i;
+            }
+        }
+        return 0;
     }
 
     private Drawable getCircleStylePreview(int style) {
@@ -3040,6 +3094,7 @@ public class SettingsFragment extends Fragment {
         viewModel.setButtonColor(SettingsRepository.DEFAULT_BUTTON_COLOR);
         viewModel.setHomeCircleColor(SettingsRepository.DEFAULT_HOME_CIRCLE_COLOR);
         viewModel.setHomeCircleStyle(SettingsRepository.DEFAULT_HOME_CIRCLE_STYLE);
+        viewModel.setHomeParticleAnimationMode(SettingsRepository.DEFAULT_PARTICLE_ANIMATION_MODE);
 
         WidgetUpdater.updateAllWidgets(requireContext());
         restartAppAfterReset();
@@ -3352,6 +3407,8 @@ public class SettingsFragment extends Fragment {
                 return getString(R.string.backup_field_home_circle_color) + ": " + formatColor(value);
             case "home_circle_style":
                 return getString(R.string.backup_field_home_circle_style) + ": " + formatCircleStyle(value);
+            case "home_particle_animation_mode":
+                return getString(R.string.backup_field_home_particle_animation) + ": " + formatParticleAnimation(value);
             case "navigation_animation_style":
                 return getString(R.string.backup_field_navigation_animation) + ": " + formatNavigationAnimation(value);
             case "background_image_uri":
@@ -3463,6 +3520,18 @@ public class SettingsFragment extends Fragment {
             }
         }
         return String.valueOf(style);
+    }
+
+    private String formatParticleAnimation(PrefValue value) {
+        int mode = prefToInt(value);
+        int[] values = getResources().getIntArray(R.array.settings_particle_animation_values);
+        String[] labels = getResources().getStringArray(R.array.settings_particle_animation_labels);
+        for (int i = 0; i < values.length && i < labels.length; i++) {
+            if (values[i] == mode) {
+                return labels[i];
+            }
+        }
+        return String.valueOf(mode);
     }
 
     private String formatAppLockTimeout(PrefValue value) {
@@ -3605,6 +3674,7 @@ public class SettingsFragment extends Fragment {
         viewModel.setButtonColor(restoredRepository.getButtonColor());
         viewModel.setHomeCircleColor(restoredRepository.getHomeCircleColor());
         viewModel.setHomeCircleStyle(restoredRepository.getHomeCircleStyle());
+        viewModel.setHomeParticleAnimationMode(restoredRepository.getHomeParticleAnimationMode());
         viewModel.setCalendarWearColor(restoredRepository.getCalendarWearColor());
         viewModel.setCalendarRingFreeColor(restoredRepository.getCalendarRingFreeColor());
         viewModel.setCalendarRemovalColor(restoredRepository.getCalendarRemovalColor());

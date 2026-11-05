@@ -187,6 +187,11 @@ public class HomeFragment extends Fragment {
                 applyHomeCircleStyle(circularProgress, currentCircleStyle, currentCircleColor);
             }
         });
+        viewModel.getHomeParticleAnimationMode().observe(getViewLifecycleOwner(), mode -> {
+            if (mode != null) {
+                circularProgress.setParticleAnimationMode(mode);
+            }
+        });
         viewModel.getStockTrackingEnabled().observe(getViewLifecycleOwner(), value -> updateStockStatus(tvStockStatus));
         viewModel.getRingStockCount().observe(getViewLifecycleOwner(), value -> updateStockStatus(tvStockStatus));
 

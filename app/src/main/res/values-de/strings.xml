@@ -194,6 +194,8 @@
     <string name="settings_navigation_animation_dialog_title">Navigationsanimation wählen</string>
     <string name="settings_navigation_animation_format">Navigationsanimation: %1$s</string>
     <string name="settings_navigation_animation_label">Navigationsanimation</string>
+    <string name="settings_particle_animation_dialog_title">Home-Partikelanimation wählen</string>
+    <string name="settings_particle_animation_label">Partikelanimation</string>
     <string name="settings_notification_before_insertion">Vor Einsetzen (Stunden)</string>
     <string name="settings_notification_before_removal">Vor Entfernen (Stunden)</string>
     <string name="settings_notification_times_button">Erinnerungen: %1$dh vor Entfernen, %2$dh vor Einsetzen</string>
@@ -497,6 +499,7 @@
     <string name="backup_field_exact_alarm_prompted">Exakter-Alarm-Hinweis angezeigt</string>
     <string name="backup_field_home_circle_color">Home-Ring-Farbe</string>
     <string name="backup_field_home_circle_style">Home-Ring-Stil</string>
+    <string name="backup_field_home_particle_animation">Home-Partikelanimation</string>
     <string name="backup_field_last_version">Letzter App-Versionscode</string>
     <string name="backup_field_navigation_animation">Navigationsanimation</string>
     <string name="backup_field_notes_last_saved">Notizen zuletzt gespeichert</string>
@@ -662,6 +665,7 @@
     <string name="tour_body_settings_calendar">Lege fest, wie weit der Kalender vergangene und zukünftige Zyklen anzeigt.</string>
     <string name="tour_body_settings_circle_color">Lege die Ringfarbe auf dem Startbildschirm fest.\nDies ändert auch die Ringfarbe im großen Widget.</string>
     <string name="tour_body_settings_circle_style">Wähle einen Stil für den Home-Ring.</string>
+    <string name="tour_body_settings_particle_animation">Wähle den Partikeleffekt im Home-Ring: automatisch, reduziert oder aus.</string>
     <string name="tour_body_settings_cycle">Einsetzdatum, -zeit und Zykluslänge festlegen.</string>
     <string name="tour_body_settings_info">Zeigt Version, Entwickler-Info und Kontaktlinks.</string>
     <string name="tour_body_settings_language">Zwischen verschiedenen Sprachen wechseln.</string>
@@ -701,6 +705,7 @@
     <string name="tour_title_settings_calendar">Kalender-Reichweite</string>
     <string name="tour_title_settings_circle_color">Home-Ring-Farbe</string>
     <string name="tour_title_settings_circle_style">Home-Ring-Stil</string>
+    <string name="tour_title_settings_particle_animation">Partikelanimation</string>
     <string name="tour_title_settings_cycle">Zyklus-Einstellungen</string>
     <string name="tour_title_settings_ring_pause">Ringnutzung pausieren</string>
     <string name="tour_body_settings_ring_pause">Pausiere die geplante Ringnutzung während einer längeren Unterbrechung. Zukünftige Ringvorhersagen und Erinnerungen werden angehalten; dein Verlauf und die Periodenerfassung bleiben verfügbar. Hier kannst du die Ringnutzung wieder aufnehmen.</string>

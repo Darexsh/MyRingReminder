@@ -194,6 +194,8 @@
     <string name="settings_navigation_animation_dialog_title">选择导航动画</string>
     <string name="settings_navigation_animation_format">导航动画：%1$s</string>
     <string name="settings_navigation_animation_label">导航动画</string>
+    <string name="settings_particle_animation_dialog_title">主页粒子动画</string>
+    <string name="settings_particle_animation_label">粒子动画</string>
     <string name="settings_notification_before_insertion">置入前（小时）</string>
     <string name="settings_notification_before_removal">取出前（小时）</string>
     <string name="settings_notification_times_button">提醒：取出前 %1$d 小时，置入前 %2$d 小时</string>
@@ -497,6 +499,7 @@
     <string name="backup_field_exact_alarm_prompted">已显示精确闹钟提示</string>
     <string name="backup_field_home_circle_color">首页圆环颜色</string>
     <string name="backup_field_home_circle_style">首页圆环样式</string>
+    <string name="backup_field_home_particle_animation">主页粒子动画</string>
     <string name="backup_field_last_version">上次应用版本代码</string>
     <string name="backup_field_navigation_animation">导航动画</string>
     <string name="backup_field_notes_last_saved">备注上次保存时间</string>
@@ -661,6 +664,7 @@
     <string name="tour_body_settings_calendar">选择日历显示过去和未来周期的范围。</string>
     <string name="tour_body_settings_circle_color">设置首页的圆环颜色。\n这也会同时更改大组件的圆环颜色。</string>
     <string name="tour_body_settings_circle_style">为首页圆环选择一种样式。</string>
+    <string name="tour_body_settings_particle_animation">选择主页圆环的粒子效果：自动、精简或关闭。</string>
     <string name="tour_body_settings_cycle">设置置入日期、时间和周期长度。</string>
     <string name="tour_body_settings_info">显示版本、开发者信息和联系方式链接。</string>
     <string name="tour_body_settings_language">在不同语言之间切换。</string>
@@ -700,6 +704,7 @@
     <string name="tour_title_settings_calendar">日历范围</string>
     <string name="tour_title_settings_circle_color">圆环颜色</string>
     <string name="tour_title_settings_circle_style">圆环样式</string>
+    <string name="tour_title_settings_particle_animation">粒子动画</string>
     <string name="tour_title_settings_cycle">周期设置</string>
     <string name="tour_title_settings_ring_pause">暂停使用环</string>
     <string name="tour_body_settings_ring_pause">长期停用期间，可在此暂停计划中的环使用。未来的环周期预测和提醒会停止，但历史记录和经期追踪仍可使用。准备重新开始时，可在此恢复环使用。</string>

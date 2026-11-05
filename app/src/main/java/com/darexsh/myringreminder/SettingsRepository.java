@@ -47,6 +47,7 @@ public class SettingsRepository {
     private static final String KEY_HOME_CIRCLE_COLOR = "home_circle_color";
     private static final String KEY_HOME_CIRCLE_STYLE = "home_circle_style";
     private static final String KEY_HOME_CIRCLE_STYLE_VERSION = "home_circle_style_version";
+    private static final String KEY_HOME_PARTICLE_ANIMATION_MODE = "home_particle_animation_mode";
     private static final String KEY_CALENDAR_WEAR_COLOR = "calendar_wear_color";
     private static final String KEY_CALENDAR_RING_FREE_COLOR = "calendar_ring_free_color";
     private static final String KEY_CALENDAR_REMOVAL_COLOR = "calendar_removal_color";
@@ -69,6 +70,10 @@ public class SettingsRepository {
     public static final int DEFAULT_BUTTON_COLOR = 0xFF2E7D32;
     public static final int DEFAULT_HOME_CIRCLE_COLOR = 0xFFBB86FC;
     public static final int DEFAULT_HOME_CIRCLE_STYLE = 0;
+    public static final int PARTICLE_ANIMATION_AUTO = 0;
+    public static final int PARTICLE_ANIMATION_REDUCED = 1;
+    public static final int PARTICLE_ANIMATION_OFF = 2;
+    public static final int DEFAULT_PARTICLE_ANIMATION_MODE = PARTICLE_ANIMATION_AUTO;
     public static final int DEFAULT_CALENDAR_WEAR_COLOR = 0xFF00FF00;
     public static final int DEFAULT_CALENDAR_RING_FREE_COLOR = 0xFFFF0000;
     public static final int DEFAULT_CALENDAR_REMOVAL_COLOR = 0xFFFFFF00;
@@ -422,6 +427,24 @@ public class SettingsRepository {
 
     public void saveHomeCircleStyle(int style) {
         sharedPreferences.edit().putInt(KEY_HOME_CIRCLE_STYLE, style).apply();
+    }
+
+    public int getHomeParticleAnimationMode() {
+        int mode = sharedPreferences.getInt(
+                KEY_HOME_PARTICLE_ANIMATION_MODE,
+                DEFAULT_PARTICLE_ANIMATION_MODE
+        );
+        if (mode < PARTICLE_ANIMATION_AUTO || mode > PARTICLE_ANIMATION_OFF) {
+            return DEFAULT_PARTICLE_ANIMATION_MODE;
+        }
+        return mode;
+    }
+
+    public void saveHomeParticleAnimationMode(int mode) {
+        int safeMode = mode >= PARTICLE_ANIMATION_AUTO && mode <= PARTICLE_ANIMATION_OFF
+                ? mode
+                : DEFAULT_PARTICLE_ANIMATION_MODE;
+        sharedPreferences.edit().putInt(KEY_HOME_PARTICLE_ANIMATION_MODE, safeMode).apply();
     }
 
     public boolean isDebugToolsEnabled() {

@@ -29,6 +29,7 @@ public class SharedViewModel extends ViewModel {
     private final MutableLiveData<Integer> buttonColor = new MutableLiveData<>();
     private final MutableLiveData<Integer> homeCircleColor = new MutableLiveData<>();
     private final MutableLiveData<Integer> homeCircleStyle = new MutableLiveData<>();
+    private final MutableLiveData<Integer> homeParticleAnimationMode = new MutableLiveData<>();
     private final MutableLiveData<Integer> calendarWearColor = new MutableLiveData<>();
     private final MutableLiveData<Integer> calendarRingFreeColor = new MutableLiveData<>();
     private final MutableLiveData<Integer> calendarRemovalColor = new MutableLiveData<>();
@@ -60,6 +61,7 @@ public class SharedViewModel extends ViewModel {
         buttonColor.setValue(repository.getButtonColor());
         homeCircleColor.setValue(repository.getHomeCircleColor());
         homeCircleStyle.setValue(repository.getHomeCircleStyle());
+        homeParticleAnimationMode.setValue(repository.getHomeParticleAnimationMode());
         calendarWearColor.setValue(repository.getCalendarWearColor());
         calendarRingFreeColor.setValue(repository.getCalendarRingFreeColor());
         calendarRemovalColor.setValue(repository.getCalendarRemovalColor());
@@ -143,6 +145,10 @@ public class SharedViewModel extends ViewModel {
 
     public LiveData<Integer> getHomeCircleStyle() {
         return homeCircleStyle;
+    }
+
+    public LiveData<Integer> getHomeParticleAnimationMode() {
+        return homeParticleAnimationMode;
     }
 
     public LiveData<Integer> getCalendarWearColor() {
@@ -268,6 +274,11 @@ public class SharedViewModel extends ViewModel {
     public void setHomeCircleStyle(int style) {
         repository.saveHomeCircleStyle(style);
         homeCircleStyle.setValue(style);
+    }
+
+    public void setHomeParticleAnimationMode(int mode) {
+        repository.saveHomeParticleAnimationMode(mode);
+        homeParticleAnimationMode.setValue(repository.getHomeParticleAnimationMode());
     }
 
     public void setCalendarWearColor(int color) {

@@ -194,6 +194,8 @@
     <string name="settings_navigation_animation_dialog_title">Animazione navigazione</string>
     <string name="settings_navigation_animation_format">Animazione navigazione: %1$s</string>
     <string name="settings_navigation_animation_label">Animazione navigazione</string>
+    <string name="settings_particle_animation_dialog_title">Animazione delle particelle Home</string>
+    <string name="settings_particle_animation_label">Animazione particelle</string>
     <string name="settings_notification_before_insertion">Prima dell\'inserimento (ore)</string>
     <string name="settings_notification_before_removal">Prima della rimozione (ore)</string>
     <string name="settings_notification_times_button">Promemoria: %1$dh prima rimozione, %2$dh prima inserimento</string>
@@ -497,6 +499,7 @@
     <string name="backup_field_exact_alarm_prompted">Richiesta allarme preciso mostrata</string>
     <string name="backup_field_home_circle_color">Colore anello home</string>
     <string name="backup_field_home_circle_style">Stile anello home</string>
+    <string name="backup_field_home_particle_animation">Animazione delle particelle Home</string>
     <string name="backup_field_last_version">Codice ultima versione app</string>
     <string name="backup_field_navigation_animation">Animazione navigazione</string>
     <string name="backup_field_notes_last_saved">Ultimo salvataggio note</string>
@@ -662,6 +665,7 @@
     <string name="tour_body_settings_calendar">Scegli quanto indietro e avanti il calendario mostra i cicli.</string>
     <string name="tour_body_settings_circle_color">Imposta il colore dell\'anello nella Home.\nQuesto cambia anche il colore dell\'anello nel widget grande.</string>
     <string name="tour_body_settings_circle_style">Scegli uno stile per l\'anello della Home.</string>
+    <string name="tour_body_settings_particle_animation">Scegli l’effetto delle particelle dell’anello Home: automatico, ridotto o disattivato.</string>
     <string name="tour_body_settings_cycle">Imposta data, ora di inserimento e durata del ciclo.</string>
     <string name="tour_body_settings_info">Mostra versione, info sviluppatore e link di contatto.</string>
     <string name="tour_body_settings_language">Passa tra le diverse lingue.</string>
@@ -701,6 +705,7 @@
     <string name="tour_title_settings_calendar">Intervallo calendario</string>
     <string name="tour_title_settings_circle_color">Colore anello home</string>
     <string name="tour_title_settings_circle_style">Stile anello home</string>
+    <string name="tour_title_settings_particle_animation">Animazione particelle</string>
     <string name="tour_title_settings_cycle">Impostazioni ciclo</string>
     <string name="tour_title_settings_ring_pause">Sospendi l’uso dell’anello</string>
     <string name="tour_body_settings_ring_pause">Sospendi l’uso programmato dell’anello durante un’interruzione prolungata. Le previsioni e i promemoria futuri si fermano, mentre lo storico e il monitoraggio del ciclo restano disponibili. Riprendi qui l’uso dell’anello quando vuoi ricominciare.</string>

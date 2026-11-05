@@ -1492,6 +1492,10 @@ public class MainActivity extends AppCompatActivity {
         steps.add(new TourStep(R.id.nav_settings, R.id.btn_set_circle_style,
                 R.string.tour_title_settings_circle_style, R.string.tour_body_settings_circle_style,
                 R.id.settings_scroll, false));
+        steps.add(new TourStep(R.id.nav_settings, R.id.btn_set_particle_animation,
+                R.string.tour_title_settings_particle_animation,
+                R.string.tour_body_settings_particle_animation,
+                R.id.settings_scroll, false));
         steps.add(new TourStep(R.id.nav_settings, R.id.btn_set_navigation_animation,
                 R.string.tour_title_settings_animation, R.string.tour_body_settings_animation,
                 R.id.settings_scroll, false));

@@ -63,6 +63,17 @@
         <item>6</item>
         <item>3</item>
     </integer-array>
+    <string-array name="settings_particle_animation_labels">
+        <item>自动</item>
+        <item>精简</item>
+        <item>关闭</item>
+    </string-array>
+
+    <integer-array name="settings_particle_animation_values">
+        <item>0</item>
+        <item>1</item>
+        <item>2</item>
+    </integer-array>
 
     <string-array name="settings_app_lock_timeout_labels">
         <item>立即</item>

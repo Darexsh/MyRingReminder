@@ -64,6 +64,18 @@
         <item>3</item>
     </integer-array>
 
+    <string-array name="settings_particle_animation_labels">
+        <item>Automatic</item>
+        <item>Reduced</item>
+        <item>Off</item>
+    </string-array>
+
+    <integer-array name="settings_particle_animation_values">
+        <item>0</item>
+        <item>1</item>
+        <item>2</item>
+    </integer-array>
+
     <string-array name="settings_app_lock_timeout_labels">
         <item>Immediately</item>
         <item>30 seconds</item>

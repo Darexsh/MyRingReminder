@@ -194,6 +194,8 @@
     <string name="settings_navigation_animation_dialog_title">Animacja nawigacji</string>
     <string name="settings_navigation_animation_format">Animacja: %1$s</string>
     <string name="settings_navigation_animation_label">Animacja nawigacji</string>
+    <string name="settings_particle_animation_dialog_title">Animacja cząsteczek ekranu głównego</string>
+    <string name="settings_particle_animation_label">Animacja cząsteczek</string>
     <string name="settings_notification_before_insertion">Przed założeniem (godziny)</string>
     <string name="settings_notification_before_removal">Przed zdjęciem (godziny)</string>
     <string name="settings_notification_times_button">Przypomnienia: %1$dg przed zdjęciem, %2$dg przed założeniem</string>
@@ -497,6 +499,7 @@
     <string name="backup_field_exact_alarm_prompted">Pokazano monit o dokładny alarm</string>
     <string name="backup_field_home_circle_color">Kolor pierścienia na ekranie głównym</string>
     <string name="backup_field_home_circle_style">Styl pierścienia na ekranie głównym</string>
+    <string name="backup_field_home_particle_animation">Animacja cząsteczek ekranu głównego</string>
     <string name="backup_field_last_version">Kod ostatniej wersji aplikacji</string>
     <string name="backup_field_navigation_animation">Animacja nawigacji</string>
     <string name="backup_field_notes_last_saved">Ostatni zapis notatek</string>
@@ -661,6 +664,7 @@
     <string name="tour_body_settings_calendar">Wybierz, jak daleko kalendarz ma pokazywać przeszłe i przyszłe cykle.</string>
     <string name="tour_body_settings_circle_color">Ustaw kolor pierścienia na ekranie głównym.\nZmieni to również kolor pierścienia w dużym widgecie.</string>
     <string name="tour_body_settings_circle_style">Wybierz styl pierścienia na ekranie głównym.</string>
+    <string name="tour_body_settings_particle_animation">Wybierz efekt cząsteczek pierścienia na ekranie głównym: automatyczny, ograniczony lub wyłączony.</string>
     <string name="tour_body_settings_cycle">Ustaw datę, godzinę założenia i długość cyklu.</string>
     <string name="tour_body_settings_info">Pokazuje wersję, informacje o deweloperze i linki kontaktowe.</string>
     <string name="tour_body_settings_language">Przełączaj między różnymi językami.</string>
@@ -700,6 +704,7 @@
     <string name="tour_title_settings_calendar">Zakres kalendarza</string>
     <string name="tour_title_settings_circle_color">Kolor pierścienia</string>
     <string name="tour_title_settings_circle_style">Styl pierścienia</string>
+    <string name="tour_title_settings_particle_animation">Animacja cząsteczek</string>
     <string name="tour_title_settings_cycle">Ustawienia cyklu</string>
     <string name="tour_title_settings_ring_pause">Wstrzymaj używanie pierścienia</string>
     <string name="tour_body_settings_ring_pause">Wstrzymaj planowane używanie pierścienia podczas dłuższej przerwy. Przyszłe prognozy i przypomnienia zostaną wyłączone, a historia i śledzenie miesiączki pozostaną dostępne. Wznów używanie pierścienia tutaj, gdy zechcesz zacząć ponownie.</string>

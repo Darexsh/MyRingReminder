@@ -194,6 +194,8 @@
     <string name="settings_navigation_animation_dialog_title">Animação de navegação</string>
     <string name="settings_navigation_animation_format">Animação de navegação: %1$s</string>
     <string name="settings_navigation_animation_label">Animação de navegação</string>
+    <string name="settings_particle_animation_dialog_title">Animação de partículas da tela inicial</string>
+    <string name="settings_particle_animation_label">Animação de partículas</string>
     <string name="settings_notification_before_insertion">Antes da inserção (horas)</string>
     <string name="settings_notification_before_removal">Antes da remoção (horas)</string>
     <string name="settings_notification_times_button">Lembretes: %1$dh antes da remoção, %2$dh antes da inserção</string>
@@ -497,6 +499,7 @@
     <string name="backup_field_exact_alarm_prompted">Aviso de alarme exato exibido</string>
     <string name="backup_field_home_circle_color">Cor do anel da tela inicial</string>
     <string name="backup_field_home_circle_style">Estilo do anel da tela inicial</string>
+    <string name="backup_field_home_particle_animation">Animação de partículas da tela inicial</string>
     <string name="backup_field_last_version">Código da última versão do app</string>
     <string name="backup_field_navigation_animation">Animação de navegação</string>
     <string name="backup_field_notes_last_saved">Última gravação das notas</string>
@@ -661,6 +664,7 @@
     <string name="tour_body_settings_calendar">Escolha o quanto o calendário mostra de ciclos passados e futuros.</string>
     <string name="tour_body_settings_circle_color">Defina a cor do anel na tela inicial.\nIsso também muda o anel no widget grande.</string>
     <string name="tour_body_settings_circle_style">Escolha um estilo para o anel da tela inicial.</string>
+    <string name="tour_body_settings_particle_animation">Escolha o efeito de partículas do anel da tela inicial: automático, reduzido ou desativado.</string>
     <string name="tour_body_settings_cycle">Defina data, hora de inserção e duração do ciclo.</string>
     <string name="tour_body_settings_info">Mostra versão, info do desenvolvedor e links de contato.</string>
     <string name="tour_body_settings_language">Alterne entre diferentes idiomas.</string>
@@ -700,6 +704,7 @@
     <string name="tour_title_settings_calendar">Intervalo do calendário</string>
     <string name="tour_title_settings_circle_color">Cor do anel</string>
     <string name="tour_title_settings_circle_style">Estilo do anel</string>
+    <string name="tour_title_settings_particle_animation">Animação de partículas</string>
     <string name="tour_title_settings_cycle">Configurações do ciclo</string>
     <string name="tour_title_settings_ring_pause">Pausar o uso do anel</string>
     <string name="tour_body_settings_ring_pause">Pause o uso planejado do anel durante uma pausa prolongada. As previsões e os lembretes futuros são interrompidos, mas o histórico e o acompanhamento menstrual continuam disponíveis. Retome o uso do anel aqui quando quiser começar novamente.</string>

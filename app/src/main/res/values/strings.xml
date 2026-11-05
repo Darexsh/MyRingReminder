@@ -185,6 +185,8 @@
     <string name="settings_circle_style_dialog_title">Choose home circle style</string>
     <string name="settings_circle_style_format">Home circle style: %1$s</string>
     <string name="settings_circle_style_label">Home circle style</string>
+    <string name="settings_particle_animation_dialog_title">Home particle animation</string>
+    <string name="settings_particle_animation_label">Particle animation</string>
     <string name="settings_cycle_length_button">Set cycle length: %1$d days</string>
     <string name="settings_cycle_length_value">%1$d days</string>
     <string name="settings_cycle_length_message">Choose cycle length in days:</string>
@@ -497,6 +499,7 @@
     <string name="backup_field_exact_alarm_prompted">Exact alarm prompt shown</string>
     <string name="backup_field_home_circle_color">Home ring color</string>
     <string name="backup_field_home_circle_style">Home ring style</string>
+    <string name="backup_field_home_particle_animation">Home particle animation</string>
     <string name="backup_field_last_version">Last app version code</string>
     <string name="backup_field_navigation_animation">Navigation animation</string>
     <string name="backup_field_notes_last_saved">Notes last saved</string>
@@ -670,6 +673,7 @@
     <string name="tour_body_settings_calendar">Choose how far the calendar shows past and future cycles.</string>
     <string name="tour_body_settings_circle_color">Set the ring color on the Home screen.\nThis also changes the ring color on the large widget.</string>
     <string name="tour_body_settings_circle_style">Choose a style for the Home ring.</string>
+    <string name="tour_body_settings_particle_animation">Choose the Home ring particle effect: automatic, reduced, or off.</string>
     <string name="tour_body_settings_cycle">Set insertion date, time, and cycle length.</string>
     <string name="tour_body_settings_ring_pause">Pause planned ring use during a longer break. Future ring predictions and reminders stop, while your history and period tracking stay available. Resume ring use here when you are ready to begin again.</string>
     <string name="tour_body_ring_pause_confirm_button">Confirm Pause to stop future ring predictions and reminders from the selected date. Period tracking stays available.</string>
@@ -717,6 +721,7 @@
     <string name="tour_title_settings_calendar">Calendar range</string>
     <string name="tour_title_settings_circle_color">Home ring color</string>
     <string name="tour_title_settings_circle_style">Home ring style</string>
+    <string name="tour_title_settings_particle_animation">Particle animation</string>
     <string name="tour_title_settings_cycle">Cycle settings</string>
     <string name="tour_title_settings_ring_pause">Pause ring use</string>
     <string name="tour_title_ring_pause_confirm_button">Pause from the selected date</string>

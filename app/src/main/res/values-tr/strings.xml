@@ -194,6 +194,8 @@
     <string name="settings_navigation_animation_dialog_title">Gezinme animasyonunu seçin</string>
     <string name="settings_navigation_animation_format">Gezinme animasyonu: %1$s</string>
     <string name="settings_navigation_animation_label">Gezinme animasyonu</string>
+    <string name="settings_particle_animation_dialog_title">Ana ekran parçacık animasyonu</string>
+    <string name="settings_particle_animation_label">Parçacık animasyonu</string>
     <string name="settings_notification_before_insertion">Yerleştirmeden önce (saat)</string>
     <string name="settings_notification_before_removal">Çıkarmadan önce (saat)</string>
     <string name="settings_notification_times_button">Hatırlatıcılar: çıkarmadan %1$d sa, yerleştirmeden %2$d sa önce</string>
@@ -497,6 +499,7 @@
     <string name="backup_field_exact_alarm_prompted">Tam alarm uyarısı gösterildi</string>
     <string name="backup_field_home_circle_color">Ana ekran halka rengi</string>
     <string name="backup_field_home_circle_style">Ana ekran halka stili</string>
+    <string name="backup_field_home_particle_animation">Ana ekran parçacık animasyonu</string>
     <string name="backup_field_last_version">Son uygulama sürüm kodu</string>
     <string name="backup_field_navigation_animation">Navigasyon animasyonu</string>
     <string name="backup_field_notes_last_saved">Notların son kaydedilme zamanı</string>
@@ -661,6 +664,7 @@
     <string name="tour_body_settings_calendar">Takvimin geçmiş ve gelecek döngüleri ne kadar göstereceğini seçin.</string>
     <string name="tour_body_settings_circle_color">Ana ekrandaki halka rengini ayarlayın.\nBu aynı zamanda büyük widget\'taki halka rengini de değiştirir.</string>
     <string name="tour_body_settings_circle_style">Ana ekran halkası için bir stil seçin.</string>
+    <string name="tour_body_settings_particle_animation">Ana ekrandaki halkanın parçacık efektini seçin: otomatik, azaltılmış veya kapalı.</string>
     <string name="tour_body_settings_cycle">Yerleştirme tarihi, saati ve döngü uzunluğunu ayarlayın.</string>
     <string name="tour_body_settings_info">Sürüm, geliştirici bilgisi ve iletişim linklerini gösterir.</string>
     <string name="tour_body_settings_language">Diller arasında geçiş yapın.</string>
@@ -700,6 +704,7 @@
     <string name="tour_title_settings_calendar">Takvim aralığı</string>
     <string name="tour_title_settings_circle_color">Halka rengi</string>
     <string name="tour_title_settings_circle_style">Halka stili</string>
+    <string name="tour_title_settings_particle_animation">Parçacık animasyonu</string>
     <string name="tour_title_settings_cycle">Döngü ayarları</string>
     <string name="tour_title_settings_ring_pause">Halka kullanımına ara ver</string>
     <string name="tour_body_settings_ring_pause">Uzun bir ara sırasında planlanan halka kullanımını duraklatın. Gelecekteki halka tahminleri ve hatırlatmalar durur; geçmiş kayıtlarınız ve adet takibiniz kullanılabilir kalır. Yeniden başlamak istediğinizde halka kullanımını buradan sürdürün.</string>
