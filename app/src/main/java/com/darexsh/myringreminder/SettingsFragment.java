@@ -1202,15 +1202,14 @@ public class SettingsFragment extends Fragment {
                 .setTitle(R.string.language_title)
                 .setSingleChoiceItems(options, selected, (dlg, which) -> {
                     String selectedTag = tags[which];
+                    Context appContext = requireContext().getApplicationContext();
+                    dlg.dismiss();
                     if (selectedTag == null || selectedTag.trim().isEmpty()) {
                         AppCompatDelegate.setApplicationLocales(LocaleListCompat.getEmptyLocaleList());
                     } else {
                         AppCompatDelegate.setApplicationLocales(LocaleListCompat.forLanguageTags(selectedTag));
                     }
-                    WidgetUpdater.updateAllWidgets(requireContext());
-                    updateLanguageButtonText();
-                    dlg.dismiss();
-                    requireActivity().recreate();
+                    WidgetUpdater.updateAllWidgets(appContext);
                 })
                 .setNegativeButton(R.string.dialog_cancel, null)
                 .show();
