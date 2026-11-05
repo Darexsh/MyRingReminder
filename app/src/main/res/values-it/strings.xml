@@ -219,12 +219,11 @@
     <string name="settings_package_leaflet_cached">Impossibile aggiornare i link. Viene mostrato l’ultimo elenco salvato.</string>
     <string name="settings_package_leaflet_no_links">Non sono ancora stati aggiunti link ai fogli illustrativi.</string>
     <string name="settings_package_leaflet_language_title">Foglio illustrativo in un’altra lingua</string>
-    <string name="settings_package_leaflet_choose_language">Scegli la lingua del foglio illustrativo</string>
     <string name="settings_package_leaflet_language_message">Il foglio illustrativo scelto per %2$s è in %1$s, non nella lingua dell’app (%3$s). Una traduzione potrebbe essere pubblicata con un altro nome commerciale, quindi potresti doverla cercare. Vuoi aprirlo comunque?</string>
     <string name="settings_package_leaflet_reference_title">Documento di riferimento</string>
-    <string name="settings_package_leaflet_reference_message">Il foglio illustrativo disponibile per %1$s è in %2$s, mentre la lingua dell’app è %3$s.\n\n%4$s contiene gli stessi principi attivi (etonogestrel ed etinilestradiolo) e la stessa velocità media di rilascio giornaliera di %1$s.\n\nIl documento di %4$s è un riferimento, non sostituisce il foglio illustrativo di %1$s e potrebbe omettere dettagli specifici del prodotto. Segui il foglio illustrativo fornito con il tuo anello.\n\nScegli quale documento aprire.</string>
-    <string name="settings_package_leaflet_open_reference">Apri il riferimento di %1$s (%2$s)</string>
-    <string name="settings_package_leaflet_open_selected">Apri il foglio illustrativo di %1$s (%2$s)</string>
+    <string name="settings_package_leaflet_reference_message">Il foglio illustrativo di %1$s è disponibile in %2$s; l’app è in %3$s.\n\n%4$s contiene gli stessi principi attivi (etonogestrel ed etinilestradiolo) e la stessa velocità media di rilascio giornaliera di %1$s.\n\nIl documento di %4$s è solo un riferimento e non sostituisce il foglio illustrativo di %1$s. Potrebbe omettere dettagli specifici del prodotto. Segui il foglio illustrativo fornito con il tuo anello.</string>
+    <string name="settings_package_leaflet_open_reference">Riferimento %1$s · %2$s</string>
+    <string name="settings_package_leaflet_open_selected">Foglio illustrativo %1$s · %2$s</string>
     <string name="settings_package_leaflet_open_anyway">Apri comunque</string>
     <string name="settings_package_leaflet_no_browser">Nessuna app può aprire questo link.</string>
     <string name="settings_unit_month">Mese</string>

@@ -219,12 +219,11 @@
     <string name="settings_package_leaflet_cached">Could not refresh the leaflet links. Showing the last saved list.</string>
     <string name="settings_package_leaflet_no_links">No leaflet links have been added yet.</string>
     <string name="settings_package_leaflet_language_title">Leaflet in another language</string>
-    <string name="settings_package_leaflet_choose_language">Choose leaflet language</string>
     <string name="settings_package_leaflet_language_message">The selected %1$s leaflet for %2$s is not in your app language (%3$s). A translation may be listed under a different product name, so you may need to search for it yourself. Open it anyway?</string>
     <string name="settings_package_leaflet_reference_title">Reference document option</string>
-    <string name="settings_package_leaflet_reference_message">The available leaflet for %1$s is in %2$s, while your app language is %3$s.\n\n%4$s has the same active ingredients (etonogestrel and ethinylestradiol) and average daily release rate as %1$s.\n\nThe %4$s document is a reference, not a replacement for %1$s’s own leaflet; it may omit product-specific details. Follow the leaflet supplied with your ring.\n\nChoose which document to open.</string>
-    <string name="settings_package_leaflet_open_reference">Open %1$s reference (%2$s)</string>
-    <string name="settings_package_leaflet_open_selected">Open %1$s leaflet (%2$s)</string>
+    <string name="settings_package_leaflet_reference_message">%1$s’s leaflet is available in %2$s; the app is in %3$s.\n\n%4$s has the same active ingredients (etonogestrel and ethinylestradiol) and average daily release rate as %1$s.\n\nThe %4$s document is reference information, not a replacement for %1$s’s leaflet. It may omit product-specific details. Follow the leaflet supplied with your ring.</string>
+    <string name="settings_package_leaflet_open_reference">%1$s reference · %2$s</string>
+    <string name="settings_package_leaflet_open_selected">%1$s leaflet · %2$s</string>
     <string name="settings_package_leaflet_open_anyway">Open anyway</string>
     <string name="settings_package_leaflet_no_browser">No app is available to open this link.</string>
     <string name="settings_unit_month">Month</string>

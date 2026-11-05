@@ -219,12 +219,11 @@
     <string name="settings_package_leaflet_cached">Bağlantılar yenilenemedi. Son kaydedilen liste gösteriliyor.</string>
     <string name="settings_package_leaflet_no_links">Henüz talimat bağlantısı eklenmedi.</string>
     <string name="settings_package_leaflet_language_title">Farklı dilde talimat</string>
-    <string name="settings_package_leaflet_choose_language">Talimat dilini seçin</string>
     <string name="settings_package_leaflet_language_message">%2$s için seçilen talimat %1$s dilinde, uygulama dili olan %3$s dilinde değil. Çeviri farklı bir ürün adıyla listelenmiş olabilir; bu nedenle kendiniz aramanız gerekebilir. Yine de açılsın mı?</string>
     <string name="settings_package_leaflet_reference_title">Referans belge</string>
-    <string name="settings_package_leaflet_reference_message">%1$s için mevcut kullanma talimatı %2$s dilinde, uygulama dili ise %3$s.\n\n%4$s, %1$s ile aynı etkin maddeleri (etonogestrel ve etinilestradiol) ve aynı ortalama günlük salım hızını içerir.\n\n%4$s belgesi bir başvuru kaynağıdır; %1$s kullanma talimatının yerine geçmez ve ürüne özgü ayrıntıları içermeyebilir. Halkadaki ürünle birlikte verilen talimata uyun.\n\nAçmak istediğiniz belgeyi seçin.</string>
-    <string name="settings_package_leaflet_open_reference">%1$s referansını (%2$s) aç</string>
-    <string name="settings_package_leaflet_open_selected">%1$s talimatını (%2$s) aç</string>
+    <string name="settings_package_leaflet_reference_message">%1$s kullanma talimatı %2$s dilinde mevcut; uygulama dili %3$s.\n\n%4$s, %1$s ile aynı etkin maddeleri (etonogestrel ve etinilestradiol) ve aynı ortalama günlük salım hızını içerir.\n\n%4$s belgesi yalnızca referans amaçlıdır ve %1$s talimatının yerine geçmez. Ürüne özgü ayrıntıları içermeyebilir. Halkadaki ürünle birlikte verilen talimata uyun.</string>
+    <string name="settings_package_leaflet_open_reference">%1$s referansı · %2$s</string>
+    <string name="settings_package_leaflet_open_selected">%1$s talimatı · %2$s</string>
     <string name="settings_package_leaflet_open_anyway">Yine de aç</string>
     <string name="settings_package_leaflet_no_browser">Bu bağlantıyı açabilecek bir uygulama bulunamadı.</string>
     <string name="settings_unit_month">Ay</string>

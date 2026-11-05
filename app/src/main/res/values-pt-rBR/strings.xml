@@ -219,12 +219,11 @@
     <string name="settings_package_leaflet_cached">Não foi possível atualizar os links. Exibindo a última lista salva.</string>
     <string name="settings_package_leaflet_no_links">Nenhum link de bula foi adicionado ainda.</string>
     <string name="settings_package_leaflet_language_title">Bula em outro idioma</string>
-    <string name="settings_package_leaflet_choose_language">Escolha o idioma da bula</string>
     <string name="settings_package_leaflet_language_message">A bula selecionada de %2$s está em %1$s, não no idioma do aplicativo (%3$s). Uma tradução pode estar listada com outro nome de produto, então talvez você precise procurá-la por conta própria. Abrir mesmo assim?</string>
     <string name="settings_package_leaflet_reference_title">Documento de referência</string>
-    <string name="settings_package_leaflet_reference_message">A bula disponível de %1$s está em %2$s, enquanto o idioma do aplicativo é %3$s.\n\n%4$s contém os mesmos princípios ativos (etonogestrel e etinilestradiol) e a mesma taxa média de liberação diária que %1$s.\n\nO documento de %4$s é uma referência, não substitui a bula de %1$s e pode omitir detalhes específicos do produto. Siga a bula que acompanha o seu anel.\n\nEscolha qual documento abrir.</string>
-    <string name="settings_package_leaflet_open_reference">Abrir referência de %1$s (%2$s)</string>
-    <string name="settings_package_leaflet_open_selected">Abrir bula de %1$s (%2$s)</string>
+    <string name="settings_package_leaflet_reference_message">A bula de %1$s está disponível em %2$s; o aplicativo está em %3$s.\n\n%4$s contém os mesmos princípios ativos (etonogestrel e etinilestradiol) e a mesma taxa média de liberação diária que %1$s.\n\nO documento de %4$s é apenas uma referência e não substitui a bula de %1$s. Ele pode omitir detalhes específicos do produto. Siga a bula que acompanha o seu anel.</string>
+    <string name="settings_package_leaflet_open_reference">Referência de %1$s · %2$s</string>
+    <string name="settings_package_leaflet_open_selected">Bula de %1$s · %2$s</string>
     <string name="settings_package_leaflet_open_anyway">Abrir mesmo assim</string>
     <string name="settings_package_leaflet_no_browser">Nenhum aplicativo pode abrir este link.</string>
     <string name="settings_unit_month">Mês</string>

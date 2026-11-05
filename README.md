@@ -82,7 +82,7 @@ It combines cycle timing, reminders, period tracking during the ring-free window
 * **Language Mode**: Choose between multiple app languages or **System Default**, with English fallback if the device language is unsupported.
 * **App Lock**: Optional biometric or device-credential protection with configurable auto-lock delay.
 * **App Updates**: Check for new releases inside the app, review version details, download the APK, and start installation directly from the update flow.
-* **Package Leaflets**: Open ring leaflet links from Settings. If a ring has no leaflet in the app language, the app can offer a configured reference leaflet in that language alongside the ring's available leaflet. A reference may share the active ingredients and release rate, but it does not replace the leaflet supplied with the user's ring.
+* **Package Leaflets**: Open ring leaflet links from Settings. The app automatically opens a leaflet in the app language when one is available. If the selected ring has no leaflet in that language, the app can offer a configured reference leaflet alongside the ring's available leaflet. A reference may share the active ingredients and release rate, but it does not replace the leaflet supplied with the user's ring.
 * **Welcome Tour**: A restartable first-run guided tour introduces the key screens and controls.
 * **App Animations**: Choose a preferred global transition style for tab changes and screen openings.
 * **Debug View**: Long-press the settings title to open detailed diagnostic information.
@@ -224,7 +224,7 @@ An overview of the current visual experience across the app:
 ### 12. Read package leaflets
 
 * Open **Settings → Package leaflet** and choose a ring to view its available leaflet link in your browser or PDF viewer.
-* If several language versions are available, choose one in the language picker. When the app language is unavailable for the selected ring, the app may offer a reference leaflet in the app language, the selected ring's available leaflet, or Cancel. A reference leaflet is for another product and may omit product-specific information; follow the leaflet supplied with your ring.
+* The app automatically opens the selected ring's leaflet in the app language when that version is available. If it is unavailable, the app warns before opening an available version. When a reference is configured, choose the reference in the app language, the selected ring's available leaflet, or Cancel. A reference leaflet is for another product and may omit product-specific information; follow the leaflet supplied with your ring.
 * If a ring is missing from the list, contact the app developer to request it.
 
 ### 13. Keep the app up to date
@@ -262,7 +262,7 @@ An overview of the current visual experience across the app:
 * Calendar rendering and cycle logic are computed locally.
 * Local app state such as settings, notes, cycle history, period tracking, and special-case flags is stored in **SharedPreferences**.
 * In-app update checks use the public **GitHub Releases API**, and downloaded APK installation is handed off to Android's package installer.
-* Package leaflet links are loaded from the repository-root `leaflet-packages.json` file and the last valid configuration is cached locally. Each `links` object uses language codes as keys, such as `de` or `en`, and HTTP(S) URLs as values. An optional `referenceLeafletId` points to another entry to offer when the selected ring has no leaflet in the app language. Only use a reference for rings with matching active ingredients and release rates; the app labels it as a reference and reminds users to follow their own ring's leaflet. Updating the file on the `main` branch changes the links without requiring an app release.
+* Package leaflet links are loaded from the repository-root `leaflet-packages.json` file and the last valid configuration is cached locally. Each `links` object uses language codes as keys, such as `de` or `en`, and HTTP(S) URLs as values; the app selects a matching language automatically. An optional `referenceLeafletId` points to another entry to offer when the selected ring has no leaflet in the app language. Only use a reference for rings with matching active ingredients and release rates; the app labels it as a reference and reminds users to follow their own ring's leaflet. Updating the file on the `main` branch changes the links without requiring an app release.
 * Notifications are implemented with **BroadcastReceiver** and **NotificationManagerCompat**.
 * Period reports are generated locally with **PdfDocument** and exported through Android's document picker API, including grouped summary cards, multi-column day cards, and a larger notes section.
 * Shared state between fragments is managed with **SharedViewModel** and **LiveData**.

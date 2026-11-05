@@ -1,6 +1,6 @@
 # Privacy Policy – MyRingReminder
 
-Last updated: 2026-05-27
+Last updated: 2026-11-05
 
 ## 1. Controller
 Daniel Sichler (Darexsh)  
@@ -44,12 +44,17 @@ MyRingReminder is local-first for core functionality and does not require a dedi
 
 For update checks, MyRingReminder can request release metadata from the public GitHub Releases API for this project.
 
+When you open **Settings → Package leaflet**, the app requests the public `leaflet-packages.json` file from this project's GitHub repository. It contains product names, language codes, and leaflet URLs. This request does not include your cycle data, notes, or app settings. GitHub may process ordinary connection information, such as your IP address and request headers, under its privacy policy.
+
 On user action, MyRingReminder can open external destinations via system intents, including:
 - email (`mailto:`)
 - Linktree
 - Telegram
 - GitHub
 - Buy Me a Coffee
+- package leaflet documents hosted by external medicine information services or manufacturers
+
+When you open a package leaflet, Android passes its URL to the browser or document viewer you choose. The selected hosting service receives the request; the URL may reveal the leaflet's product and language. The browser/viewer and leaflet host may process ordinary connection information under their own privacy policies. MyRingReminder does not attach your locally stored cycle data, notes, or settings to these requests.
 
 When you open external links, the privacy policies of those third-party services apply.
 

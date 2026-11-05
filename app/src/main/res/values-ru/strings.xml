@@ -219,12 +219,11 @@
     <string name="settings_package_leaflet_cached">Не удалось обновить ссылки. Показан последний сохранённый список.</string>
     <string name="settings_package_leaflet_no_links">Ссылки на инструкции пока не добавлены.</string>
     <string name="settings_package_leaflet_language_title">Инструкция на другом языке</string>
-    <string name="settings_package_leaflet_choose_language">Выберите язык инструкции</string>
     <string name="settings_package_leaflet_language_message">Выбранная инструкция для %2$s на языке %1$s, а не на языке приложения (%3$s). Перевод может быть опубликован под другим названием, поэтому его, возможно, придётся искать самостоятельно. Всё равно открыть?</string>
     <string name="settings_package_leaflet_reference_title">Справочный документ</string>
-    <string name="settings_package_leaflet_reference_message">Доступная инструкция для %1$s представлена на языке %2$s, а язык приложения — %3$s.\n\nУ %4$s те же действующие вещества (этоногестрел и этинилэстрадиол) и такая же средняя суточная скорость высвобождения, как у %1$s.\n\nДокумент для %4$s дан для справки и не заменяет инструкцию к %1$s; в нём могут отсутствовать сведения о конкретном продукте. Следуйте инструкции, приложенной к вашему кольцу.\n\nВыберите документ для открытия.</string>
-    <string name="settings_package_leaflet_open_reference">Открыть справочную информацию о %1$s (%2$s)</string>
-    <string name="settings_package_leaflet_open_selected">Открыть инструкцию для %1$s (%2$s)</string>
+    <string name="settings_package_leaflet_reference_message">Инструкция к %1$s доступна на языке %2$s, а язык приложения — %3$s.\n\nУ %4$s те же действующие вещества (этоногестрел и этинилэстрадиол) и такая же средняя суточная скорость высвобождения, как у %1$s.\n\nДокумент для %4$s дан только для справки и не заменяет инструкцию к %1$s. В нём могут отсутствовать сведения о конкретном продукте. Следуйте инструкции, приложенной к вашему кольцу.</string>
+    <string name="settings_package_leaflet_open_reference">Справка: %1$s · %2$s</string>
+    <string name="settings_package_leaflet_open_selected">Инструкция: %1$s · %2$s</string>
     <string name="settings_package_leaflet_open_anyway">Всё равно открыть</string>
     <string name="settings_package_leaflet_no_browser">Нет приложения для открытия этой ссылки.</string>
     <string name="settings_unit_month">Месяц</string>
