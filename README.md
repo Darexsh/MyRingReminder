@@ -2,10 +2,13 @@
 
 <div align="center">
 
-<img src="https://capsule-render.vercel.app/api?type=waving&height=220&text=MyRingReminder&fontAlign=50&fontAlignY=50&color=0:1f4037,50:2e7d32,100:7cb342&fontColor=ffffff" width="100%" /><br>
+<img src="Screenshots/Showcase.png"
+     alt="MyRingReminder – App Showcase"
+     width="100%" />
+
 <a href="https://git.io/typing-svg">
   <img src="https://readme-typing-svg.demolab.com/?lines=Your+ring+cycle%2C+always+in+view.;Smart+reminders.+Perfect+timing.;Track+your+cycle%2C+period%2C+and+history.;Your+routine.+Your+preferences.+Your+control.;Private+by+design.+Simple+by+nature.&center=true&width=760&color=2E7D32&pause=1200&duration=3500&size=20" alt="MyRingReminder Features" />
-</a>
+</a> 
 
 ![Projekt-Status](https://img.shields.io/badge/Status-Aktiv-brightgreen)
 ![License](https://img.shields.io/badge/License-NonCommercial-blue)
