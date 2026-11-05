@@ -3,42 +3,56 @@
   "leaflets": [
     {
       "id": "circlet",
-      "name": "Circlet®",
+      "name": "Circlet",
+      "referenceLeafletId": "nuva-ring",
       "links": {
         "de": "https://cdn.shop-apotheke.com/PDF/D09/219/154/D09219154-bp.pdf"
       }
     },
     {
-      "id": "cycelle",
-      "name": "Cycelle®",
+      "id": "cyclelle",
+      "name": "Cyclelle",
+      "referenceLeafletId": "nuva-ring",
       "links": {
         "de": "https://cdn.shop-apotheke.com/PDF/D13/814/603/D13814603-bp.pdf"
       }
     },
     {
       "id": "gino-ring",
-      "name": "GinoRing®",
+      "name": "GinoRing",
+      "referenceLeafletId": "nuva-ring",
       "links": {
         "de": "https://cdn.shop-apotheke.com/PDF/D13/423/239/D13423239-bp.pdf"
       }
     },
     {
       "id": "nuva-ring",
-      "name": "NuvaRing®",
+      "name": "NuvaRing",
       "links": {
-        "de": "https://cdn.shop-apotheke.com/PDF/D02/081/008/D02081008-bp.pdf"
+        "de": "https://www.organon.com/austria/wp-content/uploads/sites/40/2023/05/NuvaRing-NL-H-0265-001-MAT-AT-to-DE-PL-AT-de-CRT.pdf",
+        "en": "https://www.organon.com/product/usa/pi_circulars/n/nuvaring/nuvaring_ppi.pdf",
+        "es": "https://cima.aemps.es/cima/pdfs/es/p/64570/Prospecto_64570.html.pdf",
+        "fr": "https://www.medicines.org.uk/emc/files/pil.6449.pdf",
+        "it": "https://www.farmaciauno.it/media/fa/045999024.pdf",
+        "pl": "https://gdziepolek.blob.core.windows.net/product-documents/55364/nuvaring-ulotka.pdf",
+        "pt": "https://www.organon.com/brazil/wp-content/uploads/sites/33/2023/06/nuvaring_bula_profissional.pdf",
+        "ru": "https://www.vidal.by/pdf/nuvaring-koltso-instrukciya-po-primeneniyu.pdf",
+        "tr": "https://www.msd.com.tr/wp-content/uploads/sites/69/2021/08/NUVARING_Vajinal_Halka_KT.pdf",
+        "zh": "https://www.fpnsw.org.au/sites/default/files/assets/vaginalring_comchinese.pdf"
       }
     },
     {
       "id": "setlona",
-      "name": "Setlona®",
+      "name": "Setlona",
+      "referenceLeafletId": "nuva-ring",
       "links": {
         "de": "https://cdn.shop-apotheke.com/PDF/D13/853/313/D13853313-bp.pdf"
       }
     },
     {
       "id": "veri-aristo",
-      "name": "VeRi-Aristo®",
+      "name": "VeRi-Aristo",
+      "referenceLeafletId": "nuva-ring",
       "links": {
         "de": "https://cdn.shop-apotheke.com/pdf/D12590142-bp.pdf"
       }

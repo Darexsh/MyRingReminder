@@ -1528,7 +1528,8 @@ public class SettingsFragment extends Fragment {
                 }
             }
             if (!links.isEmpty() && seenIds.add(id.trim().toLowerCase(Locale.ROOT))) {
-                leaflets.add(new PackageLeaflet(id.trim(), name.trim(), links));
+                leaflets.add(new PackageLeaflet(id.trim(), name.trim(),
+                        getJsonString(item, "referenceLeafletId"), links));
             }
         }
         return leaflets;
@@ -1616,37 +1617,139 @@ public class SettingsFragment extends Fragment {
             names[i] = leaflets.get(i).name;
         }
 
+        View header = LayoutInflater.from(requireContext())
+                .inflate(R.layout.dialog_package_leaflet_header, null, false);
+        TextView title = header.findViewById(R.id.tv_package_leaflet_dialog_title);
+        TextView hint = header.findViewById(R.id.tv_package_leaflet_dialog_hint);
+        title.setText(R.string.settings_package_leaflet_label);
+        hint.setText(R.string.settings_package_leaflet_missing_ring);
+
         AlertDialog dialog = new AlertDialog.Builder(requireContext())
-                .setTitle(R.string.settings_package_leaflet_label)
-                .setItems(names, (d, which) -> openPackageLeaflet(leaflets.get(which)))
+                .setCustomTitle(header)
+                .setItems(names, (d, which) -> openPackageLeaflet(leaflets.get(which), leaflets))
                 .setNegativeButton(R.string.dialog_cancel, null)
                 .show();
         applyDialogButtonColors(dialog);
     }
 
-    private void openPackageLeaflet(@NonNull PackageLeaflet leaflet) {
+    private void openPackageLeaflet(@NonNull PackageLeaflet leaflet,
+                                    @NonNull List<PackageLeaflet> allLeaflets) {
         Locale appLocale = getResources().getConfiguration().getLocales().get(0);
+        if (leaflet.links.size() > 1) {
+            showPackageLeafletLanguageChooser(leaflet, appLocale, allLeaflets);
+            return;
+        }
+
         Map.Entry<String, String> selectedLink = selectPackageLeafletLink(leaflet, appLocale);
         if (selectedLink == null) {
             return;
         }
 
-        String linkLanguage = Locale.forLanguageTag(selectedLink.getKey()).getLanguage();
-        boolean matchesAppLanguage = linkLanguage.equalsIgnoreCase(appLocale.getLanguage());
-        if (!matchesAppLanguage) {
-            String languageName = Locale.forLanguageTag(selectedLink.getKey()).getDisplayLanguage(appLocale);
-            AlertDialog warning = new AlertDialog.Builder(requireContext())
-                    .setTitle(R.string.settings_package_leaflet_language_title)
-                    .setMessage(getString(R.string.settings_package_leaflet_language_message,
-                            languageName, leaflet.name))
-                    .setPositiveButton(R.string.settings_package_leaflet_open_anyway,
-                            (d, which) -> openPackageLeafletUrl(selectedLink.getValue()))
-                    .setNegativeButton(R.string.dialog_cancel, null)
-                    .show();
-            applyDialogButtonColors(warning);
+        if (hasPackageLeafletLanguage(leaflet, appLocale)) {
+            openPackageLeafletUrl(selectedLink.getValue());
             return;
         }
-        openPackageLeafletUrl(selectedLink.getValue());
+        showPackageLeafletLanguageWarning(leaflet, selectedLink, appLocale, allLeaflets);
+    }
+
+    private void showPackageLeafletLanguageChooser(@NonNull PackageLeaflet leaflet,
+                                                   @NonNull Locale appLocale,
+                                                   @NonNull List<PackageLeaflet> allLeaflets) {
+        List<Map.Entry<String, String>> links = new ArrayList<>(leaflet.links.entrySet());
+        String[] languageNames = new String[links.size()];
+        for (int i = 0; i < links.size(); i++) {
+            languageNames[i] = Locale.forLanguageTag(links.get(i).getKey()).getDisplayName(appLocale);
+        }
+
+        boolean appLanguageAvailable = hasPackageLeafletLanguage(leaflet, appLocale);
+        AlertDialog dialog = new AlertDialog.Builder(requireContext())
+                .setTitle(R.string.settings_package_leaflet_choose_language)
+                .setItems(languageNames, (d, which) -> {
+                    Map.Entry<String, String> selectedLink = links.get(which);
+                    if (appLanguageAvailable) {
+                        openPackageLeafletUrl(selectedLink.getValue());
+                    } else {
+                        showPackageLeafletLanguageWarning(leaflet, selectedLink, appLocale, allLeaflets);
+                    }
+                })
+                .setNegativeButton(R.string.dialog_cancel, null)
+                .show();
+        applyDialogButtonColors(dialog);
+    }
+
+    private boolean hasPackageLeafletLanguage(@NonNull PackageLeaflet leaflet,
+                                              @NonNull Locale appLocale) {
+        for (String languageTag : leaflet.links.keySet()) {
+            if (Locale.forLanguageTag(languageTag).getLanguage().equalsIgnoreCase(appLocale.getLanguage())) {
+                return true;
+            }
+        }
+        return false;
+    }
+
+    private void showPackageLeafletLanguageWarning(@NonNull PackageLeaflet leaflet,
+                                                   @NonNull Map.Entry<String, String> selectedLink,
+                                                   @NonNull Locale appLocale,
+                                                   @NonNull List<PackageLeaflet> allLeaflets) {
+        PackageLeaflet referenceLeaflet = findReferenceLeaflet(leaflet, allLeaflets);
+        if (referenceLeaflet != null && hasPackageLeafletLanguage(referenceLeaflet, appLocale)) {
+            Map.Entry<String, String> referenceLink = selectPackageLeafletLink(referenceLeaflet, appLocale);
+            if (referenceLink != null) {
+                showPackageLeafletReferenceDialog(leaflet, selectedLink, referenceLeaflet,
+                        referenceLink, appLocale);
+                return;
+            }
+        }
+
+        String languageName = Locale.forLanguageTag(selectedLink.getKey()).getDisplayLanguage(appLocale);
+        String appLanguageName = appLocale.getDisplayLanguage(appLocale);
+        AlertDialog warning = new AlertDialog.Builder(requireContext())
+                .setTitle(R.string.settings_package_leaflet_language_title)
+                .setMessage(getString(R.string.settings_package_leaflet_language_message,
+                        languageName, leaflet.name, appLanguageName))
+                .setPositiveButton(R.string.settings_package_leaflet_open_anyway,
+                        (d, which) -> openPackageLeafletUrl(selectedLink.getValue()))
+                .setNegativeButton(R.string.dialog_cancel, null)
+                .show();
+        applyDialogButtonColors(warning);
+    }
+
+    @Nullable
+    private PackageLeaflet findReferenceLeaflet(@NonNull PackageLeaflet leaflet,
+                                                @NonNull List<PackageLeaflet> allLeaflets) {
+        if (leaflet.referenceLeafletId == null || leaflet.referenceLeafletId.trim().isEmpty()) {
+            return null;
+        }
+        for (PackageLeaflet candidate : allLeaflets) {
+            if (candidate.id.equalsIgnoreCase(leaflet.referenceLeafletId)
+                    && !candidate.id.equalsIgnoreCase(leaflet.id)) {
+                return candidate;
+            }
+        }
+        return null;
+    }
+
+    private void showPackageLeafletReferenceDialog(@NonNull PackageLeaflet leaflet,
+                                                   @NonNull Map.Entry<String, String> selectedLink,
+                                                   @NonNull PackageLeaflet referenceLeaflet,
+                                                   @NonNull Map.Entry<String, String> referenceLink,
+                                                   @NonNull Locale appLocale) {
+        String selectedLanguage = Locale.forLanguageTag(selectedLink.getKey()).getDisplayLanguage(appLocale);
+        String referenceLanguage = Locale.forLanguageTag(referenceLink.getKey()).getDisplayLanguage(appLocale);
+        String appLanguage = appLocale.getDisplayLanguage(appLocale);
+        AlertDialog dialog = new AlertDialog.Builder(requireContext())
+                .setTitle(R.string.settings_package_leaflet_reference_title)
+                .setMessage(getString(R.string.settings_package_leaflet_reference_message,
+                        leaflet.name, selectedLanguage, appLanguage, referenceLeaflet.name))
+                .setPositiveButton(getString(R.string.settings_package_leaflet_open_reference,
+                                referenceLeaflet.name, referenceLanguage),
+                        (d, which) -> openPackageLeafletUrl(referenceLink.getValue()))
+                .setNeutralButton(getString(R.string.settings_package_leaflet_open_selected,
+                                leaflet.name, selectedLanguage),
+                        (d, which) -> openPackageLeafletUrl(selectedLink.getValue()))
+                .setNegativeButton(R.string.dialog_cancel, null)
+                .show();
+        applyDialogButtonColors(dialog);
     }
 
     @Nullable
@@ -1688,11 +1791,17 @@ public class SettingsFragment extends Fragment {
     private static final class PackageLeaflet {
         final String id;
         final String name;
+        @Nullable
+        final String referenceLeafletId;
         final Map<String, String> links;
 
-        PackageLeaflet(@NonNull String id, @NonNull String name, @NonNull Map<String, String> links) {
+        PackageLeaflet(@NonNull String id,
+                       @NonNull String name,
+                       @Nullable String referenceLeafletId,
+                       @NonNull Map<String, String> links) {
             this.id = id;
             this.name = name;
+            this.referenceLeafletId = referenceLeafletId;
             this.links = links;
         }
     }
