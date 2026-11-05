@@ -136,9 +136,9 @@ public class SettingsFragment extends Fragment {
     private int[] appLockTimeoutValues;
     private Drawable[] circleStylePreviews;
     private static final String RELEASES_URL = "https://api.github.com/repos/Darexsh/MyRingReminder/releases";
-    private static final String PRIVACY_POLICY_URL = "https://raw.githubusercontent.com/Darexsh/MyRingReminder/main/PRIVACY_POLICY.md";
+    private static final String PRIVACY_POLICY_URL = "https://raw.githubusercontent.com/Darexsh/MyRingReminder/main/privacy-policy/";
     private static final String PRIVACY_POLICY_PREFS = "privacy_policy_cache";
-    private static final String PRIVACY_POLICY_CACHE_KEY = "markdown";
+    private static final String PRIVACY_POLICY_LEGACY_CACHE_KEY = "markdown";
     private File pendingApkFile;
     private AlertDialog downloadDialog;
     private ProgressBar downloadProgressBar;
@@ -3522,24 +3522,39 @@ public class SettingsFragment extends Fragment {
         int requestId = ++privacyPolicyRequestId;
         showPrivacyPolicyLoadingDialog();
         Context appContext = requireContext().getApplicationContext();
+        String supportedLanguage = getSupportedPrivacyPolicyLanguage();
+        String requestedLanguage = supportedLanguage != null ? supportedLanguage : "en";
+        boolean initialEnglishFallback = supportedLanguage == null;
 
         new Thread(() -> {
             String markdown = null;
             boolean fromCache = false;
+            String displayedLanguage = requestedLanguage;
+            boolean englishFallback = initialEnglishFallback;
             try {
-                markdown = fetchPrivacyPolicy();
-                appContext.getSharedPreferences(PRIVACY_POLICY_PREFS, Context.MODE_PRIVATE)
-                        .edit()
-                        .putString(PRIVACY_POLICY_CACHE_KEY, markdown)
-                        .apply();
+                markdown = fetchPrivacyPolicy(requestedLanguage);
+                cachePrivacyPolicy(appContext, requestedLanguage, markdown);
             } catch (Exception networkError) {
-                markdown = appContext.getSharedPreferences(PRIVACY_POLICY_PREFS, Context.MODE_PRIVATE)
-                        .getString(PRIVACY_POLICY_CACHE_KEY, null);
+                markdown = readCachedPrivacyPolicy(appContext, requestedLanguage);
                 fromCache = markdown != null;
+            }
+
+            if ((markdown == null || markdown.trim().isEmpty()) && !"en".equals(requestedLanguage)) {
+                displayedLanguage = "en";
+                englishFallback = true;
+                try {
+                    markdown = fetchPrivacyPolicy("en");
+                    cachePrivacyPolicy(appContext, "en", markdown);
+                    fromCache = false;
+                } catch (Exception englishNetworkError) {
+                    markdown = readCachedPrivacyPolicy(appContext, "en");
+                    fromCache = markdown != null;
+                }
             }
 
             String finalMarkdown = markdown;
             boolean finalFromCache = fromCache;
+            boolean finalEnglishFallback = englishFallback || !requestedLanguage.equals(displayedLanguage);
             MAIN_HANDLER.post(() -> {
                 if (requestId != privacyPolicyRequestId) {
                     return;
@@ -3556,15 +3571,69 @@ public class SettingsFragment extends Fragment {
                     Toast.makeText(requireContext(), R.string.app_info_privacy_cached,
                             Toast.LENGTH_LONG).show();
                 }
-                showPrivacyPolicyDialog(finalMarkdown);
+                showPrivacyPolicyDialog(finalMarkdown, finalEnglishFallback);
             });
         }, "privacy-policy-fetch").start();
     }
 
-    private String fetchPrivacyPolicy() throws IOException {
+    @Nullable
+    private String getSupportedPrivacyPolicyLanguage() {
+        LocaleListCompat appLocales = AppCompatDelegate.getApplicationLocales();
+        Locale locale;
+        if (!appLocales.isEmpty() && appLocales.get(0) != null) {
+            locale = appLocales.get(0);
+        } else {
+            locale = getResources().getConfiguration().getLocales().get(0);
+        }
+
+        String language = locale.getLanguage().toLowerCase(Locale.ROOT);
+        if ("pt".equals(language)) {
+            return "BR".equalsIgnoreCase(locale.getCountry()) ? "pt-BR" : null;
+        }
+        switch (language) {
+            case "de":
+            case "en":
+            case "es":
+            case "fr":
+            case "it":
+            case "pl":
+            case "ru":
+            case "tr":
+            case "zh":
+                return language;
+            default:
+                return null;
+        }
+    }
+
+    private String privacyPolicyCacheKey(@NonNull String language) {
+        return "markdown_" + language.replace('-', '_');
+    }
+
+    private void cachePrivacyPolicy(@NonNull Context context,
+                                   @NonNull String language,
+                                   @NonNull String markdown) {
+        context.getSharedPreferences(PRIVACY_POLICY_PREFS, Context.MODE_PRIVATE)
+                .edit()
+                .putString(privacyPolicyCacheKey(language), markdown)
+                .apply();
+    }
+
+    @Nullable
+    private String readCachedPrivacyPolicy(@NonNull Context context, @NonNull String language) {
+        android.content.SharedPreferences preferences = context.getSharedPreferences(
+                PRIVACY_POLICY_PREFS, Context.MODE_PRIVATE);
+        String cached = preferences.getString(privacyPolicyCacheKey(language), null);
+        if (cached == null && "en".equals(language)) {
+            cached = preferences.getString(PRIVACY_POLICY_LEGACY_CACHE_KEY, null);
+        }
+        return cached;
+    }
+
+    private String fetchPrivacyPolicy(@NonNull String language) throws IOException {
         HttpURLConnection connection = null;
         try {
-            connection = (HttpURLConnection) new URL(PRIVACY_POLICY_URL).openConnection();
+            connection = (HttpURLConnection) new URL(PRIVACY_POLICY_URL + language + ".md").openConnection();
             connection.setConnectTimeout(10000);
             connection.setReadTimeout(15000);
             connection.setUseCaches(false);
@@ -3637,7 +3706,7 @@ public class SettingsFragment extends Fragment {
         applyDialogButtonColors(dialog);
     }
 
-    private void showPrivacyPolicyDialog(@NonNull String markdown) {
+    private void showPrivacyPolicyDialog(@NonNull String markdown, boolean englishFallback) {
         View content = LayoutInflater.from(requireContext())
                 .inflate(R.layout.dialog_privacy_policy, null, false);
         ScrollView scrollView = content.findViewById(R.id.scroll_privacy_policy);
@@ -3653,7 +3722,9 @@ public class SettingsFragment extends Fragment {
         int surfaceColor = MaterialColors.getColor(content, com.google.android.material.R.attr.colorSurface);
         int onSurfaceColor = MaterialColors.getColor(content, com.google.android.material.R.attr.colorOnSurface);
 
-        languageNote.setText(R.string.app_info_privacy_language_note);
+        languageNote.setText(englishFallback
+                ? R.string.app_info_privacy_english_fallback_note
+                : R.string.app_info_privacy_language_note);
         languageNote.setTextColor(accentColor);
         if (document.lastUpdated.isEmpty()) {
             lastUpdated.setVisibility(View.GONE);

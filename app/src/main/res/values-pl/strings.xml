@@ -10,7 +10,8 @@
     <string name="app_info_name">MyRingReminder</string>
     <string name="app_info_open_coffee">Wesprzyj rozwój</string>
     <string name="app_info_open_privacy">Polityka prywatności</string>
-    <string name="app_info_privacy_language_note">Ta polityka jest obecnie dostępna w języku angielskim.</string>
+    <string name="app_info_privacy_language_note">Polityka jest wyświetlana w wybranym języku aplikacji.</string>
+    <string name="app_info_privacy_english_fallback_note">Tłumaczenie na wybrany język aplikacji nie jest dostępne. Wyświetlana jest angielska wersja polityki.</string>
     <string name="app_info_privacy_last_updated">Ostatnia aktualizacja: %1$s</string>
     <string name="app_info_privacy_loading">Ładowanie polityki prywatności…</string>
     <string name="app_info_privacy_load_failed">Nie udało się załadować polityki prywatności. Sprawdź połączenie z internetem i spróbuj ponownie.</string>

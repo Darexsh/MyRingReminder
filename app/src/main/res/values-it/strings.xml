@@ -10,7 +10,8 @@
     <string name="app_info_name">MyRingReminder</string>
     <string name="app_info_open_coffee">Supporta lo sviluppo</string>
     <string name="app_info_open_privacy">Informativa sulla privacy</string>
-    <string name="app_info_privacy_language_note">Questa informativa è attualmente disponibile in inglese.</string>
+    <string name="app_info_privacy_language_note">Questa informativa è mostrata nella lingua selezionata per l’app.</string>
+    <string name="app_info_privacy_english_fallback_note">Non è disponibile una traduzione per la lingua selezionata dell’app. Viene mostrata l’informativa in inglese.</string>
     <string name="app_info_privacy_last_updated">Ultimo aggiornamento: %1$s</string>
     <string name="app_info_privacy_loading">Caricamento dell’informativa sulla privacy…</string>
     <string name="app_info_privacy_load_failed">Impossibile caricare l’informativa sulla privacy. Controlla la connessione Internet e riprova.</string>

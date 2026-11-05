@@ -44,7 +44,7 @@ MyRingReminder is local-first for core functionality and does not require a dedi
 
 For update checks, MyRingReminder can request release metadata from the public GitHub Releases API for this project.
 
-When you open **Settings → Package leaflet**, the app requests the public `leaflet-packages.json` file from this project's GitHub repository. When you open **App info → Privacy Policy**, it fetches this policy from the same repository. These requests do not include your cycle data, notes, or app settings. GitHub may process ordinary connection information, such as your IP address and request headers, under its privacy policy. The app keeps the last successfully fetched policy on your device so it can still be read if a later request fails.
+When you open **Settings → Package leaflet**, the app requests the public `leaflet-packages.json` file from this project's GitHub repository. When you open **App info → Privacy Policy**, it requests the policy file for the app's selected language from the same repository; English is used if a translation is unavailable. These requests do not include your cycle data, notes, or app settings. GitHub may process ordinary connection information, such as your IP address and request headers, under its privacy policy. The app keeps the last successfully fetched copy of each language on your device so it can still be read if a later request fails.
 
 On user action, MyRingReminder can open external destinations via system intents, including:
 - email (`mailto:`)

@@ -10,7 +10,8 @@
     <string name="app_info_name">MyRingReminder</string>
     <string name="app_info_open_coffee">Geliştirmeyi destekle</string>
     <string name="app_info_open_privacy">Gizlilik Politikası</string>
-    <string name="app_info_privacy_language_note">Bu politika şu anda İngilizce olarak sunulmaktadır.</string>
+    <string name="app_info_privacy_language_note">Bu politika, uygulamada seçilen dilde gösterilir.</string>
+    <string name="app_info_privacy_english_fallback_note">Uygulamanın bu dili için çeviri mevcut değil. İngilizce politika gösteriliyor.</string>
     <string name="app_info_privacy_last_updated">Son güncelleme: %1$s</string>
     <string name="app_info_privacy_loading">Gizlilik politikası yükleniyor…</string>
     <string name="app_info_privacy_load_failed">Gizlilik politikası yüklenemedi. İnternet bağlantınızı kontrol edip tekrar deneyin.</string>

@@ -10,7 +10,8 @@
     <string name="app_info_name">MyRingReminder</string>
     <string name="app_info_open_coffee">支持开发</string>
     <string name="app_info_open_privacy">隐私政策</string>
-    <string name="app_info_privacy_language_note">此隐私政策目前仅提供英文版本。</string>
+    <string name="app_info_privacy_language_note">隐私政策将以当前应用语言显示。</string>
+    <string name="app_info_privacy_english_fallback_note">目前没有此应用语言的翻译，现显示英文版隐私政策。</string>
     <string name="app_info_privacy_last_updated">最后更新：%1$s</string>
     <string name="app_info_privacy_loading">正在加载隐私政策…</string>
     <string name="app_info_privacy_load_failed">无法加载隐私政策。请检查网络连接后重试。</string>

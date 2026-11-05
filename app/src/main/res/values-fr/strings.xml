@@ -10,7 +10,8 @@
     <string name="app_info_name">MyRingReminder</string>
     <string name="app_info_open_coffee">Soutenir le développement</string>
     <string name="app_info_open_privacy">Politique de confidentialité</string>
-    <string name="app_info_privacy_language_note">Cette politique est actuellement disponible en anglais.</string>
+    <string name="app_info_privacy_language_note">Cette politique est affichée dans la langue sélectionnée de l’application.</string>
+    <string name="app_info_privacy_english_fallback_note">Aucune traduction n’est disponible pour cette langue de l’application. La politique en anglais est affichée.</string>
     <string name="app_info_privacy_last_updated">Dernière mise à jour : %1$s</string>
     <string name="app_info_privacy_loading">Chargement de la politique de confidentialité…</string>
     <string name="app_info_privacy_load_failed">Impossible de charger la politique de confidentialité. Vérifiez votre connexion Internet et réessayez.</string>
