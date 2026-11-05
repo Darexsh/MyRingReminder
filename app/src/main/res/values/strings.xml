@@ -704,6 +704,7 @@
     <string name="tour_body_ring_pause_cancel_button">Cancel closes this dialog without changing the ring-use schedule.</string>
     <string name="tour_body_ring_resume_button">Continue to choose the next insertion date and time. Ring predictions and reminders restart from that schedule.</string>
     <string name="tour_body_settings_info">Shows version, developer info, and contact links.</string>
+    <string name="tour_body_package_leaflet">Browse official leaflets for supported rings. The app opens the version in your app language when available and may offer a clearly labeled reference otherwise. Always follow the leaflet supplied with your ring.</string>
     <string name="tour_body_settings_language">Switch between different languages.</string>
     <string name="tour_body_settings_notifications">Open the detailed reminder settings. Inside, you can set reminder times, send a test notification, allow notification permission, allow exact alarms, and disable battery optimization if reminders are delayed.</string>
     <string name="tour_body_settings_stock">Open the ring supply tools here. You can turn supply tracking on or off, adjust how many rings are left, and control the supply notifications.</string>

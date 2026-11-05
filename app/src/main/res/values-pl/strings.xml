@@ -690,6 +690,7 @@
     <string name="tour_body_settings_particle_animation">Wybierz efekt cząsteczek pierścienia na ekranie głównym: automatyczny, ograniczony lub wyłączony.</string>
     <string name="tour_body_settings_cycle">Ustaw datę, godzinę założenia i długość cyklu.</string>
     <string name="tour_body_settings_info">Pokazuje wersję, informacje o deweloperze i linki kontaktowe.</string>
+    <string name="tour_body_package_leaflet">Przeglądaj oficjalne ulotki dostępnych krążków. Aplikacja otwiera wersję w języku aplikacji, jeśli jest dostępna; w przeciwnym razie może zaproponować wyraźnie oznaczony dokument referencyjny. Zawsze postępuj zgodnie z ulotką dołączoną do Twojego krążka.</string>
     <string name="tour_body_settings_language">Przełączaj między różnymi językami.</string>
     <string name="tour_body_settings_notifications">Otwiera szczegółowe ustawienia przypomnień. Tutaj możesz ustawić czasy przypomnień, wysłać powiadomienie testowe, zezwolić na powiadomienia, zezwolić na dokładne alarmy i wyłączyć optymalizację baterii, jeśli przypomnienia się opóźniają.</string>
     <string name="tour_body_settings_stock">Tutaj otworzysz narzędzia zapasu krążków. Możesz włączyć lub wyłączyć śledzenie zapasu, ustawić ile krążków zostało i sterować powiadomieniami o zapasie.</string>

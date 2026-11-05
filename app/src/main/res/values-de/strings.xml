@@ -691,6 +691,7 @@
     <string name="tour_body_settings_particle_animation">Wähle den Partikeleffekt im Home-Ring: automatisch, reduziert oder aus.</string>
     <string name="tour_body_settings_cycle">Einsetzdatum, -zeit und Zykluslänge festlegen.</string>
     <string name="tour_body_settings_info">Zeigt Version, Entwickler-Info und Kontaktlinks.</string>
+    <string name="tour_body_package_leaflet">Öffne offizielle Packungsbeilagen unterstützter Ringe. Wenn verfügbar, öffnet die App die Version in deiner App-Sprache; andernfalls kann sie eine gekennzeichnete Referenz anbieten. Befolge immer die Packungsbeilage deines Rings.</string>
     <string name="tour_body_settings_language">Zwischen verschiedenen Sprachen wechseln.</string>
     <string name="tour_body_settings_notifications">Öffnet die detaillierten Erinnerungs-Einstellungen. Dort kannst du Erinnerungszeiten festlegen, eine Test-Benachrichtigung senden, die Benachrichtigungsberechtigung erlauben, exakte Alarme aktivieren und die Akku-Optimierung deaktivieren, falls Erinnerungen verzögert werden.</string>
     <string name="tour_body_settings_stock">Öffne hier die Ringvorrat-Werkzeuge. Du kannst die Vorratsverfolgung ein- oder ausschalten, die verbleibende Anzahl an Ringen anpassen und die Ringvorrat-Benachrichtigungen steuern.</string>

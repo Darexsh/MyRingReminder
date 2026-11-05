@@ -1405,6 +1405,9 @@ public class MainActivity extends AppCompatActivity {
 
         steps.add(new TourStep(R.id.nav_settings, R.id.btn_settings_info,
                 R.string.tour_title_settings_info, R.string.tour_body_settings_info, 0, false));
+        steps.add(new TourStep(R.id.nav_settings, R.id.btn_package_leaflet,
+                R.string.settings_package_leaflet_label, R.string.tour_body_package_leaflet,
+                R.id.settings_scroll, false));
         steps.add(new TourStep(R.id.nav_settings, R.id.settings_cycle_fields_container,
                 R.string.tour_title_settings_cycle, R.string.tour_body_settings_cycle,
                 R.id.settings_scroll, false));

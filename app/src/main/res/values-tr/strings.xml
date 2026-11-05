@@ -690,6 +690,7 @@
     <string name="tour_body_settings_particle_animation">Ana ekrandaki halkanın parçacık efektini seçin: otomatik, azaltılmış veya kapalı.</string>
     <string name="tour_body_settings_cycle">Yerleştirme tarihi, saati ve döngü uzunluğunu ayarlayın.</string>
     <string name="tour_body_settings_info">Sürüm, geliştirici bilgisi ve iletişim linklerini gösterir.</string>
+    <string name="tour_body_package_leaflet">Desteklenen halkaların resmî kullanma talimatlarını görüntüleyin. Varsa uygulama, uygulama dilindeki sürümü açar; yoksa açıkça referans olarak belirtilen bir belge sunabilir. Her zaman kendi halkanızla birlikte verilen talimatı izleyin.</string>
     <string name="tour_body_settings_language">Diller arasında geçiş yapın.</string>
     <string name="tour_body_settings_notifications">Ayrıntılı hatırlatıcı ayarlarını açar. Burada hatırlatma saatlerini ayarlayabilir, test bildirimi gönderebilir, bildirim izni verebilir, kesin alarmlara izin verebilir ve hatırlatmalar gecikirse pil optimizasyonunu kapatabilirsiniz.</string>
     <string name="tour_body_settings_stock">Halka stoğu araçlarını buradan açın. Stok takibini açıp kapatabilir, kaç halka kaldığını ayarlayabilir ve stok bildirimlerini yönetebilirsiniz.</string>

@@ -690,6 +690,7 @@
     <string name="tour_body_settings_particle_animation">选择主页圆环的粒子效果：自动、精简或关闭。</string>
     <string name="tour_body_settings_cycle">设置置入日期、时间和周期长度。</string>
     <string name="tour_body_settings_info">显示版本、开发者信息和联系方式链接。</string>
+    <string name="tour_body_package_leaflet">查看支持的环形避孕产品的官方说明书。若有应用语言版本，应用会打开该版本；否则可能会提供明确标注的参考文件。请始终遵循你的环形产品随附的说明书。</string>
     <string name="tour_body_settings_language">在不同语言之间切换。</string>
     <string name="tour_body_settings_notifications">打开详细的提醒设置。在这里你可以设置提醒时间、发送测试通知、允许通知权限、允许精确闹钟，并在提醒延迟时关闭电池优化。</string>
     <string name="tour_body_settings_stock">在这里打开避孕环库存工具。你可以开启或关闭库存跟踪、调整剩余数量，并管理库存通知。</string>

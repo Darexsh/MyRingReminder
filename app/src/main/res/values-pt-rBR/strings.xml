@@ -690,6 +690,7 @@
     <string name="tour_body_settings_particle_animation">Escolha o efeito de partículas do anel da tela inicial: automático, reduzido ou desativado.</string>
     <string name="tour_body_settings_cycle">Defina data, hora de inserção e duração do ciclo.</string>
     <string name="tour_body_settings_info">Mostra versão, info do desenvolvedor e links de contato.</string>
+    <string name="tour_body_package_leaflet">Consulte as bulas oficiais dos anéis disponíveis. O aplicativo abre a versão no idioma do app quando disponível; caso contrário, pode oferecer um documento de referência claramente identificado. Siga sempre a bula fornecida com o seu anel.</string>
     <string name="tour_body_settings_language">Alterne entre diferentes idiomas.</string>
     <string name="tour_body_settings_notifications">Abre as configurações detalhadas de lembretes. Lá você pode definir os horários, enviar uma notificação de teste, permitir notificações, permitir alarmes exatos e desativar a otimização da bateria se os lembretes atrasarem.</string>
     <string name="tour_body_settings_stock">Abra aqui as ferramentas do estoque de anéis. Você pode ativar ou desativar o controle, ajustar quantos anéis restam e controlar as notificações do estoque.</string>

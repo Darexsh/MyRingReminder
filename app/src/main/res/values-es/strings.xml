@@ -690,6 +690,7 @@
     <string name="tour_body_settings_particle_animation">Elige el efecto de partículas del anillo de inicio: automático, reducido o desactivado.</string>
     <string name="tour_body_settings_cycle">Establece la fecha, la hora y la duración del ciclo de inserción.</string>
     <string name="tour_body_settings_info">Muestra la versión, la información del desarrollador y los enlaces de contacto.</string>
+    <string name="tour_body_package_leaflet">Consulta los prospectos oficiales de los anillos disponibles. La aplicación abre la versión en el idioma de la app cuando existe y, si no, puede ofrecer un documento de referencia claramente identificado. Sigue siempre el prospecto incluido con tu anillo.</string>
     <string name="tour_body_settings_language">Cambiar entre diferentes idiomas.</string>
     <string name="tour_body_settings_notifications">Abre los ajustes detallados de recordatorios. Allí puedes configurar los horarios, enviar una notificación de prueba, permitir el permiso de notificaciones, habilitar alarmas exactas y desactivar la optimización de la batería si los recordatorios se retrasan.</string>
     <string name="tour_body_settings_stock">Abre aquí las herramientas del stock de anillos. Puedes activar o desactivar el seguimiento, ajustar cuántos anillos quedan y controlar las notificaciones del stock.</string>

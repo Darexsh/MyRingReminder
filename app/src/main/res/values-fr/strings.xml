@@ -691,6 +691,7 @@
     <string name="tour_body_settings_particle_animation">Choisissez l’effet des particules de l’anneau d’accueil : automatique, réduit ou désactivé.</string>
     <string name="tour_body_settings_cycle">Réglez la date, l\'heure d\'insertion et la durée du cycle.</string>
     <string name="tour_body_settings_info">Affiche la version, les infos développeur et les liens de contact.</string>
+    <string name="tour_body_package_leaflet">Consultez les notices officielles des anneaux disponibles. L’application ouvre la version dans la langue de l’app lorsqu’elle existe ; sinon, elle peut proposer un document de référence clairement indiqué. Suivez toujours la notice fournie avec votre anneau.</string>
     <string name="tour_body_settings_language">Basculez entre les différentes langues.</string>
     <string name="tour_body_settings_notifications">Ouvre les réglages détaillés des rappels. Vous pouvez y définir les heures de rappel, envoyer une notification de test, autoriser les notifications, autoriser les alarmes exactes et désactiver l\'optimisation de la batterie si les rappels arrivent en retard.</string>
     <string name="tour_body_settings_stock">Ouvrez ici les outils du stock d\'anneaux. Vous pouvez activer ou désactiver le suivi, ajuster le nombre d\'anneaux restants et gérer les notifications de stock.</string>

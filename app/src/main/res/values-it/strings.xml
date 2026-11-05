@@ -691,6 +691,7 @@
     <string name="tour_body_settings_particle_animation">Scegli l’effetto delle particelle dell’anello Home: automatico, ridotto o disattivato.</string>
     <string name="tour_body_settings_cycle">Imposta data, ora di inserimento e durata del ciclo.</string>
     <string name="tour_body_settings_info">Mostra versione, info sviluppatore e link di contatto.</string>
+    <string name="tour_body_package_leaflet">Consulta i foglietti illustrativi ufficiali degli anelli disponibili. L’app apre la versione nella lingua dell’app, se disponibile; altrimenti può proporre un documento di riferimento chiaramente indicato. Segui sempre il foglietto fornito con il tuo anello.</string>
     <string name="tour_body_settings_language">Passa tra le diverse lingue.</string>
     <string name="tour_body_settings_notifications">Apre le impostazioni dettagliate dei promemoria. Qui puoi impostare gli orari, inviare una notifica di test, consentire le notifiche, consentire gli allarmi esatti e disattivare l\'ottimizzazione della batteria se i promemoria arrivano in ritardo.</string>
     <string name="tour_body_settings_stock">Apri qui gli strumenti della scorta anelli. Puoi attivare o disattivare il monitoraggio, regolare quanti anelli restano e gestire le notifiche della scorta.</string>
