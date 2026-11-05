@@ -13,6 +13,8 @@ import android.content.Intent;
 import android.content.ActivityNotFoundException;
 import android.os.Bundle;
 import android.os.Build;
+import android.os.Handler;
+import android.os.Looper;
 import android.widget.DatePicker;
 import android.widget.TimePicker;
 import android.widget.NumberPicker;
@@ -65,6 +67,7 @@ import android.content.pm.PackageManager;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.Gravity;
 import com.google.android.material.button.MaterialButton;
 import com.google.android.material.color.MaterialColors;
 import android.content.res.ColorStateList;
@@ -96,6 +99,10 @@ public class SettingsFragment extends Fragment {
     public static final String ARG_OPEN_UPDATE_BACKUP_DIALOG = "open_update_backup_dialog";
     public static final String ARG_OPEN_STOCK_TRACKER_DIALOG = "open_stock_tracker_dialog";
     private static final String TAG = "SettingsNotification";
+    private static final String LEAFLET_PACKAGES_URL = "https://raw.githubusercontent.com/Darexsh/MyRingReminder/main/leaflet-packages.json";
+    private static final String LEAFLET_PREFS = "package_leaflet_links";
+    private static final String LEAFLET_CACHE_KEY = "last_valid_config";
+    private static final Handler MAIN_HANDLER = new Handler(Looper.getMainLooper());
 
     private View btnBackgroundTools;
     private View debugSection;
@@ -134,6 +141,9 @@ public class SettingsFragment extends Fragment {
     private AlertDialog stockToolsDialog;
     private View stockToolsDialogView;
     private AlertDialog ringUsePauseDialog;
+    private AlertDialog packageLeafletLoadingDialog;
+    private boolean isLoadingPackageLeaflets;
+    private int packageLeafletRequestId;
     private final List<ValueAnimator> notificationWarningAnimators = new ArrayList<>();
     private final List<TextView> settingsAccentTextViews = new ArrayList<>();
     private boolean continueUpdateInstallAfterBackup = false;
@@ -253,6 +263,7 @@ public class SettingsFragment extends Fragment {
 
         TextView settingsTitle = view.findViewById(R.id.tv_settings_title);
         btnSettingsInfo = view.findViewById(R.id.btn_settings_info);
+        View btnPackageLeaflet = view.findViewById(R.id.btn_package_leaflet);
         View btnSetTime = view.findViewById(R.id.btn_set_time);
         View btnSetStartDate = view.findViewById(R.id.btn_set_start_date);
         View btnSetCycleLength = view.findViewById(R.id.btn_set_cycle_length);
@@ -453,6 +464,7 @@ public class SettingsFragment extends Fragment {
 
 
         // Set up button click listeners
+        btnPackageLeaflet.setOnClickListener(v -> loadPackageLeaflets());
         btnSetTime.setOnClickListener(v -> showTimePicker());
         btnSetStartDate.setOnClickListener(v -> showDatePicker());
         btnSetCycleLength.setOnClickListener(v -> showCycleLengthDialog());
@@ -1380,6 +1392,318 @@ public class SettingsFragment extends Fragment {
     private void applySettingsAccentColor(int color) {
         for (TextView view : settingsAccentTextViews) {
             view.setTextColor(color);
+        }
+    }
+
+    private void loadPackageLeaflets() {
+        if (!isAdded() || isLoadingPackageLeaflets) {
+            return;
+        }
+
+        isLoadingPackageLeaflets = true;
+        int requestId = ++packageLeafletRequestId;
+        showPackageLeafletLoadingDialog();
+        Context appContext = requireContext().getApplicationContext();
+
+        new Thread(() -> {
+            PackageLeafletLoadResult result = null;
+            try {
+                String json = fetchPackageLeafletConfig();
+                List<PackageLeaflet> leaflets = parsePackageLeaflets(json);
+                appContext.getSharedPreferences(LEAFLET_PREFS, Context.MODE_PRIVATE)
+                        .edit()
+                        .putString(LEAFLET_CACHE_KEY, json)
+                        .apply();
+                result = new PackageLeafletLoadResult(leaflets, false);
+            } catch (Exception networkOrParseError) {
+                String cachedJson = appContext.getSharedPreferences(LEAFLET_PREFS, Context.MODE_PRIVATE)
+                        .getString(LEAFLET_CACHE_KEY, null);
+                if (cachedJson != null) {
+                    try {
+                        result = new PackageLeafletLoadResult(parsePackageLeaflets(cachedJson), true);
+                    } catch (Exception ignored) {
+                        // Report the loading failure if the last saved configuration is invalid too.
+                    }
+                }
+            }
+
+            PackageLeafletLoadResult finalResult = result;
+            MAIN_HANDLER.post(() -> {
+                if (requestId != packageLeafletRequestId) {
+                    return;
+                }
+                isLoadingPackageLeaflets = false;
+                dismissPackageLeafletLoadingDialog();
+                if (!isAdded() || getView() == null) {
+                    return;
+                }
+                if (finalResult == null) {
+                    showPackageLeafletLoadError();
+                } else if (finalResult.leaflets.isEmpty()) {
+                    showPackageLeafletNoLinksDialog();
+                } else {
+                    if (finalResult.fromCache) {
+                        Toast.makeText(requireContext(), R.string.settings_package_leaflet_cached, Toast.LENGTH_LONG).show();
+                    }
+                    showPackageLeafletChooser(finalResult.leaflets);
+                }
+            });
+        }, "package-leaflet-config").start();
+    }
+
+    private String fetchPackageLeafletConfig() throws IOException {
+        HttpURLConnection connection = null;
+        try {
+            connection = (HttpURLConnection) new URL(LEAFLET_PACKAGES_URL).openConnection();
+            connection.setConnectTimeout(10000);
+            connection.setReadTimeout(15000);
+            connection.setUseCaches(false);
+            connection.setRequestProperty("Accept", "application/json");
+            connection.setRequestProperty("Cache-Control", "no-cache");
+            connection.setRequestProperty("User-Agent", "MyRingReminder-App");
+            if (connection.getResponseCode() != HttpURLConnection.HTTP_OK) {
+                throw new IOException("Leaflet configuration request failed");
+            }
+
+            StringBuilder body = new StringBuilder();
+            try (BufferedReader reader = new BufferedReader(
+                    new InputStreamReader(connection.getInputStream(), StandardCharsets.UTF_8))) {
+                String line;
+                while ((line = reader.readLine()) != null) {
+                    body.append(line).append('\n');
+                    if (body.length() > 256_000) {
+                        throw new IOException("Leaflet configuration is too large");
+                    }
+                }
+            }
+            return body.toString();
+        } finally {
+            if (connection != null) {
+                connection.disconnect();
+            }
+        }
+    }
+
+    private List<PackageLeaflet> parsePackageLeaflets(String json) {
+        JsonElement rootElement = JsonParser.parseString(json);
+        if (!rootElement.isJsonObject()) {
+            throw new IllegalArgumentException("Invalid leaflet configuration");
+        }
+        JsonObject root = rootElement.getAsJsonObject();
+        JsonElement versionElement = root.get("version");
+        if (versionElement == null || !versionElement.isJsonPrimitive()
+                || !versionElement.getAsJsonPrimitive().isNumber()
+                || versionElement.getAsInt() != 1) {
+            throw new IllegalArgumentException("Unsupported leaflet configuration version");
+        }
+        JsonElement listElement = root.get("leaflets");
+        if (listElement == null || !listElement.isJsonArray()) {
+            throw new IllegalArgumentException("Missing leaflet list");
+        }
+
+        List<PackageLeaflet> leaflets = new ArrayList<>();
+        Set<String> seenIds = new HashSet<>();
+        for (JsonElement itemElement : listElement.getAsJsonArray()) {
+            if (!itemElement.isJsonObject()) {
+                continue;
+            }
+            JsonObject item = itemElement.getAsJsonObject();
+            String id = getJsonString(item, "id");
+            String name = getJsonString(item, "name");
+            JsonElement linksElement = item.get("links");
+            if (id == null || id.trim().isEmpty()
+                    || name == null || name.trim().isEmpty()
+                    || linksElement == null || !linksElement.isJsonObject()) {
+                continue;
+            }
+
+            Map<String, String> links = new TreeMap<>();
+            for (Map.Entry<String, JsonElement> linkEntry : linksElement.getAsJsonObject().entrySet()) {
+                String language = normalizeLeafletLanguageTag(linkEntry.getKey());
+                String link = linkEntry.getValue() != null && linkEntry.getValue().isJsonPrimitive()
+                        ? linkEntry.getValue().getAsString().trim()
+                        : "";
+                if (language != null && isValidLeafletUrl(link)) {
+                    links.put(language, link);
+                }
+            }
+            if (!links.isEmpty() && seenIds.add(id.trim().toLowerCase(Locale.ROOT))) {
+                leaflets.add(new PackageLeaflet(id.trim(), name.trim(), links));
+            }
+        }
+        return leaflets;
+    }
+
+    @Nullable
+    private String getJsonString(@NonNull JsonObject object, @NonNull String key) {
+        JsonElement element = object.get(key);
+        return element != null && element.isJsonPrimitive() ? element.getAsString() : null;
+    }
+
+    @Nullable
+    private String normalizeLeafletLanguageTag(@Nullable String languageTag) {
+        if (languageTag == null || languageTag.trim().isEmpty()) {
+            return null;
+        }
+        Locale locale = Locale.forLanguageTag(languageTag.trim().replace('_', '-'));
+        return locale.getLanguage().isEmpty() ? null : locale.toLanguageTag();
+    }
+
+    private boolean isValidLeafletUrl(@Nullable String value) {
+        if (value == null || value.trim().isEmpty()) {
+            return false;
+        }
+        Uri uri = Uri.parse(value.trim());
+        String scheme = uri.getScheme();
+        return uri.getHost() != null
+                && ("https".equalsIgnoreCase(scheme) || "http".equalsIgnoreCase(scheme));
+    }
+
+    private void showPackageLeafletLoadingDialog() {
+        int padding = dpToPx(20);
+        LinearLayout content = new LinearLayout(requireContext());
+        content.setGravity(Gravity.CENTER_VERTICAL);
+        content.setOrientation(LinearLayout.HORIZONTAL);
+        content.setPadding(padding, padding, padding, padding);
+
+        ProgressBar progressBar = new ProgressBar(requireContext());
+        content.addView(progressBar, new LinearLayout.LayoutParams(dpToPx(32), dpToPx(32)));
+
+        TextView message = new TextView(requireContext());
+        message.setText(R.string.settings_package_leaflet_loading);
+        message.setPadding(dpToPx(16), 0, 0, 0);
+        content.addView(message, new LinearLayout.LayoutParams(
+                ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT));
+
+        packageLeafletLoadingDialog = new AlertDialog.Builder(requireContext())
+                .setTitle(R.string.settings_package_leaflet_label)
+                .setView(content)
+                .setCancelable(false)
+                .create();
+        packageLeafletLoadingDialog.show();
+        applyDialogButtonColors(packageLeafletLoadingDialog);
+    }
+
+    private void dismissPackageLeafletLoadingDialog() {
+        if (packageLeafletLoadingDialog != null) {
+            packageLeafletLoadingDialog.dismiss();
+            packageLeafletLoadingDialog = null;
+        }
+    }
+
+    private void showPackageLeafletLoadError() {
+        AlertDialog dialog = new AlertDialog.Builder(requireContext())
+                .setTitle(R.string.settings_package_leaflet_label)
+                .setMessage(R.string.settings_package_leaflet_load_failed)
+                .setPositiveButton(R.string.settings_package_leaflet_retry, (d, which) -> loadPackageLeaflets())
+                .setNegativeButton(R.string.dialog_cancel, null)
+                .show();
+        applyDialogButtonColors(dialog);
+    }
+
+    private void showPackageLeafletNoLinksDialog() {
+        AlertDialog dialog = new AlertDialog.Builder(requireContext())
+                .setTitle(R.string.settings_package_leaflet_label)
+                .setMessage(R.string.settings_package_leaflet_no_links)
+                .setPositiveButton(R.string.dialog_ok, null)
+                .show();
+        applyDialogButtonColors(dialog);
+    }
+
+    private void showPackageLeafletChooser(@NonNull List<PackageLeaflet> leaflets) {
+        String[] names = new String[leaflets.size()];
+        for (int i = 0; i < leaflets.size(); i++) {
+            names[i] = leaflets.get(i).name;
+        }
+
+        AlertDialog dialog = new AlertDialog.Builder(requireContext())
+                .setTitle(R.string.settings_package_leaflet_label)
+                .setItems(names, (d, which) -> openPackageLeaflet(leaflets.get(which)))
+                .setNegativeButton(R.string.dialog_cancel, null)
+                .show();
+        applyDialogButtonColors(dialog);
+    }
+
+    private void openPackageLeaflet(@NonNull PackageLeaflet leaflet) {
+        Locale appLocale = getResources().getConfiguration().getLocales().get(0);
+        Map.Entry<String, String> selectedLink = selectPackageLeafletLink(leaflet, appLocale);
+        if (selectedLink == null) {
+            return;
+        }
+
+        String linkLanguage = Locale.forLanguageTag(selectedLink.getKey()).getLanguage();
+        boolean matchesAppLanguage = linkLanguage.equalsIgnoreCase(appLocale.getLanguage());
+        if (!matchesAppLanguage) {
+            String languageName = Locale.forLanguageTag(selectedLink.getKey()).getDisplayLanguage(appLocale);
+            AlertDialog warning = new AlertDialog.Builder(requireContext())
+                    .setTitle(R.string.settings_package_leaflet_language_title)
+                    .setMessage(getString(R.string.settings_package_leaflet_language_message,
+                            languageName, leaflet.name))
+                    .setPositiveButton(R.string.settings_package_leaflet_open_anyway,
+                            (d, which) -> openPackageLeafletUrl(selectedLink.getValue()))
+                    .setNegativeButton(R.string.dialog_cancel, null)
+                    .show();
+            applyDialogButtonColors(warning);
+            return;
+        }
+        openPackageLeafletUrl(selectedLink.getValue());
+    }
+
+    @Nullable
+    private Map.Entry<String, String> selectPackageLeafletLink(@NonNull PackageLeaflet leaflet,
+                                                               @NonNull Locale appLocale) {
+        String appTag = appLocale.toLanguageTag();
+        for (Map.Entry<String, String> link : leaflet.links.entrySet()) {
+            if (link.getKey().equalsIgnoreCase(appTag)) {
+                return link;
+            }
+        }
+        for (Map.Entry<String, String> link : leaflet.links.entrySet()) {
+            if (Locale.forLanguageTag(link.getKey()).getLanguage().equalsIgnoreCase(appLocale.getLanguage())) {
+                return link;
+            }
+        }
+        for (Map.Entry<String, String> link : leaflet.links.entrySet()) {
+            if (Locale.forLanguageTag(link.getKey()).getLanguage().equalsIgnoreCase("de")) {
+                return link;
+            }
+        }
+        return leaflet.links.entrySet().iterator().next();
+    }
+
+    private void openPackageLeafletUrl(@NonNull String link) {
+        Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse(link));
+        try {
+            startActivity(intent);
+        } catch (ActivityNotFoundException e) {
+            AlertDialog dialog = new AlertDialog.Builder(requireContext())
+                    .setTitle(R.string.settings_package_leaflet_label)
+                    .setMessage(R.string.settings_package_leaflet_no_browser)
+                    .setPositiveButton(R.string.dialog_ok, null)
+                    .show();
+            applyDialogButtonColors(dialog);
+        }
+    }
+
+    private static final class PackageLeaflet {
+        final String id;
+        final String name;
+        final Map<String, String> links;
+
+        PackageLeaflet(@NonNull String id, @NonNull String name, @NonNull Map<String, String> links) {
+            this.id = id;
+            this.name = name;
+            this.links = links;
+        }
+    }
+
+    private static final class PackageLeafletLoadResult {
+        final List<PackageLeaflet> leaflets;
+        final boolean fromCache;
+
+        PackageLeafletLoadResult(@NonNull List<PackageLeaflet> leaflets, boolean fromCache) {
+            this.leaflets = leaflets;
+            this.fromCache = fromCache;
         }
     }
 
@@ -4024,6 +4348,9 @@ public class SettingsFragment extends Fragment {
     public void onDestroyView() {
         stopNotificationWarningAnimations();
         stopResetAppAnimation();
+        packageLeafletRequestId++;
+        dismissPackageLeafletLoadingDialog();
+        isLoadingPackageLeaflets = false;
         super.onDestroyView();
     }
 

@@ -210,6 +210,17 @@
     <string name="settings_subtitle">All in one place.</string>
     <string name="settings_time_button_format">Set insertion time: %1$02d:%2$02d</string>
     <string name="settings_title">Settings</string>
+    <string name="settings_package_leaflet_label">Package leaflet</string>
+    <string name="settings_package_leaflet_hint">Official product information</string>
+    <string name="settings_package_leaflet_loading">Loading leaflet links…</string>
+    <string name="settings_package_leaflet_load_failed">Could not load the leaflet links. Check your internet connection and try again.</string>
+    <string name="settings_package_leaflet_retry">Retry</string>
+    <string name="settings_package_leaflet_cached">Could not refresh the leaflet links. Showing the last saved list.</string>
+    <string name="settings_package_leaflet_no_links">No leaflet links have been added yet.</string>
+    <string name="settings_package_leaflet_language_title">Leaflet in another language</string>
+    <string name="settings_package_leaflet_language_message">The leaflet for %2$s is currently available only in %1$s. A translation may be listed under a different product name, so you may need to search for it yourself. Open it anyway?</string>
+    <string name="settings_package_leaflet_open_anyway">Open anyway</string>
+    <string name="settings_package_leaflet_no_browser">No app is available to open this link.</string>
     <string name="settings_unit_month">Month</string>
     <string name="settings_unit_month_short">mo</string>
     <string name="settings_unit_year">Year</string>

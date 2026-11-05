@@ -210,6 +210,17 @@
     <string name="settings_subtitle">一应俱全。</string>
     <string name="settings_time_button_format">设置置入时间：%1$02d:%2$02d</string>
     <string name="settings_title">设置</string>
+    <string name="settings_package_leaflet_label">药品说明书</string>
+    <string name="settings_package_leaflet_hint">官方产品信息</string>
+    <string name="settings_package_leaflet_loading">正在加载说明书链接…</string>
+    <string name="settings_package_leaflet_load_failed">无法加载说明书链接。请检查网络连接后重试。</string>
+    <string name="settings_package_leaflet_retry">重试</string>
+    <string name="settings_package_leaflet_cached">无法刷新链接，正在显示上次保存的列表。</string>
+    <string name="settings_package_leaflet_no_links">尚未添加说明书链接。</string>
+    <string name="settings_package_leaflet_language_title">其他语言的说明书</string>
+    <string name="settings_package_leaflet_language_message">%2$s 的说明书目前仅提供 %1$s 版本。译本可能使用其他商品名称，因此你可能需要自行搜索。仍要打开吗？</string>
+    <string name="settings_package_leaflet_open_anyway">仍要打开</string>
+    <string name="settings_package_leaflet_no_browser">没有可用于打开此链接的应用。</string>
     <string name="settings_unit_month">月</string>
     <string name="settings_unit_month_short">月</string>
     <string name="settings_unit_year">年</string>

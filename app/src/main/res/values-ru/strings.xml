@@ -210,6 +210,17 @@
     <string name="settings_subtitle">Все в одном месте.</string>
     <string name="settings_time_button_format">Время вставки: %1$02d:%2$02d</string>
     <string name="settings_title">Настройки</string>
+    <string name="settings_package_leaflet_label">Листок-вкладыш</string>
+    <string name="settings_package_leaflet_hint">Официальная информация о препарате</string>
+    <string name="settings_package_leaflet_loading">Загрузка ссылок на инструкции…</string>
+    <string name="settings_package_leaflet_load_failed">Не удалось загрузить ссылки. Проверьте подключение к интернету и повторите попытку.</string>
+    <string name="settings_package_leaflet_retry">Повторить</string>
+    <string name="settings_package_leaflet_cached">Не удалось обновить ссылки. Показан последний сохранённый список.</string>
+    <string name="settings_package_leaflet_no_links">Ссылки на инструкции пока не добавлены.</string>
+    <string name="settings_package_leaflet_language_title">Инструкция на другом языке</string>
+    <string name="settings_package_leaflet_language_message">Инструкция для %2$s сейчас доступна только на языке: %1$s. Перевод может быть опубликован под другим названием, поэтому его, возможно, придётся искать самостоятельно. Всё равно открыть?</string>
+    <string name="settings_package_leaflet_open_anyway">Всё равно открыть</string>
+    <string name="settings_package_leaflet_no_browser">Нет приложения для открытия этой ссылки.</string>
     <string name="settings_unit_month">Месяц</string>
     <string name="settings_unit_month_short">мес</string>
     <string name="settings_unit_year">Год</string>

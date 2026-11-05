@@ -210,6 +210,17 @@
     <string name="settings_subtitle">Wszystko w jednym miejscu.</string>
     <string name="settings_time_button_format">Godzina założenia: %1$02d:%2$02d</string>
     <string name="settings_title">Ustawienia</string>
+    <string name="settings_package_leaflet_label">Ulotka dołączona do opakowania</string>
+    <string name="settings_package_leaflet_hint">Oficjalne informacje o produkcie</string>
+    <string name="settings_package_leaflet_loading">Wczytywanie linków do ulotek…</string>
+    <string name="settings_package_leaflet_load_failed">Nie udało się wczytać linków. Sprawdź połączenie internetowe i spróbuj ponownie.</string>
+    <string name="settings_package_leaflet_retry">Ponów próbę</string>
+    <string name="settings_package_leaflet_cached">Nie udało się odświeżyć linków. Wyświetlana jest ostatnia zapisana lista.</string>
+    <string name="settings_package_leaflet_no_links">Nie dodano jeszcze linków do ulotek.</string>
+    <string name="settings_package_leaflet_language_title">Ulotka w innym języku</string>
+    <string name="settings_package_leaflet_language_message">Ulotka dla produktu %2$s jest obecnie dostępna tylko w języku: %1$s. Tłumaczenie może być dostępne pod inną nazwą produktu, więc trzeba będzie poszukać go samodzielnie. Otworzyć mimo to?</string>
+    <string name="settings_package_leaflet_open_anyway">Otwórz mimo to</string>
+    <string name="settings_package_leaflet_no_browser">Brak aplikacji, która może otworzyć ten link.</string>
     <string name="settings_unit_month">Miesiąc</string>
     <string name="settings_unit_month_short">m-c</string>
     <string name="settings_unit_year">Rok</string>

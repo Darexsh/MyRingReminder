@@ -210,6 +210,17 @@
     <string name="settings_subtitle">Her şey tek bir yerde.</string>
     <string name="settings_time_button_format">Yerleştirme saati: %1$02d:%2$02d</string>
     <string name="settings_title">Ayarlar</string>
+    <string name="settings_package_leaflet_label">Kullanma talimatı</string>
+    <string name="settings_package_leaflet_hint">Ürün hakkında resmî bilgiler</string>
+    <string name="settings_package_leaflet_loading">Talimat bağlantıları yükleniyor…</string>
+    <string name="settings_package_leaflet_load_failed">Bağlantılar yüklenemedi. İnternet bağlantınızı kontrol edip tekrar deneyin.</string>
+    <string name="settings_package_leaflet_retry">Tekrar dene</string>
+    <string name="settings_package_leaflet_cached">Bağlantılar yenilenemedi. Son kaydedilen liste gösteriliyor.</string>
+    <string name="settings_package_leaflet_no_links">Henüz talimat bağlantısı eklenmedi.</string>
+    <string name="settings_package_leaflet_language_title">Farklı dilde talimat</string>
+    <string name="settings_package_leaflet_language_message">%2$s için talimat şu anda yalnızca %1$s dilinde mevcut. Çeviri farklı bir ürün adıyla listelenmiş olabilir; bu nedenle kendiniz aramanız gerekebilir. Yine de açılsın mı?</string>
+    <string name="settings_package_leaflet_open_anyway">Yine de aç</string>
+    <string name="settings_package_leaflet_no_browser">Bu bağlantıyı açabilecek bir uygulama bulunamadı.</string>
     <string name="settings_unit_month">Ay</string>
     <string name="settings_unit_month_short">ay</string>
     <string name="settings_unit_year">Yıl</string>

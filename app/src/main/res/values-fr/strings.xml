@@ -210,6 +210,17 @@
     <string name="settings_subtitle">Tout au même endroit.</string>
     <string name="settings_time_button_format">Heure d\'insertion : %1$02d:%2$02d</string>
     <string name="settings_title">Paramètres</string>
+    <string name="settings_package_leaflet_label">Notice du médicament</string>
+    <string name="settings_package_leaflet_hint">Informations officielles sur le produit</string>
+    <string name="settings_package_leaflet_loading">Chargement des liens des notices…</string>
+    <string name="settings_package_leaflet_load_failed">Impossible de charger les liens. Vérifiez votre connexion Internet, puis réessayez.</string>
+    <string name="settings_package_leaflet_retry">Réessayer</string>
+    <string name="settings_package_leaflet_cached">Impossible d’actualiser les liens. La dernière liste enregistrée est affichée.</string>
+    <string name="settings_package_leaflet_no_links">Aucun lien vers une notice n’a encore été ajouté.</string>
+    <string name="settings_package_leaflet_language_title">Notice dans une autre langue</string>
+    <string name="settings_package_leaflet_language_message">La notice de %2$s est actuellement disponible uniquement en %1$s. Une traduction peut être publiée sous un autre nom de produit : vous devrez peut-être la rechercher vous-même. Voulez-vous tout de même l’ouvrir ?</string>
+    <string name="settings_package_leaflet_open_anyway">Ouvrir quand même</string>
+    <string name="settings_package_leaflet_no_browser">Aucune application ne peut ouvrir ce lien.</string>
     <string name="settings_unit_month">Mois</string>
     <string name="settings_unit_month_short">mo</string>
     <string name="settings_unit_year">An</string>

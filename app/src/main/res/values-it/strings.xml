@@ -210,6 +210,17 @@
     <string name="settings_subtitle">Tutto in un unico posto.</string>
     <string name="settings_time_button_format">Ora inserimento: %1$02d:%2$02d</string>
     <string name="settings_title">Impostazioni</string>
+    <string name="settings_package_leaflet_label">Foglio illustrativo</string>
+    <string name="settings_package_leaflet_hint">Informazioni ufficiali sul prodotto</string>
+    <string name="settings_package_leaflet_loading">Caricamento dei link dei fogli illustrativi…</string>
+    <string name="settings_package_leaflet_load_failed">Impossibile caricare i link. Controlla la connessione Internet e riprova.</string>
+    <string name="settings_package_leaflet_retry">Riprova</string>
+    <string name="settings_package_leaflet_cached">Impossibile aggiornare i link. Viene mostrato l’ultimo elenco salvato.</string>
+    <string name="settings_package_leaflet_no_links">Non sono ancora stati aggiunti link ai fogli illustrativi.</string>
+    <string name="settings_package_leaflet_language_title">Foglio illustrativo in un’altra lingua</string>
+    <string name="settings_package_leaflet_language_message">Il foglio illustrativo di %2$s è attualmente disponibile solo in %1$s. Una traduzione potrebbe essere pubblicata con un altro nome commerciale, quindi potresti doverla cercare. Vuoi aprirlo comunque?</string>
+    <string name="settings_package_leaflet_open_anyway">Apri comunque</string>
+    <string name="settings_package_leaflet_no_browser">Nessuna app può aprire questo link.</string>
     <string name="settings_unit_month">Mese</string>
     <string name="settings_unit_month_short">me</string>
     <string name="settings_unit_year">Anno</string>

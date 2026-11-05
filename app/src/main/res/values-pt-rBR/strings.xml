@@ -210,6 +210,17 @@
     <string name="settings_subtitle">Tudo em um só lugar.</string>
     <string name="settings_time_button_format">Hora de inserção: %1$02d:%2$02d</string>
     <string name="settings_title">Configurações</string>
+    <string name="settings_package_leaflet_label">Bula</string>
+    <string name="settings_package_leaflet_hint">Informações oficiais do produto</string>
+    <string name="settings_package_leaflet_loading">Carregando links das bulas…</string>
+    <string name="settings_package_leaflet_load_failed">Não foi possível carregar os links. Verifique sua conexão com a internet e tente novamente.</string>
+    <string name="settings_package_leaflet_retry">Tentar novamente</string>
+    <string name="settings_package_leaflet_cached">Não foi possível atualizar os links. Exibindo a última lista salva.</string>
+    <string name="settings_package_leaflet_no_links">Nenhum link de bula foi adicionado ainda.</string>
+    <string name="settings_package_leaflet_language_title">Bula em outro idioma</string>
+    <string name="settings_package_leaflet_language_message">A bula de %2$s está disponível atualmente apenas em %1$s. Uma tradução pode estar listada com outro nome de produto, então talvez você precise procurá-la por conta própria. Abrir mesmo assim?</string>
+    <string name="settings_package_leaflet_open_anyway">Abrir mesmo assim</string>
+    <string name="settings_package_leaflet_no_browser">Nenhum aplicativo pode abrir este link.</string>
     <string name="settings_unit_month">Mês</string>
     <string name="settings_unit_month_short">mês</string>
     <string name="settings_unit_year">Ano</string>

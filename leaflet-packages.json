@@ -1,0 +1,47 @@
+{
+  "version": 1,
+  "leaflets": [
+    {
+      "id": "circlet",
+      "name": "Circlet®",
+      "links": {
+        "de": "https://cdn.shop-apotheke.com/PDF/D09/219/154/D09219154-bp.pdf"
+      }
+    },
+    {
+      "id": "cycelle",
+      "name": "Cycelle®",
+      "links": {
+        "de": "https://cdn.shop-apotheke.com/PDF/D13/814/603/D13814603-bp.pdf"
+      }
+    },
+    {
+      "id": "gino-ring",
+      "name": "GinoRing®",
+      "links": {
+        "de": "https://cdn.shop-apotheke.com/PDF/D13/423/239/D13423239-bp.pdf"
+      }
+    },
+    {
+      "id": "nuva-ring",
+      "name": "NuvaRing®",
+      "links": {
+        "de": "https://cdn.shop-apotheke.com/PDF/D02/081/008/D02081008-bp.pdf"
+      }
+    },
+    {
+      "id": "setlona",
+      "name": "Setlona®",
+      "links": {
+        "de": "https://cdn.shop-apotheke.com/PDF/D13/853/313/D13853313-bp.pdf"
+      }
+    },
+    {
+      "id": "veri-aristo",
+      "name": "VeRi-Aristo®",
+      "links": {
+        "de": "https://cdn.shop-apotheke.com/pdf/D12590142-bp.pdf"
+      }
+    }
+  ]
+}

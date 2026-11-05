@@ -210,6 +210,17 @@
     <string name="settings_subtitle">Alles an einem Ort.</string>
     <string name="settings_time_button_format">Einsetzzeit: %1$02d:%2$02d</string>
     <string name="settings_title">Einstellungen</string>
+    <string name="settings_package_leaflet_label">Packungsbeilage</string>
+    <string name="settings_package_leaflet_hint">Offizielle Produktinformationen</string>
+    <string name="settings_package_leaflet_loading">Packungsbeilagen werden geladen…</string>
+    <string name="settings_package_leaflet_load_failed">Die Links zu den Packungsbeilagen konnten nicht geladen werden. Prüfe deine Internetverbindung und versuche es erneut.</string>
+    <string name="settings_package_leaflet_retry">Erneut versuchen</string>
+    <string name="settings_package_leaflet_cached">Die Links konnten nicht aktualisiert werden. Die zuletzt gespeicherte Liste wird angezeigt.</string>
+    <string name="settings_package_leaflet_no_links">Es wurden noch keine Links zu Packungsbeilagen hinzugefügt.</string>
+    <string name="settings_package_leaflet_language_title">Packungsbeilage in einer anderen Sprache</string>
+    <string name="settings_package_leaflet_language_message">Die Packungsbeilage für %2$s ist derzeit nur auf %1$s verfügbar. Eine Übersetzung ist möglicherweise unter einem anderen Produktnamen zu finden, daher musst du selbst danach suchen. Trotzdem öffnen?</string>
+    <string name="settings_package_leaflet_open_anyway">Trotzdem öffnen</string>
+    <string name="settings_package_leaflet_no_browser">Es ist keine App verfügbar, um diesen Link zu öffnen.</string>
     <string name="settings_unit_month">Monat</string>
     <string name="settings_unit_month_short">Mo</string>
     <string name="settings_unit_year">Jahr</string>

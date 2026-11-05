@@ -210,6 +210,17 @@
     <string name="settings_subtitle">Todo en un solo lugar.</string>
     <string name="settings_time_button_format">Establecer hora de inserción: %1$02d:%2$02d</string>
     <string name="settings_title">Configuración</string>
+    <string name="settings_package_leaflet_label">Prospecto</string>
+    <string name="settings_package_leaflet_hint">Información oficial del producto</string>
+    <string name="settings_package_leaflet_loading">Cargando enlaces de los prospectos…</string>
+    <string name="settings_package_leaflet_load_failed">No se pudieron cargar los enlaces. Comprueba tu conexión a internet e inténtalo de nuevo.</string>
+    <string name="settings_package_leaflet_retry">Reintentar</string>
+    <string name="settings_package_leaflet_cached">No se pudieron actualizar los enlaces. Se muestra la última lista guardada.</string>
+    <string name="settings_package_leaflet_no_links">Aún no se han añadido enlaces a los prospectos.</string>
+    <string name="settings_package_leaflet_language_title">Prospecto en otro idioma</string>
+    <string name="settings_package_leaflet_language_message">El prospecto de %2$s solo está disponible actualmente en %1$s. Es posible que la traducción aparezca con otro nombre comercial, así que quizá tengas que buscarla por tu cuenta. ¿Quieres abrirlo de todos modos?</string>
+    <string name="settings_package_leaflet_open_anyway">Abrir de todos modos</string>
+    <string name="settings_package_leaflet_no_browser">No hay ninguna aplicación disponible para abrir este enlace.</string>
     <string name="settings_unit_month">Mes</string>
     <string name="settings_unit_month_short">mes</string>
     <string name="settings_unit_year">Año</string>
