@@ -4,12 +4,12 @@ plugins {
 
 android {
     namespace 'com.darexsh.myringreminder'
-    compileSdk 35
+    compileSdk 36
 
     defaultConfig {
         applicationId "com.darexsh.myringreminder"
         minSdk 26
-        targetSdk 35
+        targetSdk 36
         versionCode 22
         versionName "1.4"
 
