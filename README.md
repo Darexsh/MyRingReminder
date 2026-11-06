@@ -284,13 +284,22 @@ An overview of the current visual experience across the app:
 
 * * *
 
-## 📜 License
+📜 License
+----------
 
-This project is licensed under the [PolyForm Noncommercial License 1.0.0](https://polyformproject.org/licenses/noncommercial/1.0.0). You may use, modify, and distribute the software for noncommercial purposes under the license terms. Commercial use requires separate permission from the copyright holder.
+This project is licensed under the **PolyForm Noncommercial License 1.0.0**.
 
-> **Required notice:** Copyright (c) 2025–2026 Daniel Sichler (Darexsh)
+This license applies to the updater application code in this repository. Upstream patch and app projects remain under their own licenses and notice terms.
 
-Anyone distributing any part of this software must include a copy of the license or its URL and the required copyright notice. See the [LICENSE](LICENSE) file for the full terms.
+**Copyright (c) 2026 Darexsh by Daniel Sichler**
+
+You are free to use, study, modify, and redistribute this software under the terms of PolyForm Noncommercial License 1.0.0.
+
+Please include the following notice when redistributing this project:
+
+> **Developer:** Darexsh by Daniel Sichler. Licensed under PolyForm Noncommercial License 1.0.0. See `LICENSE` for details.
+
+The full license is available in the [LICENSE](LICENSE) file.
 
 * * *
 
