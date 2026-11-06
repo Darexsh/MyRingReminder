@@ -86,6 +86,7 @@ It combines cycle timing, reminders, period tracking during the ring-free window
 * **App Lock**: Optional biometric or device-credential protection with configurable auto-lock delay.
 * **App Updates**: Check for new releases inside the app, review version details, download the APK, and start installation directly from the update flow.
 * **Privacy Policy**: Read the latest policy in a scrollable in-app dialog from **Settings → App info**. The app fetches the translation matching its selected language and keeps a separate copy of each language available offline.
+* **License**: Read the current project license in a formatted in-app dialog from **Settings → App info**. The license is fetched from the repository and cached for offline viewing.
 * **Package Leaflets**: Open ring leaflet links from Settings. The app automatically opens a leaflet in the app language when one is available. If the selected ring has no leaflet in that language, the app can offer a configured reference leaflet alongside the ring's available leaflet. A reference may share the active ingredients and release rate, but it does not replace the leaflet supplied with the user's ring.
 * **Welcome Tour**: A restartable first-run guided tour introduces the key screens and controls.
 * **App Animations**: Choose a preferred global transition style for tab changes and screen openings.
@@ -255,7 +256,7 @@ An overview of the current visual experience across the app:
 * **Notifications**: Used for cycle reminders and required on newer Android versions where notification permission must be granted explicitly.
 * **Exact Alarms**: Used to schedule precise reminder notifications.
 * **Biometric / Device Credential**: Used for optional app lock authentication.
-* **Internet**: Used to check GitHub release information, load remote package leaflet links, and fetch the privacy policy for in-app viewing.
+* **Internet**: Used to check GitHub release information, load remote package leaflet links, and fetch the privacy policy and project license for in-app viewing.
 * **Install Packages**: Used to hand off a downloaded update APK to Android's package installer when using the in-app update flow.
 
 * * *
@@ -267,6 +268,7 @@ An overview of the current visual experience across the app:
 * Local app state such as settings, notes, cycle history, period tracking, and special-case flags is stored in **SharedPreferences**.
 * In-app update checks use the public **GitHub Releases API**, and downloaded APK installation is handed off to Android's package installer.
 * The in-app privacy policy is fetched from `privacy-policy/<language>.md` when opened. Available translations are English, German, Spanish, French, Italian, Polish, Brazilian Portuguese, Russian, Turkish, and Chinese. Each language is cached separately for offline viewing; English is used when the app language has no translation.
+* The project license is fetched from the repository-root `LICENSE` file when opened from **Settings → App info** and cached for offline viewing.
 * Package leaflet links are loaded from the repository-root `leaflet-packages.json` file and the last valid configuration is cached locally. Each `links` object uses language codes as keys, such as `de` or `en`, and HTTP(S) URLs as values; the app selects a matching language automatically. An optional `referenceLeafletId` points to another entry to offer when the selected ring has no leaflet in the app language. Only use a reference for rings with matching active ingredients and release rates; the app labels it as a reference and reminds users to follow their own ring's leaflet. Updating the file on the `main` branch changes the links without requiring an app release.
 * Notifications are implemented with **BroadcastReceiver** and **NotificationManagerCompat**.
 * Period reports are generated locally with **PdfDocument** and exported through Android's document picker API, including grouped summary cards, multi-column day cards, and a larger notes section.
@@ -284,15 +286,11 @@ An overview of the current visual experience across the app:
 
 ## 📜 License
 
-This project is licensed under the **Non-Commercial Software License (MIT-style) v1.0** and was developed as an educational project. You are free to use, modify, and distribute the code for **non-commercial purposes only**, and must credit the author:
+This project is licensed under the [PolyForm Noncommercial License 1.0.0](https://polyformproject.org/licenses/noncommercial/1.0.0). You may use, modify, and distribute the software for noncommercial purposes under the license terms. Commercial use requires separate permission from the copyright holder.
 
-**Copyright (c) 2025 Darexsh by Daniel Sichler**
+**Required notice:** Copyright (c) 2025–2026 Daniel Sichler (Darexsh)
 
-Please include the following notice with any use or distribution:
-
-> Developed by Daniel Sichler aka Darexsh. Licensed under the Non-Commercial Software License (MIT-style) v1.0. See `LICENSE` for details.
-
-The full license is available in the [LICENSE](LICENSE) file.
+Anyone distributing any part of this software must include a copy of the license or its URL and the required copyright notice. See the [LICENSE](LICENSE) file for the full terms.
 
 * * *
 

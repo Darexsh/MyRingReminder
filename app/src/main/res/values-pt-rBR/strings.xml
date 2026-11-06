@@ -10,6 +10,12 @@
     <string name="app_info_name">MyRingReminder</string>
     <string name="app_info_open_coffee">Apoiar o desenvolvimento</string>
     <string name="app_info_open_privacy">Política de Privacidade</string>
+    <string name="app_info_open_license">Licença</string>
+    <string name="app_info_license_language_note">O texto da licença está disponível em inglês.</string>
+    <string name="app_info_license_loading">Carregando a licença…</string>
+    <string name="app_info_license_load_failed">Não foi possível carregar a licença. Verifique sua conexão com a internet e tente novamente.</string>
+    <string name="app_info_license_cached">Não foi possível atualizar a licença. Exibindo a última cópia salva.</string>
+    <string name="app_info_license_retry">Tentar novamente</string>
     <string name="app_info_privacy_language_note">Esta política é exibida no idioma selecionado do aplicativo.</string>
     <string name="app_info_privacy_english_fallback_note">Não há tradução disponível para este idioma do aplicativo. A política em inglês será exibida.</string>
     <string name="app_info_privacy_last_updated">Última atualização: %1$s</string>

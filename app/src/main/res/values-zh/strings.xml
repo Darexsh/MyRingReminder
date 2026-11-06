@@ -10,6 +10,12 @@
     <string name="app_info_name">MyRingReminder</string>
     <string name="app_info_open_coffee">支持开发</string>
     <string name="app_info_open_privacy">隐私政策</string>
+    <string name="app_info_open_license">许可证</string>
+    <string name="app_info_license_language_note">许可证文本以英文提供。</string>
+    <string name="app_info_license_loading">正在加载许可证…</string>
+    <string name="app_info_license_load_failed">无法加载许可证。请检查网络连接后重试。</string>
+    <string name="app_info_license_cached">无法更新许可证，现显示上次保存的版本。</string>
+    <string name="app_info_license_retry">重试</string>
     <string name="app_info_privacy_language_note">隐私政策将以当前应用语言显示。</string>
     <string name="app_info_privacy_english_fallback_note">目前没有此应用语言的翻译，现显示英文版隐私政策。</string>
     <string name="app_info_privacy_last_updated">最后更新：%1$s</string>

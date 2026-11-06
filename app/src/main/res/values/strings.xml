@@ -10,6 +10,12 @@
     <string name="app_info_name">MyRingReminder</string>
     <string name="app_info_open_coffee">Support development</string>
     <string name="app_info_open_privacy">Privacy Policy</string>
+    <string name="app_info_open_license">License</string>
+    <string name="app_info_license_language_note">The license text is provided in English.</string>
+    <string name="app_info_license_loading">Loading license…</string>
+    <string name="app_info_license_load_failed">Could not load the license. Check your internet connection and try again.</string>
+    <string name="app_info_license_cached">Could not refresh the license. Showing the last saved copy.</string>
+    <string name="app_info_license_retry">Retry</string>
     <string name="app_info_privacy_language_note">This policy is shown in the selected app language.</string>
     <string name="app_info_privacy_english_fallback_note">A translation for this app language is not available. The English policy is shown.</string>
     <string name="app_info_privacy_last_updated">Last updated: %1$s</string>

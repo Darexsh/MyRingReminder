@@ -178,6 +178,26 @@
             app:strokeWidth="1dp" />
 
         <com.google.android.material.button.MaterialButton
+            android:id="@+id/btn_open_license"
+            style="@style/Widget.MaterialComponents.Button.OutlinedButton"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="10dp"
+            android:text="@string/app_info_open_license"
+            android:textAllCaps="false"
+            android:textColor="?attr/colorOnBackground"
+            android:textSize="14sp"
+            app:backgroundTint="@android:color/transparent"
+            app:cornerRadius="12dp"
+            app:icon="@android:drawable/ic_menu_info_details"
+            app:iconGravity="textStart"
+            app:iconPadding="8dp"
+            app:iconSize="18dp"
+            app:iconTint="?attr/colorOnBackground"
+            app:strokeColor="@color/app_info_secondary_action_stroke"
+            app:strokeWidth="1dp" />
+
+        <com.google.android.material.button.MaterialButton
             android:id="@+id/btn_open_coffee"
             style="@style/Widget.MaterialComponents.Button"
             android:layout_width="match_parent"

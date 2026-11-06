@@ -139,6 +139,9 @@ public class SettingsFragment extends Fragment {
     private static final String PRIVACY_POLICY_URL = "https://raw.githubusercontent.com/Darexsh/MyRingReminder/main/privacy-policy/";
     private static final String PRIVACY_POLICY_PREFS = "privacy_policy_cache";
     private static final String PRIVACY_POLICY_LEGACY_CACHE_KEY = "markdown";
+    private static final String LICENSE_URL = "https://raw.githubusercontent.com/Darexsh/MyRingReminder/main/LICENSE";
+    private static final String LICENSE_PREFS = "license_cache";
+    private static final String LICENSE_CACHE_KEY = "markdown";
     private File pendingApkFile;
     private AlertDialog downloadDialog;
     private ProgressBar downloadProgressBar;
@@ -151,10 +154,11 @@ public class SettingsFragment extends Fragment {
     private View stockToolsDialogView;
     private AlertDialog ringUsePauseDialog;
     private AlertDialog packageLeafletLoadingDialog;
-    private AlertDialog privacyPolicyLoadingDialog;
+    private AlertDialog legalDocumentLoadingDialog;
     private boolean isLoadingPackageLeaflets;
     private int packageLeafletRequestId;
     private int privacyPolicyRequestId;
+    private int licenseRequestId;
     private final List<ValueAnimator> notificationWarningAnimators = new ArrayList<>();
     private final List<TextView> settingsAccentTextViews = new ArrayList<>();
     private boolean continueUpdateInstallAfterBackup = false;
@@ -3451,6 +3455,7 @@ public class SettingsFragment extends Fragment {
         com.google.android.material.button.MaterialButton openTelegramBot = content.findViewById(R.id.btn_open_telegram_bot);
         com.google.android.material.button.MaterialButton openGithubProfile = content.findViewById(R.id.btn_open_github_profile);
         com.google.android.material.button.MaterialButton openPrivacy = content.findViewById(R.id.btn_open_privacy);
+        com.google.android.material.button.MaterialButton openLicense = content.findViewById(R.id.btn_open_license);
         com.google.android.material.button.MaterialButton openCoffee = content.findViewById(R.id.btn_open_coffee);
         Integer buttonColor = viewModel.getButtonColor().getValue();
         if (buttonColor != null) {
@@ -3496,6 +3501,7 @@ public class SettingsFragment extends Fragment {
         });
 
         openPrivacy.setOnClickListener(v -> loadPrivacyPolicy());
+        openLicense.setOnClickListener(v -> loadLicense());
 
         openCoffee.setOnClickListener(v -> {
             Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse("https://buymeacoffee.com/darexsh"));
@@ -3514,7 +3520,7 @@ public class SettingsFragment extends Fragment {
     }
 
     private void loadPrivacyPolicy() {
-        if (!isAdded() || privacyPolicyLoadingDialog != null) {
+        if (!isAdded() || legalDocumentLoadingDialog != null) {
             return;
         }
 
@@ -3558,7 +3564,7 @@ public class SettingsFragment extends Fragment {
                 if (requestId != privacyPolicyRequestId) {
                     return;
                 }
-                dismissPrivacyPolicyLoadingDialog();
+                dismissLegalDocumentLoadingDialog();
                 if (!isAdded() || getView() == null) {
                     return;
                 }
@@ -3573,6 +3579,49 @@ public class SettingsFragment extends Fragment {
                 showPrivacyPolicyDialog(finalMarkdown, finalEnglishFallback);
             });
         }, "privacy-policy-fetch").start();
+    }
+
+    private void loadLicense() {
+        if (!isAdded() || legalDocumentLoadingDialog != null) {
+            return;
+        }
+
+        int requestId = ++licenseRequestId;
+        showLicenseLoadingDialog();
+        Context appContext = requireContext().getApplicationContext();
+
+        new Thread(() -> {
+            String markdown = null;
+            boolean fromCache = false;
+            try {
+                markdown = fetchMarkdownDocument(LICENSE_URL, "License request failed");
+                cacheLicense(appContext, markdown);
+            } catch (Exception networkError) {
+                markdown = readCachedLicense(appContext);
+                fromCache = markdown != null;
+            }
+
+            String finalMarkdown = markdown;
+            boolean finalFromCache = fromCache;
+            MAIN_HANDLER.post(() -> {
+                if (requestId != licenseRequestId) {
+                    return;
+                }
+                dismissLegalDocumentLoadingDialog();
+                if (!isAdded() || getView() == null) {
+                    return;
+                }
+                if (finalMarkdown == null || finalMarkdown.trim().isEmpty()) {
+                    showLicenseLoadError();
+                    return;
+                }
+                if (finalFromCache) {
+                    Toast.makeText(requireContext(), R.string.app_info_license_cached,
+                            Toast.LENGTH_LONG).show();
+                }
+                showLicenseDialog(finalMarkdown);
+            });
+        }, "license-fetch").start();
     }
 
     @Nullable
@@ -3618,6 +3667,19 @@ public class SettingsFragment extends Fragment {
                 .apply();
     }
 
+    private void cacheLicense(@NonNull Context context, @NonNull String markdown) {
+        context.getSharedPreferences(LICENSE_PREFS, Context.MODE_PRIVATE)
+                .edit()
+                .putString(LICENSE_CACHE_KEY, markdown)
+                .apply();
+    }
+
+    @Nullable
+    private String readCachedLicense(@NonNull Context context) {
+        return context.getSharedPreferences(LICENSE_PREFS, Context.MODE_PRIVATE)
+                .getString(LICENSE_CACHE_KEY, null);
+    }
+
     @Nullable
     private String readCachedPrivacyPolicy(@NonNull Context context, @NonNull String language) {
         android.content.SharedPreferences preferences = context.getSharedPreferences(
@@ -3630,9 +3692,15 @@ public class SettingsFragment extends Fragment {
     }
 
     private String fetchPrivacyPolicy(@NonNull String language) throws IOException {
+        return fetchMarkdownDocument(PRIVACY_POLICY_URL + language + ".md",
+                "Privacy policy request failed");
+    }
+
+    private String fetchMarkdownDocument(@NonNull String url,
+                                         @NonNull String requestFailureMessage) throws IOException {
         HttpURLConnection connection = null;
         try {
-            connection = (HttpURLConnection) new URL(PRIVACY_POLICY_URL + language + ".md").openConnection();
+            connection = (HttpURLConnection) new URL(url).openConnection();
             connection.setConnectTimeout(10000);
             connection.setReadTimeout(15000);
             connection.setUseCaches(false);
@@ -3640,7 +3708,7 @@ public class SettingsFragment extends Fragment {
             connection.setRequestProperty("Cache-Control", "no-cache");
             connection.setRequestProperty("User-Agent", "MyRingReminder-App");
             if (connection.getResponseCode() != HttpURLConnection.HTTP_OK) {
-                throw new IOException("Privacy policy request failed");
+                throw new IOException(requestFailureMessage);
             }
 
             StringBuilder body = new StringBuilder();
@@ -3650,7 +3718,7 @@ public class SettingsFragment extends Fragment {
                 while ((line = reader.readLine()) != null) {
                     body.append(line).append('\n');
                     if (body.length() > 512_000) {
-                        throw new IOException("Privacy policy is too large");
+                        throw new IOException("Document is too large");
                     }
                 }
             }
@@ -3663,6 +3731,16 @@ public class SettingsFragment extends Fragment {
     }
 
     private void showPrivacyPolicyLoadingDialog() {
+        showLegalDocumentLoadingDialog(R.string.app_info_open_privacy,
+                R.string.app_info_privacy_loading);
+    }
+
+    private void showLicenseLoadingDialog() {
+        showLegalDocumentLoadingDialog(R.string.app_info_open_license,
+                R.string.app_info_license_loading);
+    }
+
+    private void showLegalDocumentLoadingDialog(int titleResId, int messageResId) {
         int padding = dpToPx(20);
         LinearLayout content = new LinearLayout(requireContext());
         content.setGravity(Gravity.CENTER_VERTICAL);
@@ -3673,24 +3751,24 @@ public class SettingsFragment extends Fragment {
         content.addView(progressBar, new LinearLayout.LayoutParams(dpToPx(32), dpToPx(32)));
 
         TextView message = new TextView(requireContext());
-        message.setText(R.string.app_info_privacy_loading);
+        message.setText(messageResId);
         message.setPadding(dpToPx(16), 0, 0, 0);
         content.addView(message, new LinearLayout.LayoutParams(
                 ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT));
 
-        privacyPolicyLoadingDialog = new AlertDialog.Builder(requireContext())
-                .setTitle(R.string.app_info_open_privacy)
+        legalDocumentLoadingDialog = new AlertDialog.Builder(requireContext())
+                .setTitle(titleResId)
                 .setView(content)
                 .setCancelable(false)
                 .create();
-        privacyPolicyLoadingDialog.show();
-        applyDialogButtonColors(privacyPolicyLoadingDialog);
+        legalDocumentLoadingDialog.show();
+        applyDialogButtonColors(legalDocumentLoadingDialog);
     }
 
-    private void dismissPrivacyPolicyLoadingDialog() {
-        if (privacyPolicyLoadingDialog != null) {
-            privacyPolicyLoadingDialog.dismiss();
-            privacyPolicyLoadingDialog = null;
+    private void dismissLegalDocumentLoadingDialog() {
+        if (legalDocumentLoadingDialog != null) {
+            legalDocumentLoadingDialog.dismiss();
+            legalDocumentLoadingDialog = null;
         }
     }
 
@@ -3705,7 +3783,35 @@ public class SettingsFragment extends Fragment {
         applyDialogButtonColors(dialog);
     }
 
+    private void showLicenseLoadError() {
+        AlertDialog dialog = new AlertDialog.Builder(requireContext())
+                .setTitle(R.string.app_info_open_license)
+                .setMessage(R.string.app_info_license_load_failed)
+                .setPositiveButton(R.string.app_info_license_retry,
+                        (d, which) -> loadLicense())
+                .setNegativeButton(R.string.dialog_cancel, null)
+                .show();
+        applyDialogButtonColors(dialog);
+    }
+
     private void showPrivacyPolicyDialog(@NonNull String markdown, boolean englishFallback) {
+        int languageNoteResId = englishFallback
+                ? R.string.app_info_privacy_english_fallback_note
+                : R.string.app_info_privacy_language_note;
+        showLegalDocumentDialog(markdown, R.string.app_info_open_privacy,
+                languageNoteResId, R.string.app_info_privacy_last_updated, true);
+    }
+
+    private void showLicenseDialog(@NonNull String markdown) {
+        showLegalDocumentDialog(markdown, R.string.app_info_open_license,
+                R.string.app_info_license_language_note, 0, false);
+    }
+
+    private void showLegalDocumentDialog(@NonNull String markdown,
+                                        int titleResId,
+                                        int languageNoteResId,
+                                        int lastUpdatedFormatResId,
+                                        boolean showLastUpdated) {
         View content = LayoutInflater.from(requireContext())
                 .inflate(R.layout.dialog_privacy_policy, null, false);
         ScrollView scrollView = content.findViewById(R.id.scroll_privacy_policy);
@@ -3713,7 +3819,7 @@ public class SettingsFragment extends Fragment {
         TextView lastUpdated = content.findViewById(R.id.tv_privacy_policy_last_updated);
         LinearLayout sectionsContainer = content.findViewById(R.id.ll_privacy_policy_sections);
 
-        PrivacyPolicyDocument document = parsePrivacyPolicyMarkdown(markdown);
+        PrivacyPolicyDocument document = parsePrivacyPolicyMarkdown(markdown, titleResId);
         Integer buttonColor = viewModel != null ? viewModel.getButtonColor().getValue() : null;
         int accentColor = buttonColor != null
                 ? buttonColor
@@ -3721,14 +3827,12 @@ public class SettingsFragment extends Fragment {
         int surfaceColor = MaterialColors.getColor(content, com.google.android.material.R.attr.colorSurface);
         int onSurfaceColor = MaterialColors.getColor(content, com.google.android.material.R.attr.colorOnSurface);
 
-        languageNote.setText(englishFallback
-                ? R.string.app_info_privacy_english_fallback_note
-                : R.string.app_info_privacy_language_note);
+        languageNote.setText(languageNoteResId);
         languageNote.setTextColor(accentColor);
-        if (document.lastUpdated.isEmpty()) {
+        if (!showLastUpdated || document.lastUpdated.isEmpty()) {
             lastUpdated.setVisibility(View.GONE);
         } else {
-            lastUpdated.setText(getString(R.string.app_info_privacy_last_updated,
+            lastUpdated.setText(getString(lastUpdatedFormatResId,
                     document.lastUpdated));
             lastUpdated.setTextColor(ColorUtils.setAlphaComponent(onSurfaceColor, 190));
         }
@@ -3749,7 +3853,7 @@ public class SettingsFragment extends Fragment {
                 ViewGroup.LayoutParams.MATCH_PARENT, maxHeight));
 
         AlertDialog dialog = new AlertDialog.Builder(requireContext())
-                .setTitle(R.string.app_info_open_privacy)
+                .setTitle(titleResId)
                 .setView(content)
                 .setPositiveButton(R.string.dialog_ok, null)
                 .show();
@@ -3759,7 +3863,8 @@ public class SettingsFragment extends Fragment {
         applyDialogButtonColors(dialog);
     }
 
-    private PrivacyPolicyDocument parsePrivacyPolicyMarkdown(@NonNull String markdown) {
+    private PrivacyPolicyDocument parsePrivacyPolicyMarkdown(@NonNull String markdown,
+                                                             int defaultSectionTitleResId) {
         PrivacyPolicyDocument document = new PrivacyPolicyDocument();
         PrivacyPolicySection currentSection = null;
         StringBuilder paragraph = new StringBuilder();
@@ -3768,6 +3873,10 @@ public class SettingsFragment extends Fragment {
             if (line.isEmpty()) {
                 appendPrivacyParagraph(currentSection, paragraph);
                 continue;
+            }
+
+            if (line.startsWith("> ")) {
+                line = line.substring(2).trim();
             }
 
             if (line.startsWith("# ")) {
@@ -3787,7 +3896,7 @@ public class SettingsFragment extends Fragment {
             }
 
             if (currentSection == null) {
-                currentSection = new PrivacyPolicySection(getString(R.string.app_info_open_privacy));
+                currentSection = new PrivacyPolicySection(getString(defaultSectionTitleResId));
                 document.sections.add(currentSection);
             }
 
@@ -3946,8 +4055,10 @@ public class SettingsFragment extends Fragment {
                 .replace("<", "&lt;")
                 .replace(">", "&gt;")
                 .replace("\"", "&quot;");
+        escaped = escaped.replaceAll("\\*\\*\\*(.+?)\\*\\*\\*", "<b><i>$1</i></b>");
         escaped = escaped.replaceAll("\\*\\*(.+?)\\*\\*", "<b>$1</b>");
-        return escaped.replaceAll("`([^`]+)`", "<tt>$1</tt>");
+        escaped = escaped.replaceAll("`([^`]+)`", "<tt>$1</tt>");
+        return escaped.replaceAll("\\[([^\\]]+)]\\([^)]+\\)", "$1");
     }
 
     private void resetAppData() {
@@ -4923,7 +5034,8 @@ public class SettingsFragment extends Fragment {
         dismissPackageLeafletLoadingDialog();
         isLoadingPackageLeaflets = false;
         privacyPolicyRequestId++;
-        dismissPrivacyPolicyLoadingDialog();
+        licenseRequestId++;
+        dismissLegalDocumentLoadingDialog();
         super.onDestroyView();
     }
 
