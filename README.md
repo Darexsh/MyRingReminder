@@ -11,7 +11,7 @@
 </a> 
 
 ![Projekt-Status](https://img.shields.io/badge/Status-Aktiv-brightgreen)
-![License](https://img.shields.io/badge/License-NonCommercial-blue)
+[![License: PolyForm Noncommercial 1.0.0](https://img.shields.io/badge/License-PolyForm%20Noncommercial%201.0.0-blue)](LICENSE)
 ![Version](https://img.shields.io/badge/Version-1.4-orange)
 
 [![Telegram Bot](https://img.shields.io/badge/Telegram-Bot-2AABEE?logo=telegram&logoColor=white)](https://t.me/darexsh_bot)
