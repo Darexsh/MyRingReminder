@@ -767,6 +767,13 @@
     <string name="welcome_skip_tour">Pas maintenant</string>
     <string name="welcome_start_tour">Démarrer la visite</string>
     <string name="welcome_subtitle">MyRingReminder</string>
+    <string name="initial_setup_back">Retour</string>
+    <string name="initial_setup_continue">Continuer</string>
+    <string name="initial_setup_hint">Choisissez la date et l’heure d’insertion ainsi que la durée du cycle. Vous pourrez modifier ces réglages plus tard.</string>
+    <string name="initial_setup_enable_reminders">Activer les rappels</string>
+    <string name="initial_setup_permissions_intro">Autorisez les accès indiqués ci-dessous pour que les rappels de l’anneau s’affichent à l’heure. Android vous guidera à chaque étape.</string>
+    <string name="initial_setup_reminders_title">Fiabilisez les rappels</string>
+    <string name="initial_setup_title">Configurez votre cycle d’anneau</string>
     <string name="welcome_title">Bienvenue 👋</string>
     <string name="period_details_pdf_notification_channel_name">Exports PDF</string>
     <string name="period_details_pdf_notification_channel_desc">Notifications pour les PDF de détails de période enregistrés.</string>

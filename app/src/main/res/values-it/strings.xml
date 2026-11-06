@@ -767,6 +767,13 @@
     <string name="welcome_skip_tour">Non ora</string>
     <string name="welcome_start_tour">Inizia tour</string>
     <string name="welcome_subtitle">MyRingReminder</string>
+    <string name="initial_setup_back">Indietro</string>
+    <string name="initial_setup_continue">Continua</string>
+    <string name="initial_setup_hint">Scegli la data e l’ora di inserimento e la durata del ciclo. Potrai modificarle in seguito nelle Impostazioni.</string>
+    <string name="initial_setup_enable_reminders">Attiva i promemoria</string>
+    <string name="initial_setup_permissions_intro">Consenti gli accessi indicati qui sotto per ricevere i promemoria dell’anello al momento giusto. Android ti guiderà nei passaggi necessari.</string>
+    <string name="initial_setup_reminders_title">Rendi affidabili i promemoria</string>
+    <string name="initial_setup_title">Configura il ciclo dell’anello</string>
     <string name="welcome_title">Benvenuto 👋</string>
     <string name="period_details_pdf_notification_channel_name">Esportazioni PDF</string>
     <string name="period_details_pdf_notification_channel_desc">Notifiche per i PDF dei dettagli ciclo salvati.</string>

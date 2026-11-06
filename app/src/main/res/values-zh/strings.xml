@@ -766,6 +766,13 @@
     <string name="welcome_skip_tour">以后再说</string>
     <string name="welcome_start_tour">开始向导</string>
     <string name="welcome_subtitle">MyRingReminder</string>
+    <string name="initial_setup_back">返回</string>
+    <string name="initial_setup_continue">继续</string>
+    <string name="initial_setup_hint">选择置入日期、时间和周期长度。之后可以在设置中修改。</string>
+    <string name="initial_setup_enable_reminders">启用提醒</string>
+    <string name="initial_setup_permissions_intro">允许下方所需的访问权限，环形避孕器提醒才能按时显示。Android 会引导你完成必要步骤。</string>
+    <string name="initial_setup_reminders_title">确保提醒准时送达</string>
+    <string name="initial_setup_title">设置阴道环周期</string>
     <string name="welcome_title">欢迎使用 👋</string>
     <string name="period_details_pdf_notification_channel_name">PDF 导出</string>
     <string name="period_details_pdf_notification_channel_desc">已保存经期详情 PDF 的通知。</string>

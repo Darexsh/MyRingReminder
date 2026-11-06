@@ -1,6 +1,7 @@
 package com.darexsh.myringreminder;
 
 import android.Manifest;
+import android.app.AlarmManager;
 import android.app.NotificationChannel;
 import android.app.NotificationManager;
 import android.content.Intent;
@@ -19,6 +20,8 @@ import android.graphics.Shader;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
+import android.text.format.DateFormat;
+import android.widget.TextView;
 import android.widget.Toast;
 import androidx.activity.OnBackPressedCallback;
 import androidx.annotation.NonNull;
@@ -36,17 +39,24 @@ import androidx.fragment.app.FragmentTransaction;
 import androidx.lifecycle.Lifecycle;
 import androidx.lifecycle.ViewModelProvider;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
+import com.google.android.material.datepicker.MaterialDatePicker;
+import com.google.android.material.timepicker.MaterialTimePicker;
+import com.google.android.material.timepicker.TimeFormat;
 import com.jakewharton.threetenabp.AndroidThreeTen;
 import android.view.View;
 import android.view.ViewPropertyAnimator;
 import android.view.ViewGroup;
 import android.view.animation.PathInterpolator;
+import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.ImageButton;
 import android.widget.ScrollView;
 import com.google.android.material.button.MaterialButton;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.List;
+import java.util.Locale;
+import java.util.TimeZone;
 import android.util.Log;
 import java.util.concurrent.Executor;
 
@@ -65,6 +75,7 @@ public class MainActivity extends AppCompatActivity {
     private static final String KEY_LAST_VERSION = "last_version";
     private static final String KEY_TOUR_SHOWN = "tour_shown";
     private static final String KEY_WELCOME_SHOWN = "welcome_shown";
+    private static final String KEY_INITIAL_CYCLE_SETUP_COMPLETED = "initial_cycle_setup_completed";
     private static final String KEY_APP_LOCK_LAST_BACKGROUND_AT = "app_lock_last_background_at";
     private static final long BACK_PRESS_WINDOW_MS = 2000;
     private static final long NAVIGATION_ANIMATION_DURATION_MS = 200L;
@@ -92,6 +103,19 @@ public class MainActivity extends AppCompatActivity {
     private boolean openUpdateBackupOnNextSettings = false;
     private boolean openStockTrackerOnNextSettings = false;
     private boolean startupUpdateCheckConsumed = false;
+    private View initialCycleSetupContent;
+    private View firstRunWizardOverlay;
+    private ViewGroup firstRunWizardHost;
+    private boolean firstRunWizardWelcomeScreen;
+    private int originalStatusBarColor;
+    private int originalNavigationBarColor;
+    private boolean originalSystemBarColorsSaved;
+    private Calendar initialCycleSetupStartDate;
+    private int initialCycleSetupLength;
+    private int initialCycleSetupStep;
+    private int initialCycleSetupDirection = 1;
+    private boolean initialSetupPermissionFlowPending;
+    private boolean awaitingInitialExactAlarmSettings;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -102,6 +126,11 @@ public class MainActivity extends AppCompatActivity {
 
         prefs = getSharedPreferences(PREFS_NAME, MODE_PRIVATE);
         int lastVersion = prefs.getInt(KEY_LAST_VERSION, -1);
+        if (!prefs.contains(KEY_INITIAL_CYCLE_SETUP_COMPLETED)) {
+            // Existing installs already have cycle settings; only new installs should see setup.
+            boolean existingInstall = lastVersion >= 0 || prefs.getBoolean(KEY_WELCOME_SHOWN, false);
+            prefs.edit().putBoolean(KEY_INITIAL_CYCLE_SETUP_COMPLETED, existingInstall).apply();
+        }
 
         try {
             int currentVersion = getPackageManager()
@@ -242,6 +271,18 @@ public class MainActivity extends AppCompatActivity {
         getOnBackPressedDispatcher().addCallback(this, new OnBackPressedCallback(true) {
             @Override
             public void handleOnBackPressed() {
+                if (firstRunWizardOverlay != null) {
+                    if (initialCycleSetupContent != null) {
+                        if (initialCycleSetupStep > 0) {
+                            initialCycleSetupDirection = -1;
+                            initialCycleSetupStep--;
+                            updateInitialCycleSetupPage(true);
+                        } else {
+                            closeInitialCycleSetupAndReturnToWelcome();
+                        }
+                    }
+                    return;
+                }
                 Fragment currentFragment = getVisibleFragment();
                 if (!(currentFragment instanceof HomeFragment)) {
                     fragmentManager.popBackStackImmediate(null, FragmentManager.POP_BACK_STACK_INCLUSIVE);
@@ -264,9 +305,8 @@ public class MainActivity extends AppCompatActivity {
 
         handleLaunchIntent(getIntent());
 
-        // Create notification channel and request permission
+        // Create the notification channel before scheduling reminder jobs.
         createNotificationChannel();
-        requestNotificationPermission();
         ReminderScheduler.scheduleCurrentCycle(this);
         StockManager.syncCurrentCycle(this, viewModel.getRepository());
         viewModel.refreshStockState();
@@ -480,6 +520,10 @@ public class MainActivity extends AppCompatActivity {
         if (viewModel != null) {
             StockManager.syncCurrentCycle(this, viewModel.getRepository());
             viewModel.refreshStockState();
+        }
+        if (awaitingInitialExactAlarmSettings) {
+            awaitingInitialExactAlarmSettings = false;
+            finishInitialCycleSetup();
         }
     }
 
@@ -974,6 +1018,9 @@ public class MainActivity extends AppCompatActivity {
             maybeStartGuidedTour();
             return;
         }
+        if (firstRunWizardOverlay != null && firstRunWizardWelcomeScreen) {
+            return;
+        }
 
         View content = getLayoutInflater().inflate(R.layout.dialog_welcome, null);
         MaterialButton startButton = content.findViewById(R.id.welcome_start);
@@ -981,34 +1028,362 @@ public class MainActivity extends AppCompatActivity {
         Integer buttonColor = viewModel.getButtonColor().getValue();
         if (buttonColor != null) {
             ButtonColorHelper.applyPrimaryColor(startButton, buttonColor);
-            ButtonColorHelper.applyPrimaryColor(skipButton, buttonColor);
             startButton.setTextColor(Color.WHITE);
-            skipButton.setTextColor(Color.WHITE);
-        }
-
-        AlertDialog dialog = new AlertDialog.Builder(this)
-                .setView(content)
-                .setCancelable(false)
-                .create();
-        if (dialog.getWindow() != null) {
-            dialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
         }
 
         startButton.setOnClickListener(v -> {
-            prefs.edit().putBoolean(KEY_WELCOME_SHOWN, true).apply();
-            dialog.dismiss();
-            maybeStartGuidedTour();
+            if (prefs.getBoolean(KEY_INITIAL_CYCLE_SETUP_COMPLETED, false)) {
+                prefs.edit().putBoolean(KEY_WELCOME_SHOWN, true).apply();
+                dismissFirstRunWizardScreen();
+                maybeStartGuidedTour();
+            } else {
+                startInitialCycleSetup();
+            }
         });
 
         skipButton.setOnClickListener(v -> {
             prefs.edit()
                     .putBoolean(KEY_WELCOME_SHOWN, true)
                     .putBoolean(KEY_TOUR_SHOWN, true)
+                    .putBoolean(KEY_INITIAL_CYCLE_SETUP_COMPLETED, true)
                     .apply();
-            dialog.dismiss();
+            dismissFirstRunWizardScreen();
         });
 
-        dialog.show();
+        showFirstRunWizardScreen(content);
+    }
+
+    private void showFirstRunWizardScreen(View screen) {
+        if (firstRunWizardHost == null) {
+            firstRunWizardHost = findViewById(android.R.id.content);
+        }
+        if (firstRunWizardHost == null || screen == null) {
+            return;
+        }
+        if (!originalSystemBarColorsSaved) {
+            originalStatusBarColor = getWindow().getStatusBarColor();
+            originalNavigationBarColor = getWindow().getNavigationBarColor();
+            originalSystemBarColorsSaved = true;
+        }
+        if (firstRunWizardOverlay != null) {
+            firstRunWizardHost.removeView(firstRunWizardOverlay);
+        }
+        firstRunWizardOverlay = screen;
+        firstRunWizardWelcomeScreen = screen.findViewById(R.id.welcome_start) != null;
+        firstRunWizardHost.addView(screen, new FrameLayout.LayoutParams(
+                ViewGroup.LayoutParams.MATCH_PARENT,
+                ViewGroup.LayoutParams.MATCH_PARENT));
+        screen.setFocusableInTouchMode(true);
+        screen.requestFocus();
+        screen.bringToFront();
+        getWindow().setStatusBarColor(Color.rgb(11, 14, 21));
+        getWindow().setNavigationBarColor(Color.rgb(11, 14, 21));
+    }
+
+    private void dismissFirstRunWizardScreen() {
+        if (firstRunWizardOverlay != null && firstRunWizardHost != null) {
+            firstRunWizardHost.removeView(firstRunWizardOverlay);
+        }
+        firstRunWizardOverlay = null;
+        firstRunWizardWelcomeScreen = false;
+        if (originalSystemBarColorsSaved) {
+            getWindow().setStatusBarColor(originalStatusBarColor);
+            getWindow().setNavigationBarColor(originalNavigationBarColor);
+            originalSystemBarColorsSaved = false;
+        }
+    }
+
+    private void startInitialCycleSetup() {
+        Calendar currentStartDate = viewModel.getStartDate().getValue();
+        initialCycleSetupStartDate = currentStartDate != null
+                ? (Calendar) currentStartDate.clone()
+                : viewModel.getRepository().getStartDate();
+        Integer currentCycleLength = viewModel.getCycleLength().getValue();
+        initialCycleSetupLength = currentCycleLength != null ? currentCycleLength : 21;
+        initialCycleSetupStep = 0;
+
+        initialCycleSetupContent = getLayoutInflater().inflate(R.layout.dialog_initial_cycle_setup, null);
+        initialCycleSetupContent.findViewById(R.id.initial_setup_back).setOnClickListener(v -> {
+            if (initialCycleSetupStep > 0) {
+                initialCycleSetupDirection = -1;
+                initialCycleSetupStep--;
+                updateInitialCycleSetupPage(true);
+            } else {
+                closeInitialCycleSetupAndReturnToWelcome();
+            }
+        });
+        initialCycleSetupContent.findViewById(R.id.initial_setup_continue).setOnClickListener(v -> {
+            if (initialCycleSetupStep == 2) {
+                saveInitialCycleSettings();
+                if (hasReminderPermissionToRequest()) {
+                    initialCycleSetupDirection = 1;
+                    initialCycleSetupStep++;
+                    updateInitialCycleSetupPage(true);
+                } else {
+                    finishInitialCycleSetup();
+                }
+            } else if (initialCycleSetupStep < 3) {
+                initialCycleSetupDirection = 1;
+                initialCycleSetupStep++;
+                updateInitialCycleSetupPage(true);
+            } else if (initialCycleSetupStep == 3) {
+                beginInitialSetupPermissionFlow();
+            } else {
+                finishInitialCycleSetup();
+            }
+        });
+        initialCycleSetupContent.findViewById(R.id.initial_setup_value_card)
+                .setOnClickListener(v -> {
+                    if (initialCycleSetupStep == 0) {
+                        showInitialSetupDatePicker();
+                    } else if (initialCycleSetupStep == 1) {
+                        showInitialSetupTimePicker();
+                    }
+                });
+        initialCycleSetupContent.findViewById(R.id.initial_setup_cycle_minus)
+                .setOnClickListener(v -> {
+                    initialCycleSetupLength = Math.max(14, initialCycleSetupLength - 1);
+                    updateInitialCycleSetupPage(false);
+                });
+        initialCycleSetupContent.findViewById(R.id.initial_setup_cycle_plus)
+                .setOnClickListener(v -> {
+                    initialCycleSetupLength = Math.min(35, initialCycleSetupLength + 1);
+                    updateInitialCycleSetupPage(false);
+                });
+
+        updateInitialCycleSetupPage(false);
+        showFirstRunWizardScreen(initialCycleSetupContent);
+    }
+
+    private void updateInitialCycleSetupPage(boolean animate) {
+        if (initialCycleSetupContent == null) {
+            return;
+        }
+        View pageContent = initialCycleSetupContent.findViewById(R.id.initial_setup_page_content);
+        if (animate) {
+            pageContent.animate().cancel();
+            pageContent.setAlpha(0f);
+            float slideDistance = 18f * getResources().getDisplayMetrics().density;
+            pageContent.setTranslationX(initialCycleSetupDirection * slideDistance);
+        }
+
+        TextView step = initialCycleSetupContent.findViewById(R.id.initial_setup_step);
+        TextView fieldTitle = initialCycleSetupContent.findViewById(R.id.initial_setup_field_title);
+        TextView value = initialCycleSetupContent.findViewById(R.id.initial_setup_value);
+        TextView cycleValue = initialCycleSetupContent.findViewById(R.id.initial_setup_cycle_value);
+        View valueCard = initialCycleSetupContent.findViewById(R.id.initial_setup_value_card);
+        View cycleControls = initialCycleSetupContent.findViewById(R.id.initial_setup_cycle_controls);
+        View iconContainer = initialCycleSetupContent.findViewById(R.id.initial_setup_icon_container);
+        ImageView icon = initialCycleSetupContent.findViewById(R.id.initial_setup_icon);
+        MaterialButton continueButton = initialCycleSetupContent.findViewById(R.id.initial_setup_continue);
+        MaterialButton backButton = initialCycleSetupContent.findViewById(R.id.initial_setup_back);
+
+        step.setText(String.format(Locale.getDefault(), "%02d / 04", initialCycleSetupStep + 1));
+        int iconResource;
+        TextView headerTitle = initialCycleSetupContent.findViewById(R.id.initial_setup_header_title);
+        TextView headerHint = initialCycleSetupContent.findViewById(R.id.initial_setup_header_hint);
+        View permissionsPanel = initialCycleSetupContent.findViewById(R.id.initial_setup_permissions_panel);
+        if (initialCycleSetupStep == 0) {
+            headerTitle.setText(R.string.initial_setup_title);
+            headerHint.setText(R.string.initial_setup_hint);
+            fieldTitle.setText(R.string.settings_label_start_date);
+            value.setText(DateFormat.getDateFormat(this).format(initialCycleSetupStartDate.getTime()));
+            iconResource = R.drawable.ic_nav_calendar_outline;
+            valueCard.setVisibility(View.VISIBLE);
+            cycleControls.setVisibility(View.GONE);
+            permissionsPanel.setVisibility(View.GONE);
+        } else if (initialCycleSetupStep == 1) {
+            headerTitle.setText(R.string.initial_setup_title);
+            headerHint.setText(R.string.initial_setup_hint);
+            fieldTitle.setText(R.string.settings_label_time);
+            value.setText(DateFormat.getTimeFormat(this).format(initialCycleSetupStartDate.getTime()));
+            iconResource = R.drawable.ic_setup_clock;
+            valueCard.setVisibility(View.VISIBLE);
+            cycleControls.setVisibility(View.GONE);
+            permissionsPanel.setVisibility(View.GONE);
+        } else if (initialCycleSetupStep == 2) {
+            headerTitle.setText(R.string.initial_setup_title);
+            headerHint.setText(R.string.initial_setup_hint);
+            fieldTitle.setText(R.string.settings_label_cycle_length);
+            cycleValue.setText(getString(R.string.settings_cycle_length_value, initialCycleSetupLength));
+            iconResource = R.drawable.ic_nav_cycles_outline;
+            valueCard.setVisibility(View.GONE);
+            cycleControls.setVisibility(View.VISIBLE);
+            permissionsPanel.setVisibility(View.GONE);
+        } else {
+            headerTitle.setText(R.string.initial_setup_reminders_title);
+            headerHint.setText(R.string.initial_setup_permissions_intro);
+            iconResource = R.drawable.ic_setup_bell;
+            valueCard.setVisibility(View.GONE);
+            cycleControls.setVisibility(View.GONE);
+            fieldTitle.setVisibility(View.GONE);
+            permissionsPanel.setVisibility(View.VISIBLE);
+            updateInitialSetupPermissionRows();
+        }
+        if (initialCycleSetupStep < 3) {
+            fieldTitle.setVisibility(View.VISIBLE);
+        }
+        icon.setImageResource(iconResource);
+        continueButton.setText(initialCycleSetupStep == 3
+                ? R.string.initial_setup_enable_reminders
+                : R.string.initial_setup_continue);
+        backButton.setVisibility(View.VISIBLE);
+
+        int accentColor = viewModel.getButtonColor().getValue() != null
+                ? viewModel.getButtonColor().getValue()
+                : SettingsRepository.DEFAULT_BUTTON_COLOR;
+        ButtonColorHelper.applyPrimaryColor(continueButton, accentColor);
+        continueButton.setTextColor(Color.WHITE);
+        iconContainer.getBackground().mutate().setTint(accentColor);
+        for (int i = 0; i < 4; i++) {
+            View segment = initialCycleSetupContent.findViewById(
+                    i == 0 ? R.id.initial_setup_progress_1
+                            : i == 1 ? R.id.initial_setup_progress_2
+                            : i == 2 ? R.id.initial_setup_progress_3 : R.id.initial_setup_progress_4);
+            segment.getBackground().mutate().setTint(i <= initialCycleSetupStep
+                    ? accentColor
+                    : 0x42FFFFFF);
+        }
+
+        if (animate) {
+            pageContent.animate()
+                    .alpha(1f)
+                    .translationX(0f)
+                    .setDuration(190L)
+                    .start();
+        }
+    }
+
+    private void showInitialSetupDatePicker() {
+        Calendar utcDate = Calendar.getInstance(TimeZone.getTimeZone("UTC"));
+        utcDate.clear();
+        utcDate.set(initialCycleSetupStartDate.get(Calendar.YEAR),
+                initialCycleSetupStartDate.get(Calendar.MONTH),
+                initialCycleSetupStartDate.get(Calendar.DAY_OF_MONTH));
+        MaterialDatePicker<Long> datePicker = MaterialDatePicker.Builder.datePicker()
+                .setTitleText(R.string.settings_label_start_date)
+                .setSelection(utcDate.getTimeInMillis())
+                .build();
+        datePicker.addOnPositiveButtonClickListener(selection -> {
+            Calendar selectedUtcDate = Calendar.getInstance(TimeZone.getTimeZone("UTC"));
+            selectedUtcDate.setTimeInMillis(selection);
+            initialCycleSetupStartDate.set(
+                    selectedUtcDate.get(Calendar.YEAR),
+                    selectedUtcDate.get(Calendar.MONTH),
+                    selectedUtcDate.get(Calendar.DAY_OF_MONTH));
+            updateInitialCycleSetupPage(false);
+        });
+        datePicker.show(getSupportFragmentManager(), "initial_cycle_setup_date");
+    }
+
+    private void showInitialSetupTimePicker() {
+        MaterialTimePicker timePicker = new MaterialTimePicker.Builder()
+                .setTitleText(R.string.settings_label_time)
+                .setTimeFormat(DateFormat.is24HourFormat(this)
+                        ? TimeFormat.CLOCK_24H
+                        : TimeFormat.CLOCK_12H)
+                .setHour(initialCycleSetupStartDate.get(Calendar.HOUR_OF_DAY))
+                .setMinute(initialCycleSetupStartDate.get(Calendar.MINUTE))
+                .build();
+        timePicker.addOnPositiveButtonClickListener(view -> {
+            initialCycleSetupStartDate.set(Calendar.HOUR_OF_DAY, timePicker.getHour());
+            initialCycleSetupStartDate.set(Calendar.MINUTE, timePicker.getMinute());
+            updateInitialCycleSetupPage(false);
+        });
+        timePicker.show(getSupportFragmentManager(), "initial_cycle_setup_time");
+    }
+
+    private void closeInitialCycleSetupAndReturnToWelcome() {
+        initialCycleSetupContent = null;
+        maybeStartWelcomeFlow();
+    }
+
+    private void updateInitialSetupPermissionRows() {
+        if (initialCycleSetupContent == null) {
+            return;
+        }
+        boolean needsNotifications = isNotificationPermissionMissing();
+        boolean needsExactAlarms = isExactAlarmPermissionMissing();
+        View notificationRow = initialCycleSetupContent.findViewById(R.id.initial_setup_notification_row);
+        View exactAlarmRow = initialCycleSetupContent.findViewById(R.id.initial_setup_exact_alarm_row);
+        View divider = initialCycleSetupContent.findViewById(R.id.initial_setup_permission_divider);
+        notificationRow.setVisibility(needsNotifications ? View.VISIBLE : View.GONE);
+        exactAlarmRow.setVisibility(needsExactAlarms ? View.VISIBLE : View.GONE);
+        divider.setVisibility(needsNotifications && needsExactAlarms ? View.VISIBLE : View.GONE);
+    }
+
+    private boolean hasReminderPermissionToRequest() {
+        return isNotificationPermissionMissing() || isExactAlarmPermissionMissing();
+    }
+
+    private boolean isNotificationPermissionMissing() {
+        return Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU
+                && ContextCompat.checkSelfPermission(this, Manifest.permission.POST_NOTIFICATIONS)
+                != PackageManager.PERMISSION_GRANTED;
+    }
+
+    private boolean isExactAlarmPermissionMissing() {
+        if (Build.VERSION.SDK_INT < Build.VERSION_CODES.S) {
+            return false;
+        }
+        AlarmManager alarmManager = getSystemService(AlarmManager.class);
+        return alarmManager != null && !alarmManager.canScheduleExactAlarms();
+    }
+
+    private void saveInitialCycleSettings() {
+        if (initialCycleSetupStartDate == null) {
+            return;
+        }
+        viewModel.setStartDate((Calendar) initialCycleSetupStartDate.clone());
+        viewModel.setCycleLength(initialCycleSetupLength);
+        ReminderScheduler.scheduleCurrentCycle(this);
+        StockManager.syncCurrentCycle(this, viewModel.getRepository());
+        viewModel.refreshStockState();
+        WidgetUpdater.updateAllWidgets(this);
+    }
+
+    private void beginInitialSetupPermissionFlow() {
+        if (isNotificationPermissionMissing()) {
+            initialSetupPermissionFlowPending = true;
+            ActivityCompat.requestPermissions(this,
+                    new String[]{Manifest.permission.POST_NOTIFICATIONS},
+                    REQUEST_NOTIFICATION_PERMISSION);
+            return;
+        }
+        continueInitialSetupAfterNotificationPermission();
+    }
+
+    private void continueInitialSetupAfterNotificationPermission() {
+        if (!isExactAlarmPermissionMissing()) {
+            finishInitialCycleSetup();
+            return;
+        }
+
+        viewModel.getRepository().setExactAlarmPrompted(true);
+        Intent intent = new Intent(android.provider.Settings.ACTION_REQUEST_SCHEDULE_EXACT_ALARM);
+        intent.setData(Uri.parse("package:" + getPackageName()));
+        awaitingInitialExactAlarmSettings = true;
+        try {
+            startActivity(intent);
+        } catch (android.content.ActivityNotFoundException e) {
+            awaitingInitialExactAlarmSettings = false;
+            finishInitialCycleSetup();
+        }
+    }
+
+    private void finishInitialCycleSetup() {
+        saveInitialCycleSettings();
+        prefs.edit()
+                .putBoolean(KEY_INITIAL_CYCLE_SETUP_COMPLETED, true)
+                .putBoolean(KEY_WELCOME_SHOWN, true)
+                .apply();
+        initialCycleSetupContent = null;
+        dismissFirstRunWizardScreen();
+        maybeStartGuidedTour();
+    }
+
+    public boolean isInitialCycleSetupPending() {
+        return prefs != null && !prefs.getBoolean(KEY_INITIAL_CYCLE_SETUP_COMPLETED, false);
     }
 
     private void maybeStartGuidedTour() {
@@ -1254,14 +1629,16 @@ public class MainActivity extends AppCompatActivity {
 
     public void restartWelcomeTour() {
         prefs.edit()
-                .putBoolean(KEY_WELCOME_SHOWN, false)
+                .putBoolean(KEY_WELCOME_SHOWN, true)
                 .putBoolean(KEY_TOUR_SHOWN, false)
                 .apply();
         tourCompleted = false;
+        tourSteps = null;
+        tourIndex = 0;
         if (tourOverlay != null) {
             finishGuidedTour();
         }
-        maybeStartWelcomeFlow();
+        maybeStartGuidedTour();
     }
 
     private void scrollToView(ScrollView scrollView, View target) {
@@ -1595,25 +1972,16 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
-    // Request notification permission for Android 13 and above
-    private void requestNotificationPermission() {
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
-            if (ContextCompat.checkSelfPermission(this, Manifest.permission.POST_NOTIFICATIONS)
-                    != PackageManager.PERMISSION_GRANTED) {
-
-                ActivityCompat.requestPermissions(this,
-                        new String[]{Manifest.permission.POST_NOTIFICATIONS},
-                        REQUEST_NOTIFICATION_PERMISSION);
-            }
-        }
-    }
-
     // Handle the result of the permission request
     @Override
     public void onRequestPermissionsResult(int requestCode,
                                            @NonNull String[] permissions,
                                            @NonNull int[] grantResults) {
         super.onRequestPermissionsResult(requestCode, permissions, grantResults);
+        if (requestCode == REQUEST_NOTIFICATION_PERMISSION && initialSetupPermissionFlowPending) {
+            initialSetupPermissionFlowPending = false;
+            continueInitialSetupAfterNotificationPermission();
+        }
     }
 
     private void clearAllScheduledNotifications() {

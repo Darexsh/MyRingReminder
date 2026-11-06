@@ -766,6 +766,13 @@
     <string name="welcome_skip_tour">Şimdi değil</string>
     <string name="welcome_start_tour">Turu başlat</string>
     <string name="welcome_subtitle">MyRingReminder</string>
+    <string name="initial_setup_back">Geri</string>
+    <string name="initial_setup_continue">Devam et</string>
+    <string name="initial_setup_hint">Yerleştirme tarihini ve saatini, ayrıca döngü uzunluğunu seçin. Bunları daha sonra Ayarlar’dan değiştirebilirsiniz.</string>
+    <string name="initial_setup_enable_reminders">Hatırlatmaları etkinleştir</string>
+    <string name="initial_setup_permissions_intro">Halka hatırlatmalarının zamanında görünmesi için aşağıdaki erişimlere izin verin. Android gerekli adımlarda size yol gösterecektir.</string>
+    <string name="initial_setup_reminders_title">Hatırlatmaları zamanında alın</string>
+    <string name="initial_setup_title">Halka döngünüzü ayarlayın</string>
     <string name="welcome_title">Hoş Geldiniz 👋</string>
     <string name="period_details_pdf_notification_channel_name">PDF dışa aktarımları</string>
     <string name="period_details_pdf_notification_channel_desc">Kaydedilen dönem detayı PDF\'leri için bildirimler.</string>

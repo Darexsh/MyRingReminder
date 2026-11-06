@@ -1719,6 +1719,10 @@ public class HomeFragment extends Fragment {
         if (alarmManager.canScheduleExactAlarms()) {
             return true;
         }
+        if (getActivity() instanceof MainActivity
+                && ((MainActivity) getActivity()).isInitialCycleSetupPending()) {
+            return false;
+        }
         if (!viewModel.getRepository().wasExactAlarmPrompted()) {
             viewModel.getRepository().setExactAlarmPrompted(true);
             AlertDialog dialog = new AlertDialog.Builder(requireContext())

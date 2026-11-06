@@ -766,6 +766,13 @@
     <string name="welcome_skip_tour">Agora não</string>
     <string name="welcome_start_tour">Iniciar tour</string>
     <string name="welcome_subtitle">MyRingReminder</string>
+    <string name="initial_setup_back">Voltar</string>
+    <string name="initial_setup_continue">Continuar</string>
+    <string name="initial_setup_hint">Escolha a data e a hora de inserção e a duração do ciclo. Você pode alterá-las depois em Configurações.</string>
+    <string name="initial_setup_enable_reminders">Ativar lembretes</string>
+    <string name="initial_setup_permissions_intro">Permita os acessos indicados abaixo para que os lembretes do anel apareçam no horário. O Android guiará você pelas etapas necessárias.</string>
+    <string name="initial_setup_reminders_title">Deixe os lembretes mais confiáveis</string>
+    <string name="initial_setup_title">Configure o ciclo do anel</string>
     <string name="welcome_title">Bem-vinda 👋</string>
     <string name="period_details_pdf_notification_channel_name">Exportações em PDF</string>
     <string name="period_details_pdf_notification_channel_desc">Notificações para PDFs salvos com detalhes do período.</string>

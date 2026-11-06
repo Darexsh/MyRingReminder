@@ -766,6 +766,13 @@
     <string name="welcome_skip_tour">Не сейчас</string>
     <string name="welcome_start_tour">Начать тур</string>
     <string name="welcome_subtitle">MyRingReminder</string>
+    <string name="initial_setup_back">Назад</string>
+    <string name="initial_setup_continue">Далее</string>
+    <string name="initial_setup_hint">Выберите дату и время установки кольца и длительность цикла. Позже их можно изменить в настройках.</string>
+    <string name="initial_setup_enable_reminders">Включить напоминания</string>
+    <string name="initial_setup_permissions_intro">Разрешите указанные ниже доступы, чтобы напоминания о кольце появлялись вовремя. Android проведёт вас через необходимые шаги.</string>
+    <string name="initial_setup_reminders_title">Настройте напоминания</string>
+    <string name="initial_setup_title">Настройте цикл кольца</string>
     <string name="welcome_title">Добро пожаловать 👋</string>
     <string name="period_details_pdf_notification_channel_name">Экспорт PDF</string>
     <string name="period_details_pdf_notification_channel_desc">Уведомления о сохраненных PDF с деталями менструации.</string>

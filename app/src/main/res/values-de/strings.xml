@@ -767,6 +767,13 @@
     <string name="welcome_skip_tour">Nicht jetzt</string>
     <string name="welcome_start_tour">Tour starten</string>
     <string name="welcome_subtitle">MyRingReminder</string>
+    <string name="initial_setup_back">Zurück</string>
+    <string name="initial_setup_continue">Weiter</string>
+    <string name="initial_setup_hint">Lege Einsetzdatum, Einsetzzeit und Zykluslänge fest. Du kannst sie später in den Einstellungen ändern.</string>
+    <string name="initial_setup_enable_reminders">Erinnerungen aktivieren</string>
+    <string name="initial_setup_permissions_intro">Erlaube die unten aufgeführten Zugriffe, damit Ring-Erinnerungen angezeigt und pünktlich ausgelöst werden. Android führt dich durch die nötigen Schritte.</string>
+    <string name="initial_setup_reminders_title">Erinnerungen zuverlässig aktivieren</string>
+    <string name="initial_setup_title">Richte deinen Ringzyklus ein</string>
     <string name="welcome_title">Willkommen 👋</string>
     <string name="period_details_pdf_notification_channel_name">PDF-Exporte</string>
     <string name="period_details_pdf_notification_channel_desc">Benachrichtigungen für gespeicherte Perioden-PDFs.</string>

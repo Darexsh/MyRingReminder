@@ -767,6 +767,13 @@
     <string name="welcome_skip_tour">Not now</string>
     <string name="welcome_start_tour">Start tour</string>
     <string name="welcome_subtitle">MyRingReminder</string>
+    <string name="initial_setup_back">Back</string>
+    <string name="initial_setup_continue">Continue</string>
+    <string name="initial_setup_hint">Choose your insertion date, time, and cycle length. You can change these later in Settings.</string>
+    <string name="initial_setup_enable_reminders">Enable reminders</string>
+    <string name="initial_setup_permissions_intro">Allow the access shown below so ring reminders can appear and fire on time. Android will guide you through the required steps.</string>
+    <string name="initial_setup_reminders_title">Make reminders reliable</string>
+    <string name="initial_setup_title">Set up your ring cycle</string>
     <string name="welcome_title">Welcome 👋</string>
     <string name="period_details_pdf_notification_channel_name">PDF exports</string>
     <string name="period_details_pdf_notification_channel_desc">Notifications for saved period detail PDFs.</string>

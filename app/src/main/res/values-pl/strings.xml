@@ -766,6 +766,13 @@
     <string name="welcome_skip_tour">Nie teraz</string>
     <string name="welcome_start_tour">Rozpocznij przewodnik</string>
     <string name="welcome_subtitle">MyRingReminder</string>
+    <string name="initial_setup_back">Wstecz</string>
+    <string name="initial_setup_continue">Dalej</string>
+    <string name="initial_setup_hint">Wybierz datę i godzinę założenia oraz długość cyklu. Później zmienisz je w Ustawieniach.</string>
+    <string name="initial_setup_enable_reminders">Włącz przypomnienia</string>
+    <string name="initial_setup_permissions_intro">Zezwól na dostęp wymieniony poniżej, aby przypomnienia o krążku pojawiały się na czas. Android przeprowadzi Cię przez wymagane kroki.</string>
+    <string name="initial_setup_reminders_title">Zadbaj o terminowe przypomnienia</string>
+    <string name="initial_setup_title">Skonfiguruj cykl krążka</string>
     <string name="welcome_title">Witaj 👋</string>
     <string name="period_details_pdf_notification_channel_name">Eksporty PDF</string>
     <string name="period_details_pdf_notification_channel_desc">Powiadomienia o zapisanych plikach PDF ze szczegółami okresu.</string>
