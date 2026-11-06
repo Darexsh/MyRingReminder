@@ -288,7 +288,7 @@ An overview of the current visual experience across the app:
 
 This project is licensed under the [PolyForm Noncommercial License 1.0.0](https://polyformproject.org/licenses/noncommercial/1.0.0). You may use, modify, and distribute the software for noncommercial purposes under the license terms. Commercial use requires separate permission from the copyright holder.
 
-**Required notice:** Copyright (c) 2025–2026 Daniel Sichler (Darexsh)
+> **Required notice:** Copyright (c) 2025–2026 Daniel Sichler (Darexsh)
 
 Anyone distributing any part of this software must include a copy of the license or its URL and the required copyright notice. See the [LICENSE](LICENSE) file for the full terms.
 
