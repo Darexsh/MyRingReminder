@@ -37,6 +37,7 @@ import androidx.annotation.Nullable;
 import androidx.core.app.NotificationCompat;
 import androidx.core.app.NotificationManagerCompat;
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentActivity;
 import androidx.fragment.app.FragmentManager;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.core.content.ContextCompat;
@@ -278,14 +279,26 @@ public class PeriodDetailsFragment extends Fragment {
     }
 
     private void closeToCalendar() {
-        FragmentManager fragmentManager = requireActivity().getSupportFragmentManager();
-        fragmentManager.popBackStackImmediate(null, FragmentManager.POP_BACK_STACK_INCLUSIVE);
-        BottomNavigationView bottomNavigationView = requireActivity().findViewById(R.id.bottom_navigation);
-        if (bottomNavigationView != null) {
-            bottomNavigationView.setSelectedItemId(R.id.nav_calendar);
+        // Keep the host reference before popping: popBackStackImmediate can detach this
+        // fragment synchronously, so requireActivity() is unsafe afterward.
+        FragmentActivity activity = getActivity();
+        if (activity == null || activity.isFinishing() || activity.isDestroyed()) {
             return;
         }
-        requireActivity().getOnBackPressedDispatcher().onBackPressed();
+
+        FragmentManager fragmentManager = activity.getSupportFragmentManager();
+        BottomNavigationView bottomNavigationView = activity.findViewById(R.id.bottom_navigation);
+        boolean poppedBackStack = fragmentManager.popBackStackImmediate(
+                null, FragmentManager.POP_BACK_STACK_INCLUSIVE);
+        if (bottomNavigationView != null) {
+            if (bottomNavigationView.getSelectedItemId() != R.id.nav_calendar) {
+                bottomNavigationView.setSelectedItemId(R.id.nav_calendar);
+            }
+            return;
+        }
+        if (!poppedBackStack) {
+            activity.getOnBackPressedDispatcher().onBackPressed();
+        }
     }
 
     private void populateList(@Nullable LinearLayout container,
