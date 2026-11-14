@@ -12,6 +12,8 @@ import java.util.concurrent.Executors;
 
 public final class CalendarRenderCache {
 
+    private static final int MAX_CYCLE_DELAY_DAYS = 21;
+
     public interface SnapshotCallback {
         void onSnapshotReady(Snapshot snapshot);
     }
@@ -171,12 +173,13 @@ public final class CalendarRenderCache {
         currentStart.set(Calendar.MILLISECOND, 0);
         if (currentStart.after(pastLimit)) {
             while (currentStart.after(pastLimit)) {
-                currentStart.add(Calendar.DAY_OF_MONTH, -baseStepDays);
+                currentStart = getPreviousCycleStart(repository, currentStart, cycleLength, baseStepDays);
             }
         } else {
             while (currentStart.before(pastLimit)) {
                 int delayDays = getDelayDaysForStart(repository, currentStart);
-                currentStart.add(Calendar.DAY_OF_MONTH, baseStepDays + delayDays);
+                int ringFreeDaysForCycle = repository.getRingFreeDaysForCycle(currentStart.getTimeInMillis());
+                currentStart.add(Calendar.DAY_OF_MONTH, cycleLength + ringFreeDaysForCycle + delayDays);
             }
         }
 
@@ -242,6 +245,31 @@ public final class CalendarRenderCache {
         normalized.set(Calendar.MILLISECOND, 0);
         normalized.set(Calendar.SECOND, 0);
         return repository.getCycleDelayDays(normalized.getTimeInMillis());
+    }
+
+    private static Calendar getPreviousCycleStart(SettingsRepository repository,
+                                                  Calendar currentStart,
+                                                  int cycleLength,
+                                                  int baseStepDays) {
+        int maxStepDays = baseStepDays + MAX_CYCLE_DELAY_DAYS;
+        for (int daysBack = 1; daysBack <= maxStepDays; daysBack++) {
+            Calendar candidate = (Calendar) currentStart.clone();
+            candidate.add(Calendar.DAY_OF_MONTH, -daysBack);
+            int candidateStepDays = cycleLength
+                    + repository.getRingFreeDaysForCycle(candidate.getTimeInMillis())
+                    + getDelayDaysForStart(repository, candidate);
+            Calendar candidateNextStart = (Calendar) candidate.clone();
+            candidateNextStart.add(Calendar.DAY_OF_MONTH, candidateStepDays);
+            if (candidateNextStart.equals(currentStart)) {
+                return candidate;
+            }
+        }
+
+        // A manually reset cycle may have no recorded predecessor. Preserve the
+        // calendar's previous projection behavior in that case.
+        Calendar fallback = (Calendar) currentStart.clone();
+        fallback.add(Calendar.DAY_OF_MONTH, -baseStepDays);
+        return fallback;
     }
 
     private static void addDaysToSet(Set<CalendarDay> target,
