@@ -802,4 +802,12 @@
         <item quantity="one">Ringvorrat: %d Ring</item>
         <item quantity="other">Ringvorrat: %d Ringe</item>
     </plurals>
+    <plurals name="settings_calendar_range_month">
+        <item quantity="one">Monat</item>
+        <item quantity="other">Monate</item>
+    </plurals>
+    <plurals name="settings_calendar_range_year">
+        <item quantity="one">Jahr</item>
+        <item quantity="other">Jahre</item>
+    </plurals>
 </resources>

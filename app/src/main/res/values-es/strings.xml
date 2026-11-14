@@ -801,4 +801,12 @@
         <item quantity="one">Stock de anillos: %d anillo</item>
         <item quantity="other">Stock de anillos: %d anillos</item>
     </plurals>
+    <plurals name="settings_calendar_range_month">
+        <item quantity="one">mes</item>
+        <item quantity="other">meses</item>
+    </plurals>
+    <plurals name="settings_calendar_range_year">
+        <item quantity="one">año</item>
+        <item quantity="other">años</item>
+    </plurals>
 </resources>

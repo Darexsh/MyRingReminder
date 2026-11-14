@@ -805,9 +805,9 @@ public class SettingsFragment extends Fragment {
         tvSetCalendarRangeValue.setText(getString(
                 R.string.settings_calendar_range_value,
                 pastAmount,
-                unitLabel(pastUnit),
+                unitLabel(pastAmount, pastUnit),
                 futureAmount,
-                unitLabel(futureUnit)
+                unitLabel(futureAmount, futureUnit)
         ));
     }
 
@@ -2868,11 +2868,11 @@ public class SettingsFragment extends Fragment {
         return getString(R.string.settings_button_color_custom);
     }
 
-    private String unitLabel(String unit) {
+    private String unitLabel(int amount, String unit) {
         if ("years".equals(unit)) {
-            return getString(R.string.settings_unit_year);
+            return getResources().getQuantityString(R.plurals.settings_calendar_range_year, amount);
         }
-        return getString(R.string.settings_unit_month);
+        return getResources().getQuantityString(R.plurals.settings_calendar_range_month, amount);
     }
 
     private void checkForUpdates() {
@@ -5395,10 +5395,10 @@ public class SettingsFragment extends Fragment {
                 .append(viewModel.getRepository().wasNotificationScheduledForCycle(currentStart.getTimeInMillis()))
                 .append("\n");
         sb.append(getString(R.string.debug_calendar_range)).append(": ")
-                .append(pastAmount).append(" ").append(unitLabel(pastUnit))
+                .append(pastAmount).append(" ").append(unitLabel(pastAmount, pastUnit))
                 .append(" ").append(getString(R.string.settings_calendar_range_back))
                 .append(", ")
-                .append(futureAmount).append(" ").append(unitLabel(futureUnit))
+                .append(futureAmount).append(" ").append(unitLabel(futureAmount, futureUnit))
                 .append(" ").append(getString(R.string.settings_calendar_range_forward))
                 .append("\n");
         sb.append(getString(R.string.debug_calendar_limits)).append(": ")

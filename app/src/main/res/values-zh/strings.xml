@@ -797,4 +797,10 @@
     <plurals name="stock_notification_message">
         <item quantity="other">避孕环库存：%d</item>
     </plurals>
+    <plurals name="settings_calendar_range_month">
+        <item quantity="other">个月</item>
+    </plurals>
+    <plurals name="settings_calendar_range_year">
+        <item quantity="other">年</item>
+    </plurals>
 </resources>

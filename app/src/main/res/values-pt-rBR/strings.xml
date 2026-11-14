@@ -801,4 +801,12 @@
         <item quantity="one">Estoque de anéis: %d anel</item>
         <item quantity="other">Estoque de anéis: %d anéis</item>
     </plurals>
+    <plurals name="settings_calendar_range_month">
+        <item quantity="one">mês</item>
+        <item quantity="other">meses</item>
+    </plurals>
+    <plurals name="settings_calendar_range_year">
+        <item quantity="one">ano</item>
+        <item quantity="other">anos</item>
+    </plurals>
 </resources>

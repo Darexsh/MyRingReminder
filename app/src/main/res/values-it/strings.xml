@@ -802,4 +802,12 @@
         <item quantity="one">Scorta anelli: %d anello</item>
         <item quantity="other">Scorta anelli: %d anelli</item>
     </plurals>
+    <plurals name="settings_calendar_range_month">
+        <item quantity="one">mese</item>
+        <item quantity="other">mesi</item>
+    </plurals>
+    <plurals name="settings_calendar_range_year">
+        <item quantity="one">anno</item>
+        <item quantity="other">anni</item>
+    </plurals>
 </resources>

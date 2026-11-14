@@ -802,4 +802,12 @@
         <item quantity="one">Stock d\'anneaux : %d anneau</item>
         <item quantity="other">Stock d\'anneaux : %d anneaux</item>
     </plurals>
+    <plurals name="settings_calendar_range_month">
+        <item quantity="one">mois</item>
+        <item quantity="other">mois</item>
+    </plurals>
+    <plurals name="settings_calendar_range_year">
+        <item quantity="one">an</item>
+        <item quantity="other">ans</item>
+    </plurals>
 </resources>

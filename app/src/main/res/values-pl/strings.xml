@@ -809,4 +809,16 @@
         <item quantity="many">Zapas krążków: %d krążków</item>
         <item quantity="other">Zapas krążków: %d krążka</item>
     </plurals>
+    <plurals name="settings_calendar_range_month">
+        <item quantity="one">miesiąc</item>
+        <item quantity="few">miesiące</item>
+        <item quantity="many">miesięcy</item>
+        <item quantity="other">miesiąca</item>
+    </plurals>
+    <plurals name="settings_calendar_range_year">
+        <item quantity="one">rok</item>
+        <item quantity="few">lata</item>
+        <item quantity="many">lat</item>
+        <item quantity="other">roku</item>
+    </plurals>
 </resources>

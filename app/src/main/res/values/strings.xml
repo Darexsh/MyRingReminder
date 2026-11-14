@@ -802,4 +802,12 @@
         <item quantity="one">Ring supply: %d ring</item>
         <item quantity="other">Ring supply: %d rings</item>
     </plurals>
+    <plurals name="settings_calendar_range_month">
+        <item quantity="one">month</item>
+        <item quantity="other">months</item>
+    </plurals>
+    <plurals name="settings_calendar_range_year">
+        <item quantity="one">year</item>
+        <item quantity="other">years</item>
+    </plurals>
 </resources>
