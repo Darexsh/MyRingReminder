@@ -64,7 +64,7 @@
         <item>3</item>
     </integer-array>
     <string-array name="settings_particle_animation_labels">
-        <item>Otomatik</item>
+        <item>Tam</item>
         <item>Azaltılmış</item>
         <item>Kapalı</item>
     </string-array>

@@ -694,7 +694,7 @@
     <string name="tour_body_settings_calendar">Choisissez jusqu\'où le calendrier affiche les cycles passés et futurs.</string>
     <string name="tour_body_settings_circle_color">Réglez la couleur de l\'anneau sur l\'écran d\'accueil.\nCela modifie aussi l\'anneau sur le grand widget.</string>
     <string name="tour_body_settings_circle_style">Choisissez un style pour l\'anneau d\'accueil.</string>
-    <string name="tour_body_settings_particle_animation">Choisissez l’effet des particules de l’anneau d’accueil : automatique, réduit ou désactivé.</string>
+    <string name="tour_body_settings_particle_animation">Choisissez l’effet des particules de l’anneau d’accueil : complet, réduit ou désactivé.</string>
     <string name="tour_body_settings_cycle">Réglez la date, l\'heure d\'insertion et la durée du cycle.</string>
     <string name="tour_body_settings_info">Affiche la version, les infos développeur et les liens de contact.</string>
     <string name="tour_body_package_leaflet">Consultez les notices officielles des anneaux disponibles. L’application ouvre la version dans la langue de l’app lorsqu’elle existe ; sinon, elle peut proposer un document de référence clairement indiqué. Suivez toujours la notice fournie avec votre anneau.</string>

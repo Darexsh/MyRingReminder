@@ -693,7 +693,7 @@
     <string name="tour_body_settings_calendar">Wybierz, jak daleko kalendarz ma pokazywać przeszłe i przyszłe cykle.</string>
     <string name="tour_body_settings_circle_color">Ustaw kolor pierścienia na ekranie głównym.\nZmieni to również kolor pierścienia w dużym widgecie.</string>
     <string name="tour_body_settings_circle_style">Wybierz styl pierścienia na ekranie głównym.</string>
-    <string name="tour_body_settings_particle_animation">Wybierz efekt cząsteczek pierścienia na ekranie głównym: automatyczny, ograniczony lub wyłączony.</string>
+    <string name="tour_body_settings_particle_animation">Wybierz efekt cząsteczek pierścienia na ekranie głównym: pełny, ograniczony lub wyłączony.</string>
     <string name="tour_body_settings_cycle">Ustaw datę, godzinę założenia i długość cyklu.</string>
     <string name="tour_body_settings_info">Pokazuje wersję, informacje o deweloperze i linki kontaktowe.</string>
     <string name="tour_body_package_leaflet">Przeglądaj oficjalne ulotki dostępnych krążków. Aplikacja otwiera wersję w języku aplikacji, jeśli jest dostępna; w przeciwnym razie może zaproponować wyraźnie oznaczony dokument referencyjny. Zawsze postępuj zgodnie z ulotką dołączoną do Twojego krążka.</string>

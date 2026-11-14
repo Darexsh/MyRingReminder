@@ -694,7 +694,7 @@
     <string name="tour_body_settings_calendar">Lege fest, wie weit der Kalender vergangene und zukünftige Zyklen anzeigt.</string>
     <string name="tour_body_settings_circle_color">Lege die Ringfarbe auf dem Startbildschirm fest.\nDies ändert auch die Ringfarbe im großen Widget.</string>
     <string name="tour_body_settings_circle_style">Wähle einen Stil für den Home-Ring.</string>
-    <string name="tour_body_settings_particle_animation">Wähle den Partikeleffekt im Home-Ring: automatisch, reduziert oder aus.</string>
+    <string name="tour_body_settings_particle_animation">Wähle den Partikeleffekt im Home-Ring: voll, reduziert oder aus.</string>
     <string name="tour_body_settings_cycle">Einsetzdatum, -zeit und Zykluslänge festlegen.</string>
     <string name="tour_body_settings_info">Zeigt Version, Entwickler-Info und Kontaktlinks.</string>
     <string name="tour_body_package_leaflet">Öffne offizielle Packungsbeilagen unterstützter Ringe. Wenn verfügbar, öffnet die App die Version in deiner App-Sprache; andernfalls kann sie eine gekennzeichnete Referenz anbieten. Befolge immer die Packungsbeilage deines Rings.</string>

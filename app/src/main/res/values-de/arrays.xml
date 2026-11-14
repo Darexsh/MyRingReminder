@@ -64,7 +64,7 @@
         <item>3</item>
     </integer-array>
     <string-array name="settings_particle_animation_labels">
-        <item>Automatisch</item>
+        <item>Voll</item>
         <item>Reduziert</item>
         <item>Aus</item>
     </string-array>

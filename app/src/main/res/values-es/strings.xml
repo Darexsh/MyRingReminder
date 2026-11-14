@@ -693,7 +693,7 @@
     <string name="tour_body_settings_calendar">Elige hasta qué punto del pasado y del futuro se muestran los ciclos en el calendario.</string>
     <string name="tour_body_settings_circle_color">Establece el color del anillo en la pantalla de inicio.\nEsto también cambia el color del anillo en el widget grande.</string>
     <string name="tour_body_settings_circle_style">Elige un estilo para el anillo de la pantalla de inicio.</string>
-    <string name="tour_body_settings_particle_animation">Elige el efecto de partículas del anillo de inicio: automático, reducido o desactivado.</string>
+    <string name="tour_body_settings_particle_animation">Elige el efecto de partículas del anillo de inicio: completo, reducido o desactivado.</string>
     <string name="tour_body_settings_cycle">Establece la fecha, la hora y la duración del ciclo de inserción.</string>
     <string name="tour_body_settings_info">Muestra la versión, la información del desarrollador y los enlaces de contacto.</string>
     <string name="tour_body_package_leaflet">Consulta los prospectos oficiales de los anillos disponibles. La aplicación abre la versión en el idioma de la app cuando existe y, si no, puede ofrecer un documento de referencia claramente identificado. Sigue siempre el prospecto incluido con tu anillo.</string>

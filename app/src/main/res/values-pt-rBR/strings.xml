@@ -693,7 +693,7 @@
     <string name="tour_body_settings_calendar">Escolha o quanto o calendário mostra de ciclos passados e futuros.</string>
     <string name="tour_body_settings_circle_color">Defina a cor do anel na tela inicial.\nIsso também muda o anel no widget grande.</string>
     <string name="tour_body_settings_circle_style">Escolha um estilo para o anel da tela inicial.</string>
-    <string name="tour_body_settings_particle_animation">Escolha o efeito de partículas do anel da tela inicial: automático, reduzido ou desativado.</string>
+    <string name="tour_body_settings_particle_animation">Escolha o efeito de partículas do anel da tela inicial: completo, reduzido ou desativado.</string>
     <string name="tour_body_settings_cycle">Defina data, hora de inserção e duração do ciclo.</string>
     <string name="tour_body_settings_info">Mostra versão, info do desenvolvedor e links de contato.</string>
     <string name="tour_body_package_leaflet">Consulte as bulas oficiais dos anéis disponíveis. O aplicativo abre a versão no idioma do app quando disponível; caso contrário, pode oferecer um documento de referência claramente identificado. Siga sempre a bula fornecida com o seu anel.</string>

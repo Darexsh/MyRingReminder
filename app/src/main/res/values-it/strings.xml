@@ -694,7 +694,7 @@
     <string name="tour_body_settings_calendar">Scegli quanto indietro e avanti il calendario mostra i cicli.</string>
     <string name="tour_body_settings_circle_color">Imposta il colore dell\'anello nella Home.\nQuesto cambia anche il colore dell\'anello nel widget grande.</string>
     <string name="tour_body_settings_circle_style">Scegli uno stile per l\'anello della Home.</string>
-    <string name="tour_body_settings_particle_animation">Scegli l’effetto delle particelle dell’anello Home: automatico, ridotto o disattivato.</string>
+    <string name="tour_body_settings_particle_animation">Scegli l’effetto delle particelle dell’anello Home: completo, ridotto o disattivato.</string>
     <string name="tour_body_settings_cycle">Imposta data, ora di inserimento e durata del ciclo.</string>
     <string name="tour_body_settings_info">Mostra versione, info sviluppatore e link di contatto.</string>
     <string name="tour_body_package_leaflet">Consulta i foglietti illustrativi ufficiali degli anelli disponibili. L’app apre la versione nella lingua dell’app, se disponibile; altrimenti può proporre un documento di riferimento chiaramente indicato. Segui sempre il foglietto fornito con il tuo anello.</string>

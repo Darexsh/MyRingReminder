@@ -693,7 +693,7 @@
     <string name="tour_body_settings_calendar">Takvimin geçmiş ve gelecek döngüleri ne kadar göstereceğini seçin.</string>
     <string name="tour_body_settings_circle_color">Ana ekrandaki halka rengini ayarlayın.\nBu aynı zamanda büyük widget\'taki halka rengini de değiştirir.</string>
     <string name="tour_body_settings_circle_style">Ana ekran halkası için bir stil seçin.</string>
-    <string name="tour_body_settings_particle_animation">Ana ekrandaki halkanın parçacık efektini seçin: otomatik, azaltılmış veya kapalı.</string>
+    <string name="tour_body_settings_particle_animation">Ana ekrandaki halkanın parçacık efektini seçin: tam, azaltılmış veya kapalı.</string>
     <string name="tour_body_settings_cycle">Yerleştirme tarihi, saati ve döngü uzunluğunu ayarlayın.</string>
     <string name="tour_body_settings_info">Sürüm, geliştirici bilgisi ve iletişim linklerini gösterir.</string>
     <string name="tour_body_package_leaflet">Desteklenen halkaların resmî kullanma talimatlarını görüntüleyin. Varsa uygulama, uygulama dilindeki sürümü açar; yoksa açıkça referans olarak belirtilen bir belge sunabilir. Her zaman kendi halkanızla birlikte verilen talimatı izleyin.</string>

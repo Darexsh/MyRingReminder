@@ -702,7 +702,7 @@
     <string name="tour_body_settings_calendar">Choose how far the calendar shows past and future cycles.</string>
     <string name="tour_body_settings_circle_color">Set the ring color on the Home screen.\nThis also changes the ring color on the large widget.</string>
     <string name="tour_body_settings_circle_style">Choose a style for the Home ring.</string>
-    <string name="tour_body_settings_particle_animation">Choose the Home ring particle effect: automatic, reduced, or off.</string>
+    <string name="tour_body_settings_particle_animation">Choose the Home ring particle effect: full, reduced, or off.</string>
     <string name="tour_body_settings_cycle">Set insertion date, time, and cycle length.</string>
     <string name="tour_body_settings_ring_pause">Pause planned ring use during a longer break. Future ring predictions and reminders stop, while your history and period tracking stay available. Resume ring use here when you are ready to begin again.</string>
     <string name="tour_body_ring_pause_confirm_button">Confirm Pause to stop future ring predictions and reminders from the selected date. Period tracking stays available.</string>
