@@ -12,7 +12,7 @@
 
 ![Projekt-Status](https://img.shields.io/badge/Status-Aktiv-brightgreen)
 [![License: PolyForm Noncommercial 1.0.0](https://img.shields.io/badge/License-PolyForm%20Noncommercial%201.0.0-blue)](LICENSE)
-![Version](https://img.shields.io/badge/Version-1.4-orange)
+![Version](https://img.shields.io/badge/Version-1.4.1-orange)
 
 [![Telegram Bot](https://img.shields.io/badge/Telegram-Bot-2AABEE?logo=telegram&logoColor=white)](https://t.me/darexsh_bot)
 [![Buy Me a Coffee](https://img.shields.io/badge/Buy%20Me%20a%20Coffee-yellow?logo=buy-me-a-coffee)](https://buymeacoffee.com/darexsh)
