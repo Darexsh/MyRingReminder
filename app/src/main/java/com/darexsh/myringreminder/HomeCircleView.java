@@ -101,6 +101,8 @@ public class HomeCircleView extends View {
     }
 
     private void init() {
+        // Keep animation math relative to this view's lifetime instead of device uptime.
+        innerParticleStartTimeMs = SystemClock.uptimeMillis();
         trackPaint.setStyle(Paint.Style.STROKE);
         progressPaint.setStyle(Paint.Style.STROKE);
         markerPaint.setStyle(Paint.Style.FILL);
