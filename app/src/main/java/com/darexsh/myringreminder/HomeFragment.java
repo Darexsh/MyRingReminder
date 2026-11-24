@@ -4,8 +4,6 @@ import android.annotation.SuppressLint;
 import android.animation.ObjectAnimator;
 import android.app.AlarmManager;
 import android.app.AlertDialog;
-import android.app.PendingIntent;
-import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageInfo;
 import android.content.res.ColorStateList;
@@ -307,6 +305,7 @@ public class HomeFragment extends Fragment {
             btnSpecialActionsToggle.setEnabled(true);
             btnSpecialActionsToggle.setAlpha(1f);
             circularProgress.setPauseMode(false);
+            promptForExactAlarmAccessIfNeeded();
             if (tvCyclePhaseLabel != null) {
                 tvCyclePhaseLabel.setTextSize(TypedValue.COMPLEX_UNIT_SP, 11f);
             }
@@ -476,24 +475,6 @@ public class HomeFragment extends Fragment {
             tvRemovalDate.setText(primaryTextDate);
             tvSecondaryDate.setText(secondaryTextDate);
 
-            long cycleStartMillis = startDate.getTimeInMillis();
-            int settingsHash = viewModel.getRepository().getNotificationSettingsHash();
-            int scheduledHash = viewModel.getRepository().getNotificationSettingsHashForCycle(cycleStartMillis);
-            boolean hasPendingAlarms = ReminderScheduler.hasAnyScheduledForCycle(requireContext(), cycleStartMillis);
-            if (systemNow.before(reinsertionDate)
-                    && (!viewModel.getRepository().wasNotificationScheduledForCycle(cycleStartMillis)
-                    || scheduledHash != settingsHash
-                    || !hasPendingAlarms)) {
-                scheduleRingCycleNotifications(
-                        viewModel,
-                        (Calendar) startDate.clone(),
-                        (Calendar) removalDate.clone(),
-                        (Calendar) reinsertionDate.clone(),
-                        cycleLength
-                );
-                viewModel.getRepository().setNotificationScheduledForCycle(cycleStartMillis);
-                viewModel.getRepository().setNotificationSettingsHashForCycle(cycleStartMillis, settingsHash);
-            }
         };
 
         // Observe changes in the ViewModel and update the UI
@@ -1594,151 +1575,6 @@ public class HomeFragment extends Fragment {
         return reinsertionDate;
     }
 
-    // Schedule notifications for the ring cycle events
-    private void scheduleRingCycleNotifications(SharedViewModel viewModel, Calendar startDate, Calendar removalDate,
-                                                Calendar reinsertionDate, int cycleLength) {
-        int hour = startDate.get(Calendar.HOUR_OF_DAY);
-        int minute = startDate.get(Calendar.MINUTE);
-        long cycleStartMillis = startDate.getTimeInMillis();
-
-        // Cancel previous notifications for this cycle to prevent duplicates
-        cancelNotificationsForCycle(cycleStartMillis);
-
-        // ---- Cycle Progress Notifications ----
-        Calendar twoWeeksRemaining = (Calendar) removalDate.clone();
-        twoWeeksRemaining.add(Calendar.DAY_OF_MONTH, -14);
-        twoWeeksRemaining.set(Calendar.HOUR_OF_DAY, hour);
-        twoWeeksRemaining.set(Calendar.MINUTE, minute);
-        if (cycleLength >= 14) {
-            scheduleNotification(twoWeeksRemaining,
-                    getString(R.string.notif_cycle_duration_title),
-                    getString(R.string.notif_two_weeks_remaining),
-                    ReminderRequestCodes.buildRequestCode(cycleStartMillis, ReminderRequestCodes.NOTIFY_TWO_WEEKS));
-        }
-
-        Calendar oneWeekRemaining = (Calendar) removalDate.clone();
-        oneWeekRemaining.add(Calendar.DAY_OF_MONTH, -7);
-        oneWeekRemaining.set(Calendar.HOUR_OF_DAY, hour);
-        oneWeekRemaining.set(Calendar.MINUTE, minute);
-        if (cycleLength >= 7) {
-            scheduleNotification(oneWeekRemaining,
-                    getString(R.string.notif_cycle_duration_title),
-                    getString(R.string.notif_one_week_remaining),
-                    ReminderRequestCodes.buildRequestCode(cycleStartMillis, ReminderRequestCodes.NOTIFY_ONE_WEEK));
-        }
-
-        // ---- Ring Removal Notifications ----
-        int removalReminderHours = viewModel.getRepository().getRemovalReminderHours();
-        if (removalReminderHours > 0) {
-            Calendar removalReminder = (Calendar) removalDate.clone();
-            removalReminder.add(Calendar.HOUR_OF_DAY, -removalReminderHours);
-            scheduleNotification(removalReminder,
-                    getString(R.string.notif_remove_title),
-                    getString(R.string.notif_remove_in_hours, removalReminderHours),
-                    ReminderRequestCodes.buildRequestCode(cycleStartMillis, ReminderRequestCodes.NOTIFY_REMOVAL_REMINDER));
-        }
-
-        Calendar removalExact = (Calendar) removalDate.clone();
-        removalExact.set(Calendar.HOUR_OF_DAY, hour);
-        removalExact.set(Calendar.MINUTE, minute);
-        @SuppressLint("DefaultLocale") String removalTimeText = String.format("%02d:%02d", hour, minute);
-        scheduleNotification(removalExact,
-                getString(R.string.notif_remove_title),
-                getString(R.string.notif_remove_now, removalTimeText),
-                ReminderRequestCodes.buildRequestCode(cycleStartMillis, ReminderRequestCodes.NOTIFY_REMOVAL_EXACT));
-
-        // ---- Ring Insertion Notifications ----
-        int insertionReminderHours = viewModel.getRepository().getInsertionReminderHours();
-        if (insertionReminderHours > 0) {
-            Calendar reinsertionReminder = (Calendar) reinsertionDate.clone();
-            reinsertionReminder.add(Calendar.HOUR_OF_DAY, -insertionReminderHours);
-            scheduleNotification(reinsertionReminder,
-                    getString(R.string.notif_insert_title),
-                    getString(R.string.notif_insert_in_hours, insertionReminderHours),
-                    ReminderRequestCodes.buildRequestCode(cycleStartMillis, ReminderRequestCodes.NOTIFY_INSERTION_REMINDER));
-        }
-
-        Calendar reinsertionExact = (Calendar) reinsertionDate.clone();
-        reinsertionExact.set(Calendar.HOUR_OF_DAY, hour);
-        reinsertionExact.set(Calendar.MINUTE, minute);
-        @SuppressLint("DefaultLocale") String reinsertionTimeText = String.format("%02d:%02d", hour, minute);
-        scheduleNotification(reinsertionExact,
-                getString(R.string.notif_insert_title),
-                getString(R.string.notif_insert_now, reinsertionTimeText),
-                ReminderRequestCodes.buildRequestCode(cycleStartMillis, ReminderRequestCodes.NOTIFY_INSERTION_EXACT));
-    }
-
-    // Schedule a single notification with a unique ID
-    private void scheduleNotification(Calendar calendar, String title, String message, int requestCode) {
-        if (calendar.getTimeInMillis() <= System.currentTimeMillis()) {
-            return;
-        }
-        Intent intent = new Intent(requireContext(), NotificationReceiver.class);
-        intent.putExtra("title", title);
-        intent.putExtra("message", message);
-
-        PendingIntent pendingIntent = PendingIntent.getBroadcast(
-                requireContext(),
-                requestCode,
-                intent,
-                PendingIntent.FLAG_UPDATE_CURRENT | PendingIntent.FLAG_IMMUTABLE
-        );
-
-        // Schedule exact alarm with AlarmManager
-        AlarmManager alarmManager = (AlarmManager) requireContext().getSystemService(Context.ALARM_SERVICE);
-        if (canScheduleExactAlarms(alarmManager)) {
-            alarmManager.setExactAndAllowWhileIdle(AlarmManager.RTC_WAKEUP, calendar.getTimeInMillis(), pendingIntent);
-        } else {
-            alarmManager.setAndAllowWhileIdle(AlarmManager.RTC_WAKEUP, calendar.getTimeInMillis(), pendingIntent);
-        }
-    }
-
-    // Cancel all notifications for a specific cycle to avoid duplicates
-    private void cancelNotificationsForCycle(long cycleStartMillis) {
-        Intent intent = new Intent(requireContext(), NotificationReceiver.class);
-        for (int type : ReminderRequestCodes.ALL_TYPES) {
-            int requestCode = ReminderRequestCodes.buildRequestCode(cycleStartMillis, type);
-            PendingIntent pendingIntent = PendingIntent.getBroadcast(
-                    requireContext(),
-                    requestCode,
-                    intent,
-                    PendingIntent.FLAG_NO_CREATE | PendingIntent.FLAG_IMMUTABLE
-            );
-            if (pendingIntent != null) {
-                AlarmManager alarmManager = (AlarmManager) requireContext().getSystemService(Context.ALARM_SERVICE);
-                alarmManager.cancel(pendingIntent);
-                pendingIntent.cancel();
-            }
-        }
-    }
-
-    private boolean canScheduleExactAlarms(AlarmManager alarmManager) {
-        if (Build.VERSION.SDK_INT < Build.VERSION_CODES.S) {
-            return true;
-        }
-        if (alarmManager.canScheduleExactAlarms()) {
-            return true;
-        }
-        if (getActivity() instanceof MainActivity
-                && ((MainActivity) getActivity()).isInitialCycleSetupPending()) {
-            return false;
-        }
-        if (!viewModel.getRepository().wasExactAlarmPrompted()) {
-            viewModel.getRepository().setExactAlarmPrompted(true);
-            AlertDialog dialog = new AlertDialog.Builder(requireContext())
-                    .setTitle(R.string.exact_alarm_title)
-                    .setMessage(R.string.exact_alarm_message)
-                    .setPositiveButton(R.string.exact_alarm_open_settings, (d, which) -> {
-                        Intent intent = new Intent(android.provider.Settings.ACTION_REQUEST_SCHEDULE_EXACT_ALARM);
-                        startActivity(intent);
-                    })
-                    .setNegativeButton(R.string.dialog_cancel, null)
-                    .show();
-            applyDialogButtonColors(dialog);
-        }
-        return false;
-    }
-
     private void applyDialogButtonColors(@Nullable AlertDialog dialog) {
         if (dialog == null || viewModel == null) {
             return;
@@ -1811,32 +1647,10 @@ public class HomeFragment extends Fragment {
                             }
                     );
                     Calendar currentStart = cycleWindow.currentStart;
-                    int ringFreeDays = cycleWindow.ringFreeDays;
-
                     long cycleStartMillis = currentStart.getTimeInMillis();
                     viewModel.getRepository().pruneCycleHistoryFrom(cycleStartMillis);
-                    cancelNotificationsForCycle(cycleStartMillis);
-
                     viewModel.getRepository().setCycleDelayDays(cycleStartMillis, picker.getValue());
-                    viewModel.getRepository().clearNotificationScheduledForCycle(cycleStartMillis);
-
-                    int newDelayDays = picker.getValue();
-                    Calendar newRemoval = (Calendar) currentStart.clone();
-                    newRemoval.add(Calendar.DAY_OF_MONTH, cycleLength + newDelayDays);
-                    Calendar newReinsertion = (Calendar) newRemoval.clone();
-                    newReinsertion.add(Calendar.DAY_OF_MONTH, ringFreeDays);
-                    if (now.before(newReinsertion)) {
-                        scheduleRingCycleNotifications(
-                                viewModel,
-                                (Calendar) currentStart.clone(),
-                                (Calendar) newRemoval.clone(),
-                                (Calendar) newReinsertion.clone(),
-                                cycleLength
-                        );
-                        viewModel.getRepository().setNotificationScheduledForCycle(cycleStartMillis);
-                    viewModel.getRepository().setNotificationSettingsHashForCycle(
-                            cycleStartMillis, viewModel.getRepository().getNotificationSettingsHash());
-                    }
+                    ReminderScheduler.scheduleCurrentCycle(requireContext());
 
                     viewModel.setStartDate((Calendar) baseStart.clone());
                     StockManager.syncCurrentCycle(requireContext(), viewModel.getRepository());
@@ -1877,32 +1691,10 @@ public class HomeFragment extends Fragment {
                             }
                     );
                     Calendar currentStart = cycleWindow.currentStart;
-                    int delayDays = cycleWindow.delayDays;
-
                     long cycleStartMillis = currentStart.getTimeInMillis();
                     viewModel.getRepository().pruneCycleHistoryFrom(cycleStartMillis);
-                    cancelNotificationsForCycle(cycleStartMillis);
-
                     viewModel.getRepository().setSkipRingFreeWeek(cycleStartMillis, true);
-                    viewModel.getRepository().clearNotificationScheduledForCycle(cycleStartMillis);
-
-                    Calendar newRemoval = (Calendar) currentStart.clone();
-                    newRemoval.add(Calendar.DAY_OF_MONTH, cycleLength + delayDays);
-                    Calendar newReinsertion = (Calendar) newRemoval.clone();
-                    newReinsertion.add(Calendar.DAY_OF_MONTH, 0);
-
-                    if (now.before(newReinsertion)) {
-                        scheduleRingCycleNotifications(
-                                viewModel,
-                                (Calendar) currentStart.clone(),
-                                (Calendar) newRemoval.clone(),
-                                (Calendar) newReinsertion.clone(),
-                                cycleLength
-                        );
-                        viewModel.getRepository().setNotificationScheduledForCycle(cycleStartMillis);
-                        viewModel.getRepository().setNotificationSettingsHashForCycle(
-                                cycleStartMillis, viewModel.getRepository().getNotificationSettingsHash());
-                    }
+                    ReminderScheduler.scheduleCurrentCycle(requireContext());
 
                     viewModel.setStartDate((Calendar) baseStart.clone());
                     StockManager.syncCurrentCycle(requireContext(), viewModel.getRepository());
@@ -1935,6 +1727,32 @@ public class HomeFragment extends Fragment {
             days++;
         }
         return days;
+    }
+
+    private void promptForExactAlarmAccessIfNeeded() {
+        if (Build.VERSION.SDK_INT < Build.VERSION_CODES.S
+                || (getActivity() instanceof MainActivity
+                && ((MainActivity) getActivity()).isInitialCycleSetupPending())
+                || viewModel.getRepository().wasExactAlarmPrompted()) {
+            return;
+        }
+
+        AlarmManager alarmManager = requireContext().getSystemService(AlarmManager.class);
+        if (alarmManager == null || alarmManager.canScheduleExactAlarms()) {
+            return;
+        }
+
+        viewModel.getRepository().setExactAlarmPrompted(true);
+        AlertDialog dialog = new AlertDialog.Builder(requireContext())
+                .setTitle(R.string.exact_alarm_title)
+                .setMessage(R.string.exact_alarm_message)
+                .setPositiveButton(R.string.exact_alarm_open_settings, (d, which) -> {
+                    Intent intent = new Intent(android.provider.Settings.ACTION_REQUEST_SCHEDULE_EXACT_ALARM);
+                    startActivity(intent);
+                })
+                .setNegativeButton(R.string.dialog_cancel, null)
+                .show();
+        applyDialogButtonColors(dialog);
     }
 
     private void applyHomeCircleStyle(HomeCircleView progress, int style, int color) {

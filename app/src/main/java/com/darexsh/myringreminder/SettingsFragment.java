@@ -510,6 +510,7 @@ public class SettingsFragment extends Fragment {
             if (current != null) {
                 viewModel.setStartDate((Calendar) current.clone());
             }
+            ReminderScheduler.scheduleCurrentCycle(requireContext());
             WidgetUpdater.updateAllWidgets(requireContext());
         });
         btnDebugSetTime.setOnClickListener(v -> showDebugTimePicker());
@@ -528,6 +529,7 @@ public class SettingsFragment extends Fragment {
             if (current != null) {
                 viewModel.setStartDate((Calendar) current.clone());
             }
+            ReminderScheduler.scheduleCurrentCycle(requireContext());
             WidgetUpdater.updateAllWidgets(requireContext());
             Toast.makeText(requireContext(), getString(R.string.debug_refreshed), Toast.LENGTH_SHORT).show();
         });
@@ -839,6 +841,7 @@ public class SettingsFragment extends Fragment {
             currentCalendar.set(Calendar.MINUTE, selectedMinute);
             adoptStockCycleForManualConfig(currentCalendar, getCurrentCycleLength());
             viewModel.setStartDate(currentCalendar);
+            ReminderScheduler.scheduleCurrentCycle(requireContext());
             WidgetUpdater.updateAllWidgets(requireContext());
         }, currentCalendar.get(Calendar.HOUR_OF_DAY), currentCalendar.get(Calendar.MINUTE), true);
 
@@ -857,6 +860,7 @@ public class SettingsFragment extends Fragment {
                     currentCalendar.set(selectedYear, selectedMonth, selectedDay);
                     adoptStockCycleForManualConfig(currentCalendar, getCurrentCycleLength());
                     viewModel.setStartDate(currentCalendar);
+                    ReminderScheduler.scheduleCurrentCycle(requireContext());
                     WidgetUpdater.updateAllWidgets(requireContext());
                 }, currentCalendar.get(Calendar.YEAR), currentCalendar.get(Calendar.MONTH), currentCalendar.get(Calendar.DAY_OF_MONTH));
 
@@ -893,6 +897,7 @@ public class SettingsFragment extends Fragment {
                             : Calendar.getInstance();
                     adoptStockCycleForManualConfig(startDate, picker.getValue());
                     viewModel.setCycleLength(picker.getValue());
+                    ReminderScheduler.scheduleCurrentCycle(requireContext());
                     WidgetUpdater.updateAllWidgets(requireContext());
                 })
                 .setNegativeButton(R.string.dialog_cancel, null)
@@ -1184,6 +1189,7 @@ public class SettingsFragment extends Fragment {
                 .setPositiveButton(R.string.dialog_ok, (dlg, which) -> {
                     viewModel.setRemovalReminderHours(removalPicker.getValue());
                     viewModel.setInsertionReminderHours(insertionPicker.getValue());
+                    ReminderScheduler.scheduleCurrentCycle(requireContext());
                 })
                 .setNegativeButton(R.string.dialog_cancel, null)
                 .show();
@@ -4074,6 +4080,7 @@ public class SettingsFragment extends Fragment {
         }
 
         viewModel.getRepository().clearAllData();
+        NotificationHistory.clear(requireContext());
         requireContext().getSharedPreferences("notes_prefs", Context.MODE_PRIVATE)
                 .edit().clear().apply();
         requireContext().deleteSharedPreferences("app_prefs");
@@ -4654,6 +4661,7 @@ public class SettingsFragment extends Fragment {
     }
 
     private void applyBackupData(BackupData backupData) {
+        ReminderScheduler.cancelAllScheduledNotifications(requireContext());
         writePrefs("app_prefs", backupData.appPrefs);
         writePrefs("notes_prefs", backupData.notesPrefs);
 
@@ -4695,6 +4703,8 @@ public class SettingsFragment extends Fragment {
         if (restoredRepository.isRingUsePaused()) {
             ReminderScheduler.cancelAllScheduledNotifications(requireContext());
             restoredRepository.clearNotificationFlags();
+        } else {
+            ReminderScheduler.scheduleCurrentCycle(requireContext());
         }
         WidgetUpdater.updateAllWidgets(requireContext());
         Toast.makeText(requireContext(), R.string.backup_restored_toast, Toast.LENGTH_SHORT).show();
@@ -5139,6 +5149,8 @@ public class SettingsFragment extends Fragment {
         Intent intent = new Intent(requireContext(), NotificationReceiver.class);
         intent.putExtra("title", getString(R.string.notification_test_title));
         intent.putExtra("message", getString(R.string.notification_test_message));
+        intent.putExtra(NotificationHistory.EXTRA_TYPE, -1);
+        intent.putExtra(NotificationHistory.EXTRA_SCHEDULED_AT, System.currentTimeMillis());
         requireContext().sendBroadcast(intent);
         showToast(R.string.notification_test_sent);
     }
@@ -5296,6 +5308,7 @@ public class SettingsFragment extends Fragment {
         if (current != null) {
             viewModel.setStartDate((Calendar) current.clone());
         }
+        ReminderScheduler.scheduleCurrentCycle(requireContext());
     }
 
     private void updateDebugSectionVisibility() {
@@ -5416,8 +5429,35 @@ public class SettingsFragment extends Fragment {
         appendNotificationLine(sb, getString(R.string.debug_insertion_reminder_line, insertionReminderHours),
                 shiftHours(reinsertionDate, -insertionReminderHours), insertionReminderHours > 0);
         appendNotificationLine(sb, getString(R.string.debug_insertion), reinsertionDate, true);
+        appendRecentNotificationHistory(sb);
 
         return sb.toString();
+    }
+
+    private void appendRecentNotificationHistory(StringBuilder sb) {
+        sb.append("\n").append(getString(R.string.debug_recent_notification_history)).append(":\n");
+        List<NotificationHistory.Entry> entries = NotificationHistory.getRecent(requireContext(), 5);
+        if (entries.isEmpty()) {
+            sb.append(getString(R.string.debug_notification_history_empty)).append("\n");
+            return;
+        }
+
+        SimpleDateFormat format = new SimpleDateFormat("dd.MM.yyyy HH:mm", Locale.getDefault());
+        for (NotificationHistory.Entry entry : entries) {
+            sb.append("- ").append(entry.title).append(": ").append(entry.message).append("\n");
+            if (entry.cycleStartMillis > 0L) {
+                sb.append("  ").append(getString(R.string.debug_notification_cycle_start)).append(": ")
+                        .append(format.format(new java.util.Date(entry.cycleStartMillis))).append("\n");
+            }
+            if (entry.scheduledAtMillis > 0L) {
+                sb.append("  ").append(getString(R.string.debug_notification_scheduled_at)).append(": ")
+                        .append(format.format(new java.util.Date(entry.scheduledAtMillis))).append("\n");
+            }
+            sb.append("  ").append(getString(R.string.debug_notification_delivered_at)).append(": ")
+                    .append(format.format(new java.util.Date(entry.deliveredAtMillis))).append("\n")
+                    .append("  ").append(getString(R.string.debug_notification_result)).append(": ")
+                    .append(entry.outcome).append("\n");
+        }
     }
 
     private int getSafeCycleLength() {

@@ -5,6 +5,8 @@ import android.app.PendingIntent;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Build;
+import android.util.Log;
+import java.text.DateFormat;
 import java.util.Calendar;
 
 public final class ReminderScheduler {
@@ -58,8 +60,9 @@ public final class ReminderScheduler {
                     context,
                     twoWeeksRemaining,
                     context.getString(R.string.notif_cycle_duration_title),
-                    context.getString(R.string.notif_two_weeks_remaining),
-                    ReminderRequestCodes.buildRequestCode(cycleStartMillis, ReminderRequestCodes.NOTIFY_TWO_WEEKS)
+                    context.getString(R.string.notif_two_weeks_remaining, formatDateTime(context, removalDate)),
+                    cycleStartMillis,
+                    ReminderRequestCodes.NOTIFY_TWO_WEEKS
             );
         }
 
@@ -72,8 +75,9 @@ public final class ReminderScheduler {
                     context,
                     oneWeekRemaining,
                     context.getString(R.string.notif_cycle_duration_title),
-                    context.getString(R.string.notif_one_week_remaining),
-                    ReminderRequestCodes.buildRequestCode(cycleStartMillis, ReminderRequestCodes.NOTIFY_ONE_WEEK)
+                    context.getString(R.string.notif_one_week_remaining, formatDateTime(context, removalDate)),
+                    cycleStartMillis,
+                    ReminderRequestCodes.NOTIFY_ONE_WEEK
             );
         }
 
@@ -86,7 +90,8 @@ public final class ReminderScheduler {
                     removalReminder,
                     context.getString(R.string.notif_remove_title),
                     context.getString(R.string.notif_remove_in_hours, removalReminderHours),
-                    ReminderRequestCodes.buildRequestCode(cycleStartMillis, ReminderRequestCodes.NOTIFY_REMOVAL_REMINDER)
+                    cycleStartMillis,
+                    ReminderRequestCodes.NOTIFY_REMOVAL_REMINDER
             );
         }
 
@@ -99,7 +104,8 @@ public final class ReminderScheduler {
                 removalExact,
                 context.getString(R.string.notif_remove_title),
                 context.getString(R.string.notif_remove_now, removalTimeText),
-                ReminderRequestCodes.buildRequestCode(cycleStartMillis, ReminderRequestCodes.NOTIFY_REMOVAL_EXACT)
+                cycleStartMillis,
+                ReminderRequestCodes.NOTIFY_REMOVAL_EXACT
         );
 
         int insertionReminderHours = repository.getInsertionReminderHours();
@@ -111,7 +117,8 @@ public final class ReminderScheduler {
                     insertionReminder,
                     context.getString(R.string.notif_insert_title),
                     context.getString(R.string.notif_insert_in_hours, insertionReminderHours),
-                    ReminderRequestCodes.buildRequestCode(cycleStartMillis, ReminderRequestCodes.NOTIFY_INSERTION_REMINDER)
+                    cycleStartMillis,
+                    ReminderRequestCodes.NOTIFY_INSERTION_REMINDER
             );
         }
 
@@ -124,29 +131,13 @@ public final class ReminderScheduler {
                 insertionExact,
                 context.getString(R.string.notif_insert_title),
                 context.getString(R.string.notif_insert_now, insertionTimeText),
-                ReminderRequestCodes.buildRequestCode(cycleStartMillis, ReminderRequestCodes.NOTIFY_INSERTION_EXACT)
+                cycleStartMillis,
+                ReminderRequestCodes.NOTIFY_INSERTION_EXACT
         );
 
         int settingsHash = repository.getNotificationSettingsHash();
         repository.setNotificationScheduledForCycle(cycleStartMillis);
         repository.setNotificationSettingsHashForCycle(cycleStartMillis, settingsHash);
-    }
-
-    public static boolean hasAnyScheduledForCycle(Context context, long cycleStartMillis) {
-        Intent intent = new Intent(context, NotificationReceiver.class);
-        for (int type : ReminderRequestCodes.ALL_TYPES) {
-            int requestCode = ReminderRequestCodes.buildRequestCode(cycleStartMillis, type);
-            PendingIntent pendingIntent = PendingIntent.getBroadcast(
-                    context,
-                    requestCode,
-                    intent,
-                    PendingIntent.FLAG_NO_CREATE | PendingIntent.FLAG_IMMUTABLE
-            );
-            if (pendingIntent != null) {
-                return true;
-            }
-        }
-        return false;
     }
 
     public static void cancelAllScheduledNotifications(Context context) {
@@ -179,17 +170,25 @@ public final class ReminderScheduler {
         }
     }
 
-    private static void scheduleNotification(Context context, Calendar calendar, String title, String message, int requestCode) {
+    private static void scheduleNotification(Context context,
+                                             Calendar calendar,
+                                             String title,
+                                             String message,
+                                             long cycleStartMillis,
+                                             int notificationType) {
         if (calendar.getTimeInMillis() <= System.currentTimeMillis()) {
             return;
         }
         Intent intent = new Intent(context, NotificationReceiver.class);
         intent.putExtra("title", title);
         intent.putExtra("message", message);
+        intent.putExtra(NotificationHistory.EXTRA_TYPE, notificationType);
+        intent.putExtra(NotificationHistory.EXTRA_CYCLE_START, cycleStartMillis);
+        intent.putExtra(NotificationHistory.EXTRA_SCHEDULED_AT, calendar.getTimeInMillis());
 
         PendingIntent pendingIntent = PendingIntent.getBroadcast(
                 context,
-                requestCode,
+                ReminderRequestCodes.buildRequestCode(cycleStartMillis, notificationType),
                 intent,
                 PendingIntent.FLAG_UPDATE_CURRENT | PendingIntent.FLAG_IMMUTABLE
         );
@@ -199,7 +198,12 @@ public final class ReminderScheduler {
             return;
         }
         if (canScheduleExactAlarms(alarmManager)) {
-            alarmManager.setExactAndAllowWhileIdle(AlarmManager.RTC_WAKEUP, calendar.getTimeInMillis(), pendingIntent);
+            try {
+                alarmManager.setExactAndAllowWhileIdle(AlarmManager.RTC_WAKEUP, calendar.getTimeInMillis(), pendingIntent);
+            } catch (SecurityException e) {
+                Log.w("ReminderScheduler", "Exact alarm access changed while scheduling; using an inexact alarm", e);
+                alarmManager.setAndAllowWhileIdle(AlarmManager.RTC_WAKEUP, calendar.getTimeInMillis(), pendingIntent);
+            }
         } else {
             alarmManager.setAndAllowWhileIdle(AlarmManager.RTC_WAKEUP, calendar.getTimeInMillis(), pendingIntent);
         }
@@ -231,5 +235,13 @@ public final class ReminderScheduler {
             return true;
         }
         return alarmManager.canScheduleExactAlarms();
+    }
+
+    private static String formatDateTime(Context context, Calendar calendar) {
+        return DateFormat.getDateTimeInstance(
+                DateFormat.MEDIUM,
+                DateFormat.SHORT,
+                context.getResources().getConfiguration().getLocales().get(0)
+        ).format(calendar.getTime());
     }
 }

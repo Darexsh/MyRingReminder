@@ -206,8 +206,10 @@ final class StockManager {
             return;
         }
 
-        long triggerAtMillis = cycleStartMillis
-                + (long) repository.getStockRecipeCheckDelayDays() * 24L * 60L * 60L * 1000L;
+        Calendar triggerAt = Calendar.getInstance();
+        triggerAt.setTimeInMillis(cycleStartMillis);
+        triggerAt.add(Calendar.DAY_OF_MONTH, repository.getStockRecipeCheckDelayDays());
+        long triggerAtMillis = triggerAt.getTimeInMillis();
         if (triggerAtMillis <= DebugTimeProvider.now(repository).getTimeInMillis()) {
             return;
         }
@@ -215,6 +217,9 @@ final class StockManager {
         Intent intent = new Intent(context, NotificationReceiver.class);
         intent.putExtra("title", context.getString(R.string.stock_recipe_check_title));
         intent.putExtra("message", context.getString(R.string.stock_recipe_check_message));
+        intent.putExtra(NotificationHistory.EXTRA_TYPE, ReminderRequestCodes.NOTIFY_STOCK_RECIPE_CHECK);
+        intent.putExtra(NotificationHistory.EXTRA_CYCLE_START, cycleStartMillis);
+        intent.putExtra(NotificationHistory.EXTRA_SCHEDULED_AT, triggerAtMillis);
 
         PendingIntent pendingIntent = PendingIntent.getBroadcast(
                 context,

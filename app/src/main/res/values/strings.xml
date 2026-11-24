@@ -288,15 +288,15 @@
     <string name="exact_alarm_status_not_required">not required</string>
     <string name="exact_alarm_status_unknown">unknown</string>
     <string name="exact_alarm_title">Allow exact alarms</string>
-    <string name="notif_cycle_duration_title">Cycle length</string>
+    <string name="notif_cycle_duration_title">Ring cycle update</string>
     <string name="notif_insert_in_hours">Insert the ring in %1$d hours!</string>
     <string name="notif_insert_now">Insert the ring now at %1$s!</string>
     <string name="notif_insert_title">Insert ring</string>
-    <string name="notif_one_week_remaining">One week with ring remaining.</string>
+    <string name="notif_one_week_remaining">Progress update: one week remains until planned removal on %1$s.</string>
     <string name="notif_remove_in_hours">Remove the ring in %1$d hours!</string>
     <string name="notif_remove_now">Remove the ring now at %1$s!</string>
     <string name="notif_remove_title">Remove ring</string>
-    <string name="notif_two_weeks_remaining">Two weeks with ring remaining.</string>
+    <string name="notif_two_weeks_remaining">Progress update: two weeks remain until planned removal on %1$s.</string>
 
     <!-- Home -->
     <string name="home_at_time">at %1$s</string>
@@ -655,6 +655,12 @@
     <string name="debug_removal_reminder_line">Removal (-%1$dh)</string>
     <string name="debug_ring_free">Ring-free: %1$d days</string>
     <string name="debug_scheduled_notifications">Scheduled notifications</string>
+    <string name="debug_recent_notification_history">Recent notification activity</string>
+    <string name="debug_notification_history_empty">No notification activity recorded yet.</string>
+    <string name="debug_notification_scheduled_at">Scheduled</string>
+    <string name="debug_notification_delivered_at">Receiver ran</string>
+    <string name="debug_notification_cycle_start">Cycle start</string>
+    <string name="debug_notification_result">Result</string>
     <string name="debug_time_cleared">Debug time cleared</string>
     <string name="debug_time_set">Debug time set</string>
     <string name="debug_time_shift_back">Time moved back</string>

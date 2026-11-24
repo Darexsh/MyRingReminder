@@ -10,7 +10,11 @@ public class ReminderRescheduleReceiver extends BroadcastReceiver {
     @SuppressLint("UnsafeProtectedBroadcastReceiver")
     @Override
     public void onReceive(Context context, Intent intent) {
-        ReminderScheduler.scheduleCurrentCycle(context);
-        StockManager.syncCurrentCycle(context);
+        try {
+            ReminderScheduler.scheduleCurrentCycle(context);
+            StockManager.syncCurrentCycle(context);
+        } catch (RuntimeException e) {
+            android.util.Log.e("ReminderReschedule", "Could not restore scheduled reminders", e);
+        }
     }
 }
